@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="it.unimib.bicap">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:fullBackupContent="true"
         android:allowBackup="true"
@@ -21,6 +23,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginProfessore"/>
+        <activity android:name=".SurveyWebview" />
+        <activity android:name=".Progetto"></activity>
     </application>
 
 </manifest>

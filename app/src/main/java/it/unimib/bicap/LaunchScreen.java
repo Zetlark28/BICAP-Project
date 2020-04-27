@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,7 +43,7 @@ public class LaunchScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(LaunchScreen.this, LoginProfessore.class);
+                Intent intent=new Intent(LaunchScreen.this, Progetto.class);
                 startActivity(intent);
                 finish();
             }
