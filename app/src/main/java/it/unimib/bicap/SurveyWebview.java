@@ -21,7 +21,7 @@ public class SurveyWebview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey_webview);
+        setContentView(R.layout.activity_survey);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Prova");
