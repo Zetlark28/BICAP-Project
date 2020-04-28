@@ -24,7 +24,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginProfessore"/>
         <activity android:name=".SurveyWebview" />
-        <activity android:name=".Progetto"></activity>
+        <activity android:name=".Progetto" />
+        <activity android:name=".DettaglioQuestionario"/>
     </application>
 
 </manifest>

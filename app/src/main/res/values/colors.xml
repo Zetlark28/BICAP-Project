@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#701733</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="sfondo">#E1E2E1</color>
+    <color name="scritta">#2E2E2E</color>
 </resources>
