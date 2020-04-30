@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">BICAP</string>
+    <string name="app_name">SurveyMiB</string>
+    <string name="email">Email</string>
+    <string name="accedi">Accedi</string>
+    <string name="password">Password</string>
+    <string name="nome_progetto">Nome progetto:</string>
 </resources>
