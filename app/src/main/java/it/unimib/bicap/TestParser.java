@@ -51,18 +51,18 @@ public class TestParser extends AppCompatActivity {
                 String json = null;
                 try {
                     json = new String(bytes, "UTF-8");
-                    Log.d("succes", json);
+                    Log.d("succeso", json);
                     JSONObject progettiToParse = new JSONObject(json);
                     progetti = progettiToParse.getJSONArray("progetti");
-                    Log.d("success", progetti.toString());
+                    Log.d("successo", progetti.toString());
                     GetterInfo getter = new GetterLocal(TestParser.this);
                     JSONObject progetto = getter.getProgetto(progetti, 0);
                     String id = getter.getIdProgetto(progetto);
-                    Log.d("success",id);
+                    Log.d("successo",id);
                     String nomeProgetto = getter.getNomeProgetto(progetto);
-                    Log.d("success",nomeProgetto);
+                    Log.d("successo",nomeProgetto);
                     JSONObject progettoPrelevato = getter.getProgetto(progetti,0);
-                    Log.d("success",progettoPrelevato.toString());
+                    Log.d("successo",progettoPrelevato.toString());
                     //Vai alla prossima pagina
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
@@ -73,7 +73,7 @@ public class TestParser extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("error", "json not parse");
+                Log.d("errore", "json not parse");
             }
         });
     }
