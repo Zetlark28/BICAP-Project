@@ -9,92 +9,102 @@
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/toolbar_main"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="Inserire un solo titolo"
-        android:textColor="@color/scritta"
-        android:textSize="30sp" />
-
-    <ImageButton
-        android:id="@+id/imageButton3"
-        android:layout_width="196dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="16dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/inseriscipdf"
-        android:layout_gravity="center"/>
-
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="196dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="16dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/caricaunvideo"
-        android:layout_gravity="center"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Inserire il link del questionario"
-        android:textColor="@color/scritta"
-        android:textSize="20sp"
-        android:layout_gravity="center"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitolo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="Inserire un solo titolo"
+                android:textColor="@color/scritta"
+                android:textSize="30sp" />
+
+            <ImageButton
+                android:id="@+id/imCaricaVideo"
+                android:layout_width="196dp"
+                android:layout_height="66dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/caricaunvideo"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/imInsertPdf"
+                android:layout_width="196dp"
+                android:layout_height="66dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/inseriscipdf"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvLink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/link_questionario"
+                android:textColor="@color/scritta"
+                android:textSize="25sp" />
+
+            <EditText
+                android:id="@+id/etLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/link"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
         <ImageButton
-            android:id="@+id/imageButton6"
+            android:id="@+id/imNextStep"
             android:layout_width="196dp"
             android:layout_height="66dp"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@drawable/prossimopasso"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.35" />
+            tools:ignore="ContentDescription"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imSaveProject"
             android:layout_width="196dp"
             android:layout_height="66dp"
-            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton6"
-            app:srcCompat="@drawable/salvaprogetto" />
+            app:srcCompat="@drawable/salvaprogetto"
+            tools:ignore="ContentDescription"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+    </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

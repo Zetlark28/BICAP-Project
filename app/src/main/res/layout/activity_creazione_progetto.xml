@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/sfondo"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        layout="@layout/toolbar_main" />
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollProject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:orientation="vertical">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_main">
 
         <LinearLayout
-            android:id="@+id/lnLayoutNomeProgetto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -33,85 +26,87 @@
                 android:id="@+id/tvNomeProgetto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
                 android:text="@string/nome_progetto"
                 android:textColor="@color/scritta"
-                android:textSize="20sp"
-                android:layout_gravity="center"/>
+                android:textSize="30sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
+                android:id="@+id/etNomeProgetto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lnLayoutDescProgetto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descrizione Progetto:"
-                android:textColor="@color/scritta"
-                android:textSize="20dp"
-                android:layout_gravity="center"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/lnLayourAutoreProgetto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:orientation="vertical">
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/nome_progetto"
+                android:importantForAutofill="no"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/tvAutore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Autore:"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/autore"
                 android:textColor="@color/scritta"
-                android:textSize="20sp"
-                android:layout_gravity="center"/>
+                android:textSize="30sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <EditText
+                android:id="@+id/etAutore"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/autore"
+                android:importantForAutofill="no"
+                android:inputType="text" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tvDescrizione"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/descrizione"
+                android:textColor="@color/scritta"
+                android:textSize="30sp" />
 
+            <EditText
+                android:id="@+id/etDescrizione"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:overScrollMode="always"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:gravity="top"
+                android:singleLine="false"
+                android:hint="@string/descrizione"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <ImageButton
-        android:id="@+id/imageButton4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/inseriscidati"
-        android:scaleType="fitCenter"
+        android:id="@+id/imInsertData"
+        android:layout_width="196dp"
+        android:layout_height="66dp"
         android:adjustViewBounds="true"
-        android:layout_marginTop="100dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"/>
+        android:scaleType="fitCenter"
+        android:onClick="inserisciDati"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollProject"
+        app:layout_constraintVertical_bias="0.90"
+        app:srcCompat="@drawable/inseriscidati"
+        tools:ignore="ContentDescription" />
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

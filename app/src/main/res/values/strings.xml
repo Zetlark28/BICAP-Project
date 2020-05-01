@@ -3,5 +3,11 @@
     <string name="email">Email</string>
     <string name="accedi">Accedi</string>
     <string name="password">Password</string>
-    <string name="nome_progetto">Nome progetto:</string>
+    <string name="nome_progetto">Nome</string>
+    <string name="autore">Autore</string>
+    <string name="descrizione">Descrizione</string>
+    <string name="link">Link</string>
+    <string name="link_questionario">Inserire il link del questionario</string>
+    <string name="requisiti">Requisiti</string>
+    <string name="numero_questionari">Numero Questionari</string>
 </resources>
