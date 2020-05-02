@@ -1,6 +1,7 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -59,7 +60,8 @@ public class CreazioneProgetto extends AppCompatActivity {
             Toast.makeText(this, "Attenzione, manca la descrizione del progetto !", Toast.LENGTH_LONG).show();
         }
         else{
-            Toast.makeText(this, "Bravo", Toast.LENGTH_LONG).show();
+            Intent intentDettaglioProgetto = new Intent(this, DettaglioQuestionario.class);
+            startActivity(intentDettaglioProgetto);
         }
     }
 }

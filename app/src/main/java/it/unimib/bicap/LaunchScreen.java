@@ -39,7 +39,7 @@ public class LaunchScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(LaunchScreen.this, DettaglioQuestionario.class);
+                Intent intent=new Intent(LaunchScreen.this, HomePage.class);
                 startActivity(intent);
                 finish();
             }

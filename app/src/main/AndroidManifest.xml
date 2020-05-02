@@ -21,11 +21,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".HomePage"/>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginProfessore"/>
+        <activity
+            android:name=".LoginProfessore"
+            android:parentActivityName=".HomePage"/>
         <activity android:name=".SurveyWebview" />
-        <activity android:name=".CreazioneProgetto"/>
-        <activity android:name=".DettaglioQuestionario"/>
+        <activity
+            android:name=".CreazioneProgetto"
+            android:parentActivityName=".LoginProfessore"/>
+        <activity
+            android:name=".DettaglioQuestionario"
+            android:parentActivityName=".CreazioneProgetto"/>
+        <activity
+            android:name=".ListaProgetti"
+            android:parentActivityName=".HomePage"/>
     </application>
 
 </manifest>
