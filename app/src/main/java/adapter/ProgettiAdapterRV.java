@@ -14,6 +14,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     Context context;
     String [] nomi;
+    String from;
     LayoutInflater layoutInflater;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -25,9 +26,10 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         }
     }
 
-    public ProgettiAdapterRV (Context context, String [] progetti){
+    public ProgettiAdapterRV (Context context, String [] progetti, String from){
         this.context = context;
         this.nomi = progetti;
+        this.from = from;
         layoutInflater = (LayoutInflater.from(context));
     }
 
@@ -39,7 +41,13 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     }
 
     public void onBindViewHolder (MyViewHolder holder, final int position){
-        holder.nome.setText(nomi[position]);
+        if (from.equals("listaProgetti")) {
+            holder.nome.setText(nomi[position]);
+        }
+        else{
+            //TODO: il professore vuole eliminare un progetto
+            holder.nome.setText(nomi[position]);
+        }
     }
 
     public int getItemCount (){

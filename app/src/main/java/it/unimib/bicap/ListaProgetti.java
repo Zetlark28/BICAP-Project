@@ -4,55 +4,58 @@ import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
-import adapter.ProgettiAdapterRV;
+import adapter.SectionsPagerAdapter;
+import adapter.SectionsPagerAdapter;
 
 public class ListaProgetti extends AppCompatActivity {
 
-    RecyclerView mRecyclerView;
+    private SectionsPagerAdapter mSectionsPageAdapter;
 
-    String [] nomi = {"Progetto 1", "Progetto2", "Progetto 3"};
-    DividerItemDecoration itemDecor;
+    private ViewPager myViewPager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_progetti);
+        setContentView(R.layout.activity_progetti_utente);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Lista Progetti Disponibili");
-        //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        init();
+        mSectionsPageAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        myViewPager = findViewById(R.id.view_pager);
+        setUpViewPager(myViewPager);
 
-        ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), nomi);
-        mRecyclerView.setAdapter(progettiAdapter);
-        mRecyclerView.addItemDecoration(itemDecor);
+        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(myViewPager);
+        
+
     }
 
-    private void init() {
-        mRecyclerView = findViewById(R.id.rvProgetti);
-        itemDecor = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+    private void setUpViewPager(ViewPager viewPager){
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new QuestionariDaFare(), "QUESTIONARI DA FARE");
+        adapter.addFragment(new QuestionariDaTerminare(), "QUESTIONARI DA FINIRE");
+        viewPager.setAdapter(adapter);
     }
 }

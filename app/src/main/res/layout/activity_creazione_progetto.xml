@@ -89,24 +89,20 @@
                 android:hint="@string/descrizione"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine" />
+
+            <ImageButton
+                android:id="@+id/imInsertData"
+                android:layout_width="196dp"
+                android:layout_height="66dp"
+                android:adjustViewBounds="true"
+                android:onClick="inserisciDati"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/inseriscidati"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
     </ScrollView>
-
-    <ImageButton
-        android:id="@+id/imInsertData"
-        android:layout_width="196dp"
-        android:layout_height="66dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:onClick="inserisciDati"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollProject"
-        app:layout_constraintVertical_bias="0.90"
-        app:srcCompat="@drawable/inseriscidati"
-        tools:ignore="ContentDescription" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

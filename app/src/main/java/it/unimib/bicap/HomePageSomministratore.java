@@ -1,8 +1,6 @@
 package it.unimib.bicap;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -14,26 +12,28 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
-public class LoginProfessore extends AppCompatActivity {
+public class HomePageSomministratore extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_professore);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setContentView(R.layout.activity_homepage_somministratore);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Area Professore");
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
     }
 
-    public void accedi(View view) {
-        Intent intentAccesso = new Intent(this, HomePageSomministratore.class);
-        startActivity(intentAccesso);
+    public void eliminaProgetto(View view) {
+        Intent intentEliminaProgetto = new Intent (this, EliminaProgetti.class);
+        startActivity(intentEliminaProgetto);
+    }
+
+    public void creaProgetto(View view) {
+        Intent intentCreaProgetto = new Intent (this, CreazioneProgetto.class);
+        startActivity(intentCreaProgetto);
     }
 }
