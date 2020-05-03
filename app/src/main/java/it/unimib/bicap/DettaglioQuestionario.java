@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -32,6 +34,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private Uri filePath;
     String type;
     TextView linkQuestionario;
+    private String linkToJoinJSON;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -71,18 +74,30 @@ public class DettaglioQuestionario extends AppCompatActivity {
         findViewById(R.id.imNextStep).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario -> aggiungere una XOR (forse)
-                // TODO: per essere sicuri che solo un campo su tre è occupato
-
-                if (type.equals("Video")){
-                    uploadFile("Video");
+                // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
+                if (filePath == null && linkQuestionario.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "Devi scegliere un'opzione", Toast.LENGTH_SHORT).show();
+                } else if (!(filePath==null) && linkQuestionario.getText().toString().equals("")) {
+                    if (type.equals("Video")) {
+                        uploadFile("Video/");
+                        // TODO: quando faccio l'upload del video/pdf devo dargli un nome a caso nello storage che non si ripete
+                    } else {
+                        uploadFile("Documenti/");
+                    }
                 }
-                else if (type.equals("PDF")) {
-                    uploadFile("Documenti");
+                else if (!linkQuestionario.getText().toString().equals("") && filePath==null){
+
+                    if (!linkQuestionario.getText().toString().contains("http://")){
+                        Toast.makeText(getApplicationContext(), "Errore: il link deve iniziare per http:// o https://", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        // TODO: Operazione per il salvataggio del link del questionario nel JSON, la variabile che contiene il link è linkQuestionario
+                    }
                 }
                 else {
-                    // TODO: Operazione per il salvataggio del link del questionario nel JSON
+                    Toast.makeText(getApplicationContext(), "Devi selezionare solo un'opzione tra le tre proposte", Toast.LENGTH_SHORT).show();
                 }
+                //Setto filePath e etLinkQuestionario a null, così si possono recompilare coi valori nuovi
                 filePath = null;
                 linkQuestionario.setText("");
             }
@@ -104,28 +119,42 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 }
                 // TODO: Final step di creazione JSON -> sovrascrittura del file -> upload del file -> salvataggio nuovo link sul DB
                 // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
+
+                Log.i("url", String.valueOf(linkToJoinJSON));
             }
         });
-
-
     }
 
-    private void uploadFile (String directory) {
-
+    private void uploadFile (final String directory) {
         if (filePath != null) {
-            StorageReference riversRef = mStorageRef.child(directory);
-
-            riversRef.putFile(filePath)
+            final StorageReference fileRef = mStorageRef.child(directory);
+            fileRef.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(getApplicationContext(), "Hai aggiunto un passo", Toast.LENGTH_SHORT).show();
+
+                            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    linkToJoinJSON = String.valueOf(uri);
+                                    // TODO: In base alla directory scopriamo se è PDF o Video
+                                    if(directory.contains("Video")) {
+                                        // TODO: Creo il passo di tipo Video con il link salvato nella variabile linkToJoinJSON
+                                    }
+                                    else
+                                    {
+                                        // TODO: Creo il passo di tipo PDF con il link salvato nella variabile linkToJoinJSON
+                                    }
+                                }
+                            });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             Toast.makeText(getApplicationContext(), "Errore nell'upload", Toast.LENGTH_SHORT).show();
+
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
