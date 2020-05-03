@@ -29,13 +29,19 @@
         <activity android:name=".SurveyWebview" />
         <activity
             android:name=".CreazioneProgetto"
-            android:parentActivityName=".LoginProfessore"/>
+            android:parentActivityName=".HomePageSomministratore"/>
         <activity
             android:name=".DettaglioQuestionario"
             android:parentActivityName=".CreazioneProgetto"/>
         <activity
             android:name=".ListaProgetti"
             android:parentActivityName=".HomePage"/>
+        <activity
+            android:name=".EliminaProgetti"
+            android:parentActivityName=".HomePageSomministratore"/>
+        <activity android:name=".HomePageSomministratore"/>
+        <activity android:name=".QuestionariDaFare"/>
+        <activity android:name=".QuestionariDaTerminare"/>
     </application>
 
 </manifest>

@@ -4,8 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include
+        android:id="@+id/toolbar_main"
+        layout="@layout/toolbar_main"/>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvProgetti"
+        android:id="@+id/rvProgettiDaEliminare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"/>
