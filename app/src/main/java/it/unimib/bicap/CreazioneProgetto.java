@@ -13,13 +13,18 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONObject;
+
 import java.util.Objects;
+
+import it.unimib.bicap.service.JsonBuilder;
 
 public class CreazioneProgetto extends AppCompatActivity {
 
     EditText mNome;
     EditText mAutore;
     EditText mDescrizione;
+    private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
 
     @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -60,7 +65,9 @@ public class CreazioneProgetto extends AppCompatActivity {
             Toast.makeText(this, "Attenzione, manca la descrizione del progetto !", Toast.LENGTH_LONG).show();
         }
         else{
+            JSONObject progetto = jsonBuilder.creaProgetto(mNome.getText().toString(),mDescrizione.getText().toString(),mAutore.getText().toString());
             Intent intentDettaglioProgetto = new Intent(this, DettaglioQuestionario.class);
+            intentDettaglioProgetto.putExtra("progetto", progetto.toString());
             startActivity(intentDettaglioProgetto);
         }
     }

@@ -18,14 +18,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Objects;
+
+import it.unimib.bicap.service.JsonBuilder;
 
 public class DettaglioQuestionario extends AppCompatActivity {
 
@@ -36,6 +41,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
     String type;
     TextView linkQuestionario;
     private String linkToJoinJSON;
+    private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
+    private JSONObject progetto = new JSONObject();
+    private static JSONArray listaPassi = new JSONArray();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -51,6 +59,15 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+
+        final String progettoString = getIntent().getStringExtra("progetto");
+        try {
+            progetto = new JSONObject(progettoString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Log.d("OGGETTO JSON", progetto.toString() );
 
         findViewById(R.id.imCaricaVideo).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +109,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Errore: il link deve iniziare per http:// o https://", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        // TODO: Operazione per il salvataggio del link del questionario nel JSON, la variabile che contiene il link è linkQuestionario
+                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
                     }
                 }
                 else {
@@ -108,20 +125,27 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
-
+                //TODO : fix type ==null , nullpointer exception
                 if (type.equals("Video")){
                     uploadFile("Video MP4/file");
+                    Log.d("oggetto", progetto.toString()+2);
                 }
                 else if (type.equals("PDF")) {
                     uploadFile("Documenti PDF");
                 }
                 else {
-                    // TODO: Operazione per il salvataggio del link del questionario nel JSON
+                    jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
+                    Log.d("oggetto", listaPassi.toString());
                 }
-                // TODO: Final step di creazione JSON -> sovrascrittura del file -> upload del file -> salvataggio nuovo link sul DB
-                // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
 
-                Log.i("url", String.valueOf(linkToJoinJSON));
+                //TODO: fixare il flusso, quando carico un video o pdf prima salva il progetto e poi crea il passo!Controlla con debug
+                jsonBuilder.aggiungiListaPassi(progetto,listaPassi);
+                Log.d("oggetto", progetto.toString()+1);
+
+                // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file -> salvataggio nuovo link sul DB
+                // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
+                Intent home = new Intent (getApplicationContext(),HomePageSomministratore.class);
+                startActivity(home);
             }
         });
     }
@@ -139,13 +163,13 @@ public class DettaglioQuestionario extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     linkToJoinJSON = String.valueOf(uri);
-                                    // TODO: In base alla directory scopriamo se è PDF o Video
                                     if(directory.contains("Video")) {
-                                        // TODO: Creo il passo di tipo Video con il link salvato nella variabile linkToJoinJSON
+                                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("video", linkToJoinJSON));
                                     }
                                     else
                                     {
-                                        // TODO: Creo il passo di tipo PDF con il link salvato nella variabile linkToJoinJSON
+                                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("pdf",linkToJoinJSON));
+                                        Log.d("oggetto", listaPassi.toString() +3);
                                     }
                                 }
                             });

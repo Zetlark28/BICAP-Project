@@ -19,27 +19,33 @@ public class JsonBuilder {
     private JsonBuilder(){
     }
 
-    public  JSONObject creaPasso(String tipo, String link) throws JSONException {
+    public  JSONObject creaPasso(String tipo, String link) {
         JSONObject passo = new JSONObject();
-
-        passo.put("tipo", tipo);
-        passo.put("link", link);
-        passo.put("completato", 0);
-
-        Log.d("errore", "jsonBuilderError");
-
+        try {
+            passo.put("tipo", tipo);
+            passo.put("link", link);
+            passo.put("completato", 0);
+        } catch (JSONException e) {
+            Log.d("errore", "jsonBuilderError");
+            e.printStackTrace();
+        }
         return passo;
     }
 
 
-    public  JSONObject creaProgetto(String nomeProgetto, String descrizioneProgetto, String autore) throws JSONException {
+    public  JSONObject creaProgetto(String nomeProgetto, String descrizioneProgetto, String autore)  {
         JSONObject progetto = new JSONObject();
 
-        progetto.put("nome", nomeProgetto);
-        progetto.put("descrizione", descrizioneProgetto);
-        progetto.put("autore", autore);
-        progetto.put("completato",0);
-        Log.d("errore", "jsonBuilderError");
+        try {
+            progetto.put("nome", nomeProgetto);
+            progetto.put("descrizione", descrizioneProgetto);
+            progetto.put("autore", autore);
+            progetto.put("completato",0);
+        } catch (JSONException e) {
+            Log.d("errore", "jsonBuilderError");
+            e.printStackTrace();
+        }
+
 
         return progetto;
     }
