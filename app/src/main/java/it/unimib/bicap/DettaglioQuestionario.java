@@ -43,7 +43,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private String linkToJoinJSON;
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
     private JSONObject progetto = new JSONObject();
-    private static JSONArray listaPassi = new JSONArray();
+    private JSONArray listaPassi = new JSONArray();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -125,13 +125,13 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
-                //TODO : fix type ==null , nullpointer exception
-                if (type.equals("Video")){
-                    uploadFile("Video MP4/file");
-                    Log.d("oggetto", progetto.toString()+2);
-                }
-                else if (type.equals("PDF")) {
-                    uploadFile("Documenti PDF");
+                if(type != null) {
+                    if (type.equals("Video")) {
+                        uploadFile("Video MP4/file");
+                        Log.d("oggetto", progetto.toString() + 2);
+                    } else if (type.equals("PDF")) {
+                        uploadFile("Documenti PDF");
+                    }
                 }
                 else {
                     jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
