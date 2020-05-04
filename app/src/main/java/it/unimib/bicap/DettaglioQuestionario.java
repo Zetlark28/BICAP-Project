@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -41,7 +42,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettaglio_questionario);
-
+        FirebaseApp.initializeApp(this);
         linkQuestionario = (TextView) findViewById(R.id.etLink);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         Toolbar toolbar = findViewById(R.id.toolbar_main);
