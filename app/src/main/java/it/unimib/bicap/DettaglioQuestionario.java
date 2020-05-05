@@ -82,70 +82,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
 
         Log.d("OGGETTO JSON", progetto.toString() );
-
-        findViewById(R.id.imCaricaVideo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(Intent.createChooser(new Intent()
-                                .setAction(Intent.ACTION_GET_CONTENT)
-                                .setType("video/mp4"),
-                        "Seleziona un video"), CODE_VIDEO);
-            }
-        });
-
-        findViewById(R.id.imInsertPdf).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(Intent.createChooser(new Intent()
-                                .setAction(Intent.ACTION_GET_CONTENT)
-                                .setType("application/pdf"),
-                        "Seleziona un PDF"), CODE_PDF);
-            }
-        });
-
-        findViewById(R.id.imNextStep).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
-
-                aggiungiPassi();
-                filePath = null;
-                linkQuestionario.setText("");
-            }
-        });
-
-        findViewById(R.id.imSaveProject).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!(filePath == null) || !linkQuestionario.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "lelelele", Toast.LENGTH_SHORT).show();
-                    aggiungiPassi();
-                }
-
-                jsonBuilder.aggiungiListaPassi(progetto,listaPassi);
-                Log.d("oggetto", progetto.toString()+1);
-                // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
-                // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
-                Intent home = new Intent (getApplicationContext(),HomePageSomministratore.class);
-                startActivity(home);
-            }
-        });
-
-        // HO creato un button, quando verrà modificato in imageButton sicordarsi di cambiare l'ID qui sotto
-        findViewById(R.id.bCreaPasso).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
-                if(type != null) {
-                    if (type.equals("Video")) {
-                        uploadFile("Video/file");
-                        Log.d("oggetto", progetto.toString() + 2);
-                    } else if (type.equals("PDF")) {
-                        uploadFile("Documenti/");
-                    }
-                }
-            }
-        });
     }
 
 
@@ -230,35 +166,63 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
+                if(type != null) {
+                    if (type.equals("Video")) {
+                        uploadFile("Video/file");
+                        Log.d("oggetto", progetto.toString() + 2);
+                    } else if (type.equals("PDF")) {
+                        uploadFile("Documenti/");
+                    }
+                }
             }
         });
 
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+// Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
 
+                aggiungiPassi();
+                filePath = null;
+                linkQuestionario.setText("");
             }
         });
 
         binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!(filePath == null) || !linkQuestionario.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "lelelele", Toast.LENGTH_SHORT).show();
+                    aggiungiPassi();
+                }
 
+                jsonBuilder.aggiungiListaPassi(progetto,listaPassi);
+                Log.d("oggetto", progetto.toString()+1);
+                // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
+                // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
+                Intent home = new Intent (getApplicationContext(),HomePageSomministratore.class);
+                startActivity(home);
             }
         });
 
         binding.imCaricaVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivityForResult(Intent.createChooser(new Intent()
+                                .setAction(Intent.ACTION_GET_CONTENT)
+                                .setType("video/mp4"),
+                        "Seleziona un video"), CODE_VIDEO);
             }
         });
 
         binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivityForResult(Intent.createChooser(new Intent()
+                                .setAction(Intent.ACTION_GET_CONTENT)
+                                .setType("application/pdf"),
+                        "Seleziona un PDF"), CODE_PDF);
             }
         });
     }
