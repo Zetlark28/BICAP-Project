@@ -10,4 +10,5 @@
     <string name="link_questionario">Inserire il link del questionario</string>
     <string name="requisiti">Requisiti</string>
     <string name="numero_questionari">Numero Questionari</string>
+    <string name="creaPasso">Crea passo</string>
 </resources>
