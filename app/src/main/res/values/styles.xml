@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHighlight">@color/colorEditTextLight</item>
+        <item name="android:textColorLink">@color/colorPrimary</item>
     </style>
 
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
@@ -20,4 +22,5 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <color name="colorEditTextLight" />
 </resources>

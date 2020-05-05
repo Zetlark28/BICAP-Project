@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "452239917652",
+    "firebase_url": "https://bicap-ffecb.firebaseio.com",
+    "project_id": "bicap-ffecb",
+    "storage_bucket": "bicap-ffecb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452239917652:android:265a488809a8cf5e88e3c1",
+        "android_client_info": {
+          "package_name": "it.unimib.bicap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452239917652-49rila2398lf26qrkqhmvdqd3k5eqrab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArVc7FWmbpTNMh6JbFq69Kimm-TqS5e28"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452239917652-49rila2398lf26qrkqhmvdqd3k5eqrab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

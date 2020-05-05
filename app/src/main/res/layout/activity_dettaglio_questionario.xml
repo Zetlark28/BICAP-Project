@@ -30,6 +30,15 @@
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
 
+            <ProgressBar
+                android:id="@+id/pbUpload"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp"
+                android:paddingRight="10dp" />
+
             <ImageButton
                 android:id="@+id/imCaricaVideo"
                 android:layout_width="196dp"
