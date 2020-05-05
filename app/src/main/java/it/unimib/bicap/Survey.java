@@ -17,7 +17,7 @@ import java.util.Objects;
 
 import it.unimib.bicap.databinding.ActivitySurveyBinding;
 
-public class SurveyWebview extends AppCompatActivity {
+public class Survey extends AppCompatActivity {
 
     private static final String TAG = "SurveyWebView";
     private ActivitySurveyBinding binding;
@@ -39,11 +39,11 @@ public class SurveyWebview extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
 
-        binding.webView.loadUrl("https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
-        WebSettings webSettings = binding.webView.getSettings();
+        binding.surveyWebView.loadUrl("https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
+        WebSettings webSettings = binding.surveyWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        binding.webView.setWebViewClient(new WebViewClient() {
+        binding.surveyWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.i("URL", url);
                 if (url.contains("google")) {

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
     <include
-        layout="@layout/toolbar_main"
         android:id="@+id/toolbar_main"
+        layout="@layout/toolbar_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"
@@ -75,11 +76,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
             android:ems="10"
             android:hint="@string/email"
             android:importantForAutofill="no"
-            android:inputType="textEmailAddress"
-            android:layout_marginLeft="15dp" />
+            android:inputType="textEmailAddress" />
 
     </LinearLayout>
 
@@ -102,15 +103,15 @@
             app:srcCompat="@drawable/padlock" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/etPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:layout_marginLeft="15dp"
             android:ems="10"
             android:hint="@string/password"
             android:importantForAutofill="no"
-            android:inputType="textPassword"
-            android:layout_marginLeft="15dp" />
+            android:inputType="textPassword" />
     </LinearLayout>
 
     <ImageView
@@ -118,12 +119,12 @@
         android:layout_width="77dp"
         android:layout_height="75dp"
         android:layout_marginTop="30dp"
+        android:contentDescription="@string/accedi"
+        android:onClick="accedi"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline7"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:srcCompat="@drawable/accedi"
-        android:onClick="accedi"
-        android:contentDescription="@string/accedi" />
+        app:srcCompat="@drawable/accedi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

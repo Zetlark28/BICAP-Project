@@ -7,19 +7,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
+import it.unimib.bicap.databinding.ActivityCreazioneProgettoBinding;
+
 public class CreazioneProgetto extends AppCompatActivity {
 
-    EditText mNome;
-    EditText mAutore;
-    EditText mDescrizione;
+    private static final String TAG = "CreazioneProgetto";
+    private ActivityCreazioneProgettoBinding binding;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -27,9 +28,10 @@ public class CreazioneProgetto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_creazione_progetto);
 
-        init();
+        binding = ActivityCreazioneProgettoBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Dettagli CreazioneProgetto");
@@ -39,29 +41,28 @@ public class CreazioneProgetto extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
 
+        binding.imInsertData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    }
+                String nomeProgetto = binding.etNomeProgetto.getText().toString();
+                String autoreProgetto = binding.etAutore.getText().toString();
+                String descrizioneProgetto = binding.etDescrizione.getText().toString();
 
-    private void init() {
-        mNome = findViewById(R.id.etNomeProgetto);
-        mAutore = findViewById(R.id.etAutore);
-        mDescrizione = findViewById(R.id.etDescrizione);
-    }
-
-
-    public void inserisciDati(View view) {
-        if (mNome.getText().toString().equals("")){
-            Toast.makeText(this, "Attenzione, manca il nome del progetto !", Toast.LENGTH_LONG).show();
-        }
-        else if (mAutore.getText().toString().equals("")){
-            Toast.makeText(this, "Attenzione, manca l'autore del progetto !", Toast.LENGTH_LONG).show();
-        }
-        else if (mDescrizione.getText().toString().equals("")){
-            Toast.makeText(this, "Attenzione, manca la descrizione del progetto !", Toast.LENGTH_LONG).show();
-        }
-        else{
-            Intent intentDettaglioProgetto = new Intent(this, DettaglioQuestionario.class);
-            startActivity(intentDettaglioProgetto);
-        }
+                if (nomeProgetto.equals("")){
+                    Snackbar.make(v, "Attenziona, manca il nome del progetto !", Snackbar.LENGTH_SHORT).show();
+                }
+                else if (autoreProgetto.equals("")){
+                    Snackbar.make(v, "Attenzione, manca l'autore del progetto !", Snackbar.LENGTH_SHORT).show();
+                }
+                else if (descrizioneProgetto.equals("")){
+                    Snackbar.make(v, "Attenzione, manca la descrizione del progetto !", Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent intentDettaglioProgetto = new Intent(getApplicationContext(), DettaglioQuestionario.class);
+                    startActivity(intentDettaglioProgetto);
+                }
+            }
+        });
     }
 }

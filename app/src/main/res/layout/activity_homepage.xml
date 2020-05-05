@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/sfondo">
@@ -14,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
@@ -23,45 +25,45 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_main">
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/btnQuiz"
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
             android:onClick="rispondiQuiz"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/quiz" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvQuizAnswer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
+            android:text="RISPONDI AI QUIZ"
             android:textColor="@color/scritta"
-            android:textSize="30sp"
-            android:text="RISPONDI AI QUIZ" />
+            android:textSize="30sp" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/btnProfessore"
             android:layout_width="200dp"
             android:layout_height="100dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
+            android:adjustViewBounds="true"
             android:onClick="areaProfessore"
+            android:scaleType="fitCenter"
             app:srcCompat="@drawable/doc" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/tvProfessore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
+            android:text="AREA PROFESSORE"
             android:textColor="@color/scritta"
-            android:textSize="30sp"
-            android:text="AREA PROFESSORE" />
+            android:textSize="30sp" />
 
     </LinearLayout>
 

@@ -26,7 +26,7 @@
         <activity
             android:name=".LoginProfessore"
             android:parentActivityName=".HomePage"/>
-        <activity android:name=".SurveyWebview" />
+        <activity android:name=".Survey" />
         <activity
             android:name=".CreazioneProgetto"
             android:parentActivityName=".HomePageSomministratore"/>
@@ -39,7 +39,9 @@
         <activity
             android:name=".EliminaProgetti"
             android:parentActivityName=".HomePageSomministratore"/>
-        <activity android:name=".HomePageSomministratore"/>
+        <activity
+            android:name=".HomePageSomministratore"
+            android:parentActivityName=".LoginProfessore"/>
         <activity android:name=".QuestionariDaFare"/>
         <activity android:name=".QuestionariDaTerminare"/>
     </application>
