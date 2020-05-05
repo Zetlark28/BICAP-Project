@@ -14,14 +14,21 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
+import it.unimib.bicap.databinding.ActivityLoginProfessoreBinding;
+
 public class LoginProfessore extends AppCompatActivity {
+
+    private static final String TAG = "LoginProfessore";
+    private ActivityLoginProfessoreBinding binding;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_professore);
+        binding = ActivityLoginProfessoreBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
@@ -30,10 +37,13 @@ public class LoginProfessore extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
-    }
 
-    public void accedi(View view) {
-        Intent intentAccesso = new Intent(this, HomePageSomministratore.class);
-        startActivity(intentAccesso);
+        binding.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentAccesso = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(intentAccesso);
+            }
+        });
     }
 }

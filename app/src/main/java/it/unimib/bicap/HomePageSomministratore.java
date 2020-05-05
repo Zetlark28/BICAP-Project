@@ -12,28 +12,42 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.Objects;
 
+import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
+
 public class HomePageSomministratore extends AppCompatActivity {
+
+    private static final String TAG = "HomePageSomministratore";
+    private ActivityHomepageSomministratoreBinding binding;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage_somministratore);
+
+        binding = ActivityHomepageSomministratoreBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
-    }
 
-    public void eliminaProgetto(View view) {
-        Intent intentEliminaProgetto = new Intent (this, EliminaProgetti.class);
-        startActivity(intentEliminaProgetto);
-    }
+        binding.btnElimina.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
+                startActivity(intentEliminaProgetto);
+            }
+        });
 
-    public void creaProgetto(View view) {
-        Intent intentCreaProgetto = new Intent (this, CreazioneProgetto.class);
-        startActivity(intentCreaProgetto);
+        binding.btnCrea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCreaProgetto = new Intent (getApplicationContext(), CreazioneProgetto.class);
+                startActivity(intentCreaProgetto);
+            }
+        });
     }
 }

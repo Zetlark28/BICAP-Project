@@ -10,27 +10,41 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import it.unimib.bicap.databinding.ActivityHomepageBinding;
+
 public class HomePage extends AppCompatActivity {
+
+    private static final String TAG = "HomePage";
+    private ActivityHomepageBinding binding;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
+
+        binding = ActivityHomepageBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("SurveyMiB");
-    }
 
-    public void areaProfessore(View view) {
-        Intent intentProfessore = new Intent(this, LoginProfessore.class);
-        startActivity(intentProfessore);
-    }
+        binding.btnProfessore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentQuiz = new Intent(getApplicationContext(), LoginProfessore.class);
+                startActivity(intentQuiz);
+            }
+        });
 
-    public void rispondiQuiz(View view) {
-        Intent intentQuiz = new Intent(this, ListaProgetti.class);
-        startActivity(intentQuiz);
+        binding.btnQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentQuiz = new Intent(getApplicationContext(), ListaProgetti.class);
+                startActivity(intentQuiz);
+            }
+        });
     }
 }

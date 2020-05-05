@@ -8,20 +8,28 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import java.util.Objects;
 
-public class SurveyWebview extends AppCompatActivity {
+import it.unimib.bicap.databinding.ActivitySurveyBinding;
+
+public class Survey extends AppCompatActivity {
+
+    private static final String TAG = "SurveyWebView";
+    private ActivitySurveyBinding binding;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_survey);
+
+        binding = ActivitySurveyBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Prova");
@@ -31,13 +39,11 @@ public class SurveyWebview extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
 
-        WebView myWebView = findViewById(R.id.webView);
-        //setContentView(myWebView);
-        myWebView.loadUrl("https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
-        WebSettings webSettings = myWebView.getSettings();
+        binding.surveyWebView.loadUrl("https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
+        WebSettings webSettings = binding.surveyWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
-        myWebView.setWebViewClient(new WebViewClient() {
+        binding.surveyWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.i("URL", url);
                 if (url.contains("google")) {

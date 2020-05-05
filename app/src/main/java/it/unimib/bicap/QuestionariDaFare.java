@@ -7,18 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Objects;
-
 import adapter.ProgettiAdapterRV;
 
 public class QuestionariDaFare extends Fragment {
+
+    private static final String TAG = "QuestionariDaFare";
 
     private ProgettiAdapterRV progettiAdapterRV;
     private String [] titoli = {"Questionario 1", "Questionario 2"};

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,8 @@ import it.unimib.bicap.service.JsonBuilder;
 // TODO: La conferma dev'essere chiesta in generale anche
 // TODO: Aggiungere tanti ma tantissimi controlli
 
+import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
+
 public class DettaglioQuestionario extends AppCompatActivity {
 
     private static final int CODE_VIDEO = 1;
@@ -48,6 +51,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private JSONObject progetto = new JSONObject();
     private JSONArray listaPassi = new JSONArray();
 
+    private static final String TAG = "DettaglioQuestionario";
+    private ActivityDettaglioQuestionarioBinding binding;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,6 +62,11 @@ public class DettaglioQuestionario extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         linkQuestionario = (TextView) findViewById(R.id.etLink);
         mStorageRef = FirebaseStorage.getInstance().getReference();
+
+        binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
+
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Nome Progetto");
         setSupportActionBar(toolbar);
@@ -215,5 +226,40 @@ public class DettaglioQuestionario extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
         }
+
+        binding.btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.imNextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.imCaricaVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

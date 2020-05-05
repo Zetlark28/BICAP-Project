@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.RequiresApi;
@@ -18,9 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.Objects;
 
 import adapter.SectionsPagerAdapter;
-import adapter.SectionsPagerAdapter;
 
 public class ListaProgetti extends AppCompatActivity {
+
+    private static final String TAG = "ListaProgetti";
 
     private SectionsPagerAdapter mSectionsPageAdapter;
 
@@ -43,10 +42,10 @@ public class ListaProgetti extends AppCompatActivity {
 
         mSectionsPageAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        myViewPager = findViewById(R.id.view_pager);
+        myViewPager = findViewById(R.id.project_view_pager);
         setUpViewPager(myViewPager);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.project_tab);
         tabLayout.setupWithViewPager(myViewPager);
         
 
