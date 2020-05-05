@@ -31,6 +31,9 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 import it.unimib.bicap.service.JsonBuilder;
+// TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
+// TODO: La conferma dev'essere chiesta in generale anche
+// TODO: Aggiungere tanti ma tantissimi controlli
 
 public class DettaglioQuestionario extends AppCompatActivity {
 
@@ -93,29 +96,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
-                if (filePath == null && linkQuestionario.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Devi scegliere un'opzione", Toast.LENGTH_SHORT).show();
-                } else if (!(filePath==null) && linkQuestionario.getText().toString().equals("")) {
-                    if (type.equals("Video")) {
-                        uploadFile("Video/");
-                        // TODO: quando faccio l'upload del video/pdf devo dargli un nome a caso nello storage che non si ripete
-                    } else {
-                        uploadFile("Documenti/");
-                    }
-                }
-                else if (!linkQuestionario.getText().toString().equals("") && filePath==null){
 
-                    if (!linkQuestionario.getText().toString().contains("http://")){
-                        Toast.makeText(getApplicationContext(), "Errore: il link deve iniziare per http:// o https://", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
-                    }
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Devi selezionare solo un'opzione tra le tre proposte", Toast.LENGTH_SHORT).show();
-                }
-                //Setto filePath e etLinkQuestionario a null, così si possono recompilare coi valori nuovi
+                aggiungiPassi();
                 filePath = null;
                 linkQuestionario.setText("");
             }
@@ -124,31 +106,54 @@ public class DettaglioQuestionario extends AppCompatActivity {
         findViewById(R.id.imSaveProject).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
-                if(type != null) {
-                    if (type.equals("Video")) {
-                        uploadFile("Video MP4/file");
-                        Log.d("oggetto", progetto.toString() + 2);
-                    } else if (type.equals("PDF")) {
-                        uploadFile("Documenti PDF");
-                    }
-                }
-                else {
-                    jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
-                    Log.d("oggetto", listaPassi.toString());
+                if (!(filePath == null) || !linkQuestionario.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "lelelele", Toast.LENGTH_SHORT).show();
+                    aggiungiPassi();
                 }
 
-                //TODO: fixare il flusso, quando carico un video o pdf prima salva il progetto e poi crea il passo!Controlla con debug
                 jsonBuilder.aggiungiListaPassi(progetto,listaPassi);
                 Log.d("oggetto", progetto.toString()+1);
-
-                // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file -> salvataggio nuovo link sul DB
+                // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
                 // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
                 Intent home = new Intent (getApplicationContext(),HomePageSomministratore.class);
                 startActivity(home);
             }
         });
+
+        // HO creato un button, quando verrà modificato in imageButton sicordarsi di cambiare l'ID qui sotto
+        findViewById(R.id.bCreaPasso).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
+                if(type != null) {
+                    if (type.equals("Video")) {
+                        uploadFile("Video/file");
+                        Log.d("oggetto", progetto.toString() + 2);
+                    } else if (type.equals("PDF")) {
+                        uploadFile("Documenti/");
+                    }
+                }
+            }
+        });
     }
+
+
+    private void aggiungiPassi() {
+        if (filePath == null) {
+            jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
+            Toast.makeText(getApplicationContext(), "kek", Toast.LENGTH_SHORT).show();
+            Log.d("oggetto", listaPassi.toString());
+        } else if (type.contains("Video")) {
+            jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("video", String.valueOf(linkToJoinJSON)));
+            Log.d("oggetto", listaPassi.toString());
+            //TODO: fixare il flusso, quando carico un video o pdf prima salva il progetto e poi crea il passo!Controlla con debug
+
+        } else if (type.contains("PDF")) {
+            jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("pdf", String.valueOf(linkToJoinJSON)));
+            Log.d("oggetto", listaPassi.toString());
+        }
+    }
+
 
     private void uploadFile (final String directory) {
         if (filePath != null) {
@@ -158,19 +163,10 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(getApplicationContext(), "Hai aggiunto un passo", Toast.LENGTH_SHORT).show();
-
                             fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     linkToJoinJSON = String.valueOf(uri);
-                                    if(directory.contains("Video")) {
-                                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("video", linkToJoinJSON));
-                                    }
-                                    else
-                                    {
-                                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("pdf",linkToJoinJSON));
-                                        Log.d("oggetto", listaPassi.toString() +3);
-                                    }
                                 }
                             });
                         }
@@ -200,6 +196,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbUpload);
         progressBar.setProgress((int) progress);
     }
+
 
 
     @Override
