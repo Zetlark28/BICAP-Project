@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,9 +25,6 @@ public class CreazioneProgetto extends AppCompatActivity {
 
     private static final String TAG = "CreazioneProgetto";
     private ActivityCreazioneProgettoBinding binding;
-    EditText mNome;
-    EditText mAutore;
-    EditText mDescrizione;
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -67,8 +64,9 @@ public class CreazioneProgetto extends AppCompatActivity {
                     Snackbar.make(v, "Attenzione, manca la descrizione del progetto !", Snackbar.LENGTH_SHORT).show();
                 }
                 else{
-                    JSONObject progetto = jsonBuilder.creaProgetto(mNome.getText().toString(),mDescrizione.getText().toString(),mAutore.getText().toString());
+                    JSONObject progetto = jsonBuilder.creaProgetto(nomeProgetto,descrizioneProgetto,autoreProgetto);
                     Intent intentDettaglioProgetto = new Intent(getApplicationContext(), DettaglioQuestionario.class);
+                    Log.d(TAG, progetto.toString());
                     intentDettaglioProgetto.putExtra("progetto", progetto.toString());
                     startActivity(intentDettaglioProgetto);
                 }

@@ -6,10 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -42,7 +40,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private StorageReference mStorageRef;
     private Uri filePath;
     String type;
-    TextView linkQuestionario;
+    //TextView linkQuestionario;
+    String linkQuestionario;
     private String linkToJoinJSON;
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
     private JSONObject progetto = new JSONObject();
@@ -55,14 +54,15 @@ public class DettaglioQuestionario extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dettaglio_questionario);
-        FirebaseApp.initializeApp(this);
-        linkQuestionario = (TextView) findViewById(R.id.etLink);
-        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        FirebaseApp.initializeApp(this);
+        //linkQuestionario = findViewById(R.id.etLink);
+        linkQuestionario = binding.etLink.getText().toString();
+        mStorageRef = FirebaseStorage.getInstance().getReference();
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Nome Progetto");
@@ -80,7 +80,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
         Log.d("OGGETTO JSON", progetto.toString() );
 
-        findViewById(R.id.imCaricaVideo).setOnClickListener(new View.OnClickListener() {
+        binding.imCaricaVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(Intent.createChooser(new Intent()
@@ -90,7 +90,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.imInsertPdf).setOnClickListener(new View.OnClickListener() {
+        binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivityForResult(Intent.createChooser(new Intent()
@@ -100,13 +100,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.imNextStep).setOnClickListener(new View.OnClickListener() {
+        binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
-                if (filePath == null && linkQuestionario.getText().toString().equals("")){
-                    Toast.makeText(getApplicationContext(), "Devi scegliere un'opzione", Toast.LENGTH_SHORT).show();
-                } else if (!(filePath==null) && linkQuestionario.getText().toString().equals("")) {
+                if (filePath == null && linkQuestionario.equals("")){
+                    //Toast.makeText(getApplicationContext(), "Devi scegliere un'opzione", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Devi scegliere un'opzione", Snackbar.LENGTH_SHORT).show();
+                } else if (!(filePath==null) && linkQuestionario.equals("")) {
                     if (type.equals("Video")) {
                         uploadFile("Video/");
                         // TODO: quando faccio l'upload del video/pdf devo dargli un nome a caso nello storage che non si ripete
@@ -114,13 +115,13 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         uploadFile("Documenti/");
                     }
                 }
-                else if (!linkQuestionario.getText().toString().equals("") && filePath==null){
+                else if (filePath == null){
 
-                    if (!linkQuestionario.getText().toString().contains("http://")){
+                    if (!linkQuestionario.contains("http://")){
                         Toast.makeText(getApplicationContext(), "Errore: il link deve iniziare per http:// o https://", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
+                        jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario));
                     }
                 }
                 else {
@@ -128,11 +129,12 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 }
                 //Setto filePath e etLinkQuestionario a null, così si possono recompilare coi valori nuovi
                 filePath = null;
-                linkQuestionario.setText("");
+                //linkQuestionario.setText("");
+                binding.etLink.setText("");
             }
         });
 
-        findViewById(R.id.imSaveProject).setOnClickListener(new View.OnClickListener() {
+        binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
@@ -145,7 +147,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     }
                 }
                 else {
-                    jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario.getText().toString()));
+                    jsonBuilder.aggiungiPassoAllaLista(listaPassi,jsonBuilder.creaPasso("questionario", linkQuestionario));
                     Log.d("oggetto", listaPassi.toString());
                 }
 
@@ -160,6 +162,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
     }
+
 
     private void uploadFile (final String directory) {
         if (filePath != null) {
@@ -208,8 +211,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
         long fileSize = taskSnapshot.getTotalByteCount();
         long uploadBytes = taskSnapshot.getBytesTransferred();
         long progress = (100 * uploadBytes) / fileSize;
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbUpload);
-        progressBar.setProgress((int) progress);
+        //ProgressBar progressBar = findViewById(R.id.pbUpload);
+        binding.pbUpload.setProgress((int) progress);
     }
 
 
@@ -229,40 +232,5 @@ public class DettaglioQuestionario extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
         }
-
-        binding.btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        binding.imNextStep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        binding.imCaricaVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 }
