@@ -32,11 +32,11 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 import it.unimib.bicap.service.JsonBuilder;
+import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
+
 // TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
 // TODO: La conferma dev'essere chiesta in generale anche
 // TODO: Aggiungere tanti ma tantissimi controlli
-
-import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 
 public class DettaglioQuestionario extends AppCompatActivity {
 
@@ -181,8 +181,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-// Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
-
+            // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
                 aggiungiPassi();
                 filePath = null;
                 linkQuestionario.setText("");
