@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="RISPONDI AI QUIZ"
+            android:text="@string/rispondi_ai_quiz"
             android:textColor="@color/scritta"
             android:textSize="30sp" />
 
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:text="AREA PROFESSORE"
+            android:text="@string/area_somministratore"
             android:textColor="@color/scritta"
             android:textSize="30sp" />
 

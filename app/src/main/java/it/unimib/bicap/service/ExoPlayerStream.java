@@ -52,7 +52,7 @@ public class ExoPlayerStream extends AppCompatActivity {
         setContentView(R.layout.activity_exoplayer_stream);
 
 
-        exoPlayerView = (SimpleExoPlayerView)findViewById(R.id.exoplayerview);
+        exoPlayerView = findViewById(R.id.exoplayerview);
 
         try {
             BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();

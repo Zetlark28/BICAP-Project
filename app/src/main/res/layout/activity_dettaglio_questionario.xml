@@ -13,7 +13,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="Inserire un solo titolo"
+                android:text="Scegli una sola opzione"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
 
@@ -39,27 +40,59 @@
                 android:paddingTop="10dp"
                 android:paddingRight="10dp" />
 
-            <ImageButton
-                android:id="@+id/imCaricaVideo"
-                android:layout_width="196dp"
-                android:layout_height="66dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/caricaunvideo"
-                tools:ignore="ContentDescription" />
 
-            <ImageButton
-                android:id="@+id/imInsertPdf"
-                android:layout_width="196dp"
-                android:layout_height="66dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:adjustViewBounds="true"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/inseriscipdf"
-                tools:ignore="ContentDescription" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imCaricaVideo"
+                    android:layout_width="196dp"
+                    android:layout_height="66dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/caricaunvideo"
+                    tools:ignore="ContentDescription" />
+
+                <ImageButton
+                    android:id="@+id/imInsertPdf"
+                    android:layout_width="196dp"
+                    android:layout_height="66dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/inseriscipdf"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="10dp"
+                    android:background="#E1E2E1"
+                    android:text="UPLOAD" />
+
+                <Button
+                    android:id="@+id/btnDebug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:background="#E1E2E1"
+                    android:text="DEBUG" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvLink"
@@ -81,28 +114,6 @@
                 android:hint="@string/link"
                 android:importantForAutofill="no"
                 android:inputType="text" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnUpload"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="UPLOAD" />
-
-                <Button
-                    android:id="@+id/btnDebug"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="DEBUG" />
-            </LinearLayout>
 
 
             <LinearLayout

@@ -2,6 +2,7 @@ package it.unimib.bicap;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,14 +28,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 import it.unimib.bicap.service.JsonBuilder;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
+import it.unimib.bicap.service.Progetto;
 
 // TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
 // TODO: La conferma dev'essere chiesta in generale anche
 // TODO: Aggiungere tanti ma tantissimi controlli
+// TODO: Creare il fire writer
 
 public class DettaglioQuestionario extends AppCompatActivity {
 
@@ -43,8 +53,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private StorageReference mStorageRef;
     private StorageReference ref;
     private Uri filePath;
-    String type;
-    //TextView linkQuestionario;
+    private String type;
     private String linkToJoinJSON;
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
     private JSONObject progetto = new JSONObject();
@@ -57,9 +66,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_dettaglio_questionario);
         FirebaseApp.initializeApp(this);
-        //linkQuestionario = findViewById(R.id.etLink);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
@@ -83,85 +90,84 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
         Log.d("OGGETTO JSON", progetto.toString());
 
-            binding.btnUpload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
-                    if (type != null) {
-                        if (type.equals("Video")) {
-                            uploadFile("Video/file");
-                            Log.d("oggetto", progetto.toString() + 2);
-                        } else if (type.equals("PDF")) {
-                            uploadFile("Documenti/");
-                        }
+        binding.btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
+                if (type != null) {
+                    if (type.equals("Video")) {
+                        uploadFile("Video/file");
+                        Log.d("oggetto", progetto.toString() + 2);
+                    } else if (type.equals("PDF")) {
+                        uploadFile("Documenti/");
                     }
-                    else{
-                        Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
                 }
-            });
+            }
+        });
 
-            binding.btnDebug.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d("oggetto", "Debug click");
-                    downloadProjects();
-                }
-            });
+        binding.btnDebug.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("oggetto", "Debug click");
+                downloadProjects();
+            }
+        });
 
 
-            binding.imNextStep.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
+        binding.imNextStep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
+                aggiungiPassi();
+                filePath = null;
+                binding.etLink.setText("");
+                binding.pbUpload.setProgress(0);
+                Snackbar.make(v, "Sei passato al passaggio successivo !", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "lelelele", Toast.LENGTH_SHORT).show();
                     aggiungiPassi();
-                    filePath = null;
-                    binding.etLink.setText("");
-                    binding.pbUpload.setProgress(0);
-                    Snackbar.make(v, "Sei passato al passaggio successivo !", Snackbar.LENGTH_SHORT).show();
                 }
-            });
 
-            binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
-                        Toast.makeText(getApplicationContext(), "lelelele", Toast.LENGTH_SHORT).show();
-                        aggiungiPassi();
-                    }
+                jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
+                Log.d("oggetto", progetto.toString() + 1);
+                // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
+                // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
+                //Intent home = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                //startActivity(home);
+            }
+        });
 
-                    jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
-                    Log.d("oggetto", progetto.toString() + 1);
-                    // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
-                    // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
-                    Intent home = new Intent(getApplicationContext(), HomePageSomministratore.class);
-                    startActivity(home);
-                }
-            });
+        binding.imCaricaVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(Intent.createChooser(new Intent()
+                                .setAction(Intent.ACTION_GET_CONTENT)
+                                .setType("video/mp4"),
+                        "Seleziona un video"), CODE_VIDEO);
+            }
+        });
 
-            binding.imCaricaVideo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivityForResult(Intent.createChooser(new Intent()
-                                    .setAction(Intent.ACTION_GET_CONTENT)
-                                    .setType("video/mp4"),
-                            "Seleziona un video"), CODE_VIDEO);
-                }
-            });
+        binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
+                startActivityForResult(Intent.createChooser(new Intent()
+                                .setAction(Intent.ACTION_GET_CONTENT)
+                                .setType("application/pdf"),
+                        "Seleziona un PDF"), CODE_PDF);
+            }
+        });
+    }
 
-            binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
-                    startActivityForResult(Intent.createChooser(new Intent()
-                                    .setAction(Intent.ACTION_GET_CONTENT)
-                                    .setType("application/pdf"),
-                            "Seleziona un PDF"), CODE_PDF);
-                }
-            });
-        }
-
-    private void aggiungiPassi () {
+    private void aggiungiPassi() {
         if (filePath == null) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("questionario", binding.etLink.getText().toString()));
             Toast.makeText(getApplicationContext(), "kek", Toast.LENGTH_SHORT).show();
@@ -177,7 +183,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
-    private void uploadFile ( final String directory){
+    private void uploadFile(final String directory) {
         if (filePath != null) {
             final StorageReference fileRef = mStorageRef.child(directory);
             fileRef.putFile(filePath)
@@ -211,7 +217,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
-    private void updateProgress (UploadTask.TaskSnapshot taskSnapshot){
+    private void updateProgress(UploadTask.TaskSnapshot taskSnapshot) {
         long fileSize = taskSnapshot.getTotalByteCount();
         long uploadBytes = taskSnapshot.getBytesTransferred();
         long progress = (100 * uploadBytes) / fileSize;
@@ -220,7 +226,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -242,13 +248,71 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 Log.d("oggetto", uri.toString());
-                //DownloadTask task = new DownloadTask();
-                //task.execute(uri.toString());
+
+                DownloadTask task = new DownloadTask();
+                task.execute(uri.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
             }
         });
+    }
+
+
+    public class DownloadTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String result = "";
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+                url = new URL(strings[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.connect();
+                InputStream in = urlConnection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+
+                StringBuffer buffer = new StringBuffer();
+                String line = "";
+
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line + "\n");
+                }
+
+                return buffer.toString();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Progetto prg = new Progetto();
+
+
+            JSONObject jsonObject = null;
+            try {
+                jsonObject = new JSONObject(result);
+                JSONArray listaProgetti = jsonObject.getJSONArray("progetti");
+                listaProgetti.put(progetto);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
