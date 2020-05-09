@@ -1,13 +1,14 @@
 package it.unimib.bicap.service;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.util.ArrayList;
 
 public class Progetto {
 
     private String nomeProgetto;
-    private String desctizioneProgetto;
+    private String descrizioneProgetto;
     private String autoreProgetto;
     private int completato;
     private int numeroPassi;
@@ -15,7 +16,7 @@ public class Progetto {
 
     public Progetto(String nomeProgetto, String descrizioneProgetto, String autoreProgetto, int numeroPassi) {
         this.nomeProgetto = nomeProgetto;
-        this.desctizioneProgetto = descrizioneProgetto;
+        this.descrizioneProgetto = descrizioneProgetto;
         this.autoreProgetto = autoreProgetto;
         this.completato = 0;
         this.numeroPassi = numeroPassi;
@@ -26,13 +27,24 @@ public class Progetto {
         this.passi = new ArrayList<Passo>();
     }
 
-
+    public void stampaProgetto(Progetto progetto){
+        Log.d("Progetto", progetto.nomeProgetto+ "\n");
+        Log.d("Progetto", progetto.descrizioneProgetto + "\n");
+        Log.d("Progetto", progetto.autoreProgetto + "\n");
+        Log.d("Progetto", progetto.completato + "\n");
+        Log.d("Progetto", progetto.numeroPassi + "\n");
+        for (int i = 0; i < progetto.passi.size(); i++) {
+            Log.d("Progetto", progetto.passi.get(i).tipo + "\n");
+            Log.d("Progetto", progetto.passi.get(i).link + "\n");
+            Log.d("Progetto", progetto.passi.get(i).completato + "\n");
+        }
+    }
     public String getNomeProgetto() {
         return nomeProgetto;
     }
 
     public String getDesctizioneProgetto() {
-        return desctizioneProgetto;
+        return descrizioneProgetto;
     }
 
     public String getAutoreProgetto() {
@@ -52,7 +64,7 @@ public class Progetto {
     }
 
     public void setDesctizioneProgetto(String desctizioneProgetto) {
-        this.desctizioneProgetto = desctizioneProgetto;
+        this.descrizioneProgetto = desctizioneProgetto;
     }
 
     public void setAutoreProgetto(String autoreProgetto) {

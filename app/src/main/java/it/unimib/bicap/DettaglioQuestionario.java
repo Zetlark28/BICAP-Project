@@ -41,6 +41,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private static final int CODE_VIDEO = 1;
     private static final int CODE_PDF = 2;
     private StorageReference mStorageRef;
+    private StorageReference ref;
     private Uri filePath;
     String type;
     //TextView linkQuestionario;
@@ -99,6 +100,15 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     }
                 }
             });
+
+            binding.btnDebug.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("oggetto", "Debug click");
+                    downloadProjects();
+                }
+            });
+
 
             binding.imNextStep.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -224,5 +234,21 @@ public class DettaglioQuestionario extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void downloadProjects() {
+        ref = mStorageRef.child("Progetti").child("progetti.json");
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Log.d("oggetto", uri.toString());
+                //DownloadTask task = new DownloadTask();
+                //task.execute(uri.toString());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+            }
+        });
     }
 }
