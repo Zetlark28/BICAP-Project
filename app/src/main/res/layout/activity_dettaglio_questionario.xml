@@ -82,12 +82,28 @@
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
-            <Button
-                android:id="@+id/btnUpload"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="UPLOAD" />
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="UPLOAD" />
+
+                <Button
+                    android:id="@+id/btnDebug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="DEBUG" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
