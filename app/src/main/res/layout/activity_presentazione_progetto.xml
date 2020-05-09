@@ -31,19 +31,18 @@
         android:layout_marginEnd="20dp"
         android:textColor="@color/scritta"
         android:textSize="20sp" />
-
     <TextView
-        android:id="@+id/tvRequisiti"
+        android:id="@+id/tvNomeAutore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="@string/requisiti"
+        android:text="@string/autore"
         android:textColor="@color/scritta"
         android:textSize="30sp" />
 
     <TextView
-        android:id="@+id/tvRequisitiFinale"
+        android:id="@+id/tvAutore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

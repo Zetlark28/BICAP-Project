@@ -14,6 +14,9 @@ import java.util.Objects;
 
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 
+// TODO: Creare il menu a discesa coi vari pulsanti tra cui il LOGOUT/ Gestire il login
+// TODO: user & psw -> admin admin
+
 public class HomePageSomministratore extends AppCompatActivity {
 
     private static final String TAG = "HomePageSomministratore";
