@@ -1,3 +1,4 @@
+/*
 package it.unimib.bicap;
 
 import androidx.annotation.NonNull;
@@ -90,3 +91,4 @@ public class TestParser extends AppCompatActivity {
 
     }
 }
+*/

@@ -3,6 +3,8 @@ package it.unimib.bicap.service;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class GetterWebService implements GetterInfo {
 
 
@@ -44,5 +46,15 @@ public class GetterWebService implements GetterInfo {
     @Override
     public int getNPassi(JSONArray passi) {
         return 0;
+    }
+
+    @Override
+    public JSONArray getlistaProgetti(String stringProgetti) {
+        return null;
+    }
+
+    @Override
+    public List<String> getNomiProgetti(JSONArray listaProgetti) {
+        return null;
     }
 }
