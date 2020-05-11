@@ -3,12 +3,15 @@ package it.unimib.bicap;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -34,8 +37,20 @@ public class HomePageSomministratore extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean fromHome = false;
+                Intent intentLogProf = new Intent(getApplicationContext(), LoginProfessore.class);
+                intentLogProf.putExtra("fromHome", fromHome);
+                startActivity(intentLogProf);
+                finish();
+            }
+        });
 
         binding.btnElimina.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -34,8 +34,9 @@ public class HomePage extends AppCompatActivity {
         binding.btnProfessore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentQuiz = new Intent(getApplicationContext(), LoginProfessore.class);
-                startActivity(intentQuiz);
+                Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
+                intentLogInProf.putExtra("fromHome", true);
+                startActivity(intentLogInProf);
             }
         });
 
