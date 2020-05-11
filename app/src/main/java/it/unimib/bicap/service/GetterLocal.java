@@ -1,22 +1,18 @@
 package it.unimib.bicap.service;
 
 
-
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GetterLocal implements GetterInfo {
-    private  Context context;
-
-    public GetterLocal(Context appContext) {
-        this.context=appContext;
-    }
+    private static JSONObject converter;
 
     @Override
     public String getIdProgetto(JSONObject progetto) {
@@ -31,7 +27,7 @@ public class GetterLocal implements GetterInfo {
     @Override
     public String getNomeProgetto(JSONObject progetto) {
         try {
-            return progetto.getString("nome progetto");
+            return progetto.getString("nome");
         } catch (JSONException e) {
             Log.d("error", "not found");
         }
@@ -41,7 +37,7 @@ public class GetterLocal implements GetterInfo {
     @Override
     public String getDescrizione(JSONObject progetto) {
         try {
-            return progetto.getString("descrizione progetto");
+            return progetto.getString("descrizione");
         } catch (JSONException e) {
             Log.d("error", "not found");
         }
@@ -51,7 +47,7 @@ public class GetterLocal implements GetterInfo {
     @Override
     public String getAutore(JSONObject progetto) {
         try {
-            return progetto.getString("autore progetto");
+            return progetto.getString("autore");
         } catch (JSONException e) {
             Log.d("error", "not found");
         }
@@ -91,5 +87,29 @@ public class GetterLocal implements GetterInfo {
     @Override
     public int getNPassi(JSONArray passi) {
         return passi.length();
+    }
+
+    @Override
+    public JSONArray getlistaProgetti(String listaProgeti) {
+        try {
+            JSONObject jsonLista = converter.getJSONObject(listaProgeti);
+            return jsonLista.getJSONArray("progetti");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> getNomiProgetti(JSONArray listaProgetti){
+        List<String> result = new ArrayList<>();
+        for(int i = 0; i<listaProgetti.length(); i++){
+            try {
+                result.add(listaProgetti.getJSONObject(i).getString("nome progetto"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 }

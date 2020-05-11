@@ -3,6 +3,8 @@ package it.unimib.bicap.service;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public interface GetterInfo {
     String getIdProgetto(JSONObject progetto);
     String getNomeProgetto(JSONObject progetto);
@@ -12,4 +14,8 @@ public interface GetterInfo {
     JSONArray getPassi (JSONObject progetti);
     JSONObject getPasso (JSONArray passi,int index);
     int getNPassi(JSONArray passi);
+
+    JSONArray getlistaProgetti(String stringProgetti);
+
+    List<String> getNomiProgetti(JSONArray listaProgetti);
 }
