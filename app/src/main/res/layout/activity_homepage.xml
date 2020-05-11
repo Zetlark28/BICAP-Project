@@ -26,44 +26,24 @@
 
         <ImageButton
             android:id="@+id/btnQuiz"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
+            android:layout_width="350dp"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
             android:adjustViewBounds="true"
             android:onClick="rispondiQuiz"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/quiz" />
-
-        <TextView
-            android:id="@+id/tvQuizAnswer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/rispondi_ai_quiz"
-            android:textColor="@color/scritta"
-            android:textSize="30sp" />
+            app:srcCompat="@drawable/compilaiquestionari" />
 
         <ImageButton
             android:id="@+id/btnProfessore"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
+            android:layout_width="350dp"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:adjustViewBounds="true"
             android:onClick="areaProfessore"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/doc" />
-
-        <TextView
-            android:id="@+id/tvProfessore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/area_somministratore"
-            android:textColor="@color/scritta"
-            android:textSize="30sp" />
+            app:srcCompat="@drawable/redigiiquestionari" />
 
     </LinearLayout>
 
