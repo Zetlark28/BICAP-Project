@@ -37,6 +37,7 @@ public class LoginProfessore extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        
         fromHome = getIntent().getExtras().getBoolean("fromHome");
         updateUI(currentUser, fromHome);
     }
