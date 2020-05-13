@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHighlight">@color/colorEditTextLight</item>
         <item name="android:textColorLink">@color/colorPrimary</item>
+        <item name="android:itemBackground">@color/sfondo</item>
+        <item name="android:textColor">@color/scritta</item>
     </style>
 
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">

@@ -30,18 +30,19 @@ public class LoginProfessore extends AppCompatActivity {
     private static final String TAG = "LoginProfessore";
     private ActivityLoginProfessoreBinding binding;
     private FirebaseAuth mAuth;
+    private boolean fromHome;
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        fromHome = getIntent().getExtras().getBoolean("fromHome");
+        updateUI(currentUser, fromHome);
     }
 
-    private void updateUI(FirebaseUser currentUser) {
+    private void updateUI(FirebaseUser currentUser, boolean fromHome) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        boolean fromHome = getIntent().getExtras().getBoolean("fromHome");
 
         if (user != null) {
             if (fromHome) {
@@ -49,19 +50,20 @@ public class LoginProfessore extends AppCompatActivity {
                 intentHomeProf.putExtra("fromHome", fromHome);
                 startActivity(intentHomeProf);
                 finish();
-            } else if (!fromHome) {
+            } else {
                 Intent intentHome = new Intent(this, HomePage.class);
                 startActivity(intentHome);
                 finish();
-            } else {
-                String email = user.getEmail();
+            }
+        }   else {
+            assert user != null;
+            String email = user.getEmail();
 
                 Intent intentLogged = new Intent(this, HomePageSomministratore.class);
                 intentLogged.putExtra("Email", email);
                 startActivity(intentLogged);
             }
         }
-    }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @SuppressLint("SourceLockedOrientationActivity")
@@ -108,12 +110,13 @@ public class LoginProfessore extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.i(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                updateUI(user);
+                                fromHome = true;
+                                updateUI(user, fromHome);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.i(TAG, "createUserWithEmail:failure", task.getException());
                                 Snackbar.make(binding.constraintLayout, "Attenzione, credenziali non valide !", Snackbar.LENGTH_SHORT).show();
-                                updateUI(null);
+                                updateUI(null, fromHome);
                             }
                         }
                     });

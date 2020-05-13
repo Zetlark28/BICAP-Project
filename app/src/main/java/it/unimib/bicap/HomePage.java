@@ -30,6 +30,7 @@ public class HomePage extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("SurveyMiB");
+        toolbar.setNavigationIcon(null);
 
         binding.btnProfessore.setOnClickListener(new View.OnClickListener() {
             @Override
