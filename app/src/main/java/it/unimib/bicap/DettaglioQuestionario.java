@@ -29,6 +29,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -50,6 +53,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
     private static final int CODE_VIDEO = 1;
     private static final int CODE_PDF = 2;
+    private static final String FILE_NAME = "progetti.json";
     private StorageReference mStorageRef;
     private StorageReference ref;
     private Uri filePath;
@@ -58,6 +62,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
     private JSONObject progetto = new JSONObject();
     private JSONArray listaPassi = new JSONArray();
+    private JSONArray listaProgetti = new JSONArray();
 
     private static final String TAG = "DettaglioQuestionario";
     private ActivityDettaglioQuestionarioBinding binding;
@@ -201,6 +206,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     linkToJoinJSON = String.valueOf(uri);
+                                    Log.d("oggetto", "Upload completato");
                                 }
                             });
                         }
@@ -209,7 +215,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             Toast.makeText(getApplicationContext(), "Errore nell'upload", Toast.LENGTH_SHORT).show();
-
+                            Log.d("oggetto", "Errore nell'upload");
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -241,6 +247,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
+            Log.d("oggetto", filePath.toString());
             this.type = "PDF";
             Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
         } else {
@@ -257,6 +264,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
                 DownloadTask task = new DownloadTask();
                 task.execute(uri.toString());
+                Log.d("oggetto", listaProgetti.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -265,6 +273,34 @@ public class DettaglioQuestionario extends AppCompatActivity {
         });
     }
 
+    public void write(String progetti){
+        FileOutputStream fos = null;
+
+        try {
+            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            fos.write(progetti.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // TODO: Capire che path devo specificare all'upload
+
+
+
+        //filePath = Uri.parse("data/data/it.unimib.bicap/files/progetti.json");
+        //uploadFile("Progetti/progetti.json");
+
+    }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
         @Override
@@ -305,6 +341,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             return null;
         }
 
+
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
@@ -314,11 +351,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(result);
-                JSONArray listaProgetti = jsonObject.getJSONArray("progetti");
+                listaProgetti = jsonObject.getJSONArray("progetti");
                 listaProgetti.put(progetto);
+                Log.d("oggetto", listaProgetti.toString());
+                write(listaProgetti.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+
     }
 }

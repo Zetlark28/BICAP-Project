@@ -105,7 +105,7 @@ public class GetterLocal implements GetterInfo {
         List<String> result = new ArrayList<>();
         for(int i = 0; i<listaProgetti.length(); i++){
             try {
-                result.add(listaProgetti.getJSONObject(i).getString("nome progetto"));
+                result.add(listaProgetti.getJSONObject(i).getString("nome"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -1,8 +1,11 @@
 package it.unimib.bicap;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -82,6 +85,12 @@ public class HomePageSomministratore extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem item = menu.getItem(0);
+        SpannableString s = new SpannableString("LogOut");
+        s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
+        item.setTitle(s);
+
         return true;
     }
 
