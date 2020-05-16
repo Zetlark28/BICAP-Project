@@ -95,14 +95,15 @@
         android:textColor="@color/scritta"
         android:textSize="20sp" />
 
-    <ImageButton
+    <Button
         android:id="@+id/imageButton"
-        android:layout_width="196dp"
-        android:layout_height="66dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:layout_marginTop="20dp"
+        android:text="Inizia progetto"
         app:srcCompat="@drawable/inziaprogetto"
         tools:ignore="ContentDescription" />
 
