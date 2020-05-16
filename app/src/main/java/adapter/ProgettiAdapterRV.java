@@ -94,6 +94,23 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
                 }
             });
+
+        }else if(from.equals("daFare")){
+            holder.nome.setText(nomi.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }else if(from.equals("daTerminare")){
+            holder.nome.setText(nomi.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 
