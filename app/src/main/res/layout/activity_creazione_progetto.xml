@@ -30,18 +30,22 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:text="@string/nome_progetto"
+                android:textAllCaps="false"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/testo2"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nome_progetto"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -51,11 +55,12 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto"
                     android:importantForAutofill="no"
                     android:inputType="text"
                     android:padding="20dp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tvAutore"
@@ -63,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:text="@string/autore"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
@@ -84,6 +90,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto"
                     android:importantForAutofill="no"
                     android:inputType="text" />
 
@@ -95,6 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:text="@string/descrizione"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
@@ -116,6 +124,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto"
                     android:gravity="top"
                     android:importantForAutofill="no"
                     android:inputType="textMultiLine"
@@ -133,6 +142,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:adjustViewBounds="true"
+                android:fontFamily="@font/roboto"
                 android:scaleType="fitCenter"
                 android:text="@string/inserisci_dati"
                 app:srcCompat="@drawable/inseriscidati"

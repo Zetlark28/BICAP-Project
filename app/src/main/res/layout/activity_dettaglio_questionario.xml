@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:text="Scegli una sola opzione"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
@@ -53,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
+                    android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
                     android:text="CARICA UN VIDEO"
                     app:srcCompat="@drawable/caricaunvideo"
@@ -64,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
+                    android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
                     android:text="INSERISCI UN PDF"
                     app:srcCompat="@drawable/inseriscipdf"
@@ -84,6 +87,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginRight="10dp"
                     android:background="#E1E2E1"
+                    android:fontFamily="@font/roboto"
                     android:text="UPLOAD" />
 
                 <Button
@@ -93,6 +97,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="10dp"
                     android:background="#E1E2E1"
+                    android:fontFamily="@font/roboto"
                     android:text="DEBUG" />
             </LinearLayout>
 
@@ -102,6 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/roboto"
                 android:text="@string/link_questionario"
                 android:textColor="@color/scritta"
                 android:textSize="25sp" />
@@ -122,6 +128,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/roboto"
                     android:importantForAutofill="no"
                     android:inputType="text" />
 
@@ -141,9 +148,10 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:adjustViewBounds="true"
+                    android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
-                    android:text="PROSSIMO PASSO"
                     android:src="@drawable/prossimopasso"
+                    android:text="PROSSIMO PASSO"
                     tools:ignore="ContentDescription" />
 
                 <Button
@@ -154,6 +162,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:adjustViewBounds="true"
+                    android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
                     android:text="SALVA PROGETTO"
                     app:srcCompat="@drawable/salvaprogetto"

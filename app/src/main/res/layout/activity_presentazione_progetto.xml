@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/nome_progetto"
         android:textColor="@color/scritta"
         android:textSize="30sp" />
@@ -25,18 +26,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="prova"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:fontFamily="@font/roboto"
+        android:text="prova"
         android:textColor="@color/scritta"
         android:textSize="20sp" />
+
     <TextView
         android:id="@+id/tvNomeAutore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/autore"
         android:textColor="@color/scritta"
         android:textSize="30sp" />
@@ -46,10 +50,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="prova"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
+        android:fontFamily="@font/roboto"
+        android:text="prova"
         android:textColor="@color/scritta"
         android:textSize="20sp" />
 
@@ -59,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/numero_questionari"
         android:textColor="@color/scritta"
         android:textSize="30sp" />
@@ -69,6 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto"
         android:text="prova"
         android:textColor="@color/scritta"
         android:textSize="20sp" />
@@ -79,6 +86,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto"
         android:text="@string/descrizione"
         android:textColor="@color/scritta"
         android:textSize="30sp" />
@@ -87,11 +95,12 @@
         android:id="@+id/tvDescrizioneFinale"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:text="prova"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:scrollbars = "vertical"
+        android:fontFamily="@font/roboto"
+        android:scrollbars="vertical"
+        android:text="prova"
         android:textColor="@color/scritta"
         android:textSize="20sp" />
 
@@ -100,9 +109,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
         android:layout_marginTop="20dp"
+        android:adjustViewBounds="true"
+        android:fontFamily="@font/roboto"
+        android:scaleType="fitCenter"
         android:text="Inizia progetto"
         app:srcCompat="@drawable/inziaprogetto"
         tools:ignore="ContentDescription" />
