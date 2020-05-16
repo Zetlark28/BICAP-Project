@@ -85,12 +85,10 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                     //TODO : dialog di conferma -> activity questionari da eliminare.
                     //TODO: fix cancellazione visuale e variabili
                     EliminaDialog eliminaDialog = null;
-                    eliminaDialog = new EliminaDialog(listaProgetti, position, eliminaActivity, istanzaProgettiAdapter);
+                    eliminaDialog = new EliminaDialog(listaProgetti, position, istanzaProgettiAdapter);
                     eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
-                    ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(eliminaActivity.getApplicationContext(), EliminaProgetti.getProgetti(), eliminaActivity,"eliminaProgetti");
-
-
-
+//                    nomi = getterInfo.getNomiProgetti(listaProgetti);
+//                    ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(eliminaActivity.getApplicationContext(), EliminaProgetti.getProgetti(), eliminaActivity,"eliminaProgetti");
 
                 }
             });
