@@ -62,6 +62,8 @@ public class EliminaProgetti extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
 
+        //TODO: nome autore da settare correttamente
+        final String nomeAutore = "Nome autore";
         mStorageRef = FirebaseStorage.getInstance().getReference();
         ref = mStorageRef.child("/Progetti/progetti.json");
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -72,7 +74,15 @@ public class EliminaProgetti extends AppCompatActivity {
                     json = new String(bytes, "UTF-8");
                     JSONObject progettiToParse = new JSONObject(json);
                     progetti = progettiToParse.getJSONArray("progetti");
-                    List<String> nomiProgetti = getterInfo.getNomiProgetti(progetti);
+                    JSONArray  progettiAutore = new JSONArray();
+                    for(int i=0; i<progetti.length(); i++){
+                        if(progetti.getJSONObject(i).getString("autore").equals(nomeAutore))
+                            progettiAutore.put(progetti.getJSONObject(i));
+                    }
+
+                    List<String> nomiProgetti = getterInfo.getNomiProgetti(progettiAutore);
+
+
                     nomi = nomiProgetti.toArray(new String[nomiProgetti.size()]);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
