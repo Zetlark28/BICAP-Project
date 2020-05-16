@@ -26,7 +26,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Objects;
 
 import adapter.ProgettiAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
@@ -87,8 +86,6 @@ public class EliminaProgetti extends AppCompatActivity {
                             progettiAutore.put(progetti.getJSONObject(i));
                         }
                     }
-                    List<String> nomiProgetti = getterInfo.getNomiProgetti(progettiAutore);
-                    nomi = nomiProgetti.toArray(new String[nomiProgetti.size()]);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
                     ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), progettiAutore, from);
