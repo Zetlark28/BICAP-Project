@@ -3,10 +3,12 @@ package it.unimib.bicap;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -95,7 +97,6 @@ public class LoginProfessore extends AppCompatActivity {
                         Snackbar.make(v, "Attenzione, password non valida", Snackbar.LENGTH_SHORT).show();
                     } else
                         loginUser(email, password);
-                    //Email: admin@admin.com --> Password: BicapAdmin
                 }
             });
         }
