@@ -1,5 +1,6 @@
 package it.unimib.bicap;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,8 +60,14 @@ public class EliminaProgetti extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHomeProfessore = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(intentHomeProfessore);
+                finish();
+            }
+        });
 
         //TODO: nome autore da settare correttamente
         final String nomeAutore = "Nome autore";

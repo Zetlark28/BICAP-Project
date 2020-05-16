@@ -20,9 +20,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Objects;
-
 import it.unimib.bicap.databinding.ActivityLoginProfessoreBinding;
 
 public class LoginProfessore extends AppCompatActivity {
@@ -47,24 +44,19 @@ public class LoginProfessore extends AppCompatActivity {
 
         if (user != null) {
             if (fromHome) {
-                Intent intentHomeProf = new Intent(this, HomePageSomministratore.class);
-                intentHomeProf.putExtra("fromHome", fromHome);
-                startActivity(intentHomeProf);
+                String email = user.getEmail();
+                Intent intentLogged = new Intent(this, HomePageSomministratore.class);
+                intentLogged.putExtra("Email", email);
+                intentLogged.putExtra("fromHome", fromHome);
+                startActivity(intentLogged);
                 finish();
             } else {
                 Intent intentHome = new Intent(this, HomePage.class);
                 startActivity(intentHome);
                 finish();
             }
-        }   else {
-            assert user != null;
-            String email = user.getEmail();
-
-                Intent intentLogged = new Intent(this, HomePageSomministratore.class);
-                intentLogged.putExtra("Email", email);
-                startActivity(intentLogged);
-            }
         }
+    }
 
         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @SuppressLint("SourceLockedOrientationActivity")
@@ -80,8 +72,14 @@ public class LoginProfessore extends AppCompatActivity {
             toolbar.setTitle("Area Professore");
             setSupportActionBar(toolbar);
 
-            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentHome = new Intent(getApplicationContext(), HomePage.class);
+                    startActivity(intentHome);
+                    finish();
+                }
+            });
 
             mAuth = FirebaseAuth.getInstance();
 
@@ -126,5 +124,6 @@ public class LoginProfessore extends AppCompatActivity {
 }
 
 //TODO: Email: admin@admin.com Password:alessio
+//TODO: aaggiungere nome e cognome
 
 
