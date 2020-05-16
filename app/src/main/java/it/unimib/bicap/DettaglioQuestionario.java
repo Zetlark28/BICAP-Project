@@ -77,8 +77,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
         toolbar.setTitle("Nome Progetto");
         setSupportActionBar(toolbar);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHomeProf = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(intentHomeProf);
+                finish();
+            }
+        });
 
         final String progettoString = getIntent().getStringExtra("progetto");
         try {
