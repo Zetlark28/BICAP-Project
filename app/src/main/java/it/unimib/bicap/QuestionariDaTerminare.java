@@ -59,7 +59,7 @@ public class QuestionariDaTerminare extends Fragment {
                     JSONObject progettiToParse = new JSONObject(jsonString);
                     progetti = progettiToParse.getJSONArray("progetti");
                     //TODO: selezione dei questionari da terminare
-                    progettiAdapterRV = new ProgettiAdapterRV(getContext(), progetti, from);
+                    progettiAdapterRV = new ProgettiAdapterRV(getContext(), progetti,  from);
                     recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
                     recyclerView.setAdapter(progettiAdapterRV);
                 } catch (UnsupportedEncodingException | JSONException e){

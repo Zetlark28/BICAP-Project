@@ -25,7 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 import adapter.ProgettiAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
@@ -43,6 +42,14 @@ public class EliminaProgetti extends AppCompatActivity {
     private static JSONArray progetti;
     private Button bottone;
 
+    public static JSONArray getProgetti() {
+        return progetti;
+    }
+
+    public static void setProgetti(JSONArray progetti) {
+        EliminaProgetti.progetti = progetti;
+    }
+
     String [] nomi = {"Elimina 1", "Elimina 2", "Elimina 3", "Elimina 4"};
 
     String from = "eliminaProgetti";
@@ -58,6 +65,7 @@ public class EliminaProgetti extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+        final EliminaProgetti instance = this;
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,15 +88,15 @@ public class EliminaProgetti extends AppCompatActivity {
                     json = new String(bytes, "UTF-8");
                     JSONObject progettiToParse = new JSONObject(json);
                     progetti = progettiToParse.getJSONArray("progetti");
-                    JSONArray  progettiAutore = new JSONArray();
-                    for(int i=0; i<progetti.length(); i++){
-                        if(progetti.getJSONObject(i).getString("autore").equals(nomeAutore)) {
+                    JSONArray progettiAutore = new JSONArray();
+                    for (int i = 0; i < progetti.length(); i++) {
+                        if (progetti.getJSONObject(i).getString("autore").equals(nomeAutore)) {
                             progettiAutore.put(progetti.getJSONObject(i));
                         }
                     }
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-                    ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), progettiAutore, from);
+                    ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), progettiAutore, instance,from);
                     binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
                     binding.rvProgettiDaEliminare.addItemDecoration(new DividerItemDecoration(binding.rvProgettiDaEliminare.getContext(), DividerItemDecoration.VERTICAL));
 
@@ -104,8 +112,6 @@ public class EliminaProgetti extends AppCompatActivity {
                 Log.d("errore", "json not parse");
             }
         });
-
-
     }
 
 
