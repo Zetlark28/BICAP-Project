@@ -37,7 +37,7 @@ public class QuestionariDaTerminare extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        progettiAdapterRV = new ProgettiAdapterRV(getContext(), titoli, from);
+        progettiAdapterRV = new ProgettiAdapterRV(getContext(), null, from);
         recyclerView.setAdapter(progettiAdapterRV);
 
         return rootView;
