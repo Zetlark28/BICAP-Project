@@ -50,10 +50,12 @@ public class LoginProfessore extends AppCompatActivity {
                 Intent intentHomeProf = new Intent(this, HomePageSomministratore.class);
                 intentHomeProf.putExtra("fromHome", fromHome);
                 startActivity(intentHomeProf);
+                overridePendingTransition(R.anim.slide_on_right, R.anim.slide_out_left);
                 finish();
             } else {
                 Intent intentHome = new Intent(this, HomePage.class);
                 startActivity(intentHome);
+                overridePendingTransition(R.anim.slide_on_right, R.anim.slide_out_left);
                 finish();
             }
         }   else {
@@ -63,6 +65,7 @@ public class LoginProfessore extends AppCompatActivity {
                 Intent intentLogged = new Intent(this, HomePageSomministratore.class);
                 intentLogged.putExtra("Email", email);
                 startActivity(intentLogged);
+                overridePendingTransition(R.anim.slide_on_right, R.anim.slide_out_left);
             }
         }
 

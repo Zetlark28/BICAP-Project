@@ -69,6 +69,7 @@ public class CreazioneProgetto extends AppCompatActivity {
                     Log.d(TAG, progetto.toString());
                     intentDettaglioProgetto.putExtra("progetto", progetto.toString());
                     startActivity(intentDettaglioProgetto);
+                    overridePendingTransition(R.anim.slide_on_right, R.anim.slide_out_left);
                 }
             }
         });

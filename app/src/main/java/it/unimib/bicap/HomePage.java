@@ -38,6 +38,7 @@ public class HomePage extends AppCompatActivity {
                 Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
                 intentLogInProf.putExtra("fromHome", true);
                 startActivity(intentLogInProf);
+                overridePendingTransition(R.anim.slide_on_right, R.anim.slide_out_left);
             }
         });
 
@@ -46,6 +47,7 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentQuiz = new Intent(getApplicationContext(), ListaProgetti.class);
                 startActivity(intentQuiz);
+                overridePendingTransition(R.anim.slide_on_right, R.anim.slide_out_left);
             }
         });
     }
