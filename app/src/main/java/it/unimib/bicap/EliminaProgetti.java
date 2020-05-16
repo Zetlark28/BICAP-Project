@@ -70,7 +70,7 @@ public class EliminaProgetti extends AppCompatActivity {
         });
 
         //TODO: nome autore da settare correttamente
-        final String nomeAutore = "Nome autore";
+        final String nomeAutore = "prova";
         mStorageRef = FirebaseStorage.getInstance().getReference();
         ref = mStorageRef.child("/Progetti/progetti.json");
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -83,17 +83,15 @@ public class EliminaProgetti extends AppCompatActivity {
                     progetti = progettiToParse.getJSONArray("progetti");
                     JSONArray  progettiAutore = new JSONArray();
                     for(int i=0; i<progetti.length(); i++){
-                        if(progetti.getJSONObject(i).getString("autore").equals(nomeAutore))
+                        if(progetti.getJSONObject(i).getString("autore").equals(nomeAutore)) {
                             progettiAutore.put(progetti.getJSONObject(i));
+                        }
                     }
-
                     List<String> nomiProgetti = getterInfo.getNomiProgetti(progettiAutore);
-
-
                     nomi = nomiProgetti.toArray(new String[nomiProgetti.size()]);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
                     binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-                    ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), nomi, from);
+                    ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), progettiAutore, from);
                     binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
                     binding.rvProgettiDaEliminare.addItemDecoration(new DividerItemDecoration(binding.rvProgettiDaEliminare.getContext(), DividerItemDecoration.VERTICAL));
 
