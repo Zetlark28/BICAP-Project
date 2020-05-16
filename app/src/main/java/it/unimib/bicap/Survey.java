@@ -36,9 +36,6 @@ public class Survey extends AppCompatActivity {
         //TODO: inserire metodo get titolo from JSON File
         setSupportActionBar(toolbar);
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
-
         binding.surveyWebView.loadUrl("https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
         WebSettings webSettings = binding.surveyWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
