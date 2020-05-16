@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -246,6 +247,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
+            Log.d("oggetto", filePath.toString());
             this.type = "PDF";
             Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
         } else {
@@ -290,8 +292,13 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 }
             }
         }
-        filePath = Uri.parse("/data/data/it.unimib.bicap/files/progetti.json");
-        uploadFile("Progetti/progetti.json");
+
+        // TODO: Capire che path devo specificare all'upload
+
+
+
+        //filePath = Uri.parse("data/data/it.unimib.bicap/files/progetti.json");
+        //uploadFile("Progetti/progetti.json");
 
     }
 
