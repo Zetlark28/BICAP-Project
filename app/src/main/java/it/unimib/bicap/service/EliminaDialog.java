@@ -3,6 +3,7 @@ package it.unimib.bicap.service;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,15 +20,15 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private String nomeProgetto;
     private JSONArray listaProgetti;
     private Integer index;
-    private EliminaProgetti eliminaActivity;
     private ProgettiAdapterRV progettiAdapterRV;
-    public EliminaDialog(JSONArray listaProgetti, Integer index, EliminaProgetti eliminaActivity, ProgettiAdapterRV istanzaProgettiAdapter){
+    private EliminaDialog instance;
+    public EliminaDialog(JSONArray listaProgetti, Integer index, ProgettiAdapterRV istanzaProgettiAdapter){
         try {
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
             this.listaProgetti=listaProgetti;
             this.index = index;
-            this.eliminaActivity=eliminaActivity;
             this.progettiAdapterRV = istanzaProgettiAdapter;
+            this.instance=this;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -52,9 +53,10 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     e.printStackTrace();
                                 }
                             }
-                        EliminaProgetti.setProgetti(listaNuova);
-                        ProgettiAdapterRV.setListaProgetti(listaNuova);
-                        progettiAdapterRV.notifyItemRemoved(index);
+
+                        Intent intentEliminaProgetti = new Intent(instance.getContext(),EliminaProgetti.class);
+                            intentEliminaProgetti.putExtra("listaProgetti",listaNuova.toString());
+                            startActivity(intentEliminaProgetti);
 
 
                     }
