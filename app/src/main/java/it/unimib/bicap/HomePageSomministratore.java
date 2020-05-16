@@ -58,6 +58,7 @@ public class HomePageSomministratore extends AppCompatActivity {
         setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Homepage Somministratore");
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main_menu);
 

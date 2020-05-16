@@ -39,7 +39,7 @@ public class CreazioneProgetto extends AppCompatActivity {
         setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Dettagli CreazioneProgetto");
+        toolbar.setTitle("Creazione progetto");
         //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
