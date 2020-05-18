@@ -32,7 +32,7 @@ public class HomePage extends AppCompatActivity {
         toolbar.setTitle("SurveyMiB");
         toolbar.setNavigationIcon(null);
 
-        binding.btnProfessore.setOnClickListener(new View.OnClickListener() {
+        binding.btnProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
