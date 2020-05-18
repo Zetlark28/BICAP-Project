@@ -44,6 +44,16 @@ public class CreazioneProgetto extends AppCompatActivity {
         //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
+        //aggiunto metodo navigazione toolbar - elena
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHomeProfessore = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(intentHomeProfessore);
+                finish();
+            }
+        });
+
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
 
@@ -89,4 +99,19 @@ public class CreazioneProgetto extends AppCompatActivity {
             }
         });
     }
+
+    //override startActivity
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
+
+    //override finish con animazione slide indietro
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
+
 }

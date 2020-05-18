@@ -49,4 +49,13 @@ public class HomePage extends AppCompatActivity {
             }
         });
     }
+
+    //override startActivity con animazione slide avanti
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
+
+
 }
