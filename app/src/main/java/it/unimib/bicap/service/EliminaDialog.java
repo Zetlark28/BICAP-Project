@@ -3,7 +3,6 @@ package it.unimib.bicap.service;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import it.unimib.bicap.EliminaProgetti;
 import adapter.ProgettiAdapterRV;
 public class EliminaDialog extends AppCompatDialogFragment {
 
@@ -35,7 +33,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
         }
     }
 
-    //TODO : fix dialog di cancellazione visuale
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -57,6 +54,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
                             ProgettiAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
                             ProgettiAdapterRV.setListaProgetti(listaNuova);
                             progettiAdapterRV.notifyDataSetChanged();
+
+                            //TODO: dialog on process e metodo di riscrittura file progetti.json
                         dismiss();
 
 

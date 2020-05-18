@@ -82,8 +82,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO : dialog di conferma -> activity questionari da eliminare.
-                    //TODO: fix cancellazione visuale e variabili
+
                     EliminaDialog eliminaDialog = null;
                     eliminaDialog = new EliminaDialog(listaProgetti, position, istanzaProgettiAdapter);
                     eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
