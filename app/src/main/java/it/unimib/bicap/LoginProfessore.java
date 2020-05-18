@@ -54,6 +54,7 @@ public class LoginProfessore extends AppCompatActivity {
                 Intent intentHome = new Intent(this, HomePage.class);
                 startActivity(intentHome);
                 finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             }
         }
     }
@@ -78,6 +79,7 @@ public class LoginProfessore extends AppCompatActivity {
                     Intent intentHome = new Intent(getApplicationContext(), HomePage.class);
                     startActivity(intentHome);
                     finish();
+                    overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 }
             });
 
@@ -121,6 +123,12 @@ public class LoginProfessore extends AppCompatActivity {
                     });
         }
 
+    //override startActivity con animazione slide avanti
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
 }
 
 //TODO: Email: admin@admin.com Password:alessio
