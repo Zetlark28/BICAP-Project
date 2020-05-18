@@ -21,7 +21,7 @@ import it.unimib.bicap.service.GetterLocal;
 public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.MyViewHolder> {
 
     Context context;
-    List<String> nomi;
+    public static List <String> nomi;
     String from;
     LayoutInflater layoutInflater;
     public static JSONArray listaProgetti;
@@ -44,7 +44,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     public ProgettiAdapterRV(Context context, JSONArray progetti, EliminaProgetti eliminaActivity, String from){
         this.context = context;
-        this.nomi = getterInfo.getNomiProgetti(progetti);
+        nomi = getterInfo.getNomiProgetti(progetti);
         this.from = from;
         listaProgetti=progetti;
         this.eliminaActivity = eliminaActivity;
@@ -53,7 +53,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     }
     public ProgettiAdapterRV(Context context, JSONArray progetti, String from){
         this.context = context;
-        this.nomi = getterInfo.getNomiProgetti(progetti);
+        nomi = getterInfo.getNomiProgetti(progetti);
         this.from = from;
         listaProgetti=progetti;
         this.istanzaProgettiAdapter =this;
@@ -87,9 +87,6 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                     EliminaDialog eliminaDialog = null;
                     eliminaDialog = new EliminaDialog(listaProgetti, position, istanzaProgettiAdapter);
                     eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
-//                    nomi = getterInfo.getNomiProgetti(listaProgetti);
-//                    ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(eliminaActivity.getApplicationContext(), EliminaProgetti.getProgetti(), eliminaActivity,"eliminaProgetti");
-
                 }
             });
 
@@ -116,4 +113,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         return nomi.size();
     }
 
+    public static void setNomi(List<String> nomi) {
+        ProgettiAdapterRV.nomi = nomi;
+    }
 }

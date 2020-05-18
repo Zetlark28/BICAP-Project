@@ -22,6 +22,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private Integer index;
     private ProgettiAdapterRV progettiAdapterRV;
     private EliminaDialog instance;
+    private GetterInfo getterInfo = new GetterLocal();
     public EliminaDialog(JSONArray listaProgetti, Integer index, ProgettiAdapterRV istanzaProgettiAdapter){
         try {
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
@@ -45,7 +46,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         JSONArray listaNuova = new JSONArray();
-                        for(int i = 1; i<listaProgetti.length(); i++)
+                        for(int i = 0; i<listaProgetti.length(); i++)
                             if(i!=index) {
                                 try {
                                     listaNuova.put(listaProgetti.getJSONObject(i));
@@ -53,10 +54,10 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     e.printStackTrace();
                                 }
                             }
-
-                        Intent intentEliminaProgetti = new Intent(instance.getContext(),EliminaProgetti.class);
-                            intentEliminaProgetti.putExtra("listaProgetti",listaNuova.toString());
-                            startActivity(intentEliminaProgetti);
+                            ProgettiAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
+                            ProgettiAdapterRV.setListaProgetti(listaNuova);
+                            progettiAdapterRV.notifyDataSetChanged();
+                        dismiss();
 
 
                     }

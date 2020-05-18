@@ -3,11 +3,9 @@ package it.unimib.bicap;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +13,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 
 import adapter.ProgettiAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
@@ -76,6 +68,7 @@ public class EliminaProgetti extends AppCompatActivity {
             }
         });
         try {
+            if(progettiAutore==null)
             progettiAutore = new JSONArray(getIntent().getExtras().getString("listaProgetti"));
         } catch (JSONException e) {
             e.printStackTrace();
