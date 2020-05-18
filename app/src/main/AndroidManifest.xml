@@ -3,13 +3,15 @@
     package="it.unimib.bicap">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
 
     <application
         android:fullBackupContent="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_survey_mib"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_survey_mib_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LaunchScreen"
@@ -48,6 +50,10 @@
             android:parentActivityName=".LoginProfessore"/>
         <activity android:name=".QuestionariDaFare"/>
         <activity android:name=".QuestionariDaTerminare"/>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

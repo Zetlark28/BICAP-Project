@@ -8,14 +8,30 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+
+import java.util.List;
+
+import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.R;
+import it.unimib.bicap.service.EliminaDialog;
+import it.unimib.bicap.service.GetterInfo;
+import it.unimib.bicap.service.GetterLocal;
 
 public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.MyViewHolder> {
 
     Context context;
-    String [] nomi;
+    public static List <String> nomi;
     String from;
     LayoutInflater layoutInflater;
+    public static JSONArray listaProgetti;
+    GetterInfo getterInfo = new GetterLocal();
+    EliminaProgetti eliminaActivity;
+    ProgettiAdapterRV istanzaProgettiAdapter;
+
+    public static void setListaProgetti(JSONArray listaProgetti) {
+        ProgettiAdapterRV.listaProgetti = listaProgetti;
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
@@ -26,10 +42,21 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         }
     }
 
-    public ProgettiAdapterRV (Context context, String [] progetti, String from){
+    public ProgettiAdapterRV(Context context, JSONArray progetti, EliminaProgetti eliminaActivity, String from){
         this.context = context;
-        this.nomi = progetti;
+        nomi = getterInfo.getNomiProgetti(progetti);
         this.from = from;
+        listaProgetti=progetti;
+        this.eliminaActivity = eliminaActivity;
+        this.istanzaProgettiAdapter =this;
+        layoutInflater = (LayoutInflater.from(context));
+    }
+    public ProgettiAdapterRV(Context context, JSONArray progetti, String from){
+        this.context = context;
+        nomi = getterInfo.getNomiProgetti(progetti);
+        this.from = from;
+        listaProgetti=progetti;
+        this.istanzaProgettiAdapter =this;
         layoutInflater = (LayoutInflater.from(context));
     }
 
@@ -40,18 +67,52 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         return mV;
     }
 
-    public void onBindViewHolder (MyViewHolder holder, final int position){
+    public void onBindViewHolder (final MyViewHolder holder, final int position){
         if (from.equals("listaProgetti")) {
-            holder.nome.setText(nomi[position]);
+            holder.nome.setText(nomi.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
-        else{
-            //TODO: il professore vuole eliminare un progetto
-            holder.nome.setText(nomi[position]);
+        else if(from.equals("eliminaProgetti")){
+            holder.nome.setText(nomi.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    EliminaDialog eliminaDialog = null;
+                    eliminaDialog = new EliminaDialog(listaProgetti, position, istanzaProgettiAdapter);
+                    eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
+                }
+            });
+
+        }else if(from.equals("daFare")){
+            holder.nome.setText(nomi.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }else if(from.equals("daTerminare")){
+            holder.nome.setText(nomi.get(position));
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
 
     public int getItemCount (){
-        return nomi.length;
+        return nomi.size();
     }
 
+    public static void setNomi(List<String> nomi) {
+        ProgettiAdapterRV.nomi = nomi;
+    }
 }

@@ -63,7 +63,7 @@ public class ListaProgetti extends AppCompatActivity {
 
     private void setUpViewPager(ViewPager viewPager){
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new QuestionariDaFare(), "QUESTIONARI DA FARE");
+        adapter.addFragment(new QuestionariDaFare(), "QUESTIONARI DISPONIBILI");
         adapter.addFragment(new QuestionariDaTerminare(), "QUESTIONARI DA FINIRE");
         viewPager.setAdapter(adapter);
     }

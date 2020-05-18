@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
+        android:fontFamily="@font/roboto"
         android:onClick="eliminaProgetto"
         android:text="Elimina Progetto" />
 
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
+        android:fontFamily="@font/roboto"
         android:onClick="creaProgetto"
         android:text="Crea progetto" />
 

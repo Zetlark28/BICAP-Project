@@ -1,8 +1,11 @@
 package it.unimib.bicap;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,11 +17,17 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.Objects;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 
@@ -26,6 +35,12 @@ import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 // TODO: user & psw -> admin admin
 
 public class HomePageSomministratore extends AppCompatActivity {
+    private StorageReference mStorageRef;
+    private StorageReference ref;
+    private static final int ONE_MB = 1024 * 1024;
+    private static JSONArray progetti;
+    private static JSONArray progettiAutore;
+
 
     private static final String TAG = "HomePageSomministratore";
     private ActivityHomepageSomministratoreBinding binding;
@@ -43,9 +58,35 @@ public class HomePageSomministratore extends AppCompatActivity {
         setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Homepage Somministratore");
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main_menu);
 
+        //TODO: nome autore da settare correttamente
+        final String nomeAutore = "prova";
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        ref = mStorageRef.child("/Progetti/progetti.json");
+        ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                String json = null;
+                try {
+                    json = new String(bytes, "UTF-8");
+                    JSONObject progettiToParse = new JSONObject(json);
+                    progetti = progettiToParse.getJSONArray("progetti");
+                    progettiAutore = new JSONArray();
+                    for (int i = 0; i < progetti.length(); i++) {
+                        if (progetti.getJSONObject(i).getString("autore").equals(nomeAutore)) {
+                            progettiAutore.put(progetti.getJSONObject(i));
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+            });
         //Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -65,6 +106,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
+                intentEliminaProgetto.putExtra("listaProgetti", progettiAutore.toString());
                 startActivity(intentEliminaProgetto);
             }
         });
@@ -82,6 +124,12 @@ public class HomePageSomministratore extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        MenuItem item = menu.getItem(0);
+        SpannableString s = new SpannableString("LogOut");
+        s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
+        item.setTitle(s);
+
         return true;
     }
 
