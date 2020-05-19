@@ -55,6 +55,7 @@ public class LoginProfessore extends AppCompatActivity {
                 Intent intentHome = new Intent(this, HomePage.class);
                 startActivity(intentHome);
                 finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             }
         }
     }
@@ -79,12 +80,13 @@ public class LoginProfessore extends AppCompatActivity {
                     Intent intentHome = new Intent(getApplicationContext(), HomePage.class);
                     startActivity(intentHome);
                     finish();
+                    overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 }
             });
 
             mAuth = FirebaseAuth.getInstance();
 
-            binding.imageView.setOnClickListener(new View.OnClickListener() {
+            binding.imAccedi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String email = binding.etEmail.getText().toString();
@@ -114,13 +116,19 @@ public class LoginProfessore extends AppCompatActivity {
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.i(TAG, "createUserWithEmail:failure", task.getException());
-                                Snackbar.make(binding.constraintLayout, "Attenzione, credenziali non valide !", Snackbar.LENGTH_SHORT).show();
+                                Snackbar.make(binding.linearlayout, "Attenzione, credenziali non valide !", Snackbar.LENGTH_SHORT).show();
                                 updateUI(null, fromHome);
                             }
                         }
                     });
         }
 
+    //override startActivity con animazione slide avanti
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
 }
 
 //TODO: Email: admin@admin.com Password:alessio

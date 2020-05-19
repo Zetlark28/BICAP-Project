@@ -143,6 +143,19 @@ public class HomePageSomministratore extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
+
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
+
     private void updateUI() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         boolean fromHome = false;
@@ -150,8 +163,12 @@ public class HomePageSomministratore extends AppCompatActivity {
         if (currentUser == null){
             Intent intentLogout = new Intent(this, LoginProfessore.class);
             intentLogout.putExtra("fromHome", fromHome);
-            finish();
-            startActivity(intentLogout);
+            if(fromHome == false){
+                startActivity(intentLogout);
+                finish();
+            }else{
+                startActivity(intentLogout);
+            }
         }
     }
 }

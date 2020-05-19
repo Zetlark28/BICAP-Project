@@ -1,64 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main" />
+        layout="@layout/toolbar_main"/>
 
     <ScrollView
-        android:id="@+id/scrollProject"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_main">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/tvNomeProgetto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto"
                 android:text="@string/nome_progetto"
-                android:textAllCaps="false"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/testo2"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:id="@+id/tfNomeProgetto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nome_progetto"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/nome_progetto">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNomeProgetto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/roboto"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="20dp" />
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,33 +48,26 @@
                 android:id="@+id/tvAutore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/roboto"
                 android:text="@string/autore"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/testo10"
+                android:id="@+id/tfAutoreProgetto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/autore"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/autore">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etAutore"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/roboto"
-                    android:importantForAutofill="no"
-                    android:inputType="text" />
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,38 +75,28 @@
                 android:id="@+id/tvDescrizione"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/roboto"
                 android:text="@string/descrizione"
                 android:textColor="@color/scritta"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/testo3"
+                android:id="@+id/tfDescrizione"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/descrizione"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="100dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/descrizione">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etDescrizione"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/roboto"
-                    android:gravity="top"
-                    android:importantForAutofill="no"
+                    android:layout_height="match_parent"
                     android:inputType="textMultiLine"
-                    android:overScrollMode="always"
-                    android:scrollbarStyle="insideInset"
                     android:scrollbars="vertical"
-                    android:singleLine="false" />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,14 +106,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:adjustViewBounds="true"
-                android:fontFamily="@font/roboto"
-                android:scaleType="fitCenter"
-                android:text="@string/inserisci_dati"
-                app:srcCompat="@drawable/inseriscidati"
-                tools:ignore="ContentDescription" />
+                android:background="@color/colorPrimary"
+                android:text="@string/inserisci_dati" />
+
         </LinearLayout>
     </ScrollView>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
