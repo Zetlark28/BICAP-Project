@@ -29,20 +29,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
 
 import it.unimib.bicap.service.JsonBuilder;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
-import it.unimib.bicap.service.Progetto;
 
 // TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
 // TODO: La conferma dev'essere chiesta in generale anche
@@ -109,8 +108,10 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     if (type.equals("Video")) {
                         uploadFile("Video/file");
                         Log.d("oggetto", progetto.toString() + 2);
+                        Snackbar.make(v, "Hai inserito un video", Snackbar.LENGTH_SHORT).show();
                     } else if (type.equals("PDF")) {
                         uploadFile("Documenti/");
+                        Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
                     Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
@@ -143,12 +144,11 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
-                    Toast.makeText(getApplicationContext(), "lelelele", Toast.LENGTH_SHORT).show();
                     aggiungiPassi();
                 }
 
                 jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
-                Log.d("oggetto", progetto.toString() + 1);
+                Log.d("oggetto", progetto.toString());
                 // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
                 // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
                 //Intent home = new Intent(getApplicationContext(), HomePageSomministratore.class);
@@ -181,13 +181,11 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private void aggiungiPassi() {
         if (filePath == null) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("questionario", binding.etLink.getText().toString()));
-            Toast.makeText(getApplicationContext(), "kek", Toast.LENGTH_SHORT).show();
-            Log.d("oggetto", listaPassi.toString());
         } else if (type.contains("Video")) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("video", String.valueOf(linkToJoinJSON)));
             Log.d("oggetto", listaPassi.toString());
-            //TODO: fixare il flusso, quando carico un video o pdf prima salva il progetto e poi crea il passo!Controlla con debug
 
+            //TODO: fixare il flusso, quando carico un video o pdf prima salva il progetto e poi crea il passo!Controlla con debug
         } else if (type.contains("PDF")) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("pdf", String.valueOf(linkToJoinJSON)));
             Log.d("oggetto", listaPassi.toString());
@@ -273,32 +271,23 @@ public class DettaglioQuestionario extends AppCompatActivity {
         });
     }
 
-    public void write(String progetti){
-        FileOutputStream fos = null;
+    public void write(JSONObject progetti){
+        // TODO: Scrivere direttamente json
 
         try {
-            fos = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            fos.write(progetti.getBytes());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            Writer output;
+            File file = new File("data/data/it.unimib.bicap/files/" + FILE_NAME);
+            output = new BufferedWriter(new FileWriter(file));
+            output.write(progetti.toString());
+            output.close();
+            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
-        // TODO: Capire che path devo specificare all'upload
-
-
-
-        //filePath = Uri.parse("data/data/it.unimib.bicap/files/progetti.json");
-        //uploadFile("Progetti/progetti.json");
+        filePath = Uri.parse("file:///data/data/it.unimib.bicap/files/progetti.json");
+        uploadFile("Progetti/progetti.json");
 
     }
 
@@ -337,7 +326,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -345,16 +333,16 @@ public class DettaglioQuestionario extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Progetto prg = new Progetto();
 
 
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(result);
+                JSONObject progetti = new JSONObject();
                 listaProgetti = jsonObject.getJSONArray("progetti");
                 listaProgetti.put(progetto);
-                Log.d("oggetto", listaProgetti.toString());
-                write(listaProgetti.toString());
+                progetti.put("progetti", listaProgetti);
+                write(progetti);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
