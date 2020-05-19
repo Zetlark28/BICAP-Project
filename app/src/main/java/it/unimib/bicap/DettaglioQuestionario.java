@@ -338,10 +338,11 @@ public class DettaglioQuestionario extends AppCompatActivity {
             JSONObject jsonObject = null;
             try {
                 jsonObject = new JSONObject(result);
-                JSONObject progetti = new JSONObject();
                 listaProgetti = jsonObject.getJSONArray("progetti");
-                listaProgetti.put(progetto);
-                progetti.put("progetti", listaProgetti);
+                JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti,progetto);
+//                listaProgetti.put(progetto);
+//                progetti.put("progetti", listaProgetti);
+                Log.d("oggetto", progetti.toString());
                 write(progetti);
             } catch (JSONException e) {
                 e.printStackTrace();
