@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,6 +41,7 @@ public class HomePageSomministratore extends AppCompatActivity {
     private static final int ONE_MB = 1024 * 1024;
     private static JSONArray progetti;
     private static JSONArray progettiAutore;
+    private JSONObject progettiToParse = null;
 
 
     private static final String TAG = "HomePageSomministratore";
@@ -72,7 +74,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 String json = null;
                 try {
                     json = new String(bytes, "UTF-8");
-                    JSONObject progettiToParse = new JSONObject(json);
+                    progettiToParse = new JSONObject(json);
                     progetti = progettiToParse.getJSONArray("progetti");
                     progettiAutore = new JSONArray();
                     for (int i = 0; i < progetti.length(); i++) {
@@ -111,11 +113,18 @@ public class HomePageSomministratore extends AppCompatActivity {
             }
         });
 
+
+        // TODO: Progress bar al download dei progetti
         binding.btnCrea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCreaProgetto = new Intent (getApplicationContext(), CreazioneProgetto.class);
-                startActivity(intentCreaProgetto);
+                if (progettiToParse != null) {
+                    Intent intentCreaProgetto = new Intent(getApplicationContext(), CreazioneProgetto.class);
+                    intentCreaProgetto.putExtra("progetti", progettiToParse.toString());
+                    startActivity(intentCreaProgetto);
+                } else {
+                    Snackbar.make(v, "Attento, è in corso un processo interno!", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
     }
