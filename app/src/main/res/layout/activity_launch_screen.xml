@@ -7,9 +7,9 @@
     android:background="@color/sfondo">
 
     <pl.droidsonroids.gif.GifTextView
-        android:id="@+id/splash"
-        android:layout_width="148dp"
-        android:layout_height="181dp"
+        android:id="@+id/splash_congratulazioni"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/splash"
         android:backgroundTint="#E1E2E1"
         android:outlineProvider="background"
