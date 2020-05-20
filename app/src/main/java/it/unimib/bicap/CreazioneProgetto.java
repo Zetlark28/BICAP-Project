@@ -27,14 +27,14 @@ public class CreazioneProgetto extends AppCompatActivity {
     private static final String TAG = "CreazioneProgetto";
     private ActivityCreazioneProgettoBinding binding;
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
-
+    private String progettiJSON;
     @SuppressLint({"SourceLockedOrientationActivity", "ClickableViewAccessibility"})
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        progettiJSON = getIntent().getStringExtra("progetti");
         binding = ActivityCreazioneProgettoBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -94,6 +94,7 @@ public class CreazioneProgetto extends AppCompatActivity {
                     Intent intentDettaglioProgetto = new Intent(getApplicationContext(), DettaglioQuestionario.class);
                     Log.d(TAG, progetto.toString());
                     intentDettaglioProgetto.putExtra("progetto", progetto.toString());
+                    intentDettaglioProgetto.putExtra("progetti", progettiJSON);
                     startActivity(intentDettaglioProgetto);
                 }
             }

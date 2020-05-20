@@ -2,7 +2,6 @@ package it.unimib.bicap;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,22 +22,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+
 
 import it.unimib.bicap.service.JsonBuilder;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
@@ -53,6 +44,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private static final int CODE_VIDEO = 1;
     private static final int CODE_PDF = 2;
     private static final String FILE_NAME = "progetti.json";
+    private static final String TAG = "DettaglioQuestionario";
     private StorageReference mStorageRef;
     private StorageReference ref;
     private Uri filePath;
@@ -62,8 +54,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private JSONObject progetto = new JSONObject();
     private JSONArray listaPassi = new JSONArray();
     private JSONArray listaProgetti = new JSONArray();
+    private String progettiJSON;
 
-    private static final String TAG = "DettaglioQuestionario";
     private ActivityDettaglioQuestionarioBinding binding;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -72,7 +64,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
-
+        progettiJSON = getIntent().getStringExtra("progetti");
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -119,19 +111,11 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
-        binding.btnDebug.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("oggetto", "Debug click");
-                downloadProjects();
-            }
-        });
-
 
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
+                //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
                 aggiungiPassi();
                 filePath = null;
                 binding.etLink.setText("");
@@ -149,6 +133,19 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
                 jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
                 Log.d("oggetto", progetto.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(progettiJSON);
+                    listaProgetti = jsonObject.getJSONArray("progetti");
+                    JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti,progetto);
+                    progetti.put("progetti", listaProgetti);
+                    Log.d("oggetto", progetti.toString());
+
+                    write(progetti);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
                 // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
                 // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
                 //Intent home = new Intent(getApplicationContext(), HomePageSomministratore.class);
@@ -185,7 +182,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("video", String.valueOf(linkToJoinJSON)));
             Log.d("oggetto", listaPassi.toString());
 
-            //TODO: fixare il flusso, quando carico un video o pdf prima salva il progetto e poi crea il passo!Controlla con debug
         } else if (type.contains("PDF")) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("pdf", String.valueOf(linkToJoinJSON)));
             Log.d("oggetto", listaPassi.toString());
@@ -231,7 +227,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         long fileSize = taskSnapshot.getTotalByteCount();
         long uploadBytes = taskSnapshot.getBytesTransferred();
         long progress = (100 * uploadBytes) / fileSize;
-        //ProgressBar progressBar = (ProgressBar) findViewById(R.id.pbUpload);
         binding.pbUpload.setProgress((int) progress);
     }
 
@@ -253,27 +248,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
-    public void downloadProjects() {
-        ref = mStorageRef.child("Progetti").child("progetti.json");
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.d("oggetto", uri.toString());
-
-                DownloadTask task = new DownloadTask();
-                task.execute(uri.toString());
-                Log.d("oggetto", listaProgetti.toString());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-            }
-        });
-    }
 
     public void write(JSONObject progetti){
-        // TODO: Scrivere direttamente json
-
         try {
             Writer output;
             File file = new File("data/data/it.unimib.bicap/files/" + FILE_NAME);
@@ -285,69 +261,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
         } catch (Exception e) {
             Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
-
         filePath = Uri.parse("file:///data/data/it.unimib.bicap/files/progetti.json");
         uploadFile("Progetti/progetti.json");
-
-    }
-
-    public class DownloadTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String result = "";
-            URL url;
-            HttpURLConnection urlConnection = null;
-
-            try {
-                url = new URL(strings[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.connect();
-                InputStream in = urlConnection.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-
-                StringBuffer buffer = new StringBuffer();
-                String line = "";
-
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-
-                return buffer.toString();
-
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-
-            JSONObject jsonObject = null;
-            try {
-                jsonObject = new JSONObject(result);
-                listaProgetti = jsonObject.getJSONArray("progetti");
-                JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti,progetto);
-//                listaProgetti.put(progetto);
-//                progetti.put("progetti", listaProgetti);
-                Log.d("oggetto", progetti.toString());
-                write(progetti);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
 
     }
 }
