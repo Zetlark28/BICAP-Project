@@ -63,6 +63,20 @@ public class JsonBuilder {
         }
     }
 
+    public JSONObject aggiungiProgettoInLista(JSONArray listaProgetti, JSONObject progetto){
+        JSONObject listaCompleta  =null;
+        try {
+            int id= listaProgetti.getJSONObject(listaProgetti.length()-1).getInt("id")+1;
+            progetto.put("id",id);
+            listaProgetti.put(progetto);
+            listaCompleta=new JSONObject();
+            listaCompleta.put("progetti",listaProgetti);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return listaCompleta;
+    }
+
 
 //    public  void aggiungiProgettoInLista(JSONArray listaProgetti , JSONObject progetto){
 //        listaProgetti.put(progetto);
