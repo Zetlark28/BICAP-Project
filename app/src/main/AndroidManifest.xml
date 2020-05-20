@@ -50,6 +50,7 @@
             android:parentActivityName=".LoginProfessore"/>
         <activity android:name=".QuestionariDaFare"/>
         <activity android:name=".QuestionariDaTerminare"/>
+        <activity android:name=".PresentazioneProgetto"/>
 
         <meta-data
             android:name="preloaded_fonts"
