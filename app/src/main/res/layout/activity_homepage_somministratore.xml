@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,8 +12,8 @@
         layout="@layout/toolbar_main" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="419dp"
+        android:layout_height="605dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,10 +71,10 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnCrea"
-                        style="@android:style/Widget.Material.Light.Button"
+                        style="materialbutt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="end"
                         android:fontFamily="@font/roboto"
                         android:onClick="creaProgetto"
                         android:text="Crea progetto" />
@@ -123,17 +124,18 @@
                     <TextView
                         android:id="@+id/tvDescProf"
                         android:layout_width="wrap_content"
-                        android:padding="3dp"
                         android:layout_height="wrap_content"
+                        android:padding="3dp"
                         android:text="Elimina un questionario da te creato"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnElimina"
+                        style="materialbutt "
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal|end"
                         android:fontFamily="@font/roboto"
                         android:onClick="eliminaProgetto"
                         android:text="Elimina Progetto" />
@@ -142,4 +144,4 @@
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
