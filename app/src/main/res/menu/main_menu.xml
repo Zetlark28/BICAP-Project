@@ -7,4 +7,10 @@
         android:tooltipText="LogOut"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/downloadGuide"
+        android:title="Download"
+        app:showAsAction="never"
+        />
 </menu>
