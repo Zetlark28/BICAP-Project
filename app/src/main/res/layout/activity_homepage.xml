@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/design_default_color_background"
                 android:orientation="vertical"
+                android:padding="3dp"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp">
 
@@ -43,13 +44,15 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:text="Compila i Questionari"
-                    android:textAppearance="?attr/textAppearanceHeadline6" />
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="@color/colorPrimary" />
 
                 <TextView
                     android:id="@+id/tvDesc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="In questa sezione, andrai a compilare i questionari disponibili !"
+                    android:text="In questa sezione, andrai a compilare i questionari disponibili"
+                    android:layout_marginTop="3dp"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary" />
 
@@ -92,6 +95,7 @@
             android:layout_height="wrap_content"
             android:background="@color/design_default_color_background"
             android:orientation="vertical"
+            android:padding="3dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp">
 
@@ -101,14 +105,16 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
                 android:text="Area Professore"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:textColor="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/tvDescProf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="In questa sezione, andrai a creare i questionari !"
+                android:text="In questa sezione, andrai a creare i questionari"
                 android:textAppearance="?attr/textAppearanceBody2"
+                android:layout_marginTop="3dp"
                 android:textColor="?android:attr/textColorSecondary" />
 
             <com.google.android.material.button.MaterialButton
