@@ -149,6 +149,9 @@ public class HomePageSomministratore extends AppCompatActivity {
             updateUI();
             return true;
         }
+        else if (item.getItemId() == R.id.downloadGuide){
+            
+        }
         return super.onOptionsItemSelected(item);
     }
 
