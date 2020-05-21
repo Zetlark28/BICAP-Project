@@ -8,6 +8,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,6 +52,29 @@ public class PresentazioneProgetto extends AppCompatActivity {
         });
 
         init(obj);
+
+        final JSONObject finalObj = obj;
+        binding.btnStartProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JSONObject passo = getterInfo.getPasso(getterInfo.getPassi(finalObj), 0);
+                String tipo = "";
+                try {
+                    tipo = getterInfo.getTipo(passo);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
+                if (tipo.equals("video")){
+
+                } else if (tipo.equals("pdf")){
+
+                } else if (tipo.equals("quiz")){
+
+                }
+            }
+        });
     }
 
     private void init(JSONObject obj){
