@@ -31,6 +31,7 @@ public class Utility {
      private static final String QUESTIONNAIRE_FILE_PATH_DIR_LOCAL = "file:///data/data/it.unimib.bicap/files/progetti.json";
      private static final String FILE_NAME =  "progetti.json";
      private static final String FIREBASE_PATH_PROJECT = "Progetti/progetti.json";
+     private static final int ONE_MB = 1024 * 1024;
 
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
          Context context = null;
@@ -139,4 +140,25 @@ public class Utility {
                 });
     }
 
+//    public static JSONObject getProgetti(Context context){
+//        FirebaseApp.initializeApp(context);
+//        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+//        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
+//        final JSONObject[] progetti = {null};
+//        ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//            @Override
+//            public void onSuccess(byte[] bytes) {
+//                String json = null;
+//                try {
+//                    json = new String(bytes, "UTF-8");
+//                    progetti[0] = new JSONObject(json);
+//                } catch (JSONException ex) {
+//                    ex.printStackTrace();
+//                } catch (UnsupportedEncodingException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
+//        });
+//        return progetti[0];
+//    }
 }
