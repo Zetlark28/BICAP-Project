@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
 import it.unimib.bicap.DettaglioQuestionario;
+import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -29,16 +30,21 @@ public class Utility {
 
      private static final String QUESTIONNAIRE_FILE_PATH_DIR_LOCAL = "file:///data/data/it.unimib.bicap/files/progetti.json";
      private static final String FILE_NAME =  "progetti.json";
+     private static final String FIREBASE_PATH_PROJECT = "Progetti/progetti.json";
 
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
          Context context = null;
          Context baseContext = null;
-         Boolean writing = false;
+         Boolean writing = Boolean.FALSE;
          if(activityInstance instanceof DettaglioQuestionario) {
              DettaglioQuestionario activity = (DettaglioQuestionario) activityInstance;
              context = activity.getApplicationContext();
              baseContext = activity.getBaseContext();
-             writing=true;
+             writing=Boolean.TRUE;
+         }else if (activityInstance instanceof EliminaProgetti){
+             EliminaProgetti activity = (EliminaProgetti) activityInstance;
+             context = activity.getApplicationContext();
+             baseContext = activity.getBaseContext();
          }
          final Context finalContext = context;
          final Context finalBaseContext = baseContext;
@@ -54,7 +60,9 @@ public class Utility {
         }
 
          if(writing)
-             uploadFile(Uri.parse(QUESTIONNAIRE_FILE_PATH_DIR_LOCAL),"Progetti/progetti.json", finalContext, binding);
+             uploadFile(Uri.parse(QUESTIONNAIRE_FILE_PATH_DIR_LOCAL),FIREBASE_PATH_PROJECT, finalContext, binding);
+         else
+             updateFile(Uri.parse(QUESTIONNAIRE_FILE_PATH_DIR_LOCAL),FIREBASE_PATH_PROJECT, finalContext);
      }
 
 
@@ -97,6 +105,38 @@ public class Utility {
         long uploadBytes = taskSnapshot.getBytesTransferred();
         long progress = (100 * uploadBytes) / fileSize;
         binding.pbUpload.setProgress((int) progress);
+    }
+
+    public static void updateFile(final Uri filepath, final String directory, final Context context){
+        FirebaseApp.initializeApp(context);
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+        final StorageReference fileRef = mStorageRef.child(directory);
+        fileRef.putFile(filepath)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                DettaglioQuestionario.setLinkToJoinJSON(String.valueOf(uri));
+                                Log.d("oggetto", "Upload completato");
+                            }
+                        });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        Toast.makeText(context, "Errore nell'upload", Toast.LENGTH_SHORT).show();
+                        Log.d("oggetto", "Errore nell'upload");
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                       //TODO : dialog in corso
+                    }
+                });
     }
 
 }

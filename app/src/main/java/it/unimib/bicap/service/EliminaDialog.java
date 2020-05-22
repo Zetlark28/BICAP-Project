@@ -2,8 +2,8 @@ package it.unimib.bicap.service;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -16,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import adapter.ProgettiAdapterRV;
+import it.unimib.bicap.EliminaProgetti;
 
 public class EliminaDialog extends AppCompatDialogFragment {
 
@@ -24,14 +25,16 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private Integer index;
     private ProgettiAdapterRV progettiAdapterRV;
     private JSONObject listaProgettiTot;
+    private EliminaProgetti activity;
     private GetterInfo getterInfo = new GetterLocal();
-    public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiAdapterRV istanzaProgettiAdapter){
+    public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity){
         try {
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
             this.listaProgetti=listaProgetti;
             this.index = index;
             this.progettiAdapterRV = istanzaProgettiAdapter;
             this.listaProgettiTot = listaProgettiTot;
+            this.activity = eliminaActivity;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -47,6 +50,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         JSONArray listaNuova = new JSONArray();
+                        JSONObject nuoviProgetti = null;
                         Integer idElimina = null;
                         try {
                             for(int i = 0; i<listaProgetti.length(); i++) {
@@ -63,14 +67,14 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     nuovaListaTotProgetti.put(lista.getJSONObject(j));
                                 }
                             }
-                            JSONObject nuoviProgetti = new JSONObject();
+                            nuoviProgetti = new JSONObject();
                             nuoviProgetti.put("progetti",nuovaListaTotProgetti);
                             Log.d("oggetto", nuoviProgetti.toString());
                     } catch (JSONException e) {
                             e.printStackTrace();
                     }
                         //TODO: dialog on process e metodo di riscrittura file progetti.json
-
+                        Utility.write(nuoviProgetti,activity,null);
                         ProgettiAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
                             ProgettiAdapterRV.setListaProgetti(listaNuova);
                             progettiAdapterRV.notifyDataSetChanged();

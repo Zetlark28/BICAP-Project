@@ -35,7 +35,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     public static  JSONArray listaProgetti;
     public  JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
-    EliminaProgetti eliminaActivity;
+    private EliminaProgetti eliminaActivity;
     ProgettiAdapterRV istanzaProgettiAdapter;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
@@ -93,7 +93,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                 public void onClick(View v) {
 
                     EliminaDialog eliminaDialog = null;
-                    eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter);
+                    eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position,  istanzaProgettiAdapter,eliminaActivity);
                     eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                 }
             });
