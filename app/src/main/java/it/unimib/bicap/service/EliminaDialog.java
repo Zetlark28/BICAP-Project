@@ -23,7 +23,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private JSONArray listaProgetti;
     private Integer index;
     private ProgettiAdapterRV progettiAdapterRV;
-    private EliminaDialog instance;
     private JSONObject listaProgettiTot;
     private GetterInfo getterInfo = new GetterLocal();
     public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiAdapterRV istanzaProgettiAdapter){
@@ -32,7 +31,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
             this.listaProgetti=listaProgetti;
             this.index = index;
             this.progettiAdapterRV = istanzaProgettiAdapter;
-            this.instance=this;
             this.listaProgettiTot = listaProgettiTot;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -131,6 +129,23 @@ public class EliminaDialog extends AppCompatDialogFragment {
             Log.d("oggetto", result.toString());
         }
 
+
+    }*/
+
+  /* public void write(JSONObject progetti){
+        try {
+            Writer output;
+            FileOutputStream fOut = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(fOut);
+            osw.write(progetti.toString());
+            osw.flush();
+            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        filePath = Uri.parse("file:///data/data/it.unimib.bicap/files/progetti.json");
+        uploadFile("Progetti/progetti.json");
 
     }*/
 }
