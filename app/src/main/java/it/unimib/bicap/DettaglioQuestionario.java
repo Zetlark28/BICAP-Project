@@ -27,7 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 
@@ -252,10 +254,10 @@ public class DettaglioQuestionario extends AppCompatActivity {
     public void write(JSONObject progetti){
         try {
             Writer output;
-            File file = new File("data/data/it.unimib.bicap/files/" + FILE_NAME);
-            output = new BufferedWriter(new FileWriter(file));
-            output.write(progetti.toString());
-            output.close();
+            FileOutputStream fOut = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(fOut);
+            osw.write(progetti.toString());
+            osw.flush();
             Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
 
         } catch (Exception e) {
