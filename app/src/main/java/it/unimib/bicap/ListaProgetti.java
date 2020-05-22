@@ -75,10 +75,4 @@ public class ListaProgetti extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
-    //override finish con animazione slide indietro
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-    }
 }
