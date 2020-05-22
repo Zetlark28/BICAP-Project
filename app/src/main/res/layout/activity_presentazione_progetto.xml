@@ -20,7 +20,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto"
         android:text="@string/nome_progetto"
-        android:textColor="@color/scritta"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp" />
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto"
         android:text="@string/autore"
-        android:textColor="@color/scritta"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp" />
 
     <TextView
@@ -68,7 +68,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto"
         android:text="@string/numero_questionari"
-        android:textColor="@color/scritta"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp" />
 
     <TextView
@@ -90,7 +90,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto"
         android:text="@string/descrizione"
-        android:textColor="@color/scritta"
+        android:textColor="@color/colorPrimary"
         android:textSize="30sp" />
 
     <TextView
@@ -101,8 +101,9 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/roboto"
+        android:gravity="center_horizontal"
         android:scrollbars="vertical"
-        android:text="prova"
+        android:text="Prova"
         android:textColor="@color/scritta"
         android:textSize="20sp" />
 

@@ -25,7 +25,7 @@
                 android:layout_marginTop="30dp"
                 android:fontFamily="@font/roboto"
                 android:text="@string/nome_progetto"
-                android:textColor="@color/scritta"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -52,7 +52,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:text="@string/autore"
-                android:textColor="@color/scritta"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +79,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:text="@string/descrizione"
-                android:textColor="@color/scritta"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -100,16 +100,16 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/imInsertData"
-                style="materialbutt "
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/inserisci_dati" />
 
+
+            <Button
+                android:id="@+id/imInsertData"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:text="Inserisci Dati" />
         </LinearLayout>
     </ScrollView>
 
