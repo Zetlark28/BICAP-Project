@@ -8,9 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorHighlight">@color/colorEditTextLight</item>
         <item name="android:textColorLink">@color/colorPrimary</item>
-        <item name="android:itemBackground">@color/sfondo</item>
+        <item name="android:textColor">@color/scritta</item>
         <item name="android:fontFamily">@font/roboto</item>
+        <item name = "android:panelFullBackground">@color/sfondo</item>
+        <item name="actionOverflowMenuStyle">@style/Widget.MaterialComponents.PopupMenu.Overflow</item>
     </style>
+
+    <style name="MyTheme" parent="android:Theme">
+        <item name = "android:panelFullBackground">@color/sfondo</item>
+    </style>
+
 
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
