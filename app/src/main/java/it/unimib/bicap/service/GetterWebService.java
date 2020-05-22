@@ -57,4 +57,6 @@ public class GetterWebService implements GetterInfo {
     public List<String> getNomiProgetti(JSONArray listaProgetti) {
         return null;
     }
+
+    public String getTipo (JSONObject progetto) {return null;}
 }

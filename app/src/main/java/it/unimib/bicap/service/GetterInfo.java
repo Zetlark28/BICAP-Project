@@ -1,6 +1,7 @@
 package it.unimib.bicap.service;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public interface GetterInfo {
     JSONArray getPassi (JSONObject progetti);
     JSONObject getPasso (JSONArray passi,int index);
     int getNPassi(JSONArray passi);
+    String getTipo(JSONObject progetto) throws JSONException;
 
     JSONArray getlistaProgetti(String stringProgetti);
 

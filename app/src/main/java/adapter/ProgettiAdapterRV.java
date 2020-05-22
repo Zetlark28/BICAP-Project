@@ -10,13 +10,17 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
 import it.unimib.bicap.EliminaProgetti;
 //import it.unimib.bicap.PresentazioneProgetto;
+import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.R;
 import it.unimib.bicap.service.EliminaDialog;
 import it.unimib.bicap.service.GetterInfo;
@@ -99,17 +103,17 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    JSONObject p = getterInfo.getProgetto(listaProgetti, position);
-//                    Intent intentProg = new Intent(context, PresentazioneProgetto.class);
-//                    intentProg.putExtra("obj", p.toString());
-//                    context.startActivity(intentProg);
+                    JSONObject p = getterInfo.getProgetto(listaProgetti, position);
+                    Intent intentProg = new Intent(context, PresentazioneProgetto.class);
+                    intentProg.putExtra("obj", p.toString());
+                    context.startActivity(intentProg);
                     ((Activity)context).finish();
-//                    try {
-//                        String descrizione = getterInfo.getDescrizione((JSONObject) listaProgetti.get(position));
-//                        Snackbar.make(v, "Descrizione: " + descrizione, Snackbar.LENGTH_SHORT).show();
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
+                    try {
+                        String descrizione = getterInfo.getDescrizione((JSONObject) listaProgetti.get(position));
+                        Snackbar.make(v, "Descrizione: " + descrizione, Snackbar.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }else if(from.equals("daTerminare")){
