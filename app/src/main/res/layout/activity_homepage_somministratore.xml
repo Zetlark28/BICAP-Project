@@ -5,11 +5,13 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1E2E1"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main" />
+        layout="@layout/toolbar_main"
+        android:background="#E1E2E1" />
 
     <LinearLayout
         android:layout_width="419dp"
