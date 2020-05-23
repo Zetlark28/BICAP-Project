@@ -55,22 +55,15 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfAutoreProgetto"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tvAutoreFinale"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:hint="@string/autore">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etAutore"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:text="@string/autore"
+                android:textColor="@color/scritta"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tvDescrizione"
