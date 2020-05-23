@@ -1,4 +1,4 @@
-package adapter;
+package it.unimib.bicap.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,10 +45,14 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
+        Button info;
+        Button start;
 
         public MyViewHolder (View itemView){
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
+            info = itemView.findViewById(R.id.btnInfo);
+            start = itemView.findViewById(R.id.btnCrea);
         }
     }
 

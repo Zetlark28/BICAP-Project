@@ -95,6 +95,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
+        toolbar.setTitle(getIntent().getStringExtra("nomeProgetto"));
+
         final String progettoString = getIntent().getStringExtra("progetto");
         try {
             assert progettoString != null;
@@ -288,4 +290,17 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.pbUpload.setProgress((int) progress);
     }
 */
+    //override startActivity con animazione slide avanti
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
+
+    //override finish con animazione slide avanti
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
 }

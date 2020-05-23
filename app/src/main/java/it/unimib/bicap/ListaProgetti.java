@@ -14,9 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Objects;
-
-import adapter.SectionsPagerAdapter;
+import it.unimib.bicap.adapter.SectionsPagerAdapter;
 
 public class ListaProgetti extends AppCompatActivity {
 
@@ -44,6 +42,7 @@ public class ListaProgetti extends AppCompatActivity {
                 Intent intentHome = new Intent(getApplicationContext(), HomePage.class);
                 startActivity(intentHome);
                 finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             }
         });
 
