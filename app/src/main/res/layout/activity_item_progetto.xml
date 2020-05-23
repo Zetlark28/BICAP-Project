@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/sfondo">
+        android:background="@color/sfondo"
+        android:clickable="false">
 
             <LinearLayout
                 android:id="@+id/cardLn2"
