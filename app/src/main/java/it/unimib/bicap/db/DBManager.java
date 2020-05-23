@@ -54,6 +54,33 @@ public class DBManager {
         return crs;
     }
 
+    public static boolean isCompletato(Cursor progettiCompletati, int idProgetto){
+        if(progettiCompletati == null)
+            return false;
+        int indexColumn = progettiCompletati.getColumnIndex(DBConstants.FIELD_ID_PROGETTO);
+        progettiCompletati.moveToFirst();
+        if(progettiCompletati.getInt(indexColumn) == idProgetto)
+            return true;
+        else
+            while(progettiCompletati.moveToNext())
+                if(progettiCompletati.getInt(indexColumn) == idProgetto)
+                    return true;
+        return false;
+    }
+    public static boolean isDaCompletare(Cursor progettiDaCompletare, int idProgetto){
+        if(progettiDaCompletare == null)
+            return true;
+        int indexColumn = progettiDaCompletare.getColumnIndex(DBConstants.FIELD_ID_PROGETTO);
+        progettiDaCompletare.moveToFirst();
+        if(progettiDaCompletare.getInt(indexColumn) == idProgetto)
+            return true;
+        else
+            while(progettiDaCompletare.moveToNext())
+                if(progettiDaCompletare.getInt(indexColumn) == idProgetto)
+                    return true;
+        return false;
+    }
+
     public Cursor selectDaCompletare(Integer idUtente) {
         Cursor crs=null;
         try
