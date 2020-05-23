@@ -89,6 +89,8 @@ public class QuestionariDaFare extends Fragment {
         JSONObject progettiTot = null;
         try {
              progettiTot = new JSONObject(getContext().getSharedPreferences("author",getContext().MODE_PRIVATE).getString("file", null));
+            progetti = progettiTot.getJSONArray("progetti");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -100,7 +102,6 @@ public class QuestionariDaFare extends Fragment {
         JSONArray progettiDaFare = new JSONArray();
 
         try {
-            progetti = progettiTot.getJSONArray("progetti");
         for(int i = 0; i<progetti.length(); i++) {
 
             if (!DBManager.isCompletato(progettiCompletati, progetti.getJSONObject(i).getInt("id")))

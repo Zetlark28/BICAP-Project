@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
+import it.unimib.bicap.adapter.ProgettiDaTerminareAdapterRV;
 import it.unimib.bicap.db.DBManager;
 
 public class QuestionariDaTerminare extends Fragment {
@@ -53,7 +54,7 @@ public class QuestionariDaTerminare extends Fragment {
         db = new DBManager(getContext());
         //TODO: getUtenteReal
         //TODO: da sistemare
-        final String idUtente = "prova";
+/*        final String idUtente = "prova";
         mStorageRef = FirebaseStorage.getInstance().getReference();
         ref = mStorageRef.child("/Progetti/progetti.json");
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -83,9 +84,34 @@ public class QuestionariDaTerminare extends Fragment {
                 }
 
             }
-        });
 
+        });*/
+        final String idUtente = "prova";
+        JSONObject progettiTot = null;
+        try {
+            progettiTot = new JSONObject(getContext().getSharedPreferences("author",getContext().MODE_PRIVATE).getString("file", null));
+            progetti = progettiTot.getJSONArray("progetti");
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        Cursor progettiDaCompletare = db.selectDaCompletare(idUtente);
+        JSONArray progDaCompletare= new JSONArray();
+        try {
+            for(int i = 0; i<progetti.length(); i++) {
+                if (DBManager.isDaCompletare(progettiDaCompletare, progetti.getJSONObject(i).getInt("id"))) {
+                    progDaCompletare.put(progetti.getJSONObject(i));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        ProgettiDaTerminareAdapterRV progettiAdapterRV = new ProgettiDaTerminareAdapterRV(getContext(), progDaCompletare,  from);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(progettiAdapterRV);
         return rootView;
     }
 }
