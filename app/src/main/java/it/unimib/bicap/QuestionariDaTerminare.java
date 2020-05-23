@@ -48,11 +48,11 @@ public class QuestionariDaTerminare extends Fragment {
         final View rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         final RecyclerView recyclerView = rootView.findViewById(R.id.rvProgetti);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
+        db = new DBManager(getContext());
         //TODO: getUtenteReal
+        //TODO: da sistemare
         final String idUtente = "prova";
         mStorageRef = FirebaseStorage.getInstance().getReference();
         ref = mStorageRef.child("/Progetti/progetti.json");
@@ -75,6 +75,8 @@ public class QuestionariDaTerminare extends Fragment {
                     //TODO: selezione dei questionari da terminare
                     progettiAdapterRV = new ProgettiAdapterRV(getContext(), progDaCompletare,  from);
                     recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(progettiAdapterRV);
                 } catch (UnsupportedEncodingException | JSONException e){
                     e.printStackTrace();

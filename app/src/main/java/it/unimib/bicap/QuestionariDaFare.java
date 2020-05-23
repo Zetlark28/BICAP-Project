@@ -1,5 +1,6 @@
 package it.unimib.bicap;
 
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,12 +45,12 @@ public class QuestionariDaFare extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         final RecyclerView recyclerView = rootView.findViewById(R.id.rvProgetti);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+       /* LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);*/
 
         //TODO:  getUtenteReale
-        final String idUtente = "prova";
+       /* final String idUtente = "prova";
         mStorageRef = FirebaseStorage.getInstance().getReference();
         ref = mStorageRef.child("/Progetti/progetti.json");
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -73,14 +74,48 @@ public class QuestionariDaFare extends Fragment {
                     }
                     progettiAdapterRV = new ProgettiAdapterRV(getContext(), progettiDaFare,  from);
                     recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(linearLayoutManager);
                     recyclerView.setAdapter(progettiAdapterRV);
                 } catch (UnsupportedEncodingException | JSONException e){
                     e.printStackTrace();
                 }
 
             }
-        });
+        });*/
 
+       final String idUtente = "prova";
+
+        JSONObject progettiTot = null;
+        try {
+             progettiTot = new JSONObject(getContext().getSharedPreferences("author",getContext().MODE_PRIVATE).getString("file", null));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        db = new DBManager(getContext());
+        Cursor progettiCompletati = db.selectCompletati(idUtente);
+        Cursor progettiDaCompletare = db.selectDaCompletare(idUtente);
+
+        JSONArray progettiDaFare = new JSONArray();
+
+        try {
+            progetti = progettiTot.getJSONArray("progetti");
+        for(int i = 0; i<progetti.length(); i++) {
+
+            if (!DBManager.isCompletato(progettiCompletati, progetti.getJSONObject(i).getInt("id")))
+                if (!DBManager.isDaCompletare(progettiDaCompletare, progetti.getJSONObject(i).getInt("id")))
+                    progettiDaFare.put(progetti.getJSONObject(i));
+        }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        progettiAdapterRV = new ProgettiAdapterRV(getContext(), progettiDaFare,  from);
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(progettiAdapterRV);
 
 
         return rootView;

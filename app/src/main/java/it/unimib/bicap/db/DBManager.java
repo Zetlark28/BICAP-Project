@@ -10,7 +10,15 @@ public class DBManager {
 
     private DBHelper dbhelper;
     public DBManager(Context ctx) {
+        if(dbhelper == null)
         dbhelper=new DBHelper(ctx);
+        else
+            getDbhelper();
+
+    }
+
+    public DBHelper getDbhelper() {
+        return dbhelper;
     }
 
     public void saveCompletati(Integer idUtente, Integer idProgetto)
@@ -70,7 +78,7 @@ public class DBManager {
     }
     public static boolean isDaCompletare(Cursor progettiDaCompletare, int idProgetto){
         if(progettiDaCompletare == null)
-            return true;
+            return false;
         int indexColumn = progettiDaCompletare.getColumnIndex(DBConstants.FIELD_ID_PROGETTO);
         progettiDaCompletare.moveToFirst();
         if(progettiDaCompletare.getInt(indexColumn) == idProgetto)

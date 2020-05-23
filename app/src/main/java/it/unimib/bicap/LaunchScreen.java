@@ -1,22 +1,57 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
 public class LaunchScreen extends AppCompatActivity {
     Handler handler;
+    private static final int ONE_MB = 1024 * 1024;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
+        //TODO : download progetti
+        //TODO: salva in shared preferences
 
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
+        ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                String json = null;
+                try {
+                    json = new String(bytes, "UTF-8");
+                    JSONObject progetti = new JSONObject(json);
+                    SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("file",progetti.toString());
+                    editor.commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         /*final int flags;
