@@ -19,6 +19,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
@@ -54,8 +59,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private JSONArray listaProgetti = new JSONArray();
     private String progettiJSON;
     private DettaglioQuestionario instance;
-    private FirebaseAuth mAuth;
+
     private ActivityDettaglioQuestionarioBinding binding;
+
     public static void setLinkToJoinJSON(String linkToJoinJSON) {
         DettaglioQuestionario.linkToJoinJSON = linkToJoinJSON;
     }
@@ -63,7 +69,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        Utility.getKeyValue();
         FirebaseApp.initializeApp(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         progettiJSON = getIntent().getStringExtra("progetti");
@@ -100,14 +108,15 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String key = Utility.setKeyValue();
                 // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
                 if (type != null) {
                     if (type.equals("Video")) {
-                        Utility.uploadFile(filePath,"Video/file",instance,binding);
+                        Utility.uploadFile(filePath,"Video/" + key,instance,binding);
                         Log.d("oggetto", progetto.toString() + 2);
                         Snackbar.make(v, "Hai inserito un video", Snackbar.LENGTH_SHORT).show();
                     } else if (type.equals("PDF")) {
-                        Utility.uploadFile(filePath,"Documenti/",instance,binding);
+                        Utility.uploadFile(filePath,"Documenti/" + key,instance,binding);
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
@@ -122,7 +131,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Utility.getKeyValue();
                 //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
                 aggiungiPassi();
                 filePath = null;
@@ -135,7 +144,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
+
+
+               if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
                     aggiungiPassi();
                 }
 
@@ -183,7 +194,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void aggiungiPassi() {
