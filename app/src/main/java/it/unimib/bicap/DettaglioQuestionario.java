@@ -8,19 +8,26 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 import it.unimib.bicap.service.JsonBuilder;
@@ -47,9 +54,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private JSONArray listaProgetti = new JSONArray();
     private String progettiJSON;
     private DettaglioQuestionario instance;
-
+    private FirebaseAuth mAuth;
     private ActivityDettaglioQuestionarioBinding binding;
-
     public static void setLinkToJoinJSON(String linkToJoinJSON) {
         DettaglioQuestionario.linkToJoinJSON = linkToJoinJSON;
     }
@@ -65,6 +71,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         instance = this;
+
+
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Nome Progetto");
@@ -114,6 +122,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
                 aggiungiPassi();
                 filePath = null;
@@ -174,6 +183,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void aggiungiPassi() {
         if (filePath == null) {

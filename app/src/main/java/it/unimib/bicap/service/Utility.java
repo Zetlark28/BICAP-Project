@@ -11,6 +11,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -32,6 +33,7 @@ public class Utility {
      private static final String FILE_NAME =  "progetti.json";
      private static final String FIREBASE_PATH_PROJECT = "Progetti/progetti.json";
      private static final int ONE_MB = 1024 * 1024;
+    private StorageReference mStorageRef;
 
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
          Context context = null;
@@ -65,6 +67,29 @@ public class Utility {
          else
              updateFile(Uri.parse(QUESTIONNAIRE_FILE_PATH_DIR_LOCAL),FIREBASE_PATH_PROJECT, finalContext);
      }
+
+
+   /* public void createUniqueKey() {
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        final StorageReference listRef = mStorageRef.child("Progetti");
+
+        listRef.listAll()
+                .addOnSuccessListener(new OnSuccessListener<ListResult>() {
+                    @Override
+                    public void onSuccess(ListResult listResult) {
+                        for (StorageReference item : listResult.getItems()) {
+                                    Log.d("kek", item.toString());
+
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Uh-oh, an error occurred!
+                    }
+                });
+    }*/
 
 
     public static void uploadFile(final Uri filepath, final String directory, final Context context, final ActivityDettaglioQuestionarioBinding binding) {
