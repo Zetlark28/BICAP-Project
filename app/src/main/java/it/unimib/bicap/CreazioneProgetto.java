@@ -1,6 +1,7 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -44,6 +45,12 @@ public class CreazioneProgetto extends AppCompatActivity {
         //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
+        final String autore = getSharedPreferences("author", Context.MODE_PRIVATE).getString("autore", null);
+
+        Log.d(TAG, "autore: " + autore);
+
+        binding.tvAutoreFinale.setText(autore);
+
         //aggiunto metodo navigazione toolbar - elena
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,24 +84,25 @@ public class CreazioneProgetto extends AppCompatActivity {
             public void onClick(View v) {
 
                 String nomeProgetto = binding.etNomeProgetto.getText().toString();
-                String autoreProgetto = binding.etAutore.getText().toString();
+                //String autoreProgetto = binding.etAutore.getText().toString();
                 String descrizioneProgetto = binding.etDescrizione.getText().toString();
 
                 if (nomeProgetto.equals("")){
                     Snackbar.make(v, "Attenziona, manca il nome del progetto !", Snackbar.LENGTH_SHORT).show();
                 }
-                else if (autoreProgetto.equals("")){
-                    Snackbar.make(v, "Attenzione, manca l'autore del progetto !", Snackbar.LENGTH_SHORT).show();
-                }
+                //else if (autoreProgetto.equals("")){
+                    //Snackbar.make(v, "Attenzione, manca l'autore del progetto !", Snackbar.LENGTH_SHORT).show();
+                //}
                 else if (descrizioneProgetto.equals("")){
                     Snackbar.make(v, "Attenzione, manca la descrizione del progetto !", Snackbar.LENGTH_SHORT).show();
                 }
                 else{
-                    JSONObject progetto = jsonBuilder.creaProgetto(nomeProgetto,descrizioneProgetto,autoreProgetto);
+                    JSONObject progetto = jsonBuilder.creaProgetto(nomeProgetto,descrizioneProgetto,autore);
                     Intent intentDettaglioProgetto = new Intent(getApplicationContext(), DettaglioQuestionario.class);
                     Log.d(TAG, progetto.toString());
                     intentDettaglioProgetto.putExtra("progetto", progetto.toString());
                     intentDettaglioProgetto.putExtra("progetti", progettiJSON);
+                    intentDettaglioProgetto.putExtra("nomeProgetto", nomeProgetto);
                     startActivity(intentDettaglioProgetto);
                 }
             }

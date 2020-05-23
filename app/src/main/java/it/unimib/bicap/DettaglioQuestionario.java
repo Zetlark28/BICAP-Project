@@ -80,6 +80,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
+        toolbar.setTitle(getIntent().getStringExtra("nomeProgetto"));
+
         final String progettoString = getIntent().getStringExtra("progetto");
         try {
             assert progettoString != null;
