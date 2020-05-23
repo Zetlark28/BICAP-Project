@@ -67,7 +67,11 @@ public class LoginProfessore extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
-                            String autore = dataSnapshot.child(user.getUid()).getValue(Somministratore.class).getAutore();
+
+                            String nome = dataSnapshot.child(user.getUid()).child("nome").getValue().toString();
+                            String cognome = dataSnapshot.child(user.getUid()).child("cognome").getValue().toString();
+
+                            String autore = nome + " " +  cognome;
 
                             Log.d(TAG, "Value is: " + autore);
 
