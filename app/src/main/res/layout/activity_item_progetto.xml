@@ -4,15 +4,69 @@
     android:layout_height="wrap_content"
     android:background="#E1E2E1">
 
-    <TextView
-        android:id="@+id/idNomeProgetto"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardQuiz"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="TextView"
-        android:textColor="@color/scritta"
-        android:textSize="30sp" />
+        android:layout_margin="20dp">
+
+        <LinearLayout
+            android:id="@+id/cardLn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/cardLn2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/design_default_color_background"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/idNomeProgetto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="5dp"
+                    android:text="TextView"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="@color/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    > </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnQuiz"
+                        style="materialbutt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|end"
+                        android:layout_marginTop="10dp"
+                        android:text="info"
+                        android:gravity=""/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnQuiz"
+                        style="materialbutt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|end"
+                        android:layout_marginTop="10dp"
+                        android:text="Inizia questionario" />
+                    >
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
