@@ -44,6 +44,7 @@ public class ListaProgetti extends AppCompatActivity {
                 Intent intentHome = new Intent(getApplicationContext(), HomePage.class);
                 startActivity(intentHome);
                 finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             }
         });
 
