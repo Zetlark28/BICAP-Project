@@ -1,11 +1,8 @@
 package it.unimib.bicap;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -108,7 +105,8 @@ public class HomePageSomministratore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
-                intentEliminaProgetto.putExtra("listaProgetti", progettiAutore.toString());
+                intentEliminaProgetto.putExtra("listaProgettiAutore", progettiAutore.toString());
+                intentEliminaProgetto.putExtra("listaProgetti", progettiToParse.toString());
                 startActivity(intentEliminaProgetto);
             }
         });
@@ -134,10 +132,16 @@ public class HomePageSomministratore extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
 
-        MenuItem item = menu.getItem(0);
-        SpannableString s = new SpannableString("LogOut");
-        s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
-        item.setTitle(s);
+
+        /*MenuItem itemLogOut = menu.getItem(0);
+        SpannableString sLogOut = new SpannableString("LogOut");
+        sLogOut.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sLogOut.length(), 0);
+        itemLogOut.setTitle(sLogOut);
+
+        MenuItem itemGuide = menu.getItem(1);
+        SpannableString sGuide = new SpannableString("Scarica la Guida");
+        sGuide.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sGuide.length(), 0);
+        itemGuide.setTitle(sGuide);*/
 
         return true;
     }
@@ -149,7 +153,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             updateUI();
             return true;
         }
-        else if (item.getItemId() == R.id.downloadGuide){
+        else if (item.getItemId() == R.id.menuDownload){
             
         }
         return super.onOptionsItemSelected(item);

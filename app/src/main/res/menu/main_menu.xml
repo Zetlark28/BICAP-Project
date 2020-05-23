@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
         android:id="@+id/menuLogOut"
         android:title="LogOut"
-        android:tooltipText="LogOut"
-        app:showAsAction="never"
-        />
-
+        app:showAsAction="never"/>
     <item
-        android:id="@+id/downloadGuide"
-        android:title="Download"
-        app:showAsAction="never"
-        />
+        android:id="@+id/menuDownload"
+        android:title="Scarica la guida"
+        app:showAsAction="never"/>
+
 </menu>

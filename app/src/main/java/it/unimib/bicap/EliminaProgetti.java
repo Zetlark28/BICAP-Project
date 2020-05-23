@@ -17,6 +17,7 @@ import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import adapter.ProgettiAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
@@ -31,18 +32,10 @@ public class EliminaProgetti extends AppCompatActivity {
     private StorageReference mStorageRef;
     private StorageReference ref;
     private static final int ONE_MB = 1024 * 1024;
-    private static JSONArray progetti;
+    private static JSONObject progetti;
     private Button bottone;
     private static JSONArray progettiAutore;
 
-
-    public static JSONArray getProgetti() {
-        return progetti;
-    }
-
-    public static void setProgetti(JSONArray progetti) {
-        EliminaProgetti.progetti = progetti;
-    }
 
     String from = "eliminaProgetti";
 
@@ -68,15 +61,18 @@ public class EliminaProgetti extends AppCompatActivity {
             }
         });
         try {
-            if(progettiAutore==null)
-            progettiAutore = new JSONArray(getIntent().getExtras().getString("listaProgetti"));
+//            if(progettiAutore==null)
+
+            //TODO: check extras not null
+            progettiAutore = new JSONArray(getIntent().getExtras().getString("listaProgettiAutore"));
+            progetti = new JSONObject(getIntent().getExtras().getString("listaProgetti"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-        ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), progettiAutore, instance,from);
+        ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), progettiAutore,progetti, instance,from);
         binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
         binding.rvProgettiDaEliminare.addItemDecoration(new DividerItemDecoration(binding.rvProgettiDaEliminare.getContext(), DividerItemDecoration.VERTICAL));
 

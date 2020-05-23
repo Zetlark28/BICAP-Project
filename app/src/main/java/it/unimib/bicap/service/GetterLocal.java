@@ -112,4 +112,14 @@ public class GetterLocal implements GetterInfo {
         }
         return result;
     }
+
+    public String getTipo (JSONObject progetto){
+        try {
+            return progetto.getString("tipo");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return  null;
+    }
 }

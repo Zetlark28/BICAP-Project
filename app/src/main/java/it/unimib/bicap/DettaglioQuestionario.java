@@ -8,31 +8,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Writer;
 
-
-import it.unimib.bicap.service.JsonBuilder;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
+import it.unimib.bicap.service.JsonBuilder;
+import it.unimib.bicap.service.Utility;
 
 // TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
 // TODO: La conferma dev'essere chiesta in generale anche
@@ -48,14 +40,19 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private StorageReference mStorageRef;
     private Uri filePath;
     private String type;
-    private String linkToJoinJSON;
+    private static String linkToJoinJSON;
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
     private JSONObject progetto = new JSONObject();
     private JSONArray listaPassi = new JSONArray();
     private JSONArray listaProgetti = new JSONArray();
     private String progettiJSON;
+    private DettaglioQuestionario instance;
 
     private ActivityDettaglioQuestionarioBinding binding;
+
+    public static void setLinkToJoinJSON(String linkToJoinJSON) {
+        DettaglioQuestionario.linkToJoinJSON = linkToJoinJSON;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -67,6 +64,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        instance = this;
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Nome Progetto");
@@ -97,16 +95,18 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
                 if (type != null) {
                     if (type.equals("Video")) {
-                        uploadFile("Video/file");
+                        Utility.uploadFile(filePath,"Video/file",instance,binding);
                         Log.d("oggetto", progetto.toString() + 2);
                         Snackbar.make(v, "Hai inserito un video", Snackbar.LENGTH_SHORT).show();
                     } else if (type.equals("PDF")) {
-                        uploadFile("Documenti/");
+                        Utility.uploadFile(filePath,"Documenti/",instance,binding);
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
                     Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
                 }
+
+                //TODO: disabilitare la textInput per inserire il link del questionario e i bottoni upload, magari inserire bottone annulla upload
             }
         });
 
@@ -139,7 +139,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     progetti.put("progetti", listaProgetti);
                     Log.d("oggetto", progetti.toString());
 
-                    write(progetti);
+                    Utility.write(progetti,instance,binding);
+//                    write(progetti);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -187,6 +188,43 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            this.filePath = data.getData();
+            this.type = "Video";
+            Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            this.filePath = data.getData();
+            Log.d("oggetto", filePath.toString());
+            this.type = "PDF";
+            Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    //TODO: non utilizzato -> spostato in classe Utility.
+   /* public void write(JSONObject progetti){
+        try {
+            Writer output;
+            FileOutputStream fOut = openFileOutput(FILE_NAME, MODE_PRIVATE);
+            OutputStreamWriter osw = new OutputStreamWriter(fOut);
+            osw.write(progetti.toString());
+            osw.flush();
+            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
+
+        } catch (Exception e) {
+            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+        filePath = Uri.parse("file:///data/data/it.unimib.bicap/files/progetti.json");
+        uploadFile("Progetti/progetti.json");
+
+    }
     private void uploadFile(final String directory) {
         if (filePath != null) {
             final StorageReference fileRef = mStorageRef.child(directory);
@@ -228,40 +266,5 @@ public class DettaglioQuestionario extends AppCompatActivity {
         long progress = (100 * uploadBytes) / fileSize;
         binding.pbUpload.setProgress((int) progress);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            this.filePath = data.getData();
-            this.type = "Video";
-            Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
-        } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            this.filePath = data.getData();
-            Log.d("oggetto", filePath.toString());
-            this.type = "PDF";
-            Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public void write(JSONObject progetti){
-        try {
-            Writer output;
-            File file = new File("data/data/it.unimib.bicap/files/" + FILE_NAME);
-            output = new BufferedWriter(new FileWriter(file));
-            output.write(progetti.toString());
-            output.close();
-            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        filePath = Uri.parse("file:///data/data/it.unimib.bicap/files/progetti.json");
-        uploadFile("Progetti/progetti.json");
-
-    }
+*/
 }

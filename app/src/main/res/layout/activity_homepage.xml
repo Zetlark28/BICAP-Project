@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E1E2E1"
     android:orientation="vertical">
 
     <include
@@ -72,9 +74,9 @@
                         style="materialbutt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal|end"
                         android:layout_marginTop="10dp"
-                        android:text="Comincia i Quiz" />
+                        android:text="Rispondi ai quiz" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -121,19 +123,20 @@
                     <TextView
                         android:id="@+id/tvDescProf"
                         android:layout_width="wrap_content"
-                        android:padding="3dp"
                         android:layout_height="wrap_content"
+                        android:padding="3dp"
                         android:text="In questa sezione, andrai a creare i questionari"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnProf"
+                        style="materialbutt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
+                        android:layout_gravity="center_horizontal|end"
                         android:layout_marginTop="10dp"
-                        android:text="Crea un Quiz"
+                        android:text="Accedi"
                         app:backgroundTint="@color/colorPrimary" />
                 </LinearLayout>
             </LinearLayout>

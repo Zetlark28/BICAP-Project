@@ -77,7 +77,7 @@ public class JsonBuilder {
         return listaCompleta;
     }
 
-
+    //TODO : remove because unused
 //    public  void aggiungiProgettoInLista(JSONArray listaProgetti , JSONObject progetto){
 //        listaProgetti.put(progetto);
 //    }
