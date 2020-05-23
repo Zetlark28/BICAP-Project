@@ -8,20 +8,13 @@
         android:id="@+id/cardQuiz"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp">
-
-        <LinearLayout
-            android:id="@+id/cardLn"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        android:layout_margin="10dp"
+        android:background="@color/sfondo">
 
             <LinearLayout
                 android:id="@+id/cardLn2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
                 android:background="@color/design_default_color_background"
                 android:orientation="vertical">
 
@@ -36,37 +29,32 @@
                     android:textColor="@color/colorPrimary" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    > </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnQuiz"
-                        style="materialbutt"
+                        android:id="@+id/btnInfo"
+                        style="?attr/borderlessButtonStyle"
+                        android:background="@color/sfondo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|end"
-                        android:layout_marginTop="10dp"
-                        android:text="info"
-                        android:gravity=""/>
+                        android:text="info"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnQuiz"
-                        style="materialbutt"
+                        android:background="@color/sfondo"
+                        style="?attr/borderlessButtonStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|end"
-                        android:layout_marginTop="10dp"
-                        android:text="Inizia questionario" />
-                    >
+                        android:text="Inizia"/>
                 </LinearLayout>
 
             </LinearLayout>
-        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
