@@ -12,6 +12,7 @@ public class DBManager {
     public DBManager(Context ctx) {
         dbhelper=new DBHelper(ctx);
     }
+
     public void saveCompletati(Integer idUtente, Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
@@ -39,13 +40,13 @@ public class DBManager {
         }
     }
 
-    public Cursor selectCompletati(Integer idUtente) {
+    public Cursor selectCompletati(String idUtente) {
         Cursor crs=null;
         try
         {
             SQLiteDatabase db=dbhelper.getReadableDatabase();
             crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},DBConstants.FIELD_ID_UTENTE + "=?",
-                    new String[]{Integer.toString(idUtente)}, null, null, null, null);
+                    new String[]{idUtente}, null, null, null, null);
         }
         catch(SQLiteException sqle)
         {
@@ -81,13 +82,13 @@ public class DBManager {
         return false;
     }
 
-    public Cursor selectDaCompletare(Integer idUtente) {
+    public Cursor selectDaCompletare(String idUtente) {
         Cursor crs=null;
         try
         {
             SQLiteDatabase db=dbhelper.getReadableDatabase();
             crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},DBConstants.FIELD_ID_UTENTE + "=?",
-                    new String[]{Integer.toString(idUtente)}, null, null, null, null);
+                    new String[]{idUtente}, null, null, null, null);
         }
         catch(SQLiteException sqle)
         {

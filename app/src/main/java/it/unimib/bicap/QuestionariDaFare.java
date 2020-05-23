@@ -23,8 +23,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
-import adapter.ProgettiAdapterRV;
-import it.unimib.bicap.db.DBConstants;
+import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.db.DBManager;
 
 public class QuestionariDaFare extends Fragment {
@@ -50,7 +49,7 @@ public class QuestionariDaFare extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         //TODO:  getUtenteReale
-        final Integer idUtente = 0;
+        final String idUtente = "prova";
         mStorageRef = FirebaseStorage.getInstance().getReference();
         ref = mStorageRef.child("/Progetti/progetti.json");
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {

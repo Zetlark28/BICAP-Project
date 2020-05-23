@@ -19,7 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import adapter.ProgettiAdapterRV;
+import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;

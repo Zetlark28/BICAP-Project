@@ -1,4 +1,4 @@
-package adapter;
+package it.unimib.bicap.adapter;
 
 import android.app.Activity;
 import android.content.Context;

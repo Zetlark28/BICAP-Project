@@ -15,12 +15,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String progettiCompletatiTB="CREATE TABLE "+DBConstants.TBL_NAME_COMPLETATI+
                 " ( _id INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                DBConstants.FIELD_ID_UTENTE+" INTEGER,"+
+                DBConstants.FIELD_ID_UTENTE+" TEXT,"+
                 DBConstants.FIELD_ID_PROGETTO+" INTEGER)";
         String progettiDaCompletareTB="CREATE TABLE "+DBConstants.TBL_NAME_COMPLETATI+
                 " ( _id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 DBConstants.FIELD_ID_UTENTE+" TEXT,"+
-                DBConstants.FIELD_ID_PROGETTO+" TEXT)";
+                DBConstants.FIELD_ID_PROGETTO+" INTEGER)";
         db.execSQL(progettiCompletatiTB);
         db.execSQL(progettiDaCompletareTB);
     }
