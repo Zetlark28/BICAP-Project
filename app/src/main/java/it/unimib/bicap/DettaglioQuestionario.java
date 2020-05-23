@@ -46,7 +46,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private static final String FILE_NAME = "progetti.json";
     private static final String TAG = "DettaglioQuestionario";
     private StorageReference mStorageRef;
-    private StorageReference ref;
     private Uri filePath;
     private String type;
     private String linkToJoinJSON;
