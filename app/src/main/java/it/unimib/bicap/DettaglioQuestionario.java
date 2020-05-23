@@ -8,19 +8,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 import it.unimib.bicap.service.JsonBuilder;
@@ -38,7 +50,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private static final String FILE_NAME = "progetti.json";
     private static final String TAG = "DettaglioQuestionario";
     private StorageReference mStorageRef;
-    private StorageReference ref;
     private Uri filePath;
     private String type;
     private static String linkToJoinJSON;
@@ -58,7 +69,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        Utility.getKeyValue();
         FirebaseApp.initializeApp(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         progettiJSON = getIntent().getStringExtra("progetti");
@@ -66,6 +79,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         instance = this;
+
+
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Nome Progetto");
@@ -95,14 +110,15 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String key = Utility.setKeyValue();
                 // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
                 if (type != null) {
                     if (type.equals("Video")) {
-                        Utility.uploadFile(filePath,"Video/file",instance,binding);
+                        Utility.uploadFile(filePath,"Video/" + key,instance,binding);
                         Log.d("oggetto", progetto.toString() + 2);
                         Snackbar.make(v, "Hai inserito un video", Snackbar.LENGTH_SHORT).show();
                     } else if (type.equals("PDF")) {
-                        Utility.uploadFile(filePath,"Documenti/",instance,binding);
+                        Utility.uploadFile(filePath,"Documenti/" + key,instance,binding);
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
@@ -117,6 +133,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Utility.getKeyValue();
                 //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
                 aggiungiPassi();
                 filePath = null;
@@ -129,7 +146,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
+
+
+               if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
                     aggiungiPassi();
                 }
 
@@ -177,6 +196,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
     }
+
 
     private void aggiungiPassi() {
         if (filePath == null) {

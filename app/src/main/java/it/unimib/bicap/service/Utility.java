@@ -1,5 +1,7 @@
 package it.unimib.bicap.service;
 
+
+// TODO: Aggiungere i controlli sui metodi assincroni
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -10,7 +12,13 @@ import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -32,6 +40,8 @@ public class Utility {
      private static final String FILE_NAME =  "progetti.json";
      private static final String FIREBASE_PATH_PROJECT = "Progetti/progetti.json";
      private static final int ONE_MB = 1024 * 1024;
+     private StorageReference mStorageRef;
+     private static String keyValue;
 
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
          Context context = null;
@@ -65,6 +75,37 @@ public class Utility {
          else
              updateFile(Uri.parse(QUESTIONNAIRE_FILE_PATH_DIR_LOCAL),FIREBASE_PATH_PROJECT, finalContext);
      }
+
+
+    public static void getKeyValue(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("chiave");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                String value = dataSnapshot.child("valoreChiave").getValue().toString();
+                keyValue = value;
+                Log.d("KeyValue", "Value is: " + value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.d("Error", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    public static String setKeyValue() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("chiave");
+        String[] id = keyValue.split("-");
+        int newNumber = Integer.parseInt(id[1]) + 1;
+        String chiave = "File-" + newNumber;
+        myRef.child("valoreChiave").setValue(chiave);
+        return chiave;
+    }
 
 
     public static void uploadFile(final Uri filepath, final String directory, final Context context, final ActivityDettaglioQuestionarioBinding binding) {
