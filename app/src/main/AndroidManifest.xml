@@ -51,6 +51,7 @@
         <activity android:name=".QuestionariDaFare"/>
         <activity android:name=".QuestionariDaTerminare"/>
         <activity android:name=".PresentazioneProgetto"/>
+        <activity android:name=".CongratulazioniScreen"/>
 
         <meta-data
             android:name="preloaded_fonts"
