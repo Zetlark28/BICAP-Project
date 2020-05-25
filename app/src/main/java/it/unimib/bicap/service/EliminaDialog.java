@@ -16,17 +16,18 @@ import org.json.JSONObject;
 
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.EliminaProgetti;
+import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 
 public class EliminaDialog extends AppCompatDialogFragment {
 
     private String nomeProgetto;
     private JSONArray listaProgetti;
     private Integer index;
-    private ProgettiAdapterRV progettiAdapterRV;
+    private ProgettiDaEliminareAdapterRV progettiAdapterRV;
     private JSONObject listaProgettiTot;
     private EliminaProgetti activity;
     private GetterInfo getterInfo = new GetterLocal();
-    public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity){
+    public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity){
         try {
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
             this.listaProgetti=listaProgetti;
@@ -74,8 +75,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
                     }
                         //TODO: dialog on process e metodo di riscrittura file progetti.json
                         Utility.write(nuoviProgetti,activity,null);
-                        ProgettiAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
-                            ProgettiAdapterRV.setListaProgetti(listaNuova);
+                        ProgettiDaEliminareAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
+                            ProgettiDaEliminareAdapterRV.setListaProgetti(listaNuova);
                             progettiAdapterRV.notifyDataSetChanged();
                         dismiss();
 

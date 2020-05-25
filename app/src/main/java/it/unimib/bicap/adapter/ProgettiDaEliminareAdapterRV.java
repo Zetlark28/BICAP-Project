@@ -1,8 +1,6 @@
 package it.unimib.bicap.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,52 +9,45 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
 import it.unimib.bicap.EliminaProgetti;
-//import it.unimib.bicap.PresentazioneProgetto;
-import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.R;
 import it.unimib.bicap.service.EliminaDialog;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
-public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.MyViewHolder> {
+public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiDaEliminareAdapterRV.MyViewHolder> {
 
-    Context context;
-    public static List <String> nomi;
-    String from;
-    LayoutInflater layoutInflater;
-    public static  JSONArray listaProgetti;
-    public JSONObject listaProgettiTot;
+    private Context context;
+    private static List<String> nomi;
+    private String from;
+    private LayoutInflater layoutInflater;
+    public static JSONArray listaProgetti;
+    private JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
     private EliminaProgetti eliminaActivity;
-    ProgettiAdapterRV istanzaProgettiAdapter;
+    ProgettiDaEliminareAdapterRV istanzaProgettiAdapter;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
-        ProgettiAdapterRV.listaProgetti = listaProgetti;
+        ProgettiDaEliminareAdapterRV.listaProgetti = listaProgetti;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
-        Button info;
-        Button start;
+        Button elimina;
 
         public MyViewHolder (View itemView){
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
-            info = itemView.findViewById(R.id.btnInfo);
-            start = itemView.findViewById(R.id.btnQuiz);
+            elimina = itemView.findViewById(R.id.btnElimina);
         }
     }
 
-    public ProgettiAdapterRV(Context context, JSONArray progettiAutore, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity, String from){
+    public ProgettiDaEliminareAdapterRV(Context context, JSONArray progettiAutore, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity, String from){
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progettiAutore);
         this.from = from;
@@ -66,7 +57,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         this.istanzaProgettiAdapter =this;
         layoutInflater = (LayoutInflater.from(context));
     }
-    public ProgettiAdapterRV(Context context, JSONArray progetti, String from){
+    public ProgettiDaEliminareAdapterRV(Context context, JSONArray progetti, String from){
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progetti);
         this.from = from;
@@ -76,7 +67,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     }
 
     public MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
-        View v = layoutInflater.inflate(R.layout.activity_item_progetto, parent, false);
+        View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
         MyViewHolder mV = new MyViewHolder(v);
 
         return mV;
@@ -84,20 +75,13 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     public void onBindViewHolder (final MyViewHolder holder, final int position){
             holder.nome.setText(nomi.get(position));
-            holder.start.setOnClickListener(new View.OnClickListener() {
+            holder.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    JSONObject p = getterInfo.getProgetto(listaProgetti, position);
-                    Intent intentProg = new Intent(context, PresentazioneProgetto.class);
-                    intentProg.putExtra("obj", p.toString());
-                    context.startActivity(intentProg);
-                    ((Activity) context).finish();
-                    try {
-                        String descrizione = getterInfo.getDescrizione((JSONObject) listaProgetti.get(position));
-                        Snackbar.make(v, "Descrizione: " + descrizione, Snackbar.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
+                    EliminaDialog eliminaDialog = null;
+                    eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity);
+                    eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                 }
             });
         }
