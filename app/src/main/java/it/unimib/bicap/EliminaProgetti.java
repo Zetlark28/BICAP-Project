@@ -49,6 +49,7 @@ public class EliminaProgetti extends AppCompatActivity {
         setContentView(v);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Eliminazione progetto");
         setSupportActionBar(toolbar);
         final EliminaProgetti instance = this;
 

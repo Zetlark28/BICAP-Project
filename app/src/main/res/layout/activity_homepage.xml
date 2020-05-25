@@ -71,12 +71,12 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnQuiz"
-                        style="materialbutt"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|end"
                         android:layout_marginTop="10dp"
-                        android:text="Rispondi ai quiz" />
+                        android:text="Rispondi ai questionari" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -125,19 +125,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="3dp"
-                        android:text="In questa sezione, andrai a creare i questionari"
+                        android:text="In questa sezione, andrai a creare i progetti"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnProf"
-                        style="materialbutt"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|end"
                         android:layout_marginTop="10dp"
-                        android:text="Accedi"
-                        app:backgroundTint="@color/colorPrimary" />
+                        android:text="Accedi" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
