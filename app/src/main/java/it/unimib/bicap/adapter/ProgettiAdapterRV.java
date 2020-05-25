@@ -1,4 +1,4 @@
-package adapter;
+package it.unimib.bicap.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +34,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     String from;
     LayoutInflater layoutInflater;
     public static  JSONArray listaProgetti;
-    public  JSONObject listaProgettiTot;
+    public JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
     private EliminaProgetti eliminaActivity;
     ProgettiAdapterRV istanzaProgettiAdapter;
@@ -44,10 +45,14 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
+        Button info;
+        Button start;
 
         public MyViewHolder (View itemView){
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
+            info = itemView.findViewById(R.id.btnInfo);
+            start = itemView.findViewById(R.id.btnQuiz);
         }
     }
 
@@ -78,36 +83,15 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     }
 
     public void onBindViewHolder (final MyViewHolder holder, final int position){
-        if (from.equals("listaProgetti")) {
             holder.nome.setText(nomi.get(position));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                }
-            });
-        }
-        else if(from.equals("eliminaProgetti")){
-            holder.nome.setText(nomi.get(position));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    EliminaDialog eliminaDialog = null;
-                    eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position,  istanzaProgettiAdapter,eliminaActivity);
-                    eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
-                }
-            });
-
-        }else if(from.equals("daFare")){
-            holder.nome.setText(nomi.get(position));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     JSONObject p = getterInfo.getProgetto(listaProgetti, position);
                     Intent intentProg = new Intent(context, PresentazioneProgetto.class);
                     intentProg.putExtra("obj", p.toString());
                     context.startActivity(intentProg);
-                    ((Activity)context).finish();
+                    ((Activity) context).finish();
                     try {
                         String descrizione = getterInfo.getDescrizione((JSONObject) listaProgetti.get(position));
                         Snackbar.make(v, "Descrizione: " + descrizione, Snackbar.LENGTH_SHORT).show();
@@ -116,16 +100,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                     }
                 }
             });
-        }else if(from.equals("daTerminare")){
-            holder.nome.setText(nomi.get(position));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
-    }
 
     public int getItemCount (){
         return nomi.size();

@@ -14,9 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Objects;
-
-import adapter.SectionsPagerAdapter;
+import it.unimib.bicap.adapter.SectionsPagerAdapter;
 
 public class ListaProgetti extends AppCompatActivity {
 

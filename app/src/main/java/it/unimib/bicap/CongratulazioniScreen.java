@@ -45,6 +45,8 @@ public class CongratulazioniScreen extends AppCompatActivity {
             }
         },10000);
 
+
+
     }
     //override startActivity con animazione slide avanti
     @Override
