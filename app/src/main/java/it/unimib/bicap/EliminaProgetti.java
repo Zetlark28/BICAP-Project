@@ -20,6 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
+import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
@@ -50,7 +51,7 @@ public class EliminaProgetti extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        final EliminaProgetti instance = this;
+        //final EliminaProgetti instance = this;
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +73,7 @@ public class EliminaProgetti extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-        ProgettiAdapterRV progettiAdapter = new ProgettiAdapterRV(getApplicationContext(), progettiAutore,progetti, instance,from);
+        ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(this, progettiAutore ,from);
         binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
         binding.rvProgettiDaEliminare.addItemDecoration(new DividerItemDecoration(binding.rvProgettiDaEliminare.getContext(), DividerItemDecoration.VERTICAL));
 
