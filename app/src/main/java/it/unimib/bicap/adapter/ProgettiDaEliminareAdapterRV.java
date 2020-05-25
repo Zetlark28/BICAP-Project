@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
@@ -78,10 +79,9 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
             holder.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     EliminaDialog eliminaDialog = null;
                     eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity);
-                    eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
+                    eliminaDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "prova");
                 }
             });
         }
@@ -94,3 +94,5 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         ProgettiAdapterRV.nomi = nomi;
     }
 }
+
+//TODO: implementare controllo quanado la lista dei progetti rimane vuota (Adapter non funziona altrimenti errore nel getJSONArray())
