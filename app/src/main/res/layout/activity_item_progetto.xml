@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#E1E2E1"
     android:orientation="vertical">
 
@@ -40,7 +41,8 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnInfo"
-                        style="?attr/borderlessButtonStyle"
+                        app:icon="@drawable/infook"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:background="@color/sfondo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -49,8 +51,8 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnQuiz"
-                        android:background="@color/sfondo"
-                        style="?attr/borderlessButtonStyle"
+                        style="?attr/materialButtonOutlinedStyle"
+                        app:strokeColor="#a4224b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|end"
