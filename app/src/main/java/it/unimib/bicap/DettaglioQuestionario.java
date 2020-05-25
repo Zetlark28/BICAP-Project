@@ -150,11 +150,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
-                // TODO:  sovrascrittura del file, il JSON è nella variabile progetto -> upload del file
-                // TODO: Reindirizzare l'utente ad un'activity dove ci sarà scritto "Progetto salvato con successo"
-                //Intent home = new Intent(getApplicationContext(), HomePageSomministratore.class);
-                //startActivity(home);
+                Intent congratScreem = new Intent(getApplicationContext(), CongratulazioniScreen.class);
+                startActivity(congratScreem);
             }
         });
 
