@@ -19,13 +19,12 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import it.unimib.bicap.EliminaProgetti;
-//import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.R;
-import it.unimib.bicap.service.EliminaDialog;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
+
+//import it.unimib.bicap.PresentazioneProgetto;
 
 public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.MyViewHolder> {
 
@@ -34,9 +33,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     String from;
     LayoutInflater layoutInflater;
     public static  JSONArray listaProgetti;
-    public JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
-    private EliminaProgetti eliminaActivity;
     ProgettiAdapterRV istanzaProgettiAdapter;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
@@ -56,16 +53,6 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         }
     }
 
-    public ProgettiAdapterRV(Context context, JSONArray progettiAutore, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity, String from){
-        this.context = context;
-        nomi = getterInfo.getNomiProgetti(progettiAutore);
-        this.from = from;
-        listaProgetti = progettiAutore;
-        this.listaProgettiTot = listaProgettiTot;
-        this.eliminaActivity = eliminaActivity;
-        this.istanzaProgettiAdapter =this;
-        layoutInflater = (LayoutInflater.from(context));
-    }
     public ProgettiAdapterRV(Context context, JSONArray progetti, String from){
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progetti);

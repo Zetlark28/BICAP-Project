@@ -1,6 +1,8 @@
 package it.unimib.bicap;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,12 +35,10 @@ import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 // TODO: user & psw -> admin admin
 
 public class HomePageSomministratore extends AppCompatActivity {
-    private StorageReference mStorageRef;
-    private StorageReference ref;
     private static final int ONE_MB = 1024 * 1024;
-    private static JSONArray progetti;
+    private static JSONObject progetti;
     private static JSONArray progettiAutore;
-    private JSONObject progettiToParse = null;
+    private static JSONArray progettiDaSelezionare;
 
 
     private static final String TAG = "HomePageSomministratore";
@@ -61,31 +61,38 @@ public class HomePageSomministratore extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main_menu);
 
-        //TODO: nome autore da settare correttamente
-        final String nomeAutore = "prova";
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        ref = mStorageRef.child("/Progetti/progetti.json");
+
+        final String autore = getSharedPreferences("author", Context.MODE_PRIVATE).getString("autore", null);
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                String json = null;
+                String json;
                 try {
                     json = new String(bytes, "UTF-8");
-                    progettiToParse = new JSONObject(json);
-                    progetti = progettiToParse.getJSONArray("progetti");
+                    progetti = new JSONObject(json);
+                    SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("file",progetti.toString());
+                    editor.commit();
+                    progettiDaSelezionare = progetti.getJSONArray("progetti");
                     progettiAutore = new JSONArray();
-                    for (int i = 0; i < progetti.length(); i++) {
-                        if (progetti.getJSONObject(i).getString("autore").equals(nomeAutore)) {
-                            progettiAutore.put(progetti.getJSONObject(i));
+                    for (int i = 0; i < progettiDaSelezionare.length(); i++) {
+                        if (progettiDaSelezionare.getJSONObject(i).getString("autore").equals(autore)) {
+                            progettiAutore.put(progettiDaSelezionare.getJSONObject(i));
                         }
                     }
+                    editor.putString("progettiTot", progettiAutore.toString());
+                    editor.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             }
-            });
+        });
+
         //Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
@@ -106,7 +113,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
                 intentEliminaProgetto.putExtra("listaProgettiAutore", progettiAutore.toString());
-                intentEliminaProgetto.putExtra("listaProgetti", progettiToParse.toString());
+                intentEliminaProgetto.putExtra("listaProgetti", progetti.toString());
                 startActivity(intentEliminaProgetto);
             }
         });
@@ -116,9 +123,9 @@ public class HomePageSomministratore extends AppCompatActivity {
         binding.btnCrea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (progettiToParse != null) {
+                if (progettiAutore != null) {
                     Intent intentCreaProgetto = new Intent(getApplicationContext(), CreazioneProgetto.class);
-                    intentCreaProgetto.putExtra("progetti", progettiToParse.toString());
+                    intentCreaProgetto.putExtra("progetti", progettiDaSelezionare.toString());
                     startActivity(intentCreaProgetto);
                 } else {
                     Snackbar.make(v, "Attento, è in corso un processo interno!", Snackbar.LENGTH_SHORT).show();

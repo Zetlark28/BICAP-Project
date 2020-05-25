@@ -58,14 +58,6 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         this.istanzaProgettiAdapter =this;
         layoutInflater = (LayoutInflater.from(context));
     }
-    public ProgettiDaEliminareAdapterRV(Context context, JSONArray progetti, String from){
-        this.context = context;
-        nomi = getterInfo.getNomiProgetti(progetti);
-        this.from = from;
-        listaProgetti=progetti;
-        this.istanzaProgettiAdapter =this;
-        layoutInflater = (LayoutInflater.from(context));
-    }
 
     public MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
         View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);

@@ -19,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
 import it.unimib.bicap.service.GetterInfo;
@@ -74,7 +73,7 @@ public class EliminaProgetti extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-        ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(this, progettiAutore ,from);
+        ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), progettiAutore, progetti ,this,from);
         binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
         binding.rvProgettiDaEliminare.addItemDecoration(new DividerItemDecoration(binding.rvProgettiDaEliminare.getContext(), DividerItemDecoration.VERTICAL));
 

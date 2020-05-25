@@ -1,24 +1,35 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
 import it.unimib.bicap.adapter.SectionsPagerAdapter;
 
 public class ListaProgetti extends AppCompatActivity {
 
     private static final String TAG = "ListaProgetti";
+    private static final int ONE_MB = 1024 * 1024;
 
     private SectionsPagerAdapter mSectionsPageAdapter;
 
@@ -47,6 +58,26 @@ public class ListaProgetti extends AppCompatActivity {
             }
         });
 
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
+        ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                String json = null;
+                try {
+                    json = new String(bytes, "UTF-8");
+                    JSONObject progetti = new JSONObject(json);
+                    SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("file",progetti.toString());
+                    editor.commit();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
