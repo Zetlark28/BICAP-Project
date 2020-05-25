@@ -8,31 +8,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
-import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 import it.unimib.bicap.service.JsonBuilder;
@@ -41,15 +28,12 @@ import it.unimib.bicap.service.Utility;
 // TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
 // TODO: La conferma dev'essere chiesta in generale anche
 // TODO: Aggiungere tanti ma tantissimi controlli
-// TODO: Creare il fire writer
+// TODO: Quando creo un nuovo file gli viene dato il nome scaricato dal realtime database, aggiungere il controllo per il download che i tasti non vengano cliccati troppo presto
 
 public class DettaglioQuestionario extends AppCompatActivity {
 
     private static final int CODE_VIDEO = 1;
     private static final int CODE_PDF = 2;
-    private static final String FILE_NAME = "progetti.json";
-    private static final String TAG = "DettaglioQuestionario";
-    private StorageReference mStorageRef;
     private Uri filePath;
     private String type;
     private static String linkToJoinJSON;
@@ -73,7 +57,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Utility.getKeyValue();
         FirebaseApp.initializeApp(this);
-        mStorageRef = FirebaseStorage.getInstance().getReference();
         progettiJSON = getIntent().getStringExtra("progetti");
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
