@@ -43,7 +43,7 @@ public class CongratulazioniScreen extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },10000);
+        },3750);
 
 
 
