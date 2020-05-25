@@ -14,8 +14,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.databinding.ActivityPresentazioneProgettoBinding;
+import it.unimib.bicap.service.ExoPlayerStream;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
+import it.unimib.bicap.service.PDFViewer;
+import it.unimib.bicap.service.Utility;
 
 public class PresentazioneProgetto extends AppCompatActivity {
 
@@ -68,10 +71,25 @@ public class PresentazioneProgetto extends AppCompatActivity {
                 Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
                 if (tipo.equals("video")){
 
+
+                    // TODO: Qui sotto ci andrà il link parsato del video
+                    /*Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
+                    intentVideo.putExtra("linkVideo", "https://firebasestorage.googleapis.com/v0/b/videoupload-c8474.appspot.com/o/Video%2Fvideoplayback.mp4?alt=media&token=89437c18-758c-4482-9fe3-23698d3c277f");
+                    startActivity(intentVideo);*/
+
                 } else if (tipo.equals("pdf")){
 
-                } else if (tipo.equals("quiz")){
+                    // TODO: Qui sotto ci andrà il link parsato del PDF
+                    Utility.downloadPDF("https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Documenti%2FFile-6?alt=media&token=12840198-bfd8-4fa2-aa4b-0ab871ba0bb3");
 
+                   // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
+                    /*Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
+                    intentPDF.putExtra("guideOrPDF", "PDF");
+                    startActivity(intentPDF);*/
+
+
+                } else if (tipo.equals("quiz")){
+                    // TODO: Aggiungere il reindirizzamento all'activity web view
                 }
             }
         });

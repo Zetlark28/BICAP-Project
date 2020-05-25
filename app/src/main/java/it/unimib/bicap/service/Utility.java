@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.OnProgressListener;
@@ -25,7 +26,10 @@ import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 import it.unimib.bicap.DettaglioQuestionario;
@@ -139,9 +143,36 @@ public class Utility {
                             updateProgress(taskSnapshot,binding);
                         }
                     });
-
-
         }
+
+        public static void downloadPDF(String link) {
+            StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(link);
+
+            mStorageRef.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    // Data for "images/island.jpg" is returns, use this as needed
+                        try {
+                            String path = "/data/data/it.unimib.bicap/cache/PDF.pdf";
+                            FileOutputStream stream = new FileOutputStream(path);
+                            try {
+                                stream.write(bytes);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+
+
     private static void updateProgress(UploadTask.TaskSnapshot taskSnapshot, ActivityDettaglioQuestionarioBinding binding) {
         long fileSize = taskSnapshot.getTotalByteCount();
         long uploadBytes = taskSnapshot.getBytesTransferred();
