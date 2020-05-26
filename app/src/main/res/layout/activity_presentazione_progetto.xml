@@ -27,7 +27,11 @@
                 android:layout_width="366dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="20dp">
+                android:layout_margin="20dp"
+                android:background="@color/design_default_color_background"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:id="@+id/cardLn"

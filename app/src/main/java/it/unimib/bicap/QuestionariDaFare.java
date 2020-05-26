@@ -64,7 +64,6 @@ public class QuestionariDaFare extends Fragment {
             }
 
         progettiAdapterRV = new ProgettiAdapterRV(getContext(), progettiDaFare,  from);
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(progettiAdapterRV);

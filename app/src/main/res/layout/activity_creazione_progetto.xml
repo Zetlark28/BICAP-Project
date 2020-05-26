@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/design_default_color_surface"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main"/>
+        layout="@layout/toolbar_main" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e1e2e1">
+        android:background="@color/design_default_color_on_primary">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,6 +43,7 @@
                     android:id="@+id/etNomeProgetto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/design_default_color_on_primary"
                     android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -88,20 +91,20 @@
                     android:id="@+id/etDescrizione"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/design_default_color_on_primary"
                     android:inputType="textMultiLine"
                     android:scrollbars="vertical" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
 
-
             <Button
                 android:id="@+id/imInsertData"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
                 android:text="Inserisci Dati" />
         </LinearLayout>
     </ScrollView>

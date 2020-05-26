@@ -13,7 +13,10 @@
         android:layout_margin="10dp"
         android:background="@color/sfondo"
         android:clickable="false"
-        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:id="@+id/cardLn2"
