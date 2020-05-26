@@ -31,12 +31,16 @@ public class Survey extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        String url = getIntent().getStringExtra("web");
+
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Prova");
         //TODO: inserire metodo get titolo from JSON File
         setSupportActionBar(toolbar);
 
-        binding.surveyWebView.loadUrl("https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
+        //"https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"
+
+        binding.surveyWebView.loadUrl(url); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
         WebSettings webSettings = binding.surveyWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 

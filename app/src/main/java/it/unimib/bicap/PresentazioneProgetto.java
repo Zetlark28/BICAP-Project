@@ -2,6 +2,7 @@ package it.unimib.bicap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -21,7 +22,7 @@ import it.unimib.bicap.service.PDFViewer;
 import it.unimib.bicap.service.Utility;
 
 public class PresentazioneProgetto extends AppCompatActivity {
-
+    private static final String TAG = "PresentazioneProgetto";
     private ActivityPresentazioneProgettoBinding binding;
     GetterInfo getterInfo = new GetterLocal();
 
@@ -61,7 +62,9 @@ public class PresentazioneProgetto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 JSONObject passo = getterInfo.getPasso(getterInfo.getPassi(finalObj), 0);
+                Log.d(TAG, "passo: " + passo.toString());
                 String tipo = "";
+                String tipo1 = "";
                 try {
                     tipo = getterInfo.getTipo(passo);
                 } catch (JSONException e) {
@@ -88,8 +91,13 @@ public class PresentazioneProgetto extends AppCompatActivity {
                     startActivity(intentPDF);*/
 
 
-                } else if (tipo.equals("quiz")){
+                } else if (tipo.equals("questionario")){
                     // TODO: Aggiungere il reindirizzamento all'activity web view
+                    tipo1 = getterInfo.getLink(passo);
+                    Intent intentWeb = new Intent(getApplicationContext(), Survey.class);
+                    intentWeb.putExtra("web", tipo1);
+                    startActivity(intentWeb);
+                    finish();
                 }
             }
         });

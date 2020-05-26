@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#E1E2E1"
     android:orientation="vertical">
@@ -41,7 +41,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnInfo"
-                        app:icon="@drawable/infook"
+
                         style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                         android:background="@color/sfondo"
                         android:layout_width="wrap_content"

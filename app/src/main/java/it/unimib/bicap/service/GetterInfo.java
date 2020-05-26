@@ -19,5 +19,7 @@ public interface GetterInfo {
 
     JSONArray getlistaProgetti(String stringProgetti);
 
+    String getLink (JSONObject progetto);
+
     List<String> getNomiProgetti(JSONArray listaProgetti);
 }
