@@ -5,7 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E1E2E1"
+    android:background="@color/common_google_signin_btn_text_dark_default"
     android:orientation="vertical">
 
     <include
@@ -18,115 +18,129 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvNomeProgetto"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardQuiz"
+                android:layout_width="366dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/roboto"
-                android:text="@string/nome_progetto"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp" />
+                android:layout_margin="20dp">
 
-            <TextView
-                android:id="@+id/tvNomeProgettoFinale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:fontFamily="@font/roboto"
-                android:text="prova"
-                android:textColor="@color/scritta"
-                android:textSize="20sp" />
+                <LinearLayout
+                    android:id="@+id/cardLn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvNomeAutore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/roboto"
-                android:text="@string/autore"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp" />
+                    <LinearLayout
+                        android:id="@+id/cardLn2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvAutore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:fontFamily="@font/roboto"
-                android:text="prova"
-                android:textColor="@color/scritta"
-                android:textSize="20sp" />
+                        <TextView
+                            android:id="@+id/tvNomeProgettoFinale"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:padding="5dp"
+                            android:text="@string/nome"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            android:textColor="@color/colorPrimary" />
 
-            <TextView
-                android:id="@+id/tvNumeroQuestionari"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/roboto"
-                android:text="@string/numero_questionari"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tvNumeroQuestionariFinale"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/roboto"
-                android:text="prova"
-                android:textColor="@color/scritta"
-                android:textSize="20sp" />
+                            <TextView
+                                android:id="@+id/scrittaAutore"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="Autore: "
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary" />
 
-            <TextView
-                android:id="@+id/tvDescrizione"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/roboto"
-                android:text="@string/descrizione"
-                android:textColor="@color/colorPrimary"
-                android:textSize="30sp" />
+                            <TextView
+                                android:id="@+id/tvAutore"
+                                android:layout_width="91dp"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="prova"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary" />
+                        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvDescrizioneFinale"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:fontFamily="@font/roboto"
-                android:gravity="center_horizontal"
-                android:scrollbars="vertical"
-                android:text="Prova"
-                android:textColor="@color/scritta"
-                android:textSize="20sp" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnStartProject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:adjustViewBounds="true"
-                android:fontFamily="@font/roboto"
-                android:scaleType="fitCenter"
-                android:text="Inizia progetto"
-                app:srcCompat="@drawable/inziaprogetto"
-                tools:ignore="ContentDescription" />
+                            <TextView
+                                android:id="@+id/scrittaRisorse"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="Numero di risorse: "
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary" />
+
+                            <TextView
+                                android:id="@+id/tvNumeroQuestionariFinale"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="prova"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/scrittaDescrizione"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="Descrizione: "
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary" />
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/tvDescrizioneFinale"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="prova"
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textColor="?android:attr/textColorSecondary" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnStartProject"
+                            style="?attr/materialButtonOutlinedStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|end"
+                            android:layout_marginTop="10dp"
+                            android:text="Inizia Progetto"
+                            app:strokeColor="#a4224b" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
     </ScrollView>
 
