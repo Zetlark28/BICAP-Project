@@ -54,6 +54,11 @@ public class GetterWebService implements GetterInfo {
     }
 
     @Override
+    public String getLink(JSONObject progetto) {
+        return null;
+    }
+
+    @Override
     public List<String> getNomiProgetti(JSONArray listaProgetti) {
         return null;
     }

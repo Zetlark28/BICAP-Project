@@ -122,4 +122,14 @@ public class GetterLocal implements GetterInfo {
 
         return  null;
     }
+
+    public String getLink (JSONObject progetto){
+        try {
+            return progetto.getString("link");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
