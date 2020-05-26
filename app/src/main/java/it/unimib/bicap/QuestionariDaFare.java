@@ -25,9 +25,15 @@ public class QuestionariDaFare extends Fragment {
     private static final String TAG = "QuestionariDaFare";
     private static JSONArray progetti;
     private DBManager db=null;
+    private JSONObject progettiTot;
 
     private ProgettiAdapterRV progettiAdapterRV;
     private String from = "daFare";
+
+    public QuestionariDaFare(JSONObject progettiTot) {
+        this.progettiTot=progettiTot;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -37,11 +43,8 @@ public class QuestionariDaFare extends Fragment {
 
        final String idUtente = "prova";
 
-        JSONObject progettiTot;
         try {
-             progettiTot = new JSONObject(getContext().getSharedPreferences("author",getContext().MODE_PRIVATE).getString("file", null));
             progetti = progettiTot.getJSONArray("progetti");
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
