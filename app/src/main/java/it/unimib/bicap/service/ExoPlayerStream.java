@@ -1,8 +1,5 @@
 package it.unimib.bicap.service;
 
-/*  Si aggiungono le dipendenze in build.grandle(Module:app)
-    Si aggiunge l'activity in AndroidManifest
- */
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,6 +92,10 @@ public class ExoPlayerStream extends AppCompatActivity {
                     getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 } else {
                     getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                }
+
+                if (playbackState == ExoPlayer.STATE_ENDED) {
+                    // TODO: Aggiungere il codice per gestire la fine del video
                 }
             }
 
