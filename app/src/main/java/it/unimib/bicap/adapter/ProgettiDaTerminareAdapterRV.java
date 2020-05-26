@@ -10,11 +10,9 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.List;
 
-import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.R;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
@@ -28,13 +26,11 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     String from;
     LayoutInflater layoutInflater;
     public static  JSONArray listaProgetti;
-    public  JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
-    private EliminaProgetti eliminaActivity;
     ProgettiDaTerminareAdapterRV istanzaProgettiAdapter;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
-        ProgettiAdapterRV.listaProgetti = listaProgetti;
+        ProgettiDaTerminareAdapterRV.listaProgetti = listaProgetti;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -48,17 +44,6 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
             info = itemView.findViewById(R.id.btnInfo);
             start = itemView.findViewById(R.id.btnCrea);
         }
-    }
-
-    public ProgettiDaTerminareAdapterRV(Context context, JSONArray progettiAutore, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity, String from){
-        this.context = context;
-        nomi = getterInfo.getNomiProgetti(progettiAutore);
-        this.from = from;
-        listaProgetti = progettiAutore;
-        this.listaProgettiTot = listaProgettiTot;
-        this.eliminaActivity = eliminaActivity;
-        this.istanzaProgettiAdapter =this;
-        layoutInflater = (LayoutInflater.from(context));
     }
     public ProgettiDaTerminareAdapterRV(Context context, JSONArray progetti, String from){
         this.context = context;
@@ -93,6 +78,6 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     }
 
     public static void setNomi(List<String> nomi) {
-        ProgettiAdapterRV.nomi = nomi;
+        ProgettiDaTerminareAdapterRV.nomi = nomi;
     }
 }

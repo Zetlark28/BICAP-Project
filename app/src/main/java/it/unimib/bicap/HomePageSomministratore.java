@@ -74,8 +74,8 @@ public class HomePageSomministratore extends AppCompatActivity {
                     progetti = new JSONObject(json);
                     SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("file",progetti.toString());
-                    editor.commit();
+//                    editor.putString("file",progetti.toString());
+//                    editor.commit();
                     progettiDaSelezionare = progetti.getJSONArray("progetti");
                     progettiAutore = new JSONArray();
                     for (int i = 0; i < progettiDaSelezionare.length(); i++) {
@@ -83,8 +83,8 @@ public class HomePageSomministratore extends AppCompatActivity {
                             progettiAutore.put(progettiDaSelezionare.getJSONObject(i));
                         }
                     }
-                    editor.putString("progettiTot", progettiAutore.toString());
-                    editor.commit();
+//                    editor.putString("progettiTot", progettiAutore.toString());
+//                    editor.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
@@ -23,9 +22,7 @@ import it.unimib.bicap.service.GetterLocal;
 
 public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiDaEliminareAdapterRV.MyViewHolder> {
 
-    private Context context;
     private static List<String> nomi;
-    private String from;
     private LayoutInflater layoutInflater;
     public static JSONArray listaProgetti;
     private JSONObject listaProgettiTot;
@@ -48,10 +45,8 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         }
     }
 
-    public ProgettiDaEliminareAdapterRV(Context context, JSONArray progettiAutore, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity, String from){
-        this.context = context;
+    public ProgettiDaEliminareAdapterRV(Context context, JSONArray progettiAutore, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity){
         nomi = getterInfo.getNomiProgetti(progettiAutore);
-        this.from = from;
         listaProgetti = progettiAutore;
         this.listaProgettiTot = listaProgettiTot;
         this.eliminaActivity = eliminaActivity;

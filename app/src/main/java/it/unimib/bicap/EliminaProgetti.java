@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
 import it.unimib.bicap.service.GetterInfo;
@@ -26,14 +28,9 @@ import it.unimib.bicap.service.GetterLocal;
 
 public class EliminaProgetti extends AppCompatActivity {
 
-    private GetterInfo getterInfo = new GetterLocal();
     private static final String TAG = "EliminaProgetti";
     private ActivityEliminaProgettiBinding binding;
-    private StorageReference mStorageRef;
-    private StorageReference ref;
-    private static final int ONE_MB = 1024 * 1024;
     private static JSONObject progetti;
-    private Button bottone;
     private static JSONArray progettiAutore;
 
 
@@ -66,14 +63,14 @@ public class EliminaProgetti extends AppCompatActivity {
 
             //TODO: check extras not null
             progettiAutore = new JSONArray(getIntent().getExtras().getString("listaProgettiAutore"));
-            progetti = new JSONObject(getIntent().getExtras().getString("listaProgetti"));
+            progetti = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString("listaProgetti")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-        ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), progettiAutore, progetti ,this,from);
+        ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), progettiAutore, progetti ,this);
         binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
         binding.rvProgettiDaEliminare.addItemDecoration(new DividerItemDecoration(binding.rvProgettiDaEliminare.getContext(), DividerItemDecoration.VERTICAL));
 
