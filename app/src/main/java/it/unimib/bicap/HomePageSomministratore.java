@@ -1,8 +1,10 @@
 package it.unimib.bicap;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -39,6 +41,7 @@ public class HomePageSomministratore extends AppCompatActivity {
     private static JSONObject progetti;
     private static JSONArray progettiAutore;
     private static JSONArray progettiDaSelezionare;
+    private ProgressDialog progressDialog;
 
 
     private static final String TAG = "HomePageSomministratore";
@@ -61,7 +64,12 @@ public class HomePageSomministratore extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main_menu);
 
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Attendi");
+        progressDialog.setProgress(10);
+        progressDialog.setMax(100);
+        progressDialog.setMessage("Caricamento");
+        new DownloadProgettiTask().execute();
         final String autore = getSharedPreferences("author", Context.MODE_PRIVATE).getString("autore", null);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
@@ -90,6 +98,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+                progressDialog.dismiss();
             }
         });
 
@@ -192,6 +201,15 @@ public class HomePageSomministratore extends AppCompatActivity {
             }else{
                 startActivity(intentLogout);
             }
+        }
+    }
+
+    public class DownloadProgettiTask extends AsyncTask<Void, Void, Void> {
+        public void onPreExecute() {
+            progressDialog.show();
+        }
+        public Void doInBackground(Void... unused) {
+            return null;
         }
     }
 }
