@@ -141,8 +141,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
                 Log.d("oggetto", progetto.toString());
                 try {
-                    JSONObject jsonObject = new JSONObject(progettiJSON);
-                    listaProgetti = jsonObject.getJSONArray("progetti");
+                    JSONArray listaProgetti= new JSONArray(progettiJSON);
                     JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti,progetto);
                     progetti.put("progetti", listaProgetti);
                     Log.d("oggetto", progetti.toString());
