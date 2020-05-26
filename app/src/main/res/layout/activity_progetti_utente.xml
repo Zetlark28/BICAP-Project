@@ -5,6 +5,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/design_default_color_background"
     android:orientation="vertical"
     tools:context=".ListaProgetti">
 
@@ -17,15 +18,15 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/project_tab"
+        style="@style/Widget.MaterialComponents.TabLayout.Colored"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.TabLayout.Colored"/>
+        android:layout_height="wrap_content" />
 
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/project_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E1E2E1" />
+        android:background="@color/design_default_color_on_primary" />
 
 </LinearLayout>

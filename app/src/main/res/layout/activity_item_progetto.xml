@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#E1E2E1"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
@@ -12,7 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@color/sfondo"
-        android:clickable="false">
+        android:clickable="false"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
 
             <LinearLayout
                 android:id="@+id/cardLn2"

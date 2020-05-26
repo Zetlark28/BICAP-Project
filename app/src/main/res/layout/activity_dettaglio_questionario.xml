@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sfondo"
+    android:background="@color/design_default_color_background"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main"/>
+        layout="@layout/toolbar_main" />
 
     <ScrollView
         android:layout_width="match_parent"
