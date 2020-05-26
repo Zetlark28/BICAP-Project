@@ -73,7 +73,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
                 public void onClick(View v) {
                     EliminaDialog eliminaDialog = null;
                     eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity);
-                    eliminaDialog.show(((AppCompatActivity)context).getSupportFragmentManager(), "prova");
+                    eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                 }
             });
         }
@@ -83,7 +83,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     }
 
     public static void setNomi(List<String> nomi) {
-        ProgettiAdapterRV.nomi = nomi;
+        ProgettiDaEliminareAdapterRV.nomi = nomi;
     }
 }
 
