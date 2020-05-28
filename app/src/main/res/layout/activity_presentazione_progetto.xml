@@ -74,7 +74,7 @@
 
                             <TextView
                                 android:id="@+id/tvAutore"
-                                android:layout_width="91dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
                                 android:text="prova"

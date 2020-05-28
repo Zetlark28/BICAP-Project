@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,12 +49,24 @@ public class HomePageSomministratore extends AppCompatActivity {
     private ActivityHomepageSomministratoreBinding binding;
     private FirebaseAuth mAuth;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAuth.getCurrentUser() == null)
+            mAuth.signInWithEmailAndPassword("admin@admin.com", "alessio");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.d(TAG, "current user: " + currentUser.getEmail());
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+         if(mAuth == null)
+             Log.d(TAG, "mauth è null");
 
         binding = ActivityHomepageSomministratoreBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -144,6 +157,16 @@ public class HomePageSomministratore extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        MenuItem item = menu.findItem(R.id.addSomm);
+        if (! email.equals("admin@admin.com"))
+            item.setVisible(false);
+
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
@@ -153,7 +176,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         SpannableString sLogOut = new SpannableString("LogOut");
         sLogOut.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sLogOut.length(), 0);
         itemLogOut.setTitle(sLogOut);
-
         MenuItem itemGuide = menu.getItem(1);
         SpannableString sGuide = new SpannableString("Scarica la Guida");
         sGuide.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sGuide.length(), 0);
@@ -170,7 +192,15 @@ public class HomePageSomministratore extends AppCompatActivity {
             return true;
         }
         else if (item.getItemId() == R.id.menuDownload){
-            
+
+        }
+        else if (item.getItemId() == R.id.addSomm){
+            String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            Intent intentAddSomm = new Intent (this, CreazioneSomministratore.class);
+            startActivity(intentAddSomm);
+            intentAddSomm.putExtra("email", email);
+            intentAddSomm.putExtra("user", mAuth.getCurrentUser());
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

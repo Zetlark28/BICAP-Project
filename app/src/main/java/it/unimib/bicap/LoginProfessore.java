@@ -51,46 +51,41 @@ public class LoginProfessore extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser, boolean fromHome) {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        this.getSharedPreferences("author", 0).edit().remove("autore");
         final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
 
         if (user != null) {
             if (fromHome) {
                 String email = user.getEmail();
+                Log.d(TAG, email);
                 // Read from the database
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
 
-                if(sharedPref.getString("autore", null) == null) {
+                        String autore = dataSnapshot.child(user.getUid()).child("autore").getValue().toString();
 
-                    Log.d(TAG, "shared preferences non presenti");
+                        Log.d(TAG, "Value is: " + autore);
 
-                    myRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
+                        SharedPreferences.Editor editor = sharedPref.edit();
 
-                            String autore = dataSnapshot.child(user.getUid()).child("autore").getValue().toString();
+                        editor.putString("autore", autore);
+                        editor.commit();
+                    }
 
-                            Log.d(TAG, "Value is: " + autore);
-
-                            SharedPreferences.Editor editor = sharedPref.edit();
-
-                            editor.putString("autore", autore);
-                            editor.commit();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Log.w(TAG, "Failed to read value.", error.toException());
-                        }
-                    });
-                }
-                else
-                    Log.d(TAG, "shared preferences presenti");
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
 
                 Intent intentLogged = new Intent(this, HomePageSomministratore.class);
-                intentLogged.putExtra("Email", email);
+                //intentLogged.putExtra("Email", email);
                 intentLogged.putExtra("fromHome", fromHome);
+                intentLogged.putExtra("email", email);
                 startActivity(intentLogged);
                 finish();
             } else {
@@ -175,5 +170,6 @@ public class LoginProfessore extends AppCompatActivity {
 
 //TODO: Email: admin@admin.com Password:alessio
 //TODO: aaggiungere nome e cognome
+//TODO: aggiungere il controllo se viene eliminato e aggiungere la possibilità di eliminare un somministratore
 
 

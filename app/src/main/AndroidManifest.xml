@@ -53,6 +53,7 @@
         <activity android:name=".PresentazioneProgetto"/>
         <activity android:name=".CongratulazioniScreen"/>
         <activity android:name=".service.PDFViewer"/>
+        <activity android:name=".CreazioneSomministratore"/>
 
         <meta-data
             android:name="preloaded_fonts"

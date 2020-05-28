@@ -10,12 +10,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
 public class HomePage extends AppCompatActivity {
 
     private static final String TAG = "HomePage";
     private ActivityHomepageBinding binding;
+    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
