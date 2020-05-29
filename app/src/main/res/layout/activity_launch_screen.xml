@@ -5,14 +5,14 @@
     android:id="@+id/launchScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/design_default_color_on_primary">
+    android:background="#e1e2e1">
 
     <pl.droidsonroids.gif.GifTextView
         android:id="@+id/splash_congratulazioni"
         android:layout_width="268dp"
         android:layout_height="487dp"
-        android:background="@drawable/launchscreenfinale"
-        android:backgroundTint="#E1E2E1"
+        android:background="@drawable/splashscreendefinitivo"
+        android:backgroundTint="#e1e2e1"
         android:outlineProvider="background"
         android:outlineSpotShadowColor="@color/colorPrimary"
         android:singleLine="false"
