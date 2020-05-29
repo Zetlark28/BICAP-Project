@@ -18,6 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/design_default_color_on_primary"
             android:orientation="vertical">
 
 
@@ -27,7 +28,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
-                android:background="@color/design_default_color_background">
+                android:background="@color/design_default_color_background"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:id="@+id/cardLn"
@@ -42,6 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        android:background="@color/design_default_color_on_primary"
                         android:orientation="vertical">
 
                         <TextView
@@ -87,9 +92,9 @@
                                 android:id="@+id/scrittaRisorse"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:padding="3dp"
-                                android:layout_marginTop="40dp"
                                 android:layout_marginStart="10dp"
+                                android:layout_marginTop="40dp"
+                                android:padding="3dp"
                                 android:text="Autore: "
                                 android:textAppearance="?attr/textAppearanceBody2"
                                 android:textColor="?android:attr/textColorSecondary" />
@@ -134,13 +139,12 @@
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/imInsertData"
                             style="?attr/materialButtonOutlinedStyle"
-                            app:strokeColor = "#a4224b"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal|end"
                             android:layout_marginTop="10dp"
                             android:text="Inserisci Dati"
-                            />
+                            app:strokeColor="#a4224b" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
