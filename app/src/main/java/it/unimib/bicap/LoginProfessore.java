@@ -108,7 +108,7 @@ public class LoginProfessore extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
             Toolbar toolbar = findViewById(R.id.toolbar_main);
-            toolbar.setTitle("Area Professore");
+            toolbar.setTitle("Area Somministratore");
             setSupportActionBar(toolbar);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
