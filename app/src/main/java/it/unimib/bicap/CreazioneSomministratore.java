@@ -120,4 +120,5 @@ public class CreazioneSomministratore extends AppCompatActivity {
                     }
                 });
     }
+
 }

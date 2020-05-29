@@ -211,7 +211,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
-
     @Override
     public void finish(){
         super.finish();

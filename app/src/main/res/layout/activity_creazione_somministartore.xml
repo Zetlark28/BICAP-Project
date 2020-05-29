@@ -14,11 +14,11 @@
         android:id="@+id/tVCreaSomm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Aggiungere i dati del somministratore"
-        android:textColor="@color/design_default_color_background"
-        android:textSize="40sp"
+        android:layout_marginTop="20sp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="20sp"/>
+        android:text="Aggiungi i dati del somministratore"
+        android:textColor="@color/design_default_color_background"
+        android:textSize="40sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,8 +49,8 @@
                     android:id="@+id/etNomneSomm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    />
+                    android:background="@color/design_default_color_on_primary"
+                    android:inputType="textPersonName" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,8 +80,8 @@
                     android:id="@+id/etEmailSomm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    />
+                    android:background="@color/design_default_color_on_primary"
+                    android:inputType="textEmailAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,8 +111,8 @@
                     android:id="@+id/etPasswordSomm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    />
+                    android:background="@color/design_default_color_on_primary"
+                    android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,8 +122,12 @@
             android:id="@+id/btnRegistraSomm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registra Somministartore"
-            android:layout_marginTop="50dp"/>
+            android:layout_marginTop="50dp"
+            android:text="Registra Somministratore"
+            style="?attr/materialButtonOutlinedStyle"
+            app:strokeColor="#FFFFFF"
+            android:textColor="@color/design_default_color_background"
+            app:backgroundTint="@color/colorPrimary" />
 
     </LinearLayout>
 
