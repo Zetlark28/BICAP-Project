@@ -50,8 +50,8 @@ public class QuestionariDaFare extends Fragment {
         }
 
         db = new DBManager(getContext());
-        Cursor progettiCompletati = db.selectCompletati(idUtente);
-        Cursor progettiDaCompletare = db.selectDaCompletare(idUtente);
+        Cursor progettiCompletati = db.selectCompletati();
+        Cursor progettiDaCompletare = db.selectDaCompletare();
 
         JSONArray progettiDaFare = new JSONArray();
 
