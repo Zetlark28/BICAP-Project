@@ -173,7 +173,7 @@ public class HomePageSomministratore extends AppCompatActivity {
 
 
         /*MenuItem itemLogOut = menu.getItem(0);
-        SpannableString sLogOut = new SpannableString("LogOut");
+        SpannableString sLogOut = new SpannableString("Logout");
         sLogOut.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sLogOut.length(), 0);
         itemLogOut.setTitle(sLogOut);
         MenuItem itemGuide = menu.getItem(1);
