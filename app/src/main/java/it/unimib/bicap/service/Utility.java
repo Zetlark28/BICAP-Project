@@ -68,8 +68,6 @@ public class Utility {
             OutputStreamWriter osw = new OutputStreamWriter(fOut);
             osw.write(progetti.toString());
             osw.flush();
-            Toast.makeText(finalContext, "Composition saved", Toast.LENGTH_LONG).show();
-
         } catch (Exception e) {
             Toast.makeText(finalBaseContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
