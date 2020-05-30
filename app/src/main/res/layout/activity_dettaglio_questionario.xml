@@ -141,7 +141,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
-                                android:text="Inserisci link del questionario"
+                                android:text="Inserisci il link del questionario"
                                 android:textAppearance="?attr/textAppearanceBody2"
                                 android:layout_marginTop="5dp"
                                 android:textColor="?android:attr/textColorSecondary" />

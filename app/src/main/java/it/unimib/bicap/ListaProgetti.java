@@ -93,7 +93,7 @@ public class ListaProgetti extends AppCompatActivity {
                     String json = new String(bytes, "UTF-8");
                     progettiTot = new JSONObject(json);
                     SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-                    adapter.addFragment(new QuestionariDaFare(progettiTot), "QUESTIONARI DISPONIBILI");
+                    adapter.addFragment(new QuestionariDaFare(progettiTot), "QUESTIONARI ATTIVI");
                     adapter.addFragment(new QuestionariDaTerminare(progettiTot), "QUESTIONARI DA FINIRE");
                     viewPager.setAdapter(adapter);
                     progressDialog.dismiss();
