@@ -14,7 +14,7 @@
         android:id="@+id/tVCreaSomm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="5dp"
         android:gravity="center_horizontal"
         android:text="Aggiungi i dati del somministratore"
         android:textColor="@color/design_default_color_background"
@@ -23,6 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="-150dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -43,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nome e Cognome"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etNomneSomm"
@@ -74,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmailSomm"
@@ -105,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="20dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPasswordSomm"
@@ -120,14 +121,15 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRegistraSomm"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:text="Registra Somministratore"
-            style="?attr/materialButtonOutlinedStyle"
-            app:strokeColor="#FFFFFF"
             android:textColor="@color/design_default_color_background"
-            app:backgroundTint="@color/colorPrimary" />
+            android:textSize="18sp"
+            app:backgroundTint="@color/colorPrimary"
+            app:strokeColor="#FFFFFF" />
 
     </LinearLayout>
 

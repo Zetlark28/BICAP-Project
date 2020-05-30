@@ -101,7 +101,7 @@ public class QuestionariDaTerminare extends Fragment {
             e.printStackTrace();
         }
 
-        Cursor progettiDaCompletare = db.selectDaCompletare(idUtente);
+        Cursor progettiDaCompletare = db.selectDaCompletare();
         JSONArray progDaCompletare= new JSONArray();
         try {
             for(int i = 0; i<progetti.length(); i++) {

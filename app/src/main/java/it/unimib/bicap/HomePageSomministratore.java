@@ -2,11 +2,13 @@ package it.unimib.bicap;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,8 +45,8 @@ public class HomePageSomministratore extends AppCompatActivity {
     private static JSONArray progettiAutore;
     private static JSONArray progettiDaSelezionare;
     private ProgressDialog progressDialog;
-
-
+    private ProgressDialog errorDialog;
+    private CountDownTimer cTimer;
     private static final String TAG = "HomePageSomministratore";
     private ActivityHomepageSomministratoreBinding binding;
     private FirebaseAuth mAuth;
@@ -78,10 +80,13 @@ public class HomePageSomministratore extends AppCompatActivity {
         toolbar.inflateMenu(R.menu.main_menu);
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Attendi");
+        progressDialog.setTitle("Caricamento...");
         progressDialog.setProgress(10);
         progressDialog.setMax(100);
-        progressDialog.setMessage("Caricamento");
+        progressDialog.setMessage("Attendi!");
+        errorDialog = new ProgressDialog(this);
+        startTimer();
+
         new DownloadProgettiTask().execute();
         final String autore = getSharedPreferences("author", Context.MODE_PRIVATE).getString("autore", null);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -92,6 +97,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 String json;
                 try {
                     json = new String(bytes, "UTF-8");
+                    Log.d("kek", json.toString());
                     progetti = new JSONObject(json);
                     SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
@@ -112,6 +118,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 progressDialog.dismiss();
+                cancelTimer();
             }
         });
 
@@ -182,6 +189,36 @@ public class HomePageSomministratore extends AppCompatActivity {
         itemGuide.setTitle(sGuide);*/
 
         return true;
+    }
+    void startTimer() {
+        cTimer = new CountDownTimer(10000, 1000) {
+            public void onTick(long millisUntilFinished) {
+            }
+            public void onFinish() {
+                errorCarica();
+            }
+        };
+        cTimer.start();
+    }
+
+    void cancelTimer() {
+        if(cTimer!=null)
+            cTimer.cancel();
+    }
+    public void errorCarica() {
+        progressDialog.dismiss();
+        errorDialog.setTitle("Problemi di connessione.");
+        errorDialog.setMessage("Assicurati di essere connesso all'internet e riprova!");
+        errorDialog.setCancelable(false);
+        errorDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Ricarica", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent (getApplicationContext(), HomePageSomministratore.class);
+                startActivity(HomePageSomministratoreRicarica);
+                finish();
+            }
+        });
+        errorDialog.show();
     }
 
     @Override

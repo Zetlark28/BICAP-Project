@@ -18,9 +18,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/accedi"
+        android:text="Login Somministratore"
         android:textColor="@color/design_default_color_on_primary"
-        android:textSize="40sp" />
+        android:textSize="35sp" />
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -86,16 +86,18 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/imAccedi"
-        android:layout_width="77dp"
-        android:layout_height="75dp"
+        style="?attr/materialButtonOutlinedStyle"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        android:background="@color/colorPrimary"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/enter">
+        android:text="Accedi"
+        android:textColor="@color/design_default_color_background"
+        android:textSize="18sp"
+        app:backgroundTint="@color/colorPrimary"
+        app:strokeColor="#FFFFFF" />
 
-    </ImageButton>
 
 </LinearLayout>
