@@ -48,6 +48,7 @@ public class Utility {
      private static String keyValue;
 
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
+         Log.d("oggetto", "Utility:Write");
          Context context = null;
          Context baseContext = null;
          Boolean writing = Boolean.FALSE;
@@ -56,10 +57,12 @@ public class Utility {
              context = activity.getApplicationContext();
              baseContext = activity.getBaseContext();
              writing=Boolean.TRUE;
+             Log.d("oggetto", "1");
          }else if (activityInstance instanceof EliminaProgetti){
              EliminaProgetti activity = (EliminaProgetti) activityInstance;
              context = activity.getApplicationContext();
              baseContext = activity.getBaseContext();
+             Log.d("oggetto", "2");
          }
          final Context finalContext = context;
          final Context finalBaseContext = baseContext;

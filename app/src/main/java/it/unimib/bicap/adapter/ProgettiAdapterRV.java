@@ -71,7 +71,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     public void onBindViewHolder (final MyViewHolder holder, final int position){
             holder.nome.setText(nomi.get(position));
-            holder.start.setOnClickListener(new View.OnClickListener() {
+            holder.info.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     JSONObject p = getterInfo.getProgetto(listaProgetti, position);
