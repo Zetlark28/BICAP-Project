@@ -48,13 +48,12 @@ public class DBManager {
         }
     }
 
-    public Cursor selectCompletati(String idUtente) {
+    public Cursor selectCompletati() {
         Cursor crs=null;
         try
         {
             SQLiteDatabase db=dbhelper.getReadableDatabase();
-            crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},DBConstants.FIELD_ID_UTENTE + "=?",
-                    new String[]{idUtente}, null, null, null, null);
+            crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},null,null, null, null, null, null);
         }
         catch(SQLiteException sqle)
         {
@@ -90,13 +89,12 @@ public class DBManager {
         return false;
     }
 
-    public Cursor selectDaCompletare(String idUtente) {
+    public Cursor selectDaCompletare() {
         Cursor crs=null;
         try
         {
             SQLiteDatabase db=dbhelper.getReadableDatabase();
-            crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},DBConstants.FIELD_ID_UTENTE + "=?",
-                    new String[]{idUtente}, null, null, null, null);
+            crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},null, null, null, null, null, null);
         }
         catch(SQLiteException sqle)
         {
