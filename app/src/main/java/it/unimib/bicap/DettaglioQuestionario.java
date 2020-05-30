@@ -134,6 +134,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Log.d("oggetto", progettiJSON);
+
                if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
                     aggiungiPassi();
                 }
@@ -141,18 +143,19 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
                 Log.d("oggetto", progetto.toString());
                 try {
+
+
                     JSONObject jsonObject = new JSONObject(progettiJSON);
+
+
                     listaProgetti = jsonObject.getJSONArray("progetti");
                     JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti,progetto);
                     progetti.put("progetti", listaProgetti);
                     Log.d("oggetto", progetti.toString());
-
                     Utility.write(progetti,instance,binding);
-//                    write(progetti);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 Intent congratScreem = new Intent(getApplicationContext(), CongratulazioniScreen.class);
                 startActivity(congratScreem);
             }

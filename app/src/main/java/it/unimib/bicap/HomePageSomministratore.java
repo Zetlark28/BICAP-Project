@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -71,6 +72,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 String json;
                 try {
                     json = new String(bytes, "UTF-8");
+                    Log.d("kek", json.toString());
                     progetti = new JSONObject(json);
                     SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
