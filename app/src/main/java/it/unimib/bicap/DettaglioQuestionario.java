@@ -1,6 +1,7 @@
 package it.unimib.bicap;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -99,12 +100,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.disabilita));
                     binding.imInsertPdf.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                    binding.btnAnnulla.setBackgroundColor(getResources().getColor(R.color.disabilita));
 
 
                     binding.imSaveProject.setClickable(true);
                     binding.imNextStep.setClickable(true);
                     binding.imCaricaVideo.setClickable(false);
                     binding.imInsertPdf.setClickable(false);
+                    binding.btnAnnulla.setClickable(false);
 
                     if (type.equals("Video")) {
                         Utility.uploadFile(filePath,"Video/" + key,instance,binding);
@@ -116,16 +119,18 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     }
                 } else {
 
-                    binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    binding.imInsertPdf.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
+                    binding.imInsertPdf.setBackgroundColor(Color.WHITE);
                     binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.btnAnnulla.setBackgroundColor(Color.WHITE);
 
                     binding.imInsertPdf.setClickable(true);
                     binding.imCaricaVideo.setClickable(true);
                     binding.imNextStep.setClickable(true);
                     binding.imSaveProject.setClickable(true);
                     binding.etLink.setEnabled(true);
+                    binding.btnAnnulla.setClickable(true);
 
                     Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
                 }
@@ -139,16 +144,18 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                binding.imInsertPdf.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
                 binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
                 binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.btnAnnulla.setBackgroundColor(Color.WHITE);
 
                 binding.imInsertPdf.setClickable(true);
                 binding.imSaveProject.setClickable(true);
                 binding.imCaricaVideo.setClickable(true);
                 binding.imNextStep.setClickable(true);
                 binding.etLink.setEnabled(true);
+                binding.btnAnnulla.setClickable(true);
 
                 Utility.getKeyValue();
                 //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
@@ -229,7 +236,27 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         "Seleziona un PDF"), CODE_PDF);
             }
         });
+
+        binding.btnAnnulla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.imCaricaVideo.setClickable(true);
+                binding.imSaveProject.setClickable(true);
+                binding.imNextStep.setClickable(true);
+                binding.etLink.setEnabled(true);
+                binding.imInsertPdf.setClickable(true);
+
+                binding.etLink.setText("");
+                filePath = null;
+
+                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+            }
+        });
     }
+
 
 
     private void aggiungiPassi() {
