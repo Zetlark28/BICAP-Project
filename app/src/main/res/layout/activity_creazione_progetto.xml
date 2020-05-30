@@ -66,6 +66,7 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/tfNomeProgetto"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
@@ -75,10 +76,13 @@
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/etNomeProgetto"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/design_default_color_on_primary"
-                                    android:inputType="textEmailAddress" />
+                                    android:fontFamily="@font/roboto"
+                                    android:inputType="textEmailAddress"
+                                    android:singleLine="false"
+                                    app:boxStrokeColor="#a4224b"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
@@ -117,20 +121,23 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/tfDescrizione"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
-                                android:layout_height="100dp"
+                                android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="20dp"
-                                android:hint="@string/descrizione">
+                                android:hint="Descrizione">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/etDescrizione"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@color/design_default_color_on_primary"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto"
                                     android:inputType="textMultiLine"
-                                    android:scrollbars="vertical" />
+                                    app:boxStrokeColor="#a4224b"
+                                    android:scrollbars="vertical"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
 

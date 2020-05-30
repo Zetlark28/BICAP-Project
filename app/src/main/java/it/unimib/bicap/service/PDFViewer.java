@@ -21,7 +21,7 @@ public class PDFViewer extends AppCompatActivity {
 
         pdfView = findViewById(R.id.pdfView);
         guideOrPDF = getIntent().getStringExtra("guideOrPDF");
-        // TODO: passo qui una stringa, se è vuota vuol dire che devo aprire al guida, se c'è qualcosa vuol dire che è un link del file PDF dal firebase
+        // TODO: passo qui una stringa, se è PDF vuol dire che devo aprire il documento PDF con link, viceversa apro la guida
         if (guideOrPDF.equals("PDF")) {
             openPDF(PDF_UNIQUE_PATH);
         } else {
@@ -31,7 +31,6 @@ public class PDFViewer extends AppCompatActivity {
 
     private void openGuida(){
         try {
-
             pdfView.fromAsset("Guida.pdf")
                     .enableSwipe(true)
                     .swipeHorizontal(false)
@@ -57,6 +56,4 @@ public class PDFViewer extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
 }

@@ -11,11 +11,6 @@
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#E1E2E1">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,74 +32,18 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
+                android:paddingLeft="20dp"
                 android:paddingTop="10dp"
-                android:paddingRight="10dp" />
+                android:paddingRight="20dp" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/imCaricaVideo"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="20dp"
-                    android:adjustViewBounds="true"
-                    android:fontFamily="@font/roboto"
-                    android:scaleType="fitCenter"
-                    android:text="Inserisci video"
-                    app:icon="@drawable/video"
-                    app:iconPadding="5dp"
-                    app:iconSize="20dp"
-                    tools:ignore="ContentDescription" />
-
-                <Button
-                    android:id="@+id/imInsertPdf"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|left"
-                    android:layout_marginLeft="20dp"
-                    android:adjustViewBounds="true"
-                    android:fontFamily="@font/roboto"
-                    android:scaleType="fitCenter"
-                    android:text="Inserisci pdf"
-                    app:icon="@drawable/caricapdf"
-                    app:iconPadding="5dp"
-                    app:iconSize="20dp"
-                    tools:ignore="ContentDescription" />
-
-                <Button
-                    android:id="@+id/imInsertLink"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|left"
-                    android:adjustViewBounds="true"
-                    android:fontFamily="@font/roboto"
-                    android:layout_marginLeft="20dp"
-                    android:scaleType="fitCenter"
-                    android:text="INSERISCI LINK"
-                    app:icon="@drawable/internet"
-                    app:iconPadding="5dp"
-                    app:iconSize="20dp"
-                    tools:ignore="ContentDescription" />
-
-                <Button
-                    android:id="@+id/btnUpload"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/roboto"
-                    android:scaleType="fitCenter"
-                    android:text="UPLOAD"
-                    app:icon="@drawable/upload"
-                    app:iconPadding="5dp"
-                    app:iconSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -117,40 +56,159 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvLink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/roboto"
-                android:text="@string/link_questionario"
-                android:textColor="@color/colorPrimary"
-                android:textSize="25sp" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/testo1"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
+                android:id="@+id/cardLn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/link"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="match_parent"
+                android:background="#FFFFFF"
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLink"
-                    android:layout_width="match_parent"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardQuiz"
+                    android:layout_width="366dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:fontFamily="@font/roboto"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:singleLine="false" />
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:background="@color/design_default_color_background"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true">>
+                    <LinearLayout
+                        android:id="@+id/cardLn2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/tvNomeProgettoFinale"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:padding="5dp"
+                            android:text="Aggiungi una risorsa"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            android:textColor="@color/colorPrimary" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/imCaricaVideo"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:adjustViewBounds="true"
+                                android:fontFamily="@font/roboto"
+                                android:scaleType="fitCenter"
+                                android:text="Inserisci video"
+                                app:icon="@drawable/video"
+                                app:iconPadding="5dp"
+                                app:iconSize="20dp"
+                                tools:ignore="ContentDescription"
+                                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+
+                            <Button
+                                android:id="@+id/imInsertPdf"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="5dp"
+                                android:adjustViewBounds="true"
+                                android:fontFamily="@font/roboto"
+                                android:scaleType="fitCenter"
+                                android:text="Inserisci \npdf"
+                                app:icon="@drawable/caricapdf"
+                                app:iconPadding="5dp"
+                                app:iconSize="20dp"
+                                tools:ignore="ContentDescription"
+                                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvNumeroQuestionariFinale"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="3dp"
+                                android:text="Inserisci link del questionario"
+                                android:textAppearance="?attr/textAppearanceBody2"
+                                android:textColor="?android:attr/textColorSecondary" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/testo1"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/link"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etLink"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto"
+                                    android:importantForAutofill="no"
+                                    android:inputType="text"
+                                    android:singleLine="false"
+                                    app:boxStrokeColor="#a4224b"/>
+
+
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/cardLn5"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnUpload"
+                                style="?attr/materialButtonOutlinedStyle"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="10dp"
+                                android:text="Upload"
+                                app:icon="@drawable/upload"
+                                app:iconPadding="5dp"
+                                app:iconSize="20dp"
+                                app:strokeColor="#a4224b" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnAnnulla"
+                                style="?attr/materialButtonOutlinedStyle"
+                                android:layout_width="150dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginRight="20dp"
+                                android:layout_marginLeft="20dp"
+                                android:text="Annulla"
+                                app:icon="@drawable/annullaicon"
+                                app:iconPadding="5dp"
+                                app:iconSize="20dp"
+                                app:strokeColor="#a4224b" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,37 +218,37 @@
 
                 <Button
                     android:id="@+id/imNextStep"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="5dp"
                     android:adjustViewBounds="true"
                     android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
-                    android:text="PROSSIMO PASSO"
-                    tools:ignore="ContentDescription"
+                    android:text="PROSSIMO \nPASSO"
                     app:icon="@drawable/prossimopassoicona"
                     app:iconPadding="5dp"
-                    app:iconSize="20dp"/>
+                    app:iconSize="20dp"
+                    tools:ignore="ContentDescription" />
 
                 <Button
                     android:id="@+id/imSaveProject"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:adjustViewBounds="true"
                     android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
                     android:text="SALVA PROGETTO"
-                    tools:ignore="ContentDescription"
                     app:icon="@drawable/conferma"
                     app:iconPadding="5dp"
-                    app:iconSize="20dp"/>
-            </LinearLayout>
+                    app:iconSize="20dp"
+                    tools:ignore="ContentDescription" />
 
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 </LinearLayout>
+
