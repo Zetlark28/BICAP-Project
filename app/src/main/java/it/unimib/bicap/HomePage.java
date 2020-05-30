@@ -1,17 +1,25 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
@@ -19,7 +27,10 @@ public class HomePage extends AppCompatActivity {
 
     private static final String TAG = "HomePage";
     private ActivityHomepageBinding binding;
-    FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
+    private boolean esisteMail;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    FirebaseUser currentFirebaseUser = mAuth.getCurrentUser() ;
+    SharedPreferences sharedPref;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -29,6 +40,33 @@ public class HomePage extends AppCompatActivity {
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+
+        if (currentFirebaseUser != null){
+            String email = currentFirebaseUser.getEmail();
+            mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+                @Override
+                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                    Log.d(TAG,"numero utenti con la mail: "+task.getResult().getSignInMethods().size());
+                    if (task.getResult().getSignInMethods().size() == 0) {
+                        esisteMail = false;
+                    } else{
+                        esisteMail = true;
+                    }
+                    SharedPreferences.Editor editor = sharedPref.edit();
+
+                    editor.putBoolean("esisteMail", esisteMail);
+                    editor.commit();
+                    Log.d(TAG, "Esiste mail Serio: " + esisteMail);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 

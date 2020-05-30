@@ -198,8 +198,6 @@ public class HomePageSomministratore extends AppCompatActivity {
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             Intent intentAddSomm = new Intent (this, CreazioneSomministratore.class);
             startActivity(intentAddSomm);
-            intentAddSomm.putExtra("email", email);
-            intentAddSomm.putExtra("user", mAuth.getCurrentUser());
             finish();
         }
         return super.onOptionsItemSelected(item);

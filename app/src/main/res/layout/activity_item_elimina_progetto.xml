@@ -25,20 +25,16 @@
             android:background="@color/design_default_color_background"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
                     <ImageView
                         android:id="@+id/imageView4"
                         android:layout_width="35dp"
                         android:layout_height="50dp"
-                        app:srcCompat="@drawable/questionariodaeliminare" />
+                        android:src="@drawable/questionariodaeliminare" />
 
                     <TextView
                         android:id="@+id/idNomeProgetto"
@@ -63,7 +59,6 @@
                     android:text="Elimina"
                     android:textColor="#A4224B"
                     app:iconTint="#FFFFFF" />
-            </LinearLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
