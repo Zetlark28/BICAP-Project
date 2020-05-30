@@ -42,6 +42,13 @@ public class QuestionariDaTerminare extends Fragment {
     private String [] titoli = {"Questionario 1", "Questionario 2"};
     private String from = "daTerminare";
     private ImageView immagine;
+    private JSONObject progettiTot;
+
+
+    public QuestionariDaTerminare(JSONObject progettiTot) {
+        this.progettiTot = progettiTot;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -87,9 +94,7 @@ public class QuestionariDaTerminare extends Fragment {
 
         });*/
         final String idUtente = "prova";
-        JSONObject progettiTot = null;
         try {
-            progettiTot = new JSONObject(getContext().getSharedPreferences("author",getContext().MODE_PRIVATE).getString("file", null));
             progetti = progettiTot.getJSONArray("progetti");
 
         } catch (JSONException e) {

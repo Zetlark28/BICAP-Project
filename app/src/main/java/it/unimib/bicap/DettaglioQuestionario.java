@@ -1,20 +1,17 @@
 package it.unimib.bicap;
 
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.FileProvider;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
@@ -23,12 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-import java.io.File;
-
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 import it.unimib.bicap.service.JsonBuilder;
-import it.unimib.bicap.service.PDFViewer;
 import it.unimib.bicap.service.Utility;
 
 // TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
@@ -46,7 +39,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
     private JSONObject progetto = new JSONObject();
     private JSONArray listaPassi = new JSONArray();
-    private JSONArray listaProgetti = new JSONArray();
     private String progettiJSON;
     private DettaglioQuestionario instance;
 
@@ -134,8 +126,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Log.d("oggetto", progettiJSON);
-
                if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
                     aggiungiPassi();
                 }
@@ -143,19 +133,17 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
                 Log.d("oggetto", progetto.toString());
                 try {
-
-
-                    JSONObject jsonObject = new JSONObject(progettiJSON);
-
-
-                    listaProgetti = jsonObject.getJSONArray("progetti");
+                    JSONArray listaProgetti= new JSONArray(progettiJSON);
                     JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti,progetto);
                     progetti.put("progetti", listaProgetti);
                     Log.d("oggetto", progetti.toString());
+
                     Utility.write(progetti,instance,binding);
+//                    write(progetti);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
                 Intent congratScreem = new Intent(getApplicationContext(), CongratulazioniScreen.class);
                 startActivity(congratScreem);
             }

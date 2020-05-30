@@ -11,4 +11,9 @@
         android:title="Scarica la guida"
         app:showAsAction="never"/>
 
+    <item
+        android:id="@+id/addSomm"
+        android:title="Aggiungi un somministratore"
+        app:showAsAction="never"/>
+
 </menu>

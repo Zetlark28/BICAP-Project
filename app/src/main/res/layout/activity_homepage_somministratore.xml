@@ -4,7 +4,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E1E2E1"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <include
@@ -25,71 +25,13 @@
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardProf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:layout_marginTop="30dp">
-
-                <LinearLayout
-                    android:id="@+id/cardLn3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/imProf"
-                        android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/eliminaprogetto" />
-
-                    <LinearLayout
-                        android:id="@+id/cardLn4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:background="@color/design_default_color_background"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvProf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto"
-                            android:padding="5dp"
-                            android:text="Elimina Progetto"
-                            android:textAppearance="?attr/textAppearanceHeadline6"
-                            android:textColor="@color/colorPrimary" />
-
-                        <TextView
-                            android:id="@+id/tvDescProf"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="3dp"
-                            android:text="Elimina un progetto da te creato"
-                            android:textAppearance="?attr/textAppearanceBody2"
-                            android:textColor="?android:attr/textColorSecondary" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnElimina"
-                            style="?attr/borderlessButtonStyle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|end"
-                            android:fontFamily="@font/roboto"
-                            android:onClick="eliminaProgetto"
-                            android:text="Elimina Progetto" />
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardQuiz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp">
+                android:layout_margin="20dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:id="@+id/cardLn"
@@ -141,6 +83,70 @@
                             android:fontFamily="@font/roboto"
                             android:onClick="creaProgetto"
                             android:text="Crea progetto" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardProf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:id="@+id/cardLn3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imProf"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/eliminaprogetto" />
+
+                    <LinearLayout
+                        android:id="@+id/cardLn4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@color/design_default_color_background"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvProf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto"
+                            android:padding="5dp"
+                            android:text="Elimina Progetto"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            android:textColor="@color/colorPrimary" />
+
+                        <TextView
+                            android:id="@+id/tvDescProf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="3dp"
+                            android:text="Elimina un progetto da te creato"
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:textColor="?android:attr/textColorSecondary" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnElimina"
+                            style="?attr/borderlessButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|end"
+                            android:fontFamily="@font/roboto"
+                            android:onClick="eliminaProgetto"
+                            android:text="Elimina Progetto" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>

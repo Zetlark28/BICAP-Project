@@ -15,12 +15,12 @@
         android:id="@+id/tvAccedi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/accedi"
-        android:textSize="40sp"
-        android:textColor="@color/sfondo"
-        android:fontFamily="@font/roboto"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/accedi"
+        android:textColor="@color/design_default_color_on_primary"
+        android:textSize="40sp" />
     
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,8 +48,8 @@
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                />
+                android:background="@color/design_default_color_on_primary"
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -67,7 +67,7 @@
             android:id="@+id/imPass"
             android:layout_width="54dp"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/padlock" />
+            app:srcCompat="@drawable/lock" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tfPass"
@@ -80,8 +80,8 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                />
+                android:background="@color/design_default_color_on_primary"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -90,11 +90,11 @@
         android:id="@+id/imAccedi"
         android:layout_width="77dp"
         android:layout_height="75dp"
-        android:scaleType="fitCenter"
-        android:background="@color/colorPrimary"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/accedi">
+        android:background="@color/colorPrimary"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/enter">
 
     </ImageButton>
 

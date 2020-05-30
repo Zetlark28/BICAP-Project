@@ -1,8 +1,10 @@
 package it.unimib.bicap;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,11 +42,22 @@ public class HomePageSomministratore extends AppCompatActivity {
     private static JSONObject progetti;
     private static JSONArray progettiAutore;
     private static JSONArray progettiDaSelezionare;
+    private ProgressDialog progressDialog;
 
 
     private static final String TAG = "HomePageSomministratore";
     private ActivityHomepageSomministratoreBinding binding;
     private FirebaseAuth mAuth;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (mAuth.getCurrentUser() == null)
+            mAuth.signInWithEmailAndPassword("admin@admin.com", "alessio");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        Log.d(TAG, "current user: " + currentUser.getEmail());
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -52,6 +65,8 @@ public class HomePageSomministratore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+         if(mAuth == null)
+             Log.d(TAG, "mauth è null");
 
         binding = ActivityHomepageSomministratoreBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -62,7 +77,12 @@ public class HomePageSomministratore extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main_menu);
 
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Attendi");
+        progressDialog.setProgress(10);
+        progressDialog.setMax(100);
+        progressDialog.setMessage("Caricamento");
+        new DownloadProgettiTask().execute();
         final String autore = getSharedPreferences("author", Context.MODE_PRIVATE).getString("autore", null);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
@@ -76,8 +96,8 @@ public class HomePageSomministratore extends AppCompatActivity {
                     progetti = new JSONObject(json);
                     SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("file",progetti.toString());
-                    editor.commit();
+//                    editor.putString("file",progetti.toString());
+//                    editor.commit();
                     progettiDaSelezionare = progetti.getJSONArray("progetti");
                     progettiAutore = new JSONArray();
                     for (int i = 0; i < progettiDaSelezionare.length(); i++) {
@@ -85,13 +105,14 @@ public class HomePageSomministratore extends AppCompatActivity {
                             progettiAutore.put(progettiDaSelezionare.getJSONObject(i));
                         }
                     }
-                    editor.putString("progettiTot", progettiAutore.toString());
-                    editor.commit();
+//                    editor.putString("progettiTot", progettiAutore.toString());
+//                    editor.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+                progressDialog.dismiss();
             }
         });
 
@@ -137,16 +158,25 @@ public class HomePageSomministratore extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        MenuItem item = menu.findItem(R.id.addSomm);
+        if (! email.equals("admin@admin.com"))
+            item.setVisible(false);
+
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
 
 
         /*MenuItem itemLogOut = menu.getItem(0);
-        SpannableString sLogOut = new SpannableString("LogOut");
+        SpannableString sLogOut = new SpannableString("Logout");
         sLogOut.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sLogOut.length(), 0);
         itemLogOut.setTitle(sLogOut);
-
         MenuItem itemGuide = menu.getItem(1);
         SpannableString sGuide = new SpannableString("Scarica la Guida");
         sGuide.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sGuide.length(), 0);
@@ -163,7 +193,15 @@ public class HomePageSomministratore extends AppCompatActivity {
             return true;
         }
         else if (item.getItemId() == R.id.menuDownload){
-            
+
+        }
+        else if (item.getItemId() == R.id.addSomm){
+            String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            Intent intentAddSomm = new Intent (this, CreazioneSomministratore.class);
+            startActivity(intentAddSomm);
+            intentAddSomm.putExtra("email", email);
+            intentAddSomm.putExtra("user", mAuth.getCurrentUser());
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -173,7 +211,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         super.startActivity(intent);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
-
 
     @Override
     public void finish(){
@@ -194,6 +231,15 @@ public class HomePageSomministratore extends AppCompatActivity {
             }else{
                 startActivity(intentLogout);
             }
+        }
+    }
+
+    public class DownloadProgettiTask extends AsyncTask<Void, Void, Void> {
+        public void onPreExecute() {
+            progressDialog.show();
+        }
+        public Void doInBackground(Void... unused) {
+            return null;
         }
     }
 }

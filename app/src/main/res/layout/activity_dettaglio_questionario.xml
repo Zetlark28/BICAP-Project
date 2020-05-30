@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sfondo"
+    android:background="@color/design_default_color_on_primary"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main"/>
+        layout="@layout/toolbar_main" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -44,33 +44,67 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/imCaricaVideo"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="20dp"
                     android:adjustViewBounds="true"
                     android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
-                    android:text="CARICA UN VIDEO"
-                    app:srcCompat="@drawable/caricaunvideo"
+                    android:text="Inserisci video"
+                    app:icon="@drawable/video"
+                    app:iconPadding="5dp"
+                    app:iconSize="20dp"
                     tools:ignore="ContentDescription" />
 
                 <Button
                     android:id="@+id/imInsertPdf"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center|left"
+                    android:layout_marginLeft="20dp"
                     android:adjustViewBounds="true"
                     android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
-                    android:text="INSERISCI UN PDF"
-                    app:srcCompat="@drawable/inseriscipdf"
+                    android:text="Inserisci pdf"
+                    app:icon="@drawable/caricapdf"
+                    app:iconPadding="5dp"
+                    app:iconSize="20dp"
                     tools:ignore="ContentDescription" />
+
+                <Button
+                    android:id="@+id/imInsertLink"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|left"
+                    android:adjustViewBounds="true"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginLeft="20dp"
+                    android:scaleType="fitCenter"
+                    android:text="INSERISCI LINK"
+                    app:icon="@drawable/internet"
+                    app:iconPadding="5dp"
+                    app:iconSize="20dp"
+                    tools:ignore="ContentDescription" />
+
+                <Button
+                    android:id="@+id/btnUpload"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto"
+                    android:scaleType="fitCenter"
+                    android:text="UPLOAD"
+                    app:icon="@drawable/upload"
+                    app:iconPadding="5dp"
+                    app:iconSize="20dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -80,16 +114,6 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btnUpload"
-                    style="@android:style/Widget.Material.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginRight="10dp"
-                    android:background="#E1E2E1"
-                    android:fontFamily="@font/roboto"
-                    android:text="UPLOAD" />
 
             </LinearLayout>
 
@@ -144,9 +168,11 @@
                     android:adjustViewBounds="true"
                     android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/prossimopasso"
                     android:text="PROSSIMO PASSO"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    app:icon="@drawable/prossimopassoicona"
+                    app:iconPadding="5dp"
+                    app:iconSize="20dp"/>
 
                 <Button
                     android:id="@+id/imSaveProject"
@@ -159,8 +185,10 @@
                     android:fontFamily="@font/roboto"
                     android:scaleType="fitCenter"
                     android:text="SALVA PROGETTO"
-                    app:srcCompat="@drawable/salvaprogetto"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    app:icon="@drawable/conferma"
+                    app:iconPadding="5dp"
+                    app:iconSize="20dp"/>
             </LinearLayout>
 
         </LinearLayout>
