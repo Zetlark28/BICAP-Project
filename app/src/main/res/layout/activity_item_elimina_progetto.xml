@@ -56,14 +56,13 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnElimina"
                     style="?attr/materialButtonOutlinedStyle"
-                    app:strokeColor="#a4224b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|end"
-                    android:background="@color/sfondo"
                     android:text="Elimina"
-                    android:textColor="#A4224B"
-                    app:iconTint="#FFFFFF" />
+                    android:textColor="#a4224b"
+                    app:strokeColor="#a4224b"
+                    android:layout_marginRight="5dp"/>
             </LinearLayout>
 
         </LinearLayout>
