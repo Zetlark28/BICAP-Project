@@ -276,4 +276,15 @@ public class HomePageSomministratore extends AppCompatActivity {
             return null;
         }
     }
+
+    //controllo su navigationBar
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        finish();
+
+    }
+
 }

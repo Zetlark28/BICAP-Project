@@ -20,13 +20,10 @@
         android:textColor="@color/design_default_color_background"
         android:textSize="40sp" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="vertical"
             android:layout_gravity="center">
 
@@ -135,6 +132,5 @@
                     app:backgroundTint="@color/colorPrimary"
                     app:strokeColor="#FFFFFF" />
             </LinearLayout>
-    </ScrollView>
 
 </LinearLayout>

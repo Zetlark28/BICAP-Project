@@ -72,7 +72,6 @@ public class EliminaProgetti extends AppCompatActivity {
         binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
         ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), progettiAutore, progetti ,this);
         binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
-        binding.rvProgettiDaEliminare.addItemDecoration(new DividerItemDecoration(binding.rvProgettiDaEliminare.getContext(), DividerItemDecoration.VERTICAL));
 
     }
 

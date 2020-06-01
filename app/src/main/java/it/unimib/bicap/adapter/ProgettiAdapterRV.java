@@ -21,6 +21,7 @@ import java.util.List;
 
 import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.R;
+import it.unimib.bicap.Survey;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
@@ -87,6 +88,14 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                     }
                 }
             });
+            holder.start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent inizioQuiz = new Intent(context, Survey.class);
+                context.startActivity(inizioQuiz);
+                ((Activity) context).finish();
+            }
+        });
         }
 
     public int getItemCount (){
