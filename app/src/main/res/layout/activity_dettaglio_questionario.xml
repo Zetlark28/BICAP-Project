@@ -64,7 +64,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardQuiz"
+                    android:id="@+id/cardCreaSomm"
                     android:layout_width="366dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

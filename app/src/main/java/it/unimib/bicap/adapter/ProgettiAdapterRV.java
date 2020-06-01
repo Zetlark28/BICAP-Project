@@ -50,7 +50,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
             info = itemView.findViewById(R.id.btnInfo);
-            start = itemView.findViewById(R.id.btnQuiz);
+            start = itemView.findViewById(R.id.btnCreaSomm);
         }
     }
 

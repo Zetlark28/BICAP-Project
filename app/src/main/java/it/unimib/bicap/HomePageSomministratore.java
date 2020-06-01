@@ -233,7 +233,7 @@ public class HomePageSomministratore extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.addSomm){
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            Intent intentAddSomm = new Intent (this, CreazioneSomministratore.class);
+            Intent intentAddSomm = new Intent (this, GestioneSomministratore.class);
             startActivity(intentAddSomm);
             finish();
         }

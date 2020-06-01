@@ -8,20 +8,16 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.SignInMethodQueryResult;
-
-//import it.unimib.bicap.databinding.ActivityHomepage2Binding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
 public class HomePage extends AppCompatActivity {
@@ -31,7 +27,10 @@ public class HomePage extends AppCompatActivity {
     private boolean esisteMail;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     FirebaseUser currentFirebaseUser = mAuth.getCurrentUser() ;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("utenti");
     SharedPreferences sharedPref;
+    private String key = "";
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -45,26 +44,28 @@ public class HomePage extends AppCompatActivity {
         sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
 
         if (currentFirebaseUser != null){
-            String email = currentFirebaseUser.getEmail();
-            mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+            final String idUser = currentFirebaseUser.getUid();
+            // Read from the database
+            myRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                    Log.d(TAG,"numero utenti con la mail: "+task.getResult().getSignInMethods().size());
-                    if (task.getResult().getSignInMethods().size() == 0) {
-                        esisteMail = false;
-                    } else{
-                        esisteMail = true;
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    for (DataSnapshot d : dataSnapshot.getChildren()){
+                        key = d.getKey();
+                        if (key.equals(idUser)){
+                            esisteMail = true;
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putBoolean("esisteMail", esisteMail);
+                            editor.commit();
+                        }
                     }
-                    SharedPreferences.Editor editor = sharedPref.edit();
-
-                    editor.putBoolean("esisteMail", esisteMail);
-                    editor.commit();
-                    Log.d(TAG, "Esiste mail Serio: " + esisteMail);
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    e.printStackTrace();
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
                 }
             });
         }

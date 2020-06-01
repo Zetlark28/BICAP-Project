@@ -15,8 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LaunchScreen"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:screenOrientation="portrait">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,51 +27,53 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".HomePage"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".LoginProfessore"
             android:parentActivityName=".HomePage"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".Survey"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".CreazioneProgetto"
             android:parentActivityName=".HomePageSomministratore"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".DettaglioQuestionario"
             android:parentActivityName=".CreazioneProgetto"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".ListaProgetti"
             android:parentActivityName=".HomePage"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".EliminaProgetti"
             android:parentActivityName=".HomePageSomministratore"
-            android:screenOrientation="portrait"/>
+            />
         <activity
             android:name=".HomePageSomministratore"
             android:parentActivityName=".LoginProfessore"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".QuestionariDaFare"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".QuestionariDaTerminare"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".PresentazioneProgetto"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".CongratulazioniScreen"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".service.PDFViewer"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".CreazioneSomministratore"
-            android:screenOrientation="portrait"/>
+            />
         <activity android:name=".GestioneSomministratore"
-            android:screenOrientation="portrait"/>
+            />
+        <activity android:name=".EliminaSomministratore"
+            />
 
         <meta-data
             android:name="preloaded_fonts"

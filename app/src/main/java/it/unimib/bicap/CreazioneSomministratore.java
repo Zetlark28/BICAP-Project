@@ -94,7 +94,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
 
         }
 
-    private void createUser(String email, String password, final String autore) {
+    private void createUser(final String email, String password, final String autore) {
         mAuth2.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @SuppressLint("LongLogTag")
@@ -106,6 +106,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                             user = mAuth2.getCurrentUser();
                             Log.d(TAG, "problema successo");
                             myRef.child(user.getUid()).child("autore").setValue(autore);
+                            myRef.child(user.getUid()).child("email").setValue(email);
                             //mFirebaseAuth2.updateCurrentUser(mAuth.getCurrentUser());
                             mAuth2.signOut();
                             //TODO: fix presa user

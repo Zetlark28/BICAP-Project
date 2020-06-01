@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
@@ -37,6 +36,7 @@ public class LoginProfessore extends AppCompatActivity {
     private ActivityLoginProfessoreBinding binding;
     private FirebaseAuth mAuth;
     private boolean fromHome;
+    private  boolean esisteMail;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
 
@@ -47,18 +47,21 @@ public class LoginProfessore extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         
         fromHome = getIntent().getExtras().getBoolean("fromHome");
+
+        final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+        esisteMail = sharedPref.getBoolean("esisteMail", false);
         try {
-            updateUI(currentUser, fromHome);
+            updateUI(currentUser, fromHome, esisteMail);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateUI(FirebaseUser currentUser, boolean fromHome) throws InterruptedException {
+    private void updateUI(FirebaseUser currentUser, boolean fromHome, boolean esisteMail) throws InterruptedException {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         this.getSharedPreferences("author", 0).edit().remove("autore");
-        final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
-        boolean esisteMail = sharedPref.getBoolean("esisteMail", false);
+       // final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+        //boolean esisteMail = sharedPref.getBoolean("esisteMail", false);
         if (user != null) {
             String email = user.getEmail();
             //checkEmailExistsOrNot(email);
@@ -78,7 +81,7 @@ public class LoginProfessore extends AppCompatActivity {
 
                             Log.d(TAG, "Value is: " + autore);
 
-                            SharedPreferences.Editor editor = sharedPref.edit();
+                            SharedPreferences.Editor editor = getSharedPreferences("author", Context.MODE_PRIVATE).edit();
 
                             editor.putString("autore", autore);
                             editor.commit();
@@ -159,17 +162,19 @@ public class LoginProfessore extends AppCompatActivity {
                                 Log.i(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 fromHome = true;
+                                esisteMail = true;
                                 try {
-                                    updateUI(user, fromHome);
+                                    updateUI(user, fromHome, esisteMail);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.i(TAG, "createUserWithEmail:failure", task.getException());
+                                esisteMail = false;
                                 Snackbar.make(binding.linearlayout, "Attenzione, credenziali non valide !", Snackbar.LENGTH_SHORT).show();
                                 try {
-                                    updateUI(null, fromHome);
+                                    updateUI(null, fromHome, esisteMail);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }

@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 
 import it.unimib.bicap.EliminaProgetti;
+import it.unimib.bicap.EliminaSomministratore;
 import it.unimib.bicap.R;
 import it.unimib.bicap.service.EliminaDialog;
 import it.unimib.bicap.service.GetterInfo;
@@ -23,11 +25,13 @@ import it.unimib.bicap.service.GetterLocal;
 public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiDaEliminareAdapterRV.MyViewHolder> {
 
     private static List<String> nomi;
+    private static HashMap<String, String> nomiSomministratori;
     private LayoutInflater layoutInflater;
     public static JSONArray listaProgetti;
     private JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
     private EliminaProgetti eliminaActivity;
+    private EliminaSomministratore eliminaActivitysomm;
     ProgettiDaEliminareAdapterRV istanzaProgettiAdapter;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
@@ -54,6 +58,12 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         layoutInflater = (LayoutInflater.from(context));
     }
 
+    public ProgettiDaEliminareAdapterRV(Context context, HashMap<String, String> nomiSomm, EliminaSomministratore eliminaActivity){
+        nomiSomministratori = nomiSomm;
+        this.eliminaActivitysomm = eliminaActivity;
+        layoutInflater = (LayoutInflater.from(context));
+    }
+
     public MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
         View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
         MyViewHolder mV = new MyViewHolder(v);
@@ -62,19 +72,33 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     }
 
     public void onBindViewHolder (final MyViewHolder holder, final int position){
-            holder.nome.setText(nomi.get(position));
+        String key = null;
+        if (eliminaActivity != null)
+                holder.nome.setText(nomi.get(position));
+            else {
+            key = nomiSomministratori.get(position);
+            holder.nome.setText(nomiSomministratori.get(key));
+        }
+
             holder.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     EliminaDialog eliminaDialog = null;
-                    eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity);
+                    if (eliminaActivity != null)
+                        eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity);
+                    else
+                        //eliminaDialog = new EliminaDialog(nomi, position, istanzaProgettiAdapter, eliminaActivitysomm);
+
                     eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                 }
             });
         }
 
     public int getItemCount (){
-        return nomi.size();
+        if (eliminaActivity != null)
+            return nomi.size();
+        else
+            return nomiSomministratori.size();
     }
 
     public static void setNomi(List<String> nomi) {

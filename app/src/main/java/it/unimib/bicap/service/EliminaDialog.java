@@ -39,6 +39,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
         }
     }
 
+    //public EliminaDialog();
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
