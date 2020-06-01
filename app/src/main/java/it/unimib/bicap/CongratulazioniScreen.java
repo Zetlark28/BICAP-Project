@@ -55,4 +55,14 @@ public class CongratulazioniScreen extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
+    //controllo su navigationBar
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        finish();
+
+    }
+
 }
