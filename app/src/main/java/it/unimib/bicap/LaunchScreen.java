@@ -14,11 +14,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+
+import it.unimib.bicap.constanti.ActivityConstants;
 
 public class LaunchScreen extends AppCompatActivity {
     Handler handler;
@@ -33,7 +34,7 @@ public class LaunchScreen extends AppCompatActivity {
         //TODO: salva in shared preferences
 
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
+        StorageReference ref = mStorageRef.child(ActivityConstants.FIREBASE_STORAGE_CHILD_PROGETTI);
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -41,7 +42,7 @@ public class LaunchScreen extends AppCompatActivity {
                 try {
                     json = new String(bytes, "UTF-8");
                     JSONObject progetti = new JSONObject(json);
-                    SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("file",progetti.toString());
                     editor.commit();

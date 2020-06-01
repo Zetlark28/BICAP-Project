@@ -83,12 +83,13 @@ public class PresentazioneProgetto extends AppCompatActivity {
                 } else if (tipo.equals("pdf")){
 
                     // TODO: Qui sotto ci andrà il link parsato del PDF
-                    Utility.downloadPDF("https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Documenti%2FFile-6?alt=media&token=12840198-bfd8-4fa2-aa4b-0ab871ba0bb3");
-
+                    boolean finito = Utility.downloadPDF("https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Documenti%2FFile-6?alt=media&token=12840198-bfd8-4fa2-aa4b-0ab871ba0bb3");
+                    while (!finito){
+                    }
                    // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
-                    /*Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
+                    Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
                     intentPDF.putExtra("guideOrPDF", "PDF");
-                    startActivity(intentPDF);*/
+                    startActivity(intentPDF);
 
 
                 } else if (tipo.equals("questionario")){

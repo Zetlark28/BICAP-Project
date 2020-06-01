@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityLoginProfessoreBinding;
 
 public class LoginProfessore extends AppCompatActivity {
@@ -59,9 +60,9 @@ public class LoginProfessore extends AppCompatActivity {
 
     private void updateUI(FirebaseUser currentUser, boolean fromHome, boolean esisteMail) throws InterruptedException {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        this.getSharedPreferences("author", 0).edit().remove("autore");
-       // final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
-        //boolean esisteMail = sharedPref.getBoolean("esisteMail", false);
+        this.getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, 0).edit().remove("autore");
+        final SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        boolean esisteMail = sharedPref.getBoolean("esisteMail", false);
         if (user != null) {
             String email = user.getEmail();
             //checkEmailExistsOrNot(email);
@@ -183,33 +184,11 @@ public class LoginProfessore extends AppCompatActivity {
                     });
         }
 
-    //override startActivity con animazione slide avanti
     @Override
     public void startActivity(Intent intent){
         super.startActivity(intent);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
-
-   /* private void checkEmailExistsOrNot(String email) {
-        mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-            @Override
-            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                Log.d(TAG,"numero utenti con la mail: "+task.getResult().getSignInMethods().size());
-                if (task.getResult().getSignInMethods().size() == 0) {
-                    esisteMail = false;
-                } else{
-                    esisteMail = true;
-                }
-                Log.d(TAG, "Esiste mail Serio: " + esisteMail);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }*/
-
 }
 
 //TODO: Email: admin@admin.com Password:alessio

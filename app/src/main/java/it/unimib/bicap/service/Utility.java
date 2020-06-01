@@ -146,7 +146,7 @@ public class Utility {
                     });
         }
 
-        public static void downloadPDF(String link) {
+        public static boolean downloadPDF(String link) {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(link);
 
             mStorageRef.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -171,6 +171,7 @@ public class Utility {
                     // Handle any errors
                 }
             });
+            return true;
         }
 
 
