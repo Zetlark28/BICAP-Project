@@ -62,7 +62,7 @@ public class LoginProfessore extends AppCompatActivity {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         this.getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, 0).edit().remove("autore");
         final SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-        boolean esisteMail = sharedPref.getBoolean("esisteMail", false);
+        esisteMail = sharedPref.getBoolean("esisteMail", false);
         if (user != null) {
             String email = user.getEmail();
             //checkEmailExistsOrNot(email);
