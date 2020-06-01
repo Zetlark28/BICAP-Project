@@ -4,100 +4,124 @@
     android:id="@+id/linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/sfondologinprimo"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main"/>
+        layout="@layout/toolbar_main" />
 
-    <TextView
-        android:id="@+id/tvAccedi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/roboto"
-        android:text="Login Somministratore"
-        android:textColor="@color/design_default_color_on_primary"
-        android:textSize="35sp" />
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="50dp">
-
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/email" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_marginLeft="20dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/design_default_color_on_primary"
-                android:inputType="textEmailAddress" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="50dp">
+        android:orientation="horizontal">
 
-
-        <ImageView
-            android:id="@+id/imPass"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/lock" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tfPass"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardProf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            android:layout_marginLeft="20dp">
+            android:layout_marginTop="40dp"
+            app:cardUseCompatPadding="true"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="5dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
+            <LinearLayout
+                android:id="@+id/cardLn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/design_default_color_on_primary"
-                android:inputType="textPassword" />
+                android:orientation="vertical">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+                    android:id="@+id/cardLn4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/design_default_color_background"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvProf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:text="Login Somministratore"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:hint="Email">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEmail"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:background="@color/design_default_color_on_primary"
+                                android:inputType="textEmailAddress"
+                                app:boxStrokeColor="#a4224b"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tfPass"
+                            android:layout_width="match_parent"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:hint="Password">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPassword"
+                                android:layout_width="match_parent"
+
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_height="wrap_content"
+                                android:background="@color/design_default_color_on_primary"
+                                android:inputType="textPassword" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/imAccedi"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="170dp"
+                        android:background="@color/sfondo"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:text="Accedi"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/imAccedi"
-        style="?attr/materialButtonOutlinedStyle"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:text="Accedi"
-        android:textColor="@color/design_default_color_background"
-        android:textSize="18sp"
-        app:backgroundTint="@color/colorPrimary"
-        app:strokeColor="#FFFFFF" />
-
-
 </LinearLayout>
