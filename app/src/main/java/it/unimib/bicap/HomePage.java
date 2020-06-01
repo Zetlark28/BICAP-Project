@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
 
 //import it.unimib.bicap.databinding.ActivityHomepage2Binding;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
 public class HomePage extends AppCompatActivity {
@@ -42,7 +43,7 @@ public class HomePage extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         if (currentFirebaseUser != null){
             String email = currentFirebaseUser.getEmail();
@@ -72,7 +73,7 @@ public class HomePage extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("SurveyMiB");
+        toolbar.setTitle(ActivityConstants.HOMEPAGE_TOOLBAR_TITLE);
         toolbar.setNavigationIcon(null);
 
         binding.btnProf.setOnClickListener(new View.OnClickListener() {

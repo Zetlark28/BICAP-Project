@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 
 // TODO: Creare il menu a discesa coi vari pulsanti tra cui il LOGOUT/ Gestire il login
@@ -56,7 +57,7 @@ public class HomePageSomministratore extends AppCompatActivity {
         super.onStart();
 
         if (mAuth.getCurrentUser() == null)
-            mAuth.signInWithEmailAndPassword("admin@admin.com", "alessio");
+            mAuth.signInWithEmailAndPassword(ActivityConstants.AUTHORIZED_EMAIL, ActivityConstants.AUTHORIZED_PASSWORD);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         Log.d(TAG, "current user: " + currentUser.getEmail());
     }
@@ -74,8 +75,9 @@ public class HomePageSomministratore extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        //TODO : metodi mancanti
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Homepage Somministratore");
+        toolbar.setTitle(ActivityConstants.HOMEPAGE_SOMMINISTRATORE_TOOLBAR_TITLE);
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main_menu);
 
@@ -88,9 +90,9 @@ public class HomePageSomministratore extends AppCompatActivity {
         startTimer();
 
         new DownloadProgettiTask().execute();
-        final String autore = getSharedPreferences("author", Context.MODE_PRIVATE).getString("autore", null);
+        final String autore = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE).getString(ActivityConstants.SHARED_PREFERENCE_AUTORE_KEY, null);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
+        StorageReference ref = mStorageRef.child(ActivityConstants.FIREBASE_STORAGE_CHILD_PROGETTI);
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -99,7 +101,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                     json = new String(bytes, "UTF-8");
                     Log.d("kek", json.toString());
                     progetti = new JSONObject(json);
-                    SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
 //                    editor.putString("file",progetti.toString());
 //                    editor.commit();
@@ -110,8 +112,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                             progettiAutore.put(progettiDaSelezionare.getJSONObject(i));
                         }
                     }
-//                    editor.putString("progettiTot", progettiAutore.toString());
-//                    editor.commit();
+//
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (UnsupportedEncodingException e) {
@@ -121,10 +122,6 @@ public class HomePageSomministratore extends AppCompatActivity {
                 cancelTimer();
             }
         });
-
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +164,7 @@ public class HomePageSomministratore extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         MenuItem item = menu.findItem(R.id.addSomm);
-        if (! email.equals("admin@admin.com"))
+        if (! email.equals(ActivityConstants.AUTHORIZED_EMAIL))
             item.setVisible(false);
 
         return true;
@@ -177,17 +174,6 @@ public class HomePageSomministratore extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
-
-
-        /*MenuItem itemLogOut = menu.getItem(0);
-        SpannableString sLogOut = new SpannableString("Logout");
-        sLogOut.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sLogOut.length(), 0);
-        itemLogOut.setTitle(sLogOut);
-        MenuItem itemGuide = menu.getItem(1);
-        SpannableString sGuide = new SpannableString("Scarica la Guida");
-        sGuide.setSpan(new ForegroundColorSpan(Color.BLACK), 0, sGuide.length(), 0);
-        itemGuide.setTitle(sGuide);*/
-
         return true;
     }
     void startTimer() {
@@ -252,6 +238,7 @@ public class HomePageSomministratore extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
+    //TODO : cambiare logica
     private void updateUI() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         boolean fromHome = false;

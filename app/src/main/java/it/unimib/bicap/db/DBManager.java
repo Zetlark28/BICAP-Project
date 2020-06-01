@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import it.unimib.bicap.constanti.DBConstants;
+
 public class DBManager {
 
     private DBHelper dbhelper;

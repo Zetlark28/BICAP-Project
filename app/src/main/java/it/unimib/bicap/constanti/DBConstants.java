@@ -1,4 +1,4 @@
-package it.unimib.bicap.db;
+package it.unimib.bicap.constanti;
 
 public class DBConstants {
     public static final String FIELD_ID_UTENTE = "id_utente";

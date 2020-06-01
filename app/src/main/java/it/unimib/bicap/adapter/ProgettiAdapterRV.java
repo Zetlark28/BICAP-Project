@@ -25,8 +25,6 @@ import it.unimib.bicap.Survey;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
-//import it.unimib.bicap.PresentazioneProgetto;
-
 public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.MyViewHolder> {
 
     Context context;

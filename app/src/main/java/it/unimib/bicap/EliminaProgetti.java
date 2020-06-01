@@ -4,27 +4,23 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
-import it.unimib.bicap.service.GetterInfo;
-import it.unimib.bicap.service.GetterLocal;
 
 public class EliminaProgetti extends AppCompatActivity {
 
@@ -46,7 +42,7 @@ public class EliminaProgetti extends AppCompatActivity {
         setContentView(v);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Eliminazione progetto");
+        toolbar.setTitle(ActivityConstants.ELIMINA_PROGETTI_TOOLBAR_TITLE);
         setSupportActionBar(toolbar);
         //final EliminaProgetti instance = this;
 

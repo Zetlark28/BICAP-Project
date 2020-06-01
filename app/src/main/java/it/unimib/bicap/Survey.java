@@ -15,6 +15,7 @@ import android.webkit.WebViewClient;
 
 import java.util.Objects;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivitySurveyBinding;
 
 public class Survey extends AppCompatActivity {
@@ -47,13 +48,13 @@ public class Survey extends AppCompatActivity {
         binding.surveyWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.i("URL", url);
-                if (url.contains("google")) {
+                if (url.contains(ActivityConstants.URL_ERROR)) {
                     Intent nextSurvey = new Intent(getApplicationContext(), LoginProfessore.class);
                     //TODO: sostituire con schermata dove sono presenti i restanti questionari e aggiornare la lista
                     startActivity(nextSurvey);
                     finish(); //METTERE INTENT PER ANDARE ALLA SCHERMATA CHE FOTTE A ME
                 }
-                else if (url.contains("facebook")) {
+                else if (url.contains(ActivityConstants.URL_EXIT)) {
                     Intent exitError = new Intent(getApplicationContext(), LoginProfessore.class);
                     //TODO: sostituire con schermata dove sono presenti tutti i progetti
                     startActivity(exitError);

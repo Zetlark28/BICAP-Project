@@ -65,7 +65,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         instance = this;
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Nome Progetto");
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.menu_cancella);
 
@@ -294,70 +293,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
-
-    //TODO: non utilizzato -> spostato in classe Utility.
-   /*
-
-    public void write(JSONObject progetti){
-        try {
-            Writer output;
-            FileOutputStream fOut = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            OutputStreamWriter osw = new OutputStreamWriter(fOut);
-            osw.write(progetti.toString());
-            osw.flush();
-            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        filePath = Uri.parse("file:///data/data/it.unimib.bicap/files/progetti.json");
-        uploadFile("Progetti/progetti.json");
-
-    }
-
-    private void uploadFile(final String directory) {
-        if (filePath != null) {
-            final StorageReference fileRef = mStorageRef.child(directory);
-            fileRef.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(getApplicationContext(), "Hai aggiunto un passo", Toast.LENGTH_SHORT).show();
-                            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    linkToJoinJSON = String.valueOf(uri);
-                                    Log.d("oggetto", "Upload completato");
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "Errore nell'upload", Toast.LENGTH_SHORT).show();
-                            Log.d("oggetto", "Errore nell'upload");
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            updateProgress(taskSnapshot);
-                        }
-                    });
-        } else {
-            Toast.makeText(this, "Non hai scelto nessun file", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void updateProgress(UploadTask.TaskSnapshot taskSnapshot) {
-        long fileSize = taskSnapshot.getTotalByteCount();
-        long uploadBytes = taskSnapshot.getBytesTransferred();
-        long progress = (100 * uploadBytes) / fileSize;
-        binding.pbUpload.setProgress((int) progress);
-    }
-
-*/
     //override startActivity con animazione slide avanti
     @Override
     public void startActivity(Intent intent){
