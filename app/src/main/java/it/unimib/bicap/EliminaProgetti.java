@@ -55,7 +55,7 @@ public class EliminaProgetti extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentHomeProfessore = new Intent(getApplicationContext(), HomePageSomministratore.class);
                 startActivity(intentHomeProfessore);
-                finish();
+                EliminaProgetti.this.finish();
             }
         });
         try {
