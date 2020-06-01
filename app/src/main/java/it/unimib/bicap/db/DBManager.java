@@ -45,6 +45,19 @@ public class DBManager {
         catch (SQLiteException sqle) {
         }
     }
+    public void saveProgettoPasso(Integer idProgetto, Integer passo)
+    {
+        SQLiteDatabase db=dbhelper.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put(DBConstants.FIELD_ID_PROGETTO, idProgetto);
+        cv.put(DBConstants.FIELD_N_PASSO, passo);
+        try
+        {
+            db.insert(DBConstants.TBL_NAME_PASSO_PROGETTO, null,cv);
+        }
+        catch (SQLiteException sqle) {
+        }
+    }
 
     public Cursor selectCompletati() {
         Cursor crs=null;
@@ -100,6 +113,21 @@ public class DBManager {
         }
         return crs;
     }
+
+    public Cursor selectNPasso(Integer progettoId) {
+        Cursor crs=null;
+        try
+        {
+            SQLiteDatabase db=dbhelper.getReadableDatabase();
+            crs=db.query(DBConstants.TBL_NAME_PASSO_PROGETTO, new String[]{DBConstants.FIELD_N_PASSO},DBConstants.FIELD_ID_PROGETTO + "=?", new String []{progettoId.toString()}, null, null, null, null);
+        }
+        catch(SQLiteException sqle)
+        {
+            return null;
+        }
+        return crs;
+    }
+
     public boolean deleteCompletati(Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
@@ -120,6 +148,21 @@ public class DBManager {
         try
         {
             if (db.delete(DBConstants.TBL_NAME_DA_COMPLETARE, DBConstants.FIELD_ID_PROGETTO +"=?",
+                    new String[]{ Integer.toString(idProgetto)})==1)
+                return true;
+            return false;
+        }
+        catch (SQLiteException sqle) {
+            return false;
+        }
+    }
+
+    public boolean deleteProgettoPasso(Integer idProgetto)
+    {
+        SQLiteDatabase db=dbhelper.getWritableDatabase();
+        try
+        {
+            if (db.delete(DBConstants.TBL_NAME_PASSO_PROGETTO, DBConstants.FIELD_ID_PROGETTO +"=?",
                     new String[]{ Integer.toString(idProgetto)})==1)
                 return true;
             return false;
