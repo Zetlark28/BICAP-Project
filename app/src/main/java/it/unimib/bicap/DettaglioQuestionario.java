@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -65,6 +67,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Nome Progetto");
         setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_cancella);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -367,5 +370,12 @@ public class DettaglioQuestionario extends AppCompatActivity {
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_cancella, menu);
+        return true;
     }
 }
