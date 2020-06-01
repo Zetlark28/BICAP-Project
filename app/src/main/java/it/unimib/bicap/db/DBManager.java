@@ -21,11 +21,10 @@ public class DBManager {
         return dbhelper;
     }
 
-    public void saveCompletati(Integer idUtente, Integer idProgetto)
+    public void saveCompletati( Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
         ContentValues cv=new ContentValues();
-        cv.put(DBConstants.FIELD_ID_UTENTE, idUtente);
         cv.put(DBConstants.FIELD_ID_PROGETTO, idProgetto);
         try {
             db.insert(DBConstants.TBL_NAME_COMPLETATI, null,cv);
@@ -34,11 +33,10 @@ public class DBManager {
 
         }
     }
-    public void saveDaCompletare(Integer idUtente, Integer idProgetto)
+    public void saveDaCompletare(Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
         ContentValues cv=new ContentValues();
-        cv.put(DBConstants.FIELD_ID_UTENTE, idUtente);
         cv.put(DBConstants.FIELD_ID_PROGETTO, idProgetto);
         try
         {
@@ -102,13 +100,13 @@ public class DBManager {
         }
         return crs;
     }
-    public boolean deleteCompletati(Integer idUtente, Integer idProgetto)
+    public boolean deleteCompletati(Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
         try
         {
             if (db.delete(DBConstants.TBL_NAME_COMPLETATI, DBConstants.FIELD_ID_UTENTE+"=? AND " + DBConstants.FIELD_ID_PROGETTO ,
-                    new String[]{Integer.toString(idUtente), Integer.toString(idProgetto)})==1)
+                    new String[]{ Integer.toString(idProgetto)})==1)
                 return true;
             return false;
         }
@@ -116,13 +114,13 @@ public class DBManager {
             return false;
         }
     }
-    public boolean deleteDaCompletare(Integer idUtente, Integer idProgetto)
+    public boolean deleteDaCompletare(Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
         try
         {
-            if (db.delete(DBConstants.TBL_NAME_DA_COMPLETARE, DBConstants.FIELD_ID_UTENTE+"=? AND " + DBConstants.FIELD_ID_PROGETTO ,
-                    new String[]{Integer.toString(idUtente), Integer.toString(idProgetto)})==1)
+            if (db.delete(DBConstants.TBL_NAME_DA_COMPLETARE, DBConstants.FIELD_ID_PROGETTO +"=?",
+                    new String[]{ Integer.toString(idProgetto)})==1)
                 return true;
             return false;
         }
