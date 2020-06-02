@@ -78,6 +78,16 @@ public class CreazioneSomministratore extends AppCompatActivity {
 
         //Log.d(TAG, password);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCreazioneSomm = new Intent(getApplicationContext(), GestioneSomministratore.class);
+                startActivity(intentCreazioneSomm);
+                finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+            }
+        });
+
 
         binding.btnRegistraSomm.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")

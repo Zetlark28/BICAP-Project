@@ -144,7 +144,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     binding.etLink.setEnabled(true);
                     binding.btnAnnulla.setClickable(true);
 
-                    Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Attenzione, non hai selezionato alcun file", Snackbar.LENGTH_SHORT).show();
                 }
 
                 //TODO: disabilitare la textInput per inserire il link del questionario e i bottoni upload, magari inserire bottone annulla upload
@@ -175,7 +175,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 filePath = null;
                 binding.etLink.setText("");
                 binding.pbUpload.setProgress(0);
-                Snackbar.make(v, "Sei passato al passaggio successivo !", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(v, "Sei passato al passaggio successivo", Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -241,7 +241,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 binding.imSaveProject.setClickable(false);
                 binding.etLink.setEnabled(false);
 
-                Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
                 startActivityForResult(Intent.createChooser(new Intent()
                                 .setAction(Intent.ACTION_GET_CONTENT)
                                 .setType("application/pdf"),
@@ -320,14 +320,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
         if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             this.type = "Video";
-            Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             Log.d("oggetto", filePath.toString());
             this.type = "PDF";
-            Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
         }
     }
 

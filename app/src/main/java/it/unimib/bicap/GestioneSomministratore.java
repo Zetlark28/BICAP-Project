@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 
@@ -22,7 +21,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -69,13 +67,20 @@ public class GestioneSomministratore extends AppCompatActivity {
 
         new DownloadSomministratoriTask().execute();
 
-        Log.d(TAG, "HashMap finale 1: " + somministratori.toString());
+        binding.btnCreaSomm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCreazioneSomm = new Intent(getApplicationContext(), CreazioneSomministratore.class);
+                startActivity(intentCreazioneSomm);
+            }
+        });
+
         boolean finito = getListaSommAttivi();
 
         while(! finito){
 
         }
-        Log.d(TAG, "Hashmap finale 2: " + somministratori);
+        Log.d(TAG, "Hashmap finale: " + somministratori);
 
         binding.btnEliminaSomm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +114,6 @@ public class GestioneSomministratore extends AppCompatActivity {
                 // whenever data at this location is updated.
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
-                    email.add(d.child("email").getValue().toString());
                     Log.d(TAG, "Hasmap: " + somministratori.toString());
                     //somministratori.add(d.getValue().toString());
                 }
@@ -124,6 +128,7 @@ public class GestioneSomministratore extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
         return true;
     }
 
