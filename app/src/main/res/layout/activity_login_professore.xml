@@ -13,7 +13,7 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:layout_marginLeft="30dp"
@@ -69,17 +69,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Email">
+                            android:hint="Email"
+                            app:boxStrokeColor="#a4224b">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etEmail"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/roboto"
-                                android:background="@color/design_default_color_on_primary"
                                 android:inputType="textEmailAddress"
-                                app:boxStrokeColor="#a4224b"/>
+                                />
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
@@ -101,11 +100,9 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etPassword"
                                 android:layout_width="match_parent"
-
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_height="wrap_content"
-                                android:background="@color/design_default_color_on_primary"
-                                android:inputType="textPassword" />
+                                android:inputType="textPassword"
+                                app:boxStrokeColor="#a4224b"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>

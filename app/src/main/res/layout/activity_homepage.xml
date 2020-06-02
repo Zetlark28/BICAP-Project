@@ -8,13 +8,16 @@
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main"/>
-
+    <ScrollView
+        android:id="@+id/scrollViewSomm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_marginTop="-20dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -143,5 +146,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

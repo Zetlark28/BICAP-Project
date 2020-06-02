@@ -18,6 +18,7 @@
         <LinearLayout
             android:id="@+id/lnScrollGestione"
             android:layout_width="match_parent"
+            android:layout_marginTop="-20dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical">
@@ -43,7 +44,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/compilaquestionari" />
+                        app:srcCompat="@drawable/immaginegruppodef" />
 
                     <TextView
                         android:id="@+id/tvCreaSomm"
@@ -98,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/redigiquestionari" />
+                        app:srcCompat="@drawable/personachelavora" />
 
                     <LinearLayout
                         android:id="@+id/lnEliminaSomm2"
