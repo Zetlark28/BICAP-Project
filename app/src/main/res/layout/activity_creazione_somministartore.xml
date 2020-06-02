@@ -1,135 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/sfondologinprimo"
     android:orientation="vertical">
 
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main" />
 
-    <TextView
-        android:id="@+id/tVCreaSomm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:gravity="center_horizontal"
-        android:text="Aggiungi i dati del somministratore"
-        android:textColor="@color/design_default_color_background"
-        android:textSize="40sp" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="-100dp"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal">
 
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardProf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginTop="40dp"
+            app:cardCornerRadius="4dp"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="true">
 
-            <ImageView
-                android:layout_width="54dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/user"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textField"
+            <LinearLayout
+                android:id="@+id/cardLn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nome e Cognome"
-                android:layout_marginLeft="10dp">
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etNomneSomm"
+                <LinearLayout
+                    android:id="@+id/cardLn4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/design_default_color_on_primary"
-                    android:inputType="textPersonName" />
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/design_default_color_background"
+                    android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/tvProf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/roboto"
+                        android:padding="10dp"
+                        android:text="Aggiungi un somministratore"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20sp" />
 
-        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tfEmailSomm"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:hint="Email"
+                            app:boxStrokeColor="#a4224b">
 
-            <ImageView
-                android:layout_width="54dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/email"/>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etEmailSomm"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto"
+                                android:inputType="textEmailAddress" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfEmailSomm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:layout_marginLeft="10dp">
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmailSomm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/design_default_color_on_primary"
-                    android:inputType="textEmailAddress" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tfPassword"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:hint="Password">
 
-        </LinearLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPasswordSomm"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                app:boxStrokeColor="#a4224b" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="30dp">
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-            <ImageView
-                android:layout_width="54dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/padlock"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tfPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:layout_marginLeft="10dp">
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textField"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:hint="Password">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPasswordSomm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/design_default_color_on_primary"
-                    android:inputType="textPassword" />
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etNomneSomm"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="textPassword"
+                                app:boxStrokeColor="#a4224b" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnRegistraSomm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Registra Somministratore"
-            style="?attr/materialButtonOutlinedStyle"
-            app:strokeColor="#FFFFFF"
-            android:textColor="@color/design_default_color_background"
-            app:backgroundTint="@color/colorPrimary" />
-
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRegistraSomm"
+                        style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="30dp"
+                        android:background="@color/sfondo"
+                        android:text="Registra Somministratore"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-
 </LinearLayout>
+

@@ -71,8 +71,6 @@ public class Utility {
             OutputStreamWriter osw = new OutputStreamWriter(fOut);
             osw.write(progetti.toString());
             osw.flush();
-            Toast.makeText(finalContext, "Composition saved", Toast.LENGTH_LONG).show();
-
         } catch (Exception e) {
             Toast.makeText(finalBaseContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -148,7 +146,7 @@ public class Utility {
                     });
         }
 
-        public static void downloadPDF(String link) {
+        public static boolean downloadPDF(String link) {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(link);
 
             mStorageRef.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -173,6 +171,7 @@ public class Utility {
                     // Handle any errors
                 }
             });
+            return true;
         }
 
 

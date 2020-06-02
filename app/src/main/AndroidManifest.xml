@@ -26,34 +26,54 @@
         <activity android:name=".service.ExoPlayerStream"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"/>
-        <activity android:name=".HomePage"/>
-        <activity android:name=".MainActivity" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
+        <activity android:name=".HomePage"
+            />
+        <activity android:name=".MainActivity"
+            />
         <activity
             android:name=".LoginProfessore"
-            android:parentActivityName=".HomePage"/>
-        <activity android:name=".Survey" />
+            android:parentActivityName=".HomePage"
+            />
+        <activity android:name=".Survey"
+            />
         <activity
             android:name=".CreazioneProgetto"
-            android:parentActivityName=".HomePageSomministratore"/>
+            android:parentActivityName=".HomePageSomministratore"
+            />
         <activity
             android:name=".DettaglioQuestionario"
-            android:parentActivityName=".CreazioneProgetto"/>
+            android:parentActivityName=".CreazioneProgetto"
+            />
         <activity
             android:name=".ListaProgetti"
-            android:parentActivityName=".HomePage"/>
+            android:parentActivityName=".HomePage"
+            />
         <activity
             android:name=".EliminaProgetti"
-            android:parentActivityName=".HomePageSomministratore"/>
+            android:parentActivityName=".HomePageSomministratore"
+            />
         <activity
             android:name=".HomePageSomministratore"
-            android:parentActivityName=".LoginProfessore"/>
-        <activity android:name=".QuestionariDaFare"/>
-        <activity android:name=".QuestionariDaTerminare"/>
-        <activity android:name=".PresentazioneProgetto"/>
-        <activity android:name=".CongratulazioniScreen"/>
-        <activity android:name=".service.PDFViewer"/>
-        <activity android:name=".CreazioneSomministratore"/>
+            android:parentActivityName=".LoginProfessore"
+            />
+        <activity android:name=".QuestionariDaFare"
+            />
+        <activity android:name=".QuestionariDaTerminare"
+            />
+        <activity android:name=".PresentazioneProgetto"
+            />
+        <activity android:name=".CongratulazioniScreen"
+            />
+        <activity android:name=".service.PDFViewer"
+            />
+        <activity android:name=".CreazioneSomministratore"
+            />
+        <activity android:name=".GestioneSomministratore"
+            />
+        <activity android:name=".EliminaSomministratore"
+            />
 
         <meta-data
             android:name="preloaded_fonts"

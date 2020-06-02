@@ -39,12 +39,14 @@ public class EliminaDialog extends AppCompatDialogFragment {
         }
     }
 
+    //public EliminaDialog();
+
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Elimina")
-                .setMessage("Sicuro di voler eliminare il progetto \n "+ nomeProgetto)
+                .setMessage("Sicuro di voler eliminare il progetto\n"+ nomeProgetto + "?")
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

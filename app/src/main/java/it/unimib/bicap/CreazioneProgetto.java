@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityCreazioneProgettoBinding;
 
 import it.unimib.bicap.service.JsonBuilder;
@@ -41,11 +42,11 @@ public class CreazioneProgetto extends AppCompatActivity {
         setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Creazione progetto");
+        toolbar.setTitle(ActivityConstants.CREAZIONE_PROGETTO_TOOLBAR_TITLE);
         //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
-        final String autore = getSharedPreferences("author", Context.MODE_PRIVATE).getString("autore", null);
+        final String autore = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE).getString(ActivityConstants.SHARED_PREFERENCE_AUTORE_KEY, null);
 
         Log.d(TAG, "autore: " + autore);
 

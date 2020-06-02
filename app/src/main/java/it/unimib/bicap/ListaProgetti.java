@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 import it.unimib.bicap.adapter.SectionsPagerAdapter;
+import it.unimib.bicap.constanti.ActivityConstants;
 
 public class ListaProgetti extends AppCompatActivity {
 
@@ -49,7 +50,7 @@ public class ListaProgetti extends AppCompatActivity {
 
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Lista questionari");
+        toolbar.setTitle(ActivityConstants.LISTA_PROGETTI_TOOLBAR_TITLE);
         setSupportActionBar(toolbar);
 
         progressDialog = new ProgressDialog(this);
@@ -85,7 +86,7 @@ public class ListaProgetti extends AppCompatActivity {
 
     private void setUpViewPager(final ViewPager viewPager){
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
+        StorageReference ref = mStorageRef.child(ActivityConstants.FIREBASE_STORAGE_CHILD_PROGETTI);
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -93,7 +94,7 @@ public class ListaProgetti extends AppCompatActivity {
                     String json = new String(bytes, "UTF-8");
                     progettiTot = new JSONObject(json);
                     SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-                    adapter.addFragment(new QuestionariDaFare(progettiTot), "QUESTIONARI DISPONIBILI");
+                    adapter.addFragment(new QuestionariDaFare(progettiTot), "QUESTIONARI ATTIVI");
                     adapter.addFragment(new QuestionariDaTerminare(progettiTot), "QUESTIONARI DA FINIRE");
                     viewPager.setAdapter(adapter);
                     progressDialog.dismiss();

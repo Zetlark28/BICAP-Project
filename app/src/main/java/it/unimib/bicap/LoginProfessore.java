@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityLoginProfessoreBinding;
 
 public class LoginProfessore extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class LoginProfessore extends AppCompatActivity {
     private ActivityLoginProfessoreBinding binding;
     private FirebaseAuth mAuth;
     private boolean fromHome;
+    private  boolean esisteMail;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
 
@@ -46,58 +48,70 @@ public class LoginProfessore extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         
         fromHome = getIntent().getExtras().getBoolean("fromHome");
-        updateUI(currentUser, fromHome);
+
+        final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+        esisteMail = sharedPref.getBoolean("esisteMail", false);
+        try {
+            updateUI(currentUser, fromHome, esisteMail);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void updateUI(FirebaseUser currentUser, boolean fromHome) {
+    private void updateUI(FirebaseUser currentUser, boolean fromHome, boolean esisteMail) throws InterruptedException {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        this.getSharedPreferences("author", 0).edit().remove("autore");
-        final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
-
+        this.getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, 0).edit().remove("autore");
+        final SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        esisteMail = sharedPref.getBoolean("esisteMail", false);
         if (user != null) {
-            if (fromHome) {
-                String email = user.getEmail();
-                Log.d(TAG, email);
-                // Read from the database
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
+            String email = user.getEmail();
+            //checkEmailExistsOrNot(email);
+            Log.d(TAG, "email: " + user.getEmail());
+            Log.d(TAG, "mail esiste? " + esisteMail);
+            if (esisteMail) {
+                if (fromHome) {
+                    Log.d(TAG, email);
+                    // Read from the database
+                    myRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
 
-                        String autore = dataSnapshot.child(user.getUid()).child("autore").getValue().toString();
+                            String autore = dataSnapshot.child(user.getUid()).child("autore").getValue().toString();
 
-                        Log.d(TAG, "Value is: " + autore);
+                            Log.d(TAG, "Value is: " + autore);
 
-                        SharedPreferences.Editor editor = sharedPref.edit();
+                            SharedPreferences.Editor editor = getSharedPreferences("author", Context.MODE_PRIVATE).edit();
 
-                        editor.putString("autore", autore);
-                        editor.commit();
-                    }
+                            editor.putString("autore", autore);
+                            editor.commit();
+                        }
 
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            // Failed to read value
+                            Log.w(TAG, "Failed to read value.", error.toException());
+                        }
+                    });
 
-                Intent intentLogged = new Intent(this, HomePageSomministratore.class);
-                //intentLogged.putExtra("Email", email);
-                intentLogged.putExtra("fromHome", fromHome);
-                intentLogged.putExtra("email", email);
-                startActivity(intentLogged);
-                finish();
-            } else {
-                Intent intentHome = new Intent(this, HomePage.class);
-                startActivity(intentHome);
-                finish();
-                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                    Intent intentLogged = new Intent(this, HomePageSomministratore.class);
+                    //intentLogged.putExtra("Email", email);
+                    intentLogged.putExtra("fromHome", fromHome);
+                    intentLogged.putExtra("email", email);
+                    startActivity(intentLogged);
+                    finish();
+                } else {
+                    Intent intentHome = new Intent(this, HomePage.class);
+                    startActivity(intentHome);
+                    finish();
+                    overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                }
             }
         }
     }
 
-        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @SuppressLint("SourceLockedOrientationActivity")
         @Override
         protected void onCreate (@Nullable Bundle savedInstanceState){
@@ -108,7 +122,7 @@ public class LoginProfessore extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
             Toolbar toolbar = findViewById(R.id.toolbar_main);
-            toolbar.setTitle("Area Somministratore");
+            toolbar.setTitle("");
             setSupportActionBar(toolbar);
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -149,18 +163,27 @@ public class LoginProfessore extends AppCompatActivity {
                                 Log.i(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 fromHome = true;
-                                updateUI(user, fromHome);
+                                esisteMail = true;
+                                try {
+                                    updateUI(user, fromHome, esisteMail);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.i(TAG, "createUserWithEmail:failure", task.getException());
+                                esisteMail = false;
                                 Snackbar.make(binding.linearlayout, "Attenzione, credenziali non valide !", Snackbar.LENGTH_SHORT).show();
-                                updateUI(null, fromHome);
+                                try {
+                                    updateUI(null, fromHome, esisteMail);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     });
         }
 
-    //override startActivity con animazione slide avanti
     @Override
     public void startActivity(Intent intent){
         super.startActivity(intent);

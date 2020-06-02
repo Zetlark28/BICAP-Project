@@ -1,10 +1,13 @@
 package it.unimib.bicap;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -62,8 +65,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
         instance = this;
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Nome Progetto");
         setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.menu_cancella);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +89,28 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
         Log.d("OGGETTO JSON", progetto.toString());
 
+
+        //TODO : settare il colore dei bottoni disabilitati
         binding.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String key = Utility.setKeyValue();
-                // TODO: Capire se sto uploadando PDF/Video o se sto inserendo il link del questionario
                 if (type != null) {
+
+                    binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                    binding.imInsertPdf.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                    binding.btnAnnulla.setBackgroundColor(getResources().getColor(R.color.disabilita));
+
+
+                    binding.imSaveProject.setClickable(true);
+                    binding.imNextStep.setClickable(true);
+                    binding.imCaricaVideo.setClickable(false);
+                    binding.imInsertPdf.setClickable(false);
+                    binding.btnAnnulla.setClickable(false);
+
                     if (type.equals("Video")) {
                         Utility.uploadFile(filePath,"Video/" + key,instance,binding);
                         Log.d("oggetto", progetto.toString() + 2);
@@ -101,6 +120,20 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
                 } else {
+
+                    binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
+                    binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+                    binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.btnAnnulla.setBackgroundColor(Color.WHITE);
+
+                    binding.imInsertPdf.setClickable(true);
+                    binding.imCaricaVideo.setClickable(true);
+                    binding.imNextStep.setClickable(true);
+                    binding.imSaveProject.setClickable(true);
+                    binding.etLink.setEnabled(true);
+                    binding.btnAnnulla.setClickable(true);
+
                     Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
                 }
 
@@ -112,6 +145,20 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.btnAnnulla.setBackgroundColor(Color.WHITE);
+
+                binding.imInsertPdf.setClickable(true);
+                binding.imSaveProject.setClickable(true);
+                binding.imCaricaVideo.setClickable(true);
+                binding.imNextStep.setClickable(true);
+                binding.etLink.setEnabled(true);
+                binding.btnAnnulla.setClickable(true);
+
                 Utility.getKeyValue();
                 //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
                 aggiungiPassi();
@@ -149,9 +196,20 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
+        //TODO : settare il colore dei bottoni disabilitati
         binding.imCaricaVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imInsertPdf.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.disabilita));
+
+                binding.imNextStep.setClickable(false);
+                binding.imInsertPdf.setClickable(false);
+                binding.imSaveProject.setClickable(false);
+                binding.etLink.setEnabled(false);
+
                 startActivityForResult(Intent.createChooser(new Intent()
                                 .setAction(Intent.ACTION_GET_CONTENT)
                                 .setType("video/mp4"),
@@ -159,9 +217,20 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
+        //TODO : settare il colore dei bottoni disabilitati
         binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.disabilita));
+
+                binding.imNextStep.setClickable(false);
+                binding.imCaricaVideo.setClickable(false);
+                binding.imSaveProject.setClickable(false);
+                binding.etLink.setEnabled(false);
+
                 Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
                 startActivityForResult(Intent.createChooser(new Intent()
                                 .setAction(Intent.ACTION_GET_CONTENT)
@@ -169,7 +238,27 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         "Seleziona un PDF"), CODE_PDF);
             }
         });
+
+        binding.btnAnnulla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.imCaricaVideo.setClickable(true);
+                binding.imSaveProject.setClickable(true);
+                binding.imNextStep.setClickable(true);
+                binding.etLink.setEnabled(true);
+                binding.imInsertPdf.setClickable(true);
+
+                binding.etLink.setText("");
+                filePath = null;
+
+                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+            }
+        });
     }
+
 
 
     private void aggiungiPassi() {
@@ -204,66 +293,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
-
-    //TODO: non utilizzato -> spostato in classe Utility.
-   /* public void write(JSONObject progetti){
-        try {
-            Writer output;
-            FileOutputStream fOut = openFileOutput(FILE_NAME, MODE_PRIVATE);
-            OutputStreamWriter osw = new OutputStreamWriter(fOut);
-            osw.write(progetti.toString());
-            osw.flush();
-            Toast.makeText(getApplicationContext(), "Composition saved", Toast.LENGTH_LONG).show();
-
-        } catch (Exception e) {
-            Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        filePath = Uri.parse("file:///data/data/it.unimib.bicap/files/progetti.json");
-        uploadFile("Progetti/progetti.json");
-
-    }
-    private void uploadFile(final String directory) {
-        if (filePath != null) {
-            final StorageReference fileRef = mStorageRef.child(directory);
-            fileRef.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(getApplicationContext(), "Hai aggiunto un passo", Toast.LENGTH_SHORT).show();
-                            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    linkToJoinJSON = String.valueOf(uri);
-                                    Log.d("oggetto", "Upload completato");
-                                }
-                            });
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(getApplicationContext(), "Errore nell'upload", Toast.LENGTH_SHORT).show();
-                            Log.d("oggetto", "Errore nell'upload");
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            updateProgress(taskSnapshot);
-                        }
-                    });
-        } else {
-            Toast.makeText(this, "Non hai scelto nessun file", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void updateProgress(UploadTask.TaskSnapshot taskSnapshot) {
-        long fileSize = taskSnapshot.getTotalByteCount();
-        long uploadBytes = taskSnapshot.getBytesTransferred();
-        long progress = (100 * uploadBytes) / fileSize;
-        binding.pbUpload.setProgress((int) progress);
-    }
-*/
     //override startActivity con animazione slide avanti
     @Override
     public void startActivity(Intent intent){
@@ -276,5 +305,12 @@ public class DettaglioQuestionario extends AppCompatActivity {
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_cancella, menu);
+        return true;
     }
 }

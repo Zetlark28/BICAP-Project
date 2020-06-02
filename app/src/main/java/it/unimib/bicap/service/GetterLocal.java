@@ -132,4 +132,18 @@ public class GetterLocal implements GetterInfo {
 
         return null;
     }
+
+    public List<String> getNomiSomministratori(JSONArray listaProgetti){
+        List<String> result = new ArrayList<>();
+        for(int i = 0; i<listaProgetti.length(); i++){
+            try {
+                if (! result.contains(listaProgetti.getJSONObject(i).getString("nome"))) {
+                    result.add(listaProgetti.getJSONObject(i).getString("nome"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 }

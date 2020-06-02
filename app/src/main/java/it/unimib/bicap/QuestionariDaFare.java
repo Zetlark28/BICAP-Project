@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,14 +49,13 @@ public class QuestionariDaFare extends Fragment {
         }
 
         db = new DBManager(getContext());
-        Cursor progettiCompletati = db.selectCompletati(idUtente);
-        Cursor progettiDaCompletare = db.selectDaCompletare(idUtente);
+        Cursor progettiCompletati = db.selectCompletati();
+        Cursor progettiDaCompletare = db.selectDaCompletare();
 
         JSONArray progettiDaFare = new JSONArray();
 
         try {
         for(int i = 0; i<progetti.length(); i++) {
-
             if (!DBManager.isCompletato(progettiCompletati, progetti.getJSONObject(i).getInt("id")))
                 if (!DBManager.isDaCompletare(progettiDaCompletare, progetti.getJSONObject(i).getInt("id")))
                     progettiDaFare.put(progetti.getJSONObject(i));

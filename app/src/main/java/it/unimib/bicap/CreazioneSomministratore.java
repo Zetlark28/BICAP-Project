@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityCreazioneSomministartoreBinding;
 
 public class CreazioneSomministratore extends AppCompatActivity {
@@ -60,9 +61,9 @@ public class CreazioneSomministratore extends AppCompatActivity {
         mAuth1 = FirebaseAuth.getInstance();
 
         FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
-                .setDatabaseUrl("https://bicap-ffecb.firebaseio.com/")
-                .setApiKey("AIzaSyArVc7FWmbpTNMh6JbFq69Kimm-TqS5e28")
-                .setApplicationId("bicap-ffecb").build();
+                .setDatabaseUrl(ActivityConstants.DATABASE_URL)
+                .setApiKey(ActivityConstants.DATABASE_API_KEY)
+                .setApplicationId(ActivityConstants.DATABASE_APPLICATION_ID).build();
 
         try { FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "AnyAppName");
             mAuth2 = FirebaseAuth.getInstance(myApp);
@@ -94,7 +95,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
 
         }
 
-    private void createUser(String email, String password, final String autore) {
+    private void createUser(final String email, String password, final String autore) {
         mAuth2.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @SuppressLint("LongLogTag")
@@ -106,6 +107,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                             user = mAuth2.getCurrentUser();
                             Log.d(TAG, "problema successo");
                             myRef.child(user.getUid()).child("autore").setValue(autore);
+                            myRef.child(user.getUid()).child("email").setValue(email);
                             //mFirebaseAuth2.updateCurrentUser(mAuth.getCurrentUser());
                             mAuth2.signOut();
                             //TODO: fix presa user
