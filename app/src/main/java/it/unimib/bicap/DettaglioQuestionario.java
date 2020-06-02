@@ -1,5 +1,8 @@
 package it.unimib.bicap;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -8,16 +11,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,6 +54,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private DettaglioQuestionario instance;
 
     private ActivityDettaglioQuestionarioBinding binding;
+
+    private ProgressDialog cancellaDialog;
 
     public static void setLinkToJoinJSON(String linkToJoinJSON) {
         DettaglioQuestionario.linkToJoinJSON = linkToJoinJSON;
@@ -239,22 +249,24 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
-        binding.btnAnnulla.setOnClickListener(new View.OnClickListener() {
+        binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.imCaricaVideo.setClickable(true);
-                binding.imSaveProject.setClickable(true);
-                binding.imNextStep.setClickable(true);
-                binding.etLink.setEnabled(true);
-                binding.imInsertPdf.setClickable(true);
 
-                binding.etLink.setText("");
-                filePath = null;
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.disabilita));
 
-                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
-                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+                binding.imNextStep.setClickable(false);
+                binding.imCaricaVideo.setClickable(false);
+                binding.imSaveProject.setClickable(false);
+                binding.etLink.setEnabled(false);
+
+                Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
+                startActivityForResult(Intent.createChooser(new Intent()
+                                .setAction(Intent.ACTION_GET_CONTENT)
+                                .setType("application/pdf"),
+                        "Seleziona un PDF"), CODE_PDF);
             }
         });
     }
@@ -274,6 +286,32 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_cancella, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menuCancella){
+            cancellaDialog.setTitle("Elimina Progetto");
+            cancellaDialog.setMessage("Sei sicuro di voler cancellare tutto?");
+            cancellaDialog.setCancelable(false);
+            cancellaDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Ricarica", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent HomePageSomministratoreRicarica = new Intent (getApplicationContext(), HomePageSomministratore.class);
+                    startActivity(HomePageSomministratoreRicarica);
+                    finish();
+                }
+            });
+            cancellaDialog.show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -307,10 +345,4 @@ public class DettaglioQuestionario extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_cancella, menu);
-        return true;
-    }
 }

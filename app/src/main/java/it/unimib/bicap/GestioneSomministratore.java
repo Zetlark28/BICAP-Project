@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +46,20 @@ public class GestioneSomministratore extends AppCompatActivity {
         binding = ActivityGestioneSomministratoreBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Gestisci i somministratori");
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentQuestionari = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(intentQuestionari);
+                finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Caricamento...");
