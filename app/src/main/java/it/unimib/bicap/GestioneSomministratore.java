@@ -113,9 +113,12 @@ public class GestioneSomministratore extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
-                    Log.d(TAG, "Hasmap: " + somministratori.toString());
-                    //somministratori.add(d.getValue().toString());
+                    if(d.child("email").getValue()!= null && d.child("autore").getValue()!=null) {
+                        somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
+                        email.add(d.child("email").getValue().toString());
+                        Log.d(TAG, "Hasmap: " + somministratori.toString());
+                        //somministratori.add(d.getValue().toString());
+                    }
                 }
 
                 progressDialog.dismiss();

@@ -71,7 +71,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
             mAuth2 = FirebaseAuth.getInstance(FirebaseApp.getInstance("AnyAppName"));
         }
 
-        final String autore = binding.etNomneSomm.getText().toString();
+        final String autore = binding.etNomeSomm.getText().toString();
         Log.d(TAG, autore);
 
         //Log.d(TAG, email);
@@ -93,13 +93,16 @@ public class CreazioneSomministratore extends AppCompatActivity {
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                String autore = binding.etNomneSomm.getText().toString();
+                String autore = binding.etNomeSomm.getText().toString();
                 Log.d(TAG, "premo il bottone");
                 String email = binding.etEmailSomm.getText().toString();
                 String password = binding.etPasswordSomm.getText().toString();
                 createUser(email, password, autore);
                 Log.d(TAG, "creato nuovo somministratore");
                 Toast.makeText(getApplicationContext(), "Nome: " + autore + " Email: " + email, Toast.LENGTH_SHORT).show();
+                Intent intentHomepage = new Intent(getApplicationContext(), GestioneSomministratore.class);
+                startActivity(intentHomepage);
+                finish();
             }
         });
 

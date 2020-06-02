@@ -86,10 +86,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
 
     @SuppressLint("LongLogTag")
     public void onBindViewHolder (final MyViewHolder holder, final int position){
-        final String key = emails.get(position);
         if (eliminaActivity != null)
                 holder.nome.setText(nomi.get(position));
-            else {
+        else {
+            String key = emails.get(position);
             Log.d(TAG, "chiave: " + key);
             holder.nome.setText(nomiSomministratori.get(key));
         }
@@ -103,6 +103,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
                         eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                     }
                     else {
+                        String key = emails.get(position);
                         eliminaDialog = new EliminaDialog(nomiSomministratori, key, position, istanzaProgettiAdapter, eliminaActivitysomm);
                         eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
                     }
