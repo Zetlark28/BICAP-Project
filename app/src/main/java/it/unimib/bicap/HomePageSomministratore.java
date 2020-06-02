@@ -38,9 +38,6 @@ import java.util.TimerTask;
 
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 
-// TODO: Creare il menu a discesa coi vari pulsanti tra cui il LOGOUT/ Gestire il login
-// TODO: user & psw -> admin admin
-
 public class HomePageSomministratore extends AppCompatActivity {
     private static final int ONE_MB = 1024 * 1024;
     private static JSONObject progetti;
@@ -127,7 +124,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         //Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,6 +134,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 finish();
             }
         });
+
 
         binding.btnElimina.setOnClickListener(new View.OnClickListener() {
             @Override
