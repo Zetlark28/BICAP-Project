@@ -66,6 +66,14 @@ public class GestioneSomministratore extends AppCompatActivity {
 
         new DownloadSomministratoriTask().execute();
 
+        binding.btnCreaSomm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCreazioneSomm = new Intent(getApplicationContext(), CreazioneSomministratore.class);
+                startActivity(intentCreazioneSomm);
+            }
+        });
+
         boolean finito = getListaSommAttivi();
 
         while(! finito){

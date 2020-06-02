@@ -116,13 +116,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Password">
+                            android:hint="Nome e Cognome">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etNomneSomm"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPassword"
+                                android:inputType="text"
                                 app:boxStrokeColor="#a4224b" />
 
                         </com.google.android.material.textfield.TextInputLayout>
