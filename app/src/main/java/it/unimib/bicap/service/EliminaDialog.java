@@ -121,10 +121,13 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                         }
                                         else
                                             nuovaHashMap.put(d.child("email").toString(), d.child("autore").toString());
+                                            //TODO: reinizializzare anche lista delle email
                                     }
                                     //String value = dataSnapshot.getValue(String.class);
                                     //Log.d(TAG, "Value is: " + value);
-                                    ProgettiDaEliminareAdapterRV.setSomministratori(nuovaHashMap);
+                                    //ProgettiDaEliminareAdapterRV.setSomministratori(nuovaHashMap);
+                                    nomiSomministratori.remove(email);
+                                    progettiAdapterSommRV.notifyItemRemoved(index);
                                     //progettiAdapterSommRV.notifyDataSetChanged();
                                     dismiss();
                                 }

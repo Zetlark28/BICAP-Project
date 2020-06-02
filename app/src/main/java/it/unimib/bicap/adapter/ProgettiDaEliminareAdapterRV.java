@@ -74,6 +74,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         Log.d(TAG, "HashMap: " + nomiSomm.toString());
         this.emails = emails;
         this.eliminaActivitysomm = eliminaActivity;
+        this.istanzaProgettiAdapter = this;
         layoutInflater = (LayoutInflater.from(context));
     }
 
