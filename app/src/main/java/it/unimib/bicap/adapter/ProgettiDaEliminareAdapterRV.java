@@ -1,6 +1,8 @@
 package it.unimib.bicap.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import it.unimib.bicap.EliminaProgetti;
@@ -26,6 +30,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
 
     private static List<String> nomi;
     private static HashMap<String, String> nomiSomministratori;
+    private static List<String> emails;
     private LayoutInflater layoutInflater;
     public static JSONArray listaProgetti;
     private JSONObject listaProgettiTot;
@@ -33,9 +38,14 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     private EliminaProgetti eliminaActivity;
     private EliminaSomministratore eliminaActivitysomm;
     ProgettiDaEliminareAdapterRV istanzaProgettiAdapter;
+    private final String TAG = "ProgettiDaEliminareAdapter";
 
     public static void setListaProgetti(JSONArray listaProgetti) {
         ProgettiDaEliminareAdapterRV.listaProgetti = listaProgetti;
+    }
+
+    public static void setSomministratori(HashMap<String, String> nuoviSomm){
+        ProgettiDaEliminareAdapterRV.nomiSomministratori = nuoviSomm;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -58,8 +68,11 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         layoutInflater = (LayoutInflater.from(context));
     }
 
-    public ProgettiDaEliminareAdapterRV(Context context, HashMap<String, String> nomiSomm, EliminaSomministratore eliminaActivity){
+    @SuppressLint("LongLogTag")
+    public ProgettiDaEliminareAdapterRV(Context context, HashMap<String, String> nomiSomm, List<String> emails, EliminaSomministratore eliminaActivity){
         nomiSomministratori = nomiSomm;
+        Log.d(TAG, "HashMap: " + nomiSomm.toString());
+        this.emails = emails;
         this.eliminaActivitysomm = eliminaActivity;
         layoutInflater = (LayoutInflater.from(context));
     }
@@ -71,12 +84,13 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         return mV;
     }
 
+    @SuppressLint("LongLogTag")
     public void onBindViewHolder (final MyViewHolder holder, final int position){
-        String key = null;
+        final String key = emails.get(position);
         if (eliminaActivity != null)
                 holder.nome.setText(nomi.get(position));
             else {
-            key = nomiSomministratori.get(position);
+            Log.d(TAG, "chiave: " + key);
             holder.nome.setText(nomiSomministratori.get(key));
         }
 
@@ -84,12 +98,14 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
                 @Override
                 public void onClick(View v) {
                     EliminaDialog eliminaDialog = null;
-                    if (eliminaActivity != null)
+                    if (eliminaActivity != null) {
                         eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity);
-                    else
-                        //eliminaDialog = new EliminaDialog(nomi, position, istanzaProgettiAdapter, eliminaActivitysomm);
-
-                    eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
+                        eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
+                    }
+                    else {
+                        eliminaDialog = new EliminaDialog(nomiSomministratori, key, position, istanzaProgettiAdapter, eliminaActivitysomm);
+                        eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
+                    }
                 }
             });
         }

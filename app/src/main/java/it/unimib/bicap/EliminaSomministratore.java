@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.databinding.ActivityEliminaSomministratoreBinding;
@@ -24,7 +26,10 @@ public class EliminaSomministratore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        HashMap<String, String> nomiSomm = (HashMap<String, String>) intent.getSerializableExtra("somministratori");
+        Log.d(TAG, "Intent: " + intent.toString());
+        HashMap<String, String> nomiSomm;
+        nomiSomm = (HashMap<String, String>) intent.getSerializableExtra("somministratori");
+        List<String> emails = intent.getStringArrayListExtra("emails");
         Log.d(TAG, "Hashmap elimina: " + nomiSomm);
 
         binding = ActivityEliminaSomministratoreBinding.inflate(getLayoutInflater());
@@ -33,7 +38,7 @@ public class EliminaSomministratore extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvSomministratoreDaEliminare.setLayoutManager(linearLayoutManager);
-        ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, this);
+        ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, emails, this);
         binding.rvSomministratoreDaEliminare.setAdapter(progettiAdapter);
     }
 }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 
@@ -20,6 +21,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +36,7 @@ public class GestioneSomministratore extends AppCompatActivity {
     private final String TAG = "GestioneSomministratore";
     HashMap<String, String> somministratori = new HashMap<>();
     private ProgressDialog progressDialog;
+    List<String> email = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,21 +54,22 @@ public class GestioneSomministratore extends AppCompatActivity {
 
         new DownloadSomministratoriTask().execute();
 
+        Log.d(TAG, "HashMap finale 1: " + somministratori.toString());
         boolean finito = getListaSommAttivi();
 
         while(! finito){
 
         }
-        Log.d(TAG, "Hashmap finale: " + somministratori);
+        Log.d(TAG, "Hashmap finale 2: " + somministratori);
 
         binding.btnEliminaSomm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentCreaSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
-                startActivity(intentCreaSomm);
-                Serializable obj = somministratori;
-                Log.d(TAG, "Intent problem: " + obj.toString());
+                Log.d(TAG, "Intent problem: " + somministratori.toString());
+                intentCreaSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
                 intentCreaSomm.putExtra("somministratori", somministratori);
+                startActivity(intentCreaSomm);
                 finish();
             }
         });
@@ -90,6 +94,7 @@ public class GestioneSomministratore extends AppCompatActivity {
                 // whenever data at this location is updated.
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
                     somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
+                    email.add(d.child("email").getValue().toString());
                     Log.d(TAG, "Hasmap: " + somministratori.toString());
                     //somministratori.add(d.getValue().toString());
                 }
@@ -104,7 +109,6 @@ public class GestioneSomministratore extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
         return true;
     }
 

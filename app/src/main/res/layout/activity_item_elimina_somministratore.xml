@@ -20,15 +20,21 @@
                 android:text="Nome Somministratore"
                 android:textSize="20sp"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEliminaSomm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Elimina"
-                android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Prova"
+                    android:textSize="20sp"
+                    android:layout_marginTop="10dp"/>
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEliminaSomm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|end"
+                    android:text="Elimina"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
