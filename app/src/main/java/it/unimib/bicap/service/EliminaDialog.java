@@ -53,6 +53,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
                         JSONArray listaNuova = new JSONArray();
                         JSONObject nuoviProgetti = null;
                         Integer idElimina = null;
+                        //primo for serve  per identificare il json da eliminare all'interno della lista intera di progetti
+                        //secondo for serve per inizializzare una nuova lista di jsonObject che l'utente vedrà senza inserire il json identificato precedentemente
                         try {
                             for(int i = 0; i<listaProgetti.length(); i++) {
                                 if (i != index)
@@ -68,6 +70,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     nuovaListaTotProgetti.put(lista.getJSONObject(j));
                                 }
                             }
+                            //crea un nuovo jsonObject dove inserisce il JsonArray ricavato precedentemente
                             nuoviProgetti = new JSONObject();
                             nuoviProgetti.put("progetti",nuovaListaTotProgetti);
                             Log.d("oggetto", nuoviProgetti.toString());

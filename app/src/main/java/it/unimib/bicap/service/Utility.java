@@ -47,11 +47,14 @@ public class Utility {
      private StorageReference mStorageRef;
      private static String keyValue;
 
+     //scrittura del jsonObject convertito a stringa su un file
+     //carica il file su firebase
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
          Log.d("oggetto", "Utility:Write");
          Context context = null;
          Context baseContext = null;
          Boolean writing = Boolean.FALSE;
+         //in base all'activity passata inizializzo le variabili
          if(activityInstance instanceof DettaglioQuestionario) {
              DettaglioQuestionario activity = (DettaglioQuestionario) activityInstance;
              context = activity.getApplicationContext();
@@ -81,7 +84,7 @@ public class Utility {
              updateFile(Uri.parse(QUESTIONNAIRE_FILE_PATH_DIR_LOCAL),FIREBASE_PATH_PROJECT, finalContext);
      }
 
-
+    //scarica la chiave associata ad un determinato oggetto su firebase
     public static void getKeyValue(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("chiave");
@@ -101,7 +104,7 @@ public class Utility {
             }
         });
     }
-
+    //setta la chiave di un oggetto (file generico) su firebase rendendola univoca aumentando di 1
     public static String setKeyValue() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("chiave");
@@ -112,12 +115,13 @@ public class Utility {
         return chiave;
     }
 
-
+    //carica un file contenuto nella memoria del telefono su firebase
     public static void uploadFile(final Uri filepath, final String directory, final Context context, final ActivityDettaglioQuestionarioBinding binding) {
 
         FirebaseApp.initializeApp(context);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         final StorageReference fileRef = mStorageRef.child(directory);
+        //se ha successo carica il percorso del file sul json
         fileRef.putFile(filepath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -146,6 +150,7 @@ public class Utility {
                     });
         }
 
+        //scarica il pdf da firebase in locale
         public static boolean downloadPDF(String link) {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(link);
 
@@ -174,7 +179,7 @@ public class Utility {
             return true;
         }
 
-
+    //update barra di caricamento
     private static void updateProgress(UploadTask.TaskSnapshot taskSnapshot, ActivityDettaglioQuestionarioBinding binding) {
         long fileSize = taskSnapshot.getTotalByteCount();
         long uploadBytes = taskSnapshot.getBytesTransferred();
@@ -182,6 +187,7 @@ public class Utility {
         binding.pbUpload.setProgress((int) progress);
     }
 
+    //aggiorna un file nello storage
     public static void updateFile(final Uri filepath, final String directory, final Context context){
         FirebaseApp.initializeApp(context);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
