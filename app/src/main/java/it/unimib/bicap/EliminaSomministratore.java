@@ -56,4 +56,12 @@ public class EliminaSomministratore extends AppCompatActivity {
         ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, emails, this);
         binding.rvSomministratoreDaEliminare.setAdapter(progettiAdapter);
     }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), GestioneSomministratore.class));
+        finish();
+
+    }
 }

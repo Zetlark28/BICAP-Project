@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
@@ -99,7 +100,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 String password = binding.etPasswordSomm.getText().toString();
                 createUser(email, password, autore);
                 Log.d(TAG, "creato nuovo somministratore");
-                Toast.makeText(getApplicationContext(), "Nome: " + autore + " Email: " + email, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Hai creato un nuovo somministratore con i seguenti dati: \n" + "Nome: " + autore + "\n" + "Email: " + email, Toast.LENGTH_SHORT).show();
                 Intent intentHomepage = new Intent(getApplicationContext(), GestioneSomministratore.class);
                 startActivity(intentHomepage);
                 finish();

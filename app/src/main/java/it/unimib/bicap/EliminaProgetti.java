@@ -78,6 +78,14 @@ public class EliminaProgetti extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
+        finish();
+
+    }
+
     //override finish con animazione slide indietro
     @Override
     public void finish(){

@@ -124,4 +124,12 @@ public class ListaProgetti extends AppCompatActivity {
         }
     }
 
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        finish();
+
+    }
+
 }

@@ -189,6 +189,14 @@ public class LoginProfessore extends AppCompatActivity {
         super.startActivity(intent);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        finish();
+
+    }
 }
 
 //TODO: Email: admin@admin.com Password:alessio
