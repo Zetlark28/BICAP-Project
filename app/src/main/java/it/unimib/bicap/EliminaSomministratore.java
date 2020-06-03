@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaSomministratoreBinding;
 
 public class EliminaSomministratore extends AppCompatActivity {
@@ -35,6 +37,19 @@ public class EliminaSomministratore extends AppCompatActivity {
         binding = ActivityEliminaSomministratoreBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Elimina Somministatore");
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentHomeProfessore = new Intent(getApplicationContext(), GestioneSomministratore.class);
+                startActivity(intentHomeProfessore);
+                EliminaSomministratore.this.finish();
+            }
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvSomministratoreDaEliminare.setLayoutManager(linearLayoutManager);
