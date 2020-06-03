@@ -94,8 +94,8 @@ public class ListaProgetti extends AppCompatActivity {
                     String json = new String(bytes, "UTF-8");
                     progettiTot = new JSONObject(json);
                     SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-                    adapter.addFragment(new QuestionariDaFare(progettiTot), "QUESTIONARI ATTIVI");
-                    adapter.addFragment(new QuestionariDaTerminare(progettiTot), "QUESTIONARI DA FINIRE");
+                    adapter.addFragment(new QuestionariDaFare(progettiTot), "SURVEY ATTIVI");
+                    adapter.addFragment(new QuestionariDaTerminare(progettiTot), "SURVEY SOSPESI");
                     viewPager.setAdapter(adapter);
                     progressDialog.dismiss();
                 } catch (JSONException e) {
@@ -122,6 +122,14 @@ public class ListaProgetti extends AppCompatActivity {
         public Void doInBackground(Void... unused) {
             return null;
         }
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        finish();
+
     }
 
 }

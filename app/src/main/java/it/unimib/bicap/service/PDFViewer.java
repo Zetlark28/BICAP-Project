@@ -1,4 +1,5 @@
 package it.unimib.bicap.service;
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -7,6 +8,7 @@ import com.github.barteksc.pdfviewer.PDFView;
 import java.io.File;
 import java.io.FileInputStream;
 
+import it.unimib.bicap.HomePage;
 import it.unimib.bicap.R;
 
 // TODO: creare if-else per capire se sto aprendo la guida o un file da firebase
@@ -55,5 +57,13 @@ public class PDFViewer extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        finish();
+
     }
 }

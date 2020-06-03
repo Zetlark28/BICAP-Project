@@ -74,7 +74,7 @@ public class Survey extends AppCompatActivity {
         });
     }
 
-    public void showDialog(){
+    public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Torna alla Homepage");
         builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");

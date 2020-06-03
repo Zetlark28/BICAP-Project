@@ -345,6 +345,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
+        finish();
+
+    }
+
     //override finish con animazione slide avanti
     @Override
     public void finish(){

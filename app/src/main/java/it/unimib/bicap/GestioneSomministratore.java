@@ -135,4 +135,12 @@ public class GestioneSomministratore extends AppCompatActivity {
         return true;
     }
 
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
+        finish();
+
+    }
+
 }
