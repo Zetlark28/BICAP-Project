@@ -40,6 +40,8 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     ProgettiDaEliminareAdapterRV istanzaProgettiAdapter;
     private final String TAG = "ProgettiDaEliminareAdapter";
 
+    private boolean context = true;
+
     public static void setListaProgetti(JSONArray listaProgetti) {
         ProgettiDaEliminareAdapterRV.listaProgetti = listaProgetti;
     }
@@ -76,13 +78,20 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         this.eliminaActivitysomm = eliminaActivity;
         this.istanzaProgettiAdapter = this;
         layoutInflater = (LayoutInflater.from(context));
+        this.context = false;
     }
 
     public MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
-        View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
-        MyViewHolder mV = new MyViewHolder(v);
-
-        return mV;
+        if(this.context) {
+            View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
+            MyViewHolder mV = new MyViewHolder(v);
+            return mV;
+        }else{
+            View v = layoutInflater.inflate(R.layout.activity_item_elimina_somministratore, parent, false);
+            MyViewHolder mV = new MyViewHolder(v);
+            return mV;
+        }
+        
     }
 
     @SuppressLint("LongLogTag")

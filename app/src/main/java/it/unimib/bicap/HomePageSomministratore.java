@@ -221,6 +221,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             Intent intentAddSomm = new Intent (this, GestioneSomministratore.class);
             startActivity(intentAddSomm);
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             finish();
         }
         return super.onOptionsItemSelected(item);
