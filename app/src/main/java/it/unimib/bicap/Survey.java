@@ -83,6 +83,7 @@ public class Survey extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePage.class);
                 startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
             }
         });
