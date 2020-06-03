@@ -13,10 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import it.unimib.bicap.EliminaProgetti;
@@ -26,12 +23,11 @@ import it.unimib.bicap.service.EliminaDialog;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
-public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiDaEliminareAdapterRV.MyViewHolder> {
+public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static List<String> nomi;
     private static HashMap<String, String> nomiSomministratori;
     private static List<String> emails;
-    private LayoutInflater layoutInflater;
     public static JSONArray listaProgetti;
     private JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
@@ -39,15 +35,23 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     private EliminaSomministratore eliminaActivitysomm;
     ProgettiDaEliminareAdapterRV istanzaProgettiAdapter;
     private final String TAG = "ProgettiDaEliminareAdapter";
+    private static final int TYPE_PROJ = 0;
+    private static final int TYPE_SOMM = 1;
+    private LayoutInflater layoutInflater;
+    Context context;
 
-    private boolean context = true;
+    @SuppressLint("LongLogTag")
+    @Override
+    public int getItemViewType(int position) {
+        Log.d(TAG, "position: " + position);
+        if (eliminaActivity != null)
+            return TYPE_PROJ;
+        else
+            return TYPE_SOMM;
+    }
 
     public static void setListaProgetti(JSONArray listaProgetti) {
         ProgettiDaEliminareAdapterRV.listaProgetti = listaProgetti;
-    }
-
-    public static void setSomministratori(HashMap<String, String> nuoviSomm){
-        ProgettiDaEliminareAdapterRV.nomiSomministratori = nuoviSomm;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -57,7 +61,20 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         public MyViewHolder (View itemView){
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
-            elimina = itemView.findViewById(R.id.btnElimina);
+            elimina = itemView.findViewById(R.id.btnEliminaProgetto);
+        }
+    }
+
+    public static class MyViewHolderSomm extends  RecyclerView.ViewHolder{
+        TextView nome;
+        TextView emailSomm;
+        Button elimina;
+
+        public MyViewHolderSomm (View itemView){
+            super(itemView);
+            nome = itemView.findViewById(R.id.tvNomeSommD);
+            emailSomm = itemView.findViewById(R.id.tvEmailSommD);
+            elimina = itemView.findViewById(R.id.btnEliminaSomm);
         }
     }
 
@@ -67,7 +84,8 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         this.listaProgettiTot = listaProgettiTot;
         this.eliminaActivity = eliminaActivity;
         this.istanzaProgettiAdapter =this;
-        layoutInflater = (LayoutInflater.from(context));
+        this.context = context;
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
     @SuppressLint("LongLogTag")
@@ -77,47 +95,60 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         this.emails = emails;
         this.eliminaActivitysomm = eliminaActivity;
         this.istanzaProgettiAdapter = this;
-        layoutInflater = (LayoutInflater.from(context));
-        this.context = false;
+        this.context = context;
+        this.layoutInflater = LayoutInflater.from(context);
     }
 
-    public MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
-        if(this.context) {
-            View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
-            MyViewHolder mV = new MyViewHolder(v);
-            return mV;
+    public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
+
+        if (viewType == TYPE_PROJ){
+            View view = this.layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
+            return new MyViewHolder(view);
         }
-        View v = layoutInflater.inflate(R.layout.activity_item_elimina_somministratore, parent, false);
+        else{
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_item_elimina_somministratore, parent, false);
+            return new MyViewHolderSomm(view);
+        }
+        /*View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
         MyViewHolder mV = new MyViewHolder(v);
-        return mV;
+        return mV;*/
     }
+
 
     @SuppressLint("LongLogTag")
-    public void onBindViewHolder (final MyViewHolder holder, final int position){
-        if (eliminaActivity != null)
-                holder.nome.setText(nomi.get(position));
-        else {
+    public void onBindViewHolder (final RecyclerView.ViewHolder holder, final int position) {
+        Log.d(TAG, "eliminaActivity: " + eliminaActivity);
+        Log.d(TAG, "type: " + holder.getItemViewType());
+        if (holder instanceof  MyViewHolder) {
+                MyViewHolder vaultItemHolder = (MyViewHolder) holder;
+                vaultItemHolder.nome.setText(nomi.get(position));
+                vaultItemHolder.elimina.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        EliminaDialog eliminaDialog = null;
+                        String message = "Sei sicuto di voler eliminare il progetto: " + nomi.get(position) + " ?";
+                        eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity, message);
+                        eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
+                    }
+                });
+        } else if (holder instanceof  MyViewHolderSomm){
+            MyViewHolderSomm vaultItemHolderSomm = (MyViewHolderSomm) holder;
             String key = emails.get(position);
             Log.d(TAG, "chiave: " + key);
-            holder.nome.setText(nomiSomministratori.get(key));
-        }
-
-            holder.elimina.setOnClickListener(new View.OnClickListener() {
+            vaultItemHolderSomm.nome.setText(nomiSomministratori.get(key));
+            vaultItemHolderSomm.emailSomm.setText(key);
+            vaultItemHolderSomm.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     EliminaDialog eliminaDialog = null;
-                    if (eliminaActivity != null) {
-                        eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity);
-                        eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
+                    String key = emails.get(position);
+                    String message = "Sei sicuro di voler eliminare il somministratore: " + nomiSomministratori.get(key) + "?";
+                    eliminaDialog = new EliminaDialog(nomiSomministratori, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
+                    eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
                     }
-                    else {
-                        String key = emails.get(position);
-                        eliminaDialog = new EliminaDialog(nomiSomministratori, key, position, istanzaProgettiAdapter, eliminaActivitysomm);
-                        eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
-                    }
-                }
             });
         }
+    }
 
     public int getItemCount (){
         if (eliminaActivity != null)
