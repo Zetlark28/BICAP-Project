@@ -86,12 +86,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<ProgettiD
             View v = layoutInflater.inflate(R.layout.activity_item_elimina_progetto, parent, false);
             MyViewHolder mV = new MyViewHolder(v);
             return mV;
-        }else{
-            View v = layoutInflater.inflate(R.layout.activity_item_elimina_somministratore, parent, false);
-            MyViewHolder mV = new MyViewHolder(v);
-            return mV;
         }
-        
+        View v = layoutInflater.inflate(R.layout.activity_item_elimina_somministratore, parent, false);
+        MyViewHolder mV = new MyViewHolder(v);
+        return mV;
     }
 
     @SuppressLint("LongLogTag")

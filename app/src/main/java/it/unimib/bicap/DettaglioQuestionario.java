@@ -55,7 +55,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
     private ActivityDettaglioQuestionarioBinding binding;
 
-    private ProgressDialog cancellaDialog;
+    private Dialog cancellaDialog;
 
     public static void setLinkToJoinJSON(String linkToJoinJSON) {
         DettaglioQuestionario.linkToJoinJSON = linkToJoinJSON;
@@ -297,20 +297,27 @@ public class DettaglioQuestionario extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menuCancella){
-            cancellaDialog.setTitle("Elimina Progetto");
-            cancellaDialog.setMessage("Sei sicuro di voler cancellare tutto?");
-            cancellaDialog.setCancelable(false);
-            cancellaDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Ricarica", new DialogInterface.OnClickListener() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Cancella tutto");
+            builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti.");
+            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Intent HomePageSomministratoreRicarica = new Intent (getApplicationContext(), HomePageSomministratore.class);
+                    Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePageSomministratore.class);
                     startActivity(HomePageSomministratoreRicarica);
                     finish();
                 }
             });
-            cancellaDialog.show();
+             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
