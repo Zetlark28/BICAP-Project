@@ -41,7 +41,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private EliminaProgetti activity;
     private EliminaSomministratore activityDelSomm;
     private GetterInfo getterInfo = new GetterLocal();
-    public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity){
+    private String message;
+    public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
         try {
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
             this.listaProgetti=listaProgetti;
@@ -49,17 +50,19 @@ public class EliminaDialog extends AppCompatDialogFragment {
             this.progettiAdapterRV = istanzaProgettiAdapter;
             this.listaProgettiTot = listaProgettiTot;
             this.activity = eliminaActivity;
+            this.message = message;
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public EliminaDialog(HashMap<String, String> nomiSomministratori, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity){
+    public EliminaDialog(HashMap<String, String> nomiSomministratori, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
         this.nomiSomministratori = nomiSomministratori;
         this.key = key;
         this.index = index;
         this.progettiAdapterSommRV = istanzaProgettiDaEliminareAdapterRV;
         this.activityDelSomm = eliminaActivity;
+        this.message = message;
     }
 
     @NonNull
@@ -67,7 +70,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Elimina")
-                .setMessage("Sicuro di voler eliminare il progetto\n"+ nomeProgetto + "?")
+                .setMessage(message)
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
