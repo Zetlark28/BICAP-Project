@@ -13,15 +13,31 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvNomeSommD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome Somministratore"
-                android:textSize="20sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="35dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/useruno" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvNomeSommD"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="9dp"
+                    android:text="Nome Somministratore"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+
+              //  <TextView
+                //  android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Prova"
                     android:textSize="20sp"
@@ -30,6 +46,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnEliminaSomm"
                     android:layout_width="wrap_content"
+                    style="?attr/materialButtonOutlinedStyle"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|end"
                     android:text="Elimina"
