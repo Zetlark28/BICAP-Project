@@ -8,29 +8,24 @@
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main"/>
-    <ScrollView
-        android:id="@+id/scrollViewSomm"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_marginTop="-20dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_main">
+        android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardQuiz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             app:cardCornerRadius="4dp"
             app:cardElevation="5dp"
             app:cardUseCompatPadding="true">
-
             <LinearLayout
                 android:id="@+id/cardLn"
                 android:layout_width="match_parent"
@@ -86,9 +81,11 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardProf"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             app:cardCornerRadius="4dp"
             app:cardElevation="5dp"
             app:cardUseCompatPadding="true">
@@ -130,7 +127,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="3dp"
-                        android:text="In questa sezione, andrai a creare i progetti"
+                        android:text="In questa sezione, andrai a creare i progetti che verranno visualizzati dagli utenti"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
@@ -146,6 +143,4 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-    </ScrollView>
-
 </LinearLayout>
