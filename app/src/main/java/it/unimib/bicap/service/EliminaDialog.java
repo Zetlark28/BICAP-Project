@@ -104,6 +104,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                             }
                             //TODO: dialog on process e metodo di riscrittura file progetti.json
                             Utility.write(nuoviProgetti, activity, null);
+                            ProgettiDaEliminareAdapterRV.setListaProgettiTot(nuoviProgetti);
                             ProgettiDaEliminareAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
                             ProgettiDaEliminareAdapterRV.setListaProgetti(listaNuova);
                             progettiAdapterRV.notifyDataSetChanged();

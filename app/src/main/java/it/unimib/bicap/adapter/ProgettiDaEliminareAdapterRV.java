@@ -29,7 +29,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     private static HashMap<String, String> nomiSomministratori;
     private static List<String> emails;
     public static JSONArray listaProgetti;
-    private JSONObject listaProgettiTot;
+    private static JSONObject listaProgettiTot;
     GetterInfo getterInfo = new GetterLocal();
     private EliminaProgetti eliminaActivity;
     private EliminaSomministratore eliminaActivitysomm;
@@ -52,6 +52,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
 
     public static void setListaProgetti(JSONArray listaProgetti) {
         ProgettiDaEliminareAdapterRV.listaProgetti = listaProgetti;
+    }
+
+    public static void setListaProgettiTot(JSONObject listaProgettiTot) {
+        ProgettiDaEliminareAdapterRV.listaProgettiTot = listaProgettiTot;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
