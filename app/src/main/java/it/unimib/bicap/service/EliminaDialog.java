@@ -20,7 +20,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
@@ -111,8 +113,10 @@ public class EliminaDialog extends AppCompatDialogFragment {
                         }
                         else{
                             final String email = key;
+                            final List<String> emailSomm = new ArrayList<>();
                             final String autore = nomiSomministratori.get(email);
                             final HashMap<String, String> nuovaHashMap = new HashMap<>();
+                            final List<String> nomiSomm = new ArrayList<>();
                             myRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -122,15 +126,22 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                         if (d.child("autore").getValue().equals(autore) && d.child("email").getValue().equals(email)){
                                             d.getRef().removeValue();
                                         }
-                                        else
+                                        else {
                                             nuovaHashMap.put(d.child("email").toString(), d.child("autore").toString());
+                                            nomiSomm.add(d.child("autore").getValue().toString());
+                                            emailSomm.add(d.child("email").getValue().toString());
+                                        }
                                             //TODO: reinizializzare anche lista delle email
                                     }
                                     //String value = dataSnapshot.getValue(String.class);
                                     //Log.d(TAG, "Value is: " + value);
                                     //ProgettiDaEliminareAdapterRV.setSomministratori(nuovaHashMap);
                                     nomiSomministratori.remove(email);
-                                    progettiAdapterSommRV.notifyItemRemoved(index);
+                                    //progettiAdapterSommRV.notifyItemRemoved(index);
+                                    ProgettiDaEliminareAdapterRV.setNomiSomm(nomiSomm);
+                                    ProgettiDaEliminareAdapterRV.setNomiSomministratori(nuovaHashMap);
+                                    ProgettiDaEliminareAdapterRV.setEmailSomm(emailSomm);
+                                    progettiAdapterSommRV.notifyDataSetChanged();
                                     //progettiAdapterSommRV.notifyDataSetChanged();
                                     dismiss();
                                 }

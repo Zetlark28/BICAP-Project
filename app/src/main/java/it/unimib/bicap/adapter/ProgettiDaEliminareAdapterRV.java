@@ -13,8 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
@@ -26,6 +30,8 @@ import it.unimib.bicap.service.GetterLocal;
 public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static List<String> nomi;
+    private static List<String> nomiSommLista = new ArrayList<>();
+    private static List<String> emailSommLista = new ArrayList<>();
     private static HashMap<String, String> nomiSomministratori;
     private static List<String> emails;
     public static JSONArray listaProgetti;
@@ -52,6 +58,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
 
     public static void setListaProgetti(JSONArray listaProgetti) {
         ProgettiDaEliminareAdapterRV.listaProgetti = listaProgetti;
+    }
+
+    public static void setNomiSomministratori(HashMap<String, String> nomiSomministratori){
+        ProgettiDaEliminareAdapterRV.nomiSomministratori = nomiSomministratori;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -91,6 +101,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     @SuppressLint("LongLogTag")
     public ProgettiDaEliminareAdapterRV(Context context, HashMap<String, String> nomiSomm, List<String> emails, EliminaSomministratore eliminaActivity){
         nomiSomministratori = nomiSomm;
+        for (Map.Entry<String, String> entry : nomiSomministratori.entrySet()) {
+            this.nomiSommLista.add(entry.getValue());
+            this.emailSommLista.add(entry.getKey());
+        }
         Log.d(TAG, "HashMap: " + nomiSomm.toString());
         this.emails = emails;
         this.eliminaActivitysomm = eliminaActivity;
@@ -135,7 +149,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
             MyViewHolderSomm vaultItemHolderSomm = (MyViewHolderSomm) holder;
             String key = emails.get(position);
             Log.d(TAG, "chiave: " + key);
-            vaultItemHolderSomm.nome.setText(nomiSomministratori.get(key));
+            vaultItemHolderSomm.nome.setText(nomiSommLista.get(position));
             vaultItemHolderSomm.emailSomm.setText(key);
             vaultItemHolderSomm.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -159,6 +173,14 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
 
     public static void setNomi(List<String> nomi) {
         ProgettiDaEliminareAdapterRV.nomi = nomi;
+    }
+
+    public static void setNomiSomm (List<String> nomi){
+        ProgettiDaEliminareAdapterRV.nomiSommLista = nomi;
+    }
+
+    public static void setEmailSomm (List<String> email){
+        ProgettiDaEliminareAdapterRV.emailSommLista = email;
     }
 }
 
