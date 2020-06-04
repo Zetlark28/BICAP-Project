@@ -1,5 +1,6 @@
 package it.unimib.bicap;
 
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;

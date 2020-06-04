@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class Survey extends AppCompatActivity {
         binding = ActivitySurveyBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         String url = getIntent().getStringExtra("web");
 

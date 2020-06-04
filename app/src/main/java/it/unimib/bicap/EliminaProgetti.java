@@ -1,6 +1,7 @@
 package it.unimib.bicap;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -45,6 +46,7 @@ public class EliminaProgetti extends AppCompatActivity {
         toolbar.setTitle(ActivityConstants.ELIMINA_PROGETTI_TOOLBAR_TITLE);
         setSupportActionBar(toolbar);
         //final EliminaProgetti instance = this;
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

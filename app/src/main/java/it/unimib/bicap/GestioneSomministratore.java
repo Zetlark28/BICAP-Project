@@ -2,6 +2,7 @@ package it.unimib.bicap;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +45,7 @@ public class GestioneSomministratore extends AppCompatActivity {
         binding = ActivityGestioneSomministratoreBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Gestisci i somministratori");

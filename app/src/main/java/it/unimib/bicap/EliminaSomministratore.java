@@ -1,6 +1,7 @@
 package it.unimib.bicap;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +38,8 @@ public class EliminaSomministratore extends AppCompatActivity {
         binding = ActivityEliminaSomministratoreBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle("Elimina Somministatore");
