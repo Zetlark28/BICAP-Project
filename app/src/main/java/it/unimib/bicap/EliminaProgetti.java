@@ -30,6 +30,13 @@ public class EliminaProgetti extends AppCompatActivity {
     private static JSONObject progetti;
     private static JSONArray progettiAutore;
 
+    public static void setProgetti(JSONObject progetti) {
+        EliminaProgetti.progetti = progetti;
+    }
+
+    public static void setProgettiAutore(JSONArray progettiAutore) {
+        EliminaProgetti.progettiAutore = progettiAutore;
+    }
 
     String from = "eliminaProgetti";
 
