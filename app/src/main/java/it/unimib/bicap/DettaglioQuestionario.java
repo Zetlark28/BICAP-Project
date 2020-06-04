@@ -131,6 +131,9 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         Utility.uploadFile(filePath,"Documenti/" + key,instance,binding);
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
+
+                    filePath = null;
+                    type=null;
                 } else {
 
                     binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
@@ -175,10 +178,32 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
                 aggiungiPassi();
                 filePath = null;
+                type=null;
                 binding.etLink.setText("");
                 binding.pbUpload.setProgress(0);
                 Snackbar.make(v, "Sei passato al passaggio successivo", Snackbar.LENGTH_SHORT).show();
             }
+        });
+
+        binding.btnAnnulla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                binding.imInsertPdf.setClickable(true);
+                binding.imSaveProject.setClickable(true);
+                binding.imCaricaVideo.setClickable(true);
+                binding.imNextStep.setClickable(true);
+                binding.etLink.setEnabled(true);
+
+                filePath = null;
+                type=null;
+                binding.etLink.setText("");
+            }
+
         });
 
         binding.imSaveProject.setOnClickListener(new View.OnClickListener() {
