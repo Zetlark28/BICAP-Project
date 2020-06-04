@@ -9,12 +9,13 @@
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main" />
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
@@ -37,7 +38,7 @@
                     <ImageView
                         android:id="@+id/imCreaSomn"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/immaginegruppodef" />
 
@@ -92,7 +93,7 @@
                     <ImageView
                         android:id="@+id/imEliminaSomm"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/personachelavora" />
 
@@ -136,6 +137,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

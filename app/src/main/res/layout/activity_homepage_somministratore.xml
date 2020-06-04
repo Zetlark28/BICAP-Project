@@ -12,12 +12,15 @@
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main" />
 
-    <LinearLayout
-        android:gravity="center"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardQuiz"
@@ -39,7 +42,7 @@
                 <ImageView
                     android:id="@+id/imQuiz"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/creaprogetto" />
 
@@ -104,7 +107,7 @@
                 <ImageView
                     android:id="@+id/imProf"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="wrap_content"
                     android:scaleType="centerCrop"
                     app:srcCompat="@drawable/eliminaprogetto" />
 
@@ -149,4 +152,5 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>
