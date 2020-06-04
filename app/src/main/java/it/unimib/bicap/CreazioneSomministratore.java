@@ -2,6 +2,7 @@ package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,8 +37,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
     private FirebaseAuth mAuth1;
     private FirebaseAuth mAuth2;
     private FirebaseUser user;
-    private boolean intent;
-    private boolean valore;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -47,6 +46,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
         binding = ActivityCreazioneSomministartoreBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -100,25 +100,24 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 Log.d(TAG, "premo il bottone");
                 String email = binding.etEmailSomm.getText().toString();
                 String password = binding.etPasswordSomm.getText().toString();
-                createUser(email, password, autore, valore);
-                /*Intent intentHomepage = new Intent(getApplicationContext(), GestioneSomministratore.class);
-                startActivity(intentHomepage);
-                finish();*/
-                Log.d(TAG, "creato nuovo somministratore");
-                Toast.makeText(getApplicationContext(), "Hai creato un nuovo somministratore con i seguenti dati: \n" + "Nome: " + autore + "\n" + "Email: " + email, Toast.LENGTH_SHORT).show();
-
+                if (password.length() > 5) {
+                    createUser(email, password, autore);
+                    Log.d(TAG, "creato nuovo somministratore");
+                    Toast.makeText(getApplicationContext(), "Hai creato un nuovo somministratore con i seguenti dati: \n" + "Nome: " + autore + "\n" + "Email: " + email, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "La password deve essere più lunga di 5 caratteri", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-    }
+        }
 
-    private void createUser(final String email, String password, final String autore, boolean valore) {
+    private void createUser(final String email, String password, final String autore) {
         mAuth2.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @SuppressLint("LongLogTag")
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "task: " + task.isSuccessful());
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             //Log.d(TAG, "createUserWithEmail:success");

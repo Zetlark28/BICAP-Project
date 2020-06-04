@@ -1,5 +1,6 @@
 package it.unimib.bicap;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -56,12 +57,11 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
     private ActivityDettaglioQuestionarioBinding binding;
 
-    private Dialog cancellaDialog;
-
     public static void setLinkToJoinJSON(String linkToJoinJSON) {
         DettaglioQuestionario.linkToJoinJSON = linkToJoinJSON;
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -70,6 +70,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         Utility.getKeyValue();
         FirebaseApp.initializeApp(this);
         progettiJSON = getIntent().getStringExtra("progetti");
+        String nomeProgetto = getIntent().getStringExtra("nomeProgetto");
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -77,15 +78,17 @@ public class DettaglioQuestionario extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+
+        toolbar.setTitle("nomeProgetto");
+
+
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.menu_cancella);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentHomeProf = new Intent(getApplicationContext(), HomePageSomministratore.class);
-                startActivity(intentHomeProf);
-                finish();
+                showDialog();
             }
         });
 
@@ -205,6 +208,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
                 Intent congratScreem = new Intent(getApplicationContext(), CongratulazioniScreen.class);
                 startActivity(congratScreem);
+                finish();
             }
         });
 
@@ -228,6 +232,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         "Seleziona un video"), CODE_VIDEO);
             }
         });
+
+
 
         //TODO : settare il colore dei bottoni disabilitati
         binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {

@@ -6,9 +6,16 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardCreaSomm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="20dp">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/sfondo"
+        android:clickable="false"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,6 +30,7 @@
                     android:id="@+id/imageView4"
                     android:layout_width="35dp"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="5dp"
                     android:src="@drawable/useruno" />
 
                 <TextView
@@ -42,7 +50,7 @@
             android:orientation="horizontal">
                  <TextView
                      android:id="@+id/tvEmailSommDrat"
-                     android:layout_marginStart="2dp"
+                     android:layout_marginStart="8dp"
                      android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
                      android:text="Email: "
@@ -68,10 +76,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|end"
                     android:text="Elimina"
-                    android:layout_marginEnd="10dp"
                     android:textColor="#a4224b"
                     app:strokeColor="#a4224b"
-                    android:layout_marginStart="10dp"
                     android:layout_marginRight="5dp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

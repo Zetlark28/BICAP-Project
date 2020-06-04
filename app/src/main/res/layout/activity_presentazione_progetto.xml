@@ -140,7 +140,8 @@
                             android:layout_gravity="center_horizontal|end"
                             android:layout_marginTop="10dp"
                             android:text="Inizia Progetto"
-                            app:strokeColor="#a4224b" />
+                            app:strokeColor="#a4224b"
+                            android:layout_marginRight="5dp"/>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
