@@ -72,7 +72,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|end"
                     android:text="Elimina"
-                    android:layout_marginEnd="10dp"
                     android:textColor="#a4224b"
                     app:strokeColor="#a4224b"
                     android:layout_marginRight="5dp"/>
