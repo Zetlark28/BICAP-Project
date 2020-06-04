@@ -2,6 +2,7 @@ package it.unimib.bicap;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,6 +36,7 @@ public class GestioneSomministratore extends AppCompatActivity {
     private final String TAG = "GestioneSomministratore";
     HashMap<String, String> somministratori = new HashMap<>();
     private ProgressDialog progressDialog;
+    List<String> email = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +45,21 @@ public class GestioneSomministratore extends AppCompatActivity {
         binding = ActivityGestioneSomministratoreBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setTitle("Gestisci i somministratori");
+        setSupportActionBar(toolbar);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentQuestionari = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(intentQuestionari);
+                finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+            }
+        });
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Caricamento...");
@@ -50,6 +68,14 @@ public class GestioneSomministratore extends AppCompatActivity {
         progressDialog.setMessage("Attendi!");
 
         new DownloadSomministratoriTask().execute();
+
+        binding.btnCreaSomm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCreazioneSomm = new Intent(getApplicationContext(), CreazioneSomministratore.class);
+                startActivity(intentCreazioneSomm);
+            }
+        });
 
         boolean finito = getListaSommAttivi();
 
@@ -62,10 +88,10 @@ public class GestioneSomministratore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentCreaSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
-                startActivity(intentCreaSomm);
-                Serializable obj = somministratori;
-                Log.d(TAG, "Intent problem: " + obj.toString());
+                Log.d(TAG, "Intent problem: " + somministratori.toString());
+                intentCreaSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
                 intentCreaSomm.putExtra("somministratori", somministratori);
+                startActivity(intentCreaSomm);
                 finish();
             }
         });
@@ -89,9 +115,12 @@ public class GestioneSomministratore extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
-                    Log.d(TAG, "Hasmap: " + somministratori.toString());
-                    //somministratori.add(d.getValue().toString());
+                    if(d.child("email").getValue()!= null && d.child("autore").getValue()!=null) {
+                        somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
+                        email.add(d.child("email").getValue().toString());
+                        Log.d(TAG, "Hasmap: " + somministratori.toString());
+                        //somministratori.add(d.getValue().toString());
+                    }
                 }
 
                 progressDialog.dismiss();
@@ -106,6 +135,14 @@ public class GestioneSomministratore extends AppCompatActivity {
         });
 
         return true;
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
+        finish();
+
     }
 
 }

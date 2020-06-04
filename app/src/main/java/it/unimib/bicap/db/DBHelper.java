@@ -12,7 +12,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, DBNAME, null, 1);
     }
-
+    //crea le tabelle per progetti completati, da completare e passo progetto
     @Override
     public void onCreate(SQLiteDatabase db) {
         String progettiCompletatiTB="CREATE TABLE "+ DBConstants.TBL_NAME_COMPLETATI+

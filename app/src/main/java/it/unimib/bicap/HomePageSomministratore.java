@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,7 +67,7 @@ public class HomePageSomministratore extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mAuth = FirebaseAuth.getInstance();
          if(mAuth == null)
              Log.d(TAG, "mauth è null");
@@ -221,6 +222,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             Intent intentAddSomm = new Intent (this, GestioneSomministratore.class);
             startActivity(intentAddSomm);
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             finish();
         }
         return super.onOptionsItemSelected(item);

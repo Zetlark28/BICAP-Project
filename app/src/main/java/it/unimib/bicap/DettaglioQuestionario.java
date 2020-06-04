@@ -1,6 +1,10 @@
 package it.unimib.bicap;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -8,16 +12,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +56,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
     private ActivityDettaglioQuestionarioBinding binding;
 
+    private Dialog cancellaDialog;
+
     public static void setLinkToJoinJSON(String linkToJoinJSON) {
         DettaglioQuestionario.linkToJoinJSON = linkToJoinJSON;
     }
@@ -63,6 +74,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         instance = this;
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -134,7 +146,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     binding.etLink.setEnabled(true);
                     binding.btnAnnulla.setClickable(true);
 
-                    Snackbar.make(v, "Attenzione, non hai selezionato alcun file !", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Attenzione, non hai selezionato alcun file", Snackbar.LENGTH_SHORT).show();
                 }
 
                 //TODO: disabilitare la textInput per inserire il link del questionario e i bottoni upload, magari inserire bottone annulla upload
@@ -165,7 +177,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 filePath = null;
                 binding.etLink.setText("");
                 binding.pbUpload.setProgress(0);
-                Snackbar.make(v, "Sei passato al passaggio successivo !", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(v, "Sei passato al passaggio successivo", Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -231,7 +243,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 binding.imSaveProject.setClickable(false);
                 binding.etLink.setEnabled(false);
 
-                Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
                 startActivityForResult(Intent.createChooser(new Intent()
                                 .setAction(Intent.ACTION_GET_CONTENT)
                                 .setType("application/pdf"),
@@ -239,22 +251,24 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
-        binding.btnAnnulla.setOnClickListener(new View.OnClickListener() {
+        binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.imCaricaVideo.setClickable(true);
-                binding.imSaveProject.setClickable(true);
-                binding.imNextStep.setClickable(true);
-                binding.etLink.setEnabled(true);
-                binding.imInsertPdf.setClickable(true);
 
-                binding.etLink.setText("");
-                filePath = null;
+                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.disabilita));
+                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.disabilita));
 
-                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
-                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+                binding.imNextStep.setClickable(false);
+                binding.imCaricaVideo.setClickable(false);
+                binding.imSaveProject.setClickable(false);
+                binding.etLink.setEnabled(false);
+
+                Toast.makeText(getApplicationContext(), "Prova", Toast.LENGTH_SHORT).show();
+                startActivityForResult(Intent.createChooser(new Intent()
+                                .setAction(Intent.ACTION_GET_CONTENT)
+                                .setType("application/pdf"),
+                        "Seleziona un PDF"), CODE_PDF);
             }
         });
     }
@@ -276,20 +290,53 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_cancella, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menuCancella){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Cancella tutto");
+            builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti");
+            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                    startActivity(HomePageSomministratoreRicarica);
+                    finish();
+                }
+            });
+             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+        return true;
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             this.type = "Video";
-            Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             Log.d("oggetto", filePath.toString());
             this.type = "PDF";
-            Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -300,6 +347,33 @@ public class DettaglioQuestionario extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
+    public void onBackPressed()
+    {
+        showDialog();
+    }
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Attenzione");
+        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     //override finish con animazione slide avanti
     @Override
     public void finish(){
@@ -307,10 +381,4 @@ public class DettaglioQuestionario extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_cancella, menu);
-        return true;
-    }
 }

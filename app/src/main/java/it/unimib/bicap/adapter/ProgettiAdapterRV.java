@@ -48,7 +48,6 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
             info = itemView.findViewById(R.id.btnInfo);
-            start = itemView.findViewById(R.id.btnCreaSomm);
         }
     }
 
@@ -86,14 +85,6 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                     }
                 }
             });
-            holder.start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent inizioQuiz = new Intent(context, Survey.class);
-                context.startActivity(inizioQuiz);
-                ((Activity) context).finish();
-            }
-        });
         }
 
     public int getItemCount (){

@@ -60,7 +60,7 @@ public class CongratulazioniScreen extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
         finish();
 
     }

@@ -1,5 +1,6 @@
 package it.unimib.bicap.service;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,7 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import it.unimib.bicap.HomePage;
 import it.unimib.bicap.R;
 
 // TODO: aggiungere cose fighe tipo la progressbar during buffering e vedere se quel fullscreen ci sta per davvero
@@ -126,6 +128,13 @@ public class ExoPlayerStream extends AppCompatActivity {
         super.onPause();
         Log.d("AppState", "OnPause");
         exoPlayer.setPlayWhenReady(false);
+    }
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        finish();
+
     }
 }
 

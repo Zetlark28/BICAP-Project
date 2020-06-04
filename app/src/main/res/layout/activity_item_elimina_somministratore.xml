@@ -2,33 +2,80 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvNomeSommD"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nome Somministratore"
-                android:textSize="20sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnEliminaSomm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Elimina"
-                android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="10dp"/>
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="35dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/useruno" />
 
+                <TextView
+                    android:id="@+id/tvNomeSommD"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="9dp"
+                    android:text="Nome Somministratore"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="@color/colorPrimary" />
+
+            </LinearLayout>
+             <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+                 <TextView
+                     android:id="@+id/tvEmailSommDrat"
+                     android:layout_marginStart="2dp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Email: "
+                     android:textSize="15dp"
+                     android:textColor="#a4224b"
+                     android:fontFamily="@font/roboto"
+                     android:layout_marginTop="10dp"/>
+                <TextView
+                    android:id="@+id/tvEmailSommD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:fontFamily="@font/roboto"
+                    android:text="Prova"
+                    android:textSize="15dp"
+                    android:layout_marginTop="10dp"/>
+             </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEliminaSomm"
+                    android:layout_width="wrap_content"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|end"
+                    android:text="Elimina"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="#a4224b"
+                    app:strokeColor="#a4224b"
+                    android:layout_marginRight="5dp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
