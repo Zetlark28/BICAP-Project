@@ -88,9 +88,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentHomeProf = new Intent(getApplicationContext(), HomePageSomministratore.class);
-                startActivity(intentHomeProf);
-                finish();
+                showDialog();
             }
         });
 

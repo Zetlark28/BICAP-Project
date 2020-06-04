@@ -68,9 +68,10 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 .setApiKey(ActivityConstants.DATABASE_API_KEY)
                 .setApplicationId(ActivityConstants.DATABASE_APPLICATION_ID).build();
 
-        try { FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "AnyAppName");
+        try {
+            FirebaseApp myApp = FirebaseApp.initializeApp(getApplicationContext(), firebaseOptions, "AnyAppName");
             mAuth2 = FirebaseAuth.getInstance(myApp);
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException e) {
             mAuth2 = FirebaseAuth.getInstance(FirebaseApp.getInstance("AnyAppName"));
         }
 
@@ -100,43 +101,45 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 Log.d(TAG, "premo il bottone");
                 String email = binding.etEmailSomm.getText().toString();
                 String password = binding.etPasswordSomm.getText().toString();
-                createUser(email, password, autore);
-                Log.d(TAG, "creato nuovo somministratore");
-                Toast.makeText(getApplicationContext(), "Hai creato un nuovo somministratore con i seguenti dati: \n" + "Nome: " + autore + "\n" + "Email: " + email, Toast.LENGTH_SHORT).show();
-                Intent intentHomepage = new Intent(getApplicationContext(), GestioneSomministratore.class);
-                startActivity(intentHomepage);
-                finish();
+                if (password.length() > 5) {
+                    createUser(email, password, autore);
+                    Log.d(TAG, "creato nuovo somministratore");
+                    Toast.makeText(getApplicationContext(), "Hai creato un nuovo somministratore con i seguenti dati: \n" + "Nome: " + autore + "\n" + "Email: " + email, Toast.LENGTH_SHORT).show();
+                    Intent intentHomepage = new Intent(getApplicationContext(), GestioneSomministratore.class);
+                    startActivity(intentHomepage);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "La password deve essere più lunga di 5 caratteri", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-        }
-
-    private void createUser(final String email, String password, final String autore) {
-        mAuth2.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @SuppressLint("LongLogTag")
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "createUserWithEmail:success");
-                            user = mAuth2.getCurrentUser();
-                            Log.d(TAG, "problema successo");
-                            myRef.child(user.getUid()).child("autore").setValue(autore);
-                            myRef.child(user.getUid()).child("email").setValue(email);
-                            //mFirebaseAuth2.updateCurrentUser(mAuth.getCurrentUser());
-                            mAuth2.signOut();
-                            //TODO: fix presa user
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Log.d(TAG, "problema insuccesso");
-                            Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
     }
+    private void createUser(final String email, String password, final String autore) {
+            mAuth2.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                //Log.d(TAG, "createUserWithEmail:success");
+                                user = mAuth2.getCurrentUser();
+                                Log.d(TAG, "problema successo");
+                                myRef.child(user.getUid()).child("autore").setValue(autore);
+                                myRef.child(user.getUid()).child("email").setValue(email);
+                                //mFirebaseAuth2.updateCurrentUser(mAuth.getCurrentUser());
+                                mAuth2.signOut();
+                                //TODO: fix presa user
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                //Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Log.d(TAG, "problema insuccesso");
+                                Toast.makeText(getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            }
+
+                            // ...
+                        }
+                    });
+        }
 
 }
