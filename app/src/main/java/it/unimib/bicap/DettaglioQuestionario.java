@@ -301,7 +301,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         if (item.getItemId() == R.id.menuCancella){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Cancella tutto");
-            builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti.");
+            builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti");
             builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -349,10 +349,29 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
     public void onBackPressed()
     {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
-        finish();
+        showDialog();
+    }
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Attenzione");
+        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePageSomministratore.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     //override finish con animazione slide avanti
