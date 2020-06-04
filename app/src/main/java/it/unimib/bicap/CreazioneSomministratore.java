@@ -126,6 +126,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                             Log.d(TAG, "problema successo");
                             myRef.child(user.getUid()).child("autore").setValue(autore);
                             myRef.child(user.getUid()).child("email").setValue(email);
+                            myRef.child(user.getUid()).child("attivo").setValue(true);
                             //mFirebaseAuth2.updateCurrentUser(mAuth.getCurrentUser());
                             mAuth2.signOut();
                             //TODO: fix presa user
