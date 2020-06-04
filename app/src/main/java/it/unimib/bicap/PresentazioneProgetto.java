@@ -72,6 +72,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
                 }
 
                 Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
+
                 if (tipo.equals("video")){
 
 

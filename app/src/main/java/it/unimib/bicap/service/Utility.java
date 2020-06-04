@@ -82,6 +82,7 @@ public class Utility {
      }
 
 
+     // Lettura del valore chiave del DataBase FireBase File-numero
     public static void getKeyValue(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("chiave");
@@ -102,6 +103,7 @@ public class Utility {
         });
     }
 
+    // Scrittura del valore chiave del DataBase FireBase File-numero
     public static String setKeyValue() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("chiave");
@@ -119,6 +121,7 @@ public class Utility {
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         final StorageReference fileRef = mStorageRef.child(directory);
         fileRef.putFile(filepath)
+                // Quando hai finito di caricare
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
