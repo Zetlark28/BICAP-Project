@@ -105,6 +105,7 @@ public class CreazioneProgetto extends AppCompatActivity {
                     intentDettaglioProgetto.putExtra("progetti", progettiJSON);
                     intentDettaglioProgetto.putExtra("nomeProgetto", nomeProgetto);
                     startActivity(intentDettaglioProgetto);
+                    finish();
                 }
             }
         });
