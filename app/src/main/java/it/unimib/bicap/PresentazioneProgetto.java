@@ -1,5 +1,6 @@
 package it.unimib.bicap;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -20,13 +21,16 @@ import it.unimib.bicap.service.ExoPlayerStream;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 import it.unimib.bicap.service.PDFViewer;
+import it.unimib.bicap.service.Progetto;
 import it.unimib.bicap.service.Utility;
 
 public class PresentazioneProgetto extends AppCompatActivity {
     private static final String TAG = "PresentazioneProgetto";
     private ActivityPresentazioneProgettoBinding binding;
+    private Progetto progetto;
     GetterInfo getterInfo = new GetterLocal();
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,10 @@ public class PresentazioneProgetto extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+
+
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(getterInfo.getNomeProgetto(obj));
@@ -76,6 +84,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
                 Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
 
                 if (tipo.equals("video")){
+
 
 
                     // TODO: Qui sotto ci andrà il link parsato del video
