@@ -1,6 +1,7 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -37,6 +39,9 @@ public class CreazioneSomministratore extends AppCompatActivity {
     private FirebaseAuth mAuth1;
     private FirebaseAuth mAuth2;
     private FirebaseUser user;
+    private String email1;
+    private String password1;
+    private String autore1;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -100,10 +105,13 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 Log.d(TAG, "premo il bottone");
                 String email = binding.etEmailSomm.getText().toString();
                 String password = binding.etPasswordSomm.getText().toString();
+                email1 = email;
+                password1 = password;
+                autore1 = autore;
                 if (password.length() > 5) {
                     createUser(email, password, autore);
                     Log.d(TAG, "creato nuovo somministratore");
-                    Toast.makeText(getApplicationContext(), "Hai creato un nuovo somministratore con i seguenti dati: \n" + "Nome: " + autore + "\n" + "Email: " + email, Toast.LENGTH_SHORT).show();
+                    showDialog();
                 } else {
                     Toast.makeText(getApplicationContext(), "La password deve essere più lunga di 5 caratteri", Toast.LENGTH_SHORT).show();
                 }
@@ -139,6 +147,23 @@ public class CreazioneSomministratore extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Hai creato un somministratore");
+        builder.setMessage("Hai creato un nuovo somministratore con i seguenti dati: \nNome: " + autore1 + "\nEmail: " + email1 + "\n" + "Password: " + password1);
+        builder.setPositiveButton("Torna alla homepage", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), GestioneSomministratore.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
 }
