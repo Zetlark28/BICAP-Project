@@ -15,15 +15,20 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_marginRight="30dp"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:src="@drawable/logobicoccaprimo"></ImageView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardProf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             app:cardCornerRadius="4dp"
             app:cardElevation="5dp"
             app:cardUseCompatPadding="true">

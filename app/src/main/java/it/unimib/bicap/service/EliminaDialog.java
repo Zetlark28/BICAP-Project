@@ -20,7 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
@@ -42,6 +45,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private EliminaSomministratore activityDelSomm;
     private GetterInfo getterInfo = new GetterLocal();
     private String message;
+    private final String TAG = "EliminaDialog";
     public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
         try {
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
@@ -72,79 +76,95 @@ public class EliminaDialog extends AppCompatDialogFragment {
         builder.setTitle("Elimina")
                 .setMessage(message)
                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (activityDelSomm == null) {
-                            JSONArray listaNuova = new JSONArray();
-                            JSONObject nuoviProgetti = null;
-                            Integer idElimina = null;
-                            //primo for serve  per identificare il json da eliminare all'interno della lista intera di progetti
-                            //secondo for serve per inizializzare una nuova lista di jsonObject che l'utente vedrà senza inserire il json identificato precedentemente
-                            try {
-                                for (int i = 0; i < listaProgetti.length(); i++) {
-                                    if (i != index)
-                                        listaNuova.put(listaProgetti.getJSONObject(i));
-                                    else
-                                        idElimina = listaProgetti.getJSONObject(i).getInt("id");
-                                }
-                                JSONArray lista = listaProgettiTot.getJSONArray("progetti");
-                                JSONArray nuovaListaTotProgetti = new JSONArray();
-                                for (int j = 0; j < lista.length(); j++) {
-                                    int idnuovo = lista.getJSONObject(j).getInt("id");
-                                    if (idnuovo != idElimina) {
-                                        nuovaListaTotProgetti.put(lista.getJSONObject(j));
-                                    }
-                                }
-                                //crea un nuovo jsonObject dove inserisce il JsonArray ricavato precedentemente
-                                nuoviProgetti = new JSONObject();
-                                nuoviProgetti.put("progetti", nuovaListaTotProgetti);
-                                Log.d("oggetto", nuoviProgetti.toString());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            //TODO: dialog on process e metodo di riscrittura file progetti.json
-                            Utility.write(nuoviProgetti, activity, null);
-                            ProgettiDaEliminareAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
-                            ProgettiDaEliminareAdapterRV.setListaProgetti(listaNuova);
-                            progettiAdapterRV.notifyDataSetChanged();
-                            dismiss();
-                        }
-                        else{
-                            final String email = key;
-                            final String autore = nomiSomministratori.get(email);
-                            final HashMap<String, String> nuovaHashMap = new HashMap<>();
-                            myRef.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    // This method is called once with the initial value and again
-                                    // whenever data at this location is updated.
-                                    for (DataSnapshot d : dataSnapshot.getChildren()){
-                                        if (d.child("autore").getValue().equals(autore) && d.child("email").getValue().equals(email)){
-                                            d.getRef().removeValue();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (activityDelSomm == null) {
+                                    JSONArray listaNuova = new JSONArray();
+                                    JSONObject nuoviProgetti = null;
+                                    Integer idElimina = null;
+                                    //primo for serve  per identificare il json da eliminare all'interno della lista intera di progetti
+                                    //secondo for serve per inizializzare una nuova lista di jsonObject che l'utente vedrà senza inserire il json identificato precedentemente
+                                    try {
+                                        for (int i = 0; i < listaProgetti.length(); i++) {
+                                            if (i != index)
+                                                listaNuova.put(listaProgetti.getJSONObject(i));
+                                            else
+                                                idElimina = listaProgetti.getJSONObject(i).getInt("id");
                                         }
-                                        else
-                                            nuovaHashMap.put(d.child("email").toString(), d.child("autore").toString());
-                                            //TODO: reinizializzare anche lista delle email
+                                        JSONArray lista = listaProgettiTot.getJSONArray("progetti");
+                                        JSONArray nuovaListaTotProgetti = new JSONArray();
+                                        for (int j = 0; j < lista.length(); j++) {
+                                            int idnuovo = lista.getJSONObject(j).getInt("id");
+                                            if (idnuovo != idElimina) {
+                                                nuovaListaTotProgetti.put(lista.getJSONObject(j));
+                                            }
+                                        }
+                                        //crea un nuovo jsonObject dove inserisce il JsonArray ricavato precedentemente
+                                        nuoviProgetti = new JSONObject();
+                                        nuoviProgetti.put("progetti", nuovaListaTotProgetti);
+                                        Log.d("oggetto", nuoviProgetti.toString());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
-                                    //String value = dataSnapshot.getValue(String.class);
-                                    //Log.d(TAG, "Value is: " + value);
-                                    //ProgettiDaEliminareAdapterRV.setSomministratori(nuovaHashMap);
-                                    nomiSomministratori.remove(email);
-                                    progettiAdapterSommRV.notifyItemRemoved(index);
-                                    //progettiAdapterSommRV.notifyDataSetChanged();
+                                    //TODO: dialog on process e metodo di riscrittura file progetti.json
+                                    Utility.write(nuoviProgetti, activity, null);
+                                    //ProgettiDaEliminareAdapterRV.setListaProgettiTot(nuoviProgetti);
+                                    ProgettiDaEliminareAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
+                                    ProgettiDaEliminareAdapterRV.setListaProgetti(listaNuova);
+                                    progettiAdapterRV.notifyDataSetChanged();
                                     dismiss();
                                 }
+                                else{
+                                    final String email = key;
+                                    final List<String> emailSomm = new ArrayList<>();
+                                    final String autore = nomiSomministratori.get(email);
+                                    final HashMap<String, String> nuovaHashMap = new HashMap<>();
+                                    final List<String> nomiSomm = new ArrayList<>();
 
-                                @Override
-                                public void onCancelled(DatabaseError error) {
-                                    // Failed to read value
-                                    //Log.w(TAG, "Failed to read value.", error.toException());
+                                    myRef.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            // This method is called once with the initial value and again
+                                            // whenever data at this location is updated.
+                                            for (DataSnapshot d : dataSnapshot.getChildren()){
+                                                if(d.child("email").getValue()!= null && d.child("autore").getValue()!=null && d.child("attivo").getValue()!=null) {
+                                                    if (d.child("autore").getValue().equals(autore) && d.child("email").getValue().equals(email)) {
+                                                        nomiSomministratori.remove(email);
+                                                        HashMap<String, Object> map = new HashMap<>();
+                                                        map.put("attivo", "false");
+                                                        d.getRef().updateChildren(map);
+                                                    } else {
+                                                        nuovaHashMap.put(d.child("email").toString(), d.child("autore").toString());
+                                                        nomiSomm.add(d.child("autore").getValue().toString());
+                                                        emailSomm.add(d.child("email").getValue().toString());
+                                                    }
+                                                }
+                                                //TODO: reinizializzare anche lista delle email
+                                            }
+                                            //String value = dataSnapshot.getValue(String.class);
+                                            //Log.d(TAG, "Value is: " + value);
+                                            //ProgettiDaEliminareAdapterRV.setSomministratori(nuovaHashMap);
+                                            //progettiAdapterSommRV.notifyItemRemoved(index);
+                                            ProgettiDaEliminareAdapterRV.setNomiSomm(nomiSomm);
+                                            ProgettiDaEliminareAdapterRV.setNomiSomministratori(nuovaHashMap);
+                                            ProgettiDaEliminareAdapterRV.setEmailSomm(emailSomm);
+                                            Log.d(TAG, emailSomm.toString());
+                                            //progettiAdapterSommRV.notifyItemRemoved(index);
+                                            progettiAdapterSommRV.notifyDataSetChanged();
+                                            //progettiAdapterSommRV.notifyDataSetChanged();
+                                            dismiss();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError error) {
+                                            // Failed to read value
+                                            //Log.w(TAG, "Failed to read value.", error.toException());
+                                        }
+                                    });
+
                                 }
-                            });
-
+                            }
                         }
-                    }
-                }
                 )
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override

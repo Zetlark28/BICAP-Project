@@ -130,8 +130,6 @@ public class Utility {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     DettaglioQuestionario.setLinkToJoinJSON(String.valueOf(uri));
-                                    Log.d("oggetto", "Upload completato");
-                                    Toast.makeText(context, "Hai completato l'upload", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
