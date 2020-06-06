@@ -149,7 +149,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
             String key = emails.get(position);
             Log.d(TAG, "chiave: " + key);
             vaultItemHolderSomm.nome.setText(nomiSommLista.get(position));
-            vaultItemHolderSomm.emailSomm.setText(key);
+            vaultItemHolderSomm.emailSomm.setText(emailSommLista.get(position));
             vaultItemHolderSomm.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -158,6 +158,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
                     String message = "Sei sicuro di voler eliminare il somministratore: " + nomiSomministratori.get(key) + "?";
                     eliminaDialog = new EliminaDialog(nomiSomministratori, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
                     eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
+
                     }
             });
         }
