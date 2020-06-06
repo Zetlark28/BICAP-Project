@@ -1,4 +1,4 @@
-package it.unimib.bicap.service;
+package it.unimib.bicap.domain;
 
 import android.net.Uri;
 import android.util.Log;
