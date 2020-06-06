@@ -35,7 +35,7 @@ public class QuestionariDaTerminare extends Fragment {
     private StorageReference ref;
     private static final int ONE_MB = 1024 * 1024;
     private static JSONArray progetti;
-    private DBManager db=null;
+    private DBManager db;
 
     //private RecyclerView recyclerView;
     private ProgettiAdapterRV progettiAdapterRV;
@@ -104,7 +104,7 @@ public class QuestionariDaTerminare extends Fragment {
         JSONArray progDaCompletare= new JSONArray();
         try {
             for(int i = 0; i<progetti.length(); i++) {
-                if (DBManager.isDaCompletare(progetti.getJSONObject(i).getInt("id"))) {
+                if (db.isDaCompletare(progetti.getJSONObject(i).getInt("id"))) {
                     progDaCompletare.put(progetti.getJSONObject(i));
                 }
             }

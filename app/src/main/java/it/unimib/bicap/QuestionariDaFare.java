@@ -56,8 +56,8 @@ public class QuestionariDaFare extends Fragment {
 
         try {
         for(int i = 0; i<progetti.length(); i++) {
-            if (!DBManager.isCompletato( progetti.getJSONObject(i).getInt("id")))
-                if (!DBManager.isDaCompletare( progetti.getJSONObject(i).getInt("id")))
+            if (!db.isCompletato( progetti.getJSONObject(i).getInt("id")))
+                if (!db.isDaCompletare( progetti.getJSONObject(i).getInt("id")))
                     progettiDaFare.put(progetti.getJSONObject(i));
         }
             } catch (JSONException e) {

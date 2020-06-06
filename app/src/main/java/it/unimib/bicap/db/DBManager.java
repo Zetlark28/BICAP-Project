@@ -75,7 +75,7 @@ public class DBManager {
         return crs;
     }
 
-    public static boolean isCompletato(int idProgetto){
+    public boolean isCompletato(int idProgetto){
         Cursor crs=null;
         try
         {
@@ -95,7 +95,7 @@ public class DBManager {
         crs.close();
         return true;
     }
-    public static boolean isDaCompletare(int idProgetto){
+    public boolean isDaCompletare(int idProgetto){
         Cursor crs=null;
         try
         {
@@ -187,5 +187,30 @@ public class DBManager {
         catch (SQLiteException sqle) {
             return false;
         }
+    }
+
+    public void updatePasso(Integer idProgetto, Integer passo){
+        SQLiteDatabase db=dbhelper.getWritableDatabase();
+
+        ContentValues cv=new ContentValues();
+        cv.put(DBConstants.FIELD_ID_PROGETTO, idProgetto);
+        cv.put(DBConstants.FIELD_N_PASSO, passo);
+
+        db.update(DBConstants.TBL_NAME_PASSO_PROGETTO, cv, DBConstants.FIELD_ID_PROGETTO + "=?", new String[]{idProgetto.toString()});
+
+    }
+
+    public boolean passoPresente(Integer idProgetto){
+        SQLiteDatabase db = dbhelper.getWritableDatabase();
+
+        Cursor crs = db.query(DBConstants.TBL_NAME_PASSO_PROGETTO,new String[]{DBConstants.FIELD_ID_PROGETTO},
+                DBConstants.FIELD_ID_PROGETTO + "=?", new String[]{idProgetto.toString()},null, null, null);
+        if(crs.getCount()<=0){
+            crs.close();
+            return false;
+        }
+
+        crs.close();
+        return true;
     }
 }

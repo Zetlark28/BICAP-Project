@@ -20,11 +20,13 @@ import java.util.Objects;
 
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivitySurveyBinding;
+import it.unimib.bicap.db.DBManager;
 
 public class Survey extends AppCompatActivity {
 
     private static final String TAG = "SurveyWebView";
     private ActivitySurveyBinding binding;
+    private DBManager dbManager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -36,6 +38,7 @@ public class Survey extends AppCompatActivity {
         setContentView(view);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        dbManager = new DBManager(getApplicationContext());
         String url = getIntent().getStringExtra("web");
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
@@ -59,12 +62,22 @@ public class Survey extends AppCompatActivity {
                 Log.i("URL", url);
                 if (url.contains(ActivityConstants.URL_ERROR)) {
                     Intent nextSurvey = new Intent(getApplicationContext(), LoginProfessore.class);
+                    //TODO: passaggio del idProgetto per gestione db
+                /*
+                    dbManager.saveCompletati("idProgetto");
+                    dbManager.deleteDaCompletare("idProgetto");
+                    dbManager.deleteProgettoPasso("idProgetto");*/
                     //TODO: sostituire con schermata dove sono presenti i restanti questionari e aggiornare la lista
                     startActivity(nextSurvey);
                     finish(); //METTERE INTENT PER ANDARE ALLA SCHERMATA CHE FOTTE A ME
                 }
                 else if (url.contains(ActivityConstants.URL_EXIT)) {
                     Intent exitError = new Intent(getApplicationContext(), LoginProfessore.class);
+                    //TODO : passaggio del idProgetto per gestione db
+                    /*
+                    dbManager.saveCompletati("idProgetto");
+                    dbManager.deleteDaCompletare("idProgetto");
+                    dbManager.deleteProgettoPasso("idProgetto");*/
                     //TODO: sostituire con schermata dove sono presenti tutti i progetti
                     startActivity(exitError);
                     finish();
