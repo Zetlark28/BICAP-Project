@@ -30,7 +30,7 @@
             />
         <activity android:name=".HomePage"
             />
-        <activity android:name=".MainActivity"
+        <activity android:name=".service.Intermediate"
             />
         <activity
             android:name=".LoginProfessore"

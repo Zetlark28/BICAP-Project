@@ -35,6 +35,7 @@ public class PDFViewer extends AppCompatActivity {
         nomeProgetto = getIntent().getStringExtra("NomeProgetto");
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(nomeProgetto);
+        setSupportActionBar(toolbar);
         // TODO: passo qui una stringa, se è PDF vuol dire che devo aprire il documento PDF con link, viceversa apro la guida
         if (guideOrPDF.equals("PDF")) {
             openPDF(PDF_UNIQUE_PATH);
@@ -50,6 +51,7 @@ public class PDFViewer extends AppCompatActivity {
                 finish();
             }
         });
+        
     }
 
 

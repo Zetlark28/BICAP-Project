@@ -20,6 +20,7 @@ import it.unimib.bicap.databinding.ActivityPresentazioneProgettoBinding;
 import it.unimib.bicap.service.ExoPlayerStream;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
+import it.unimib.bicap.service.Intermediate;
 import it.unimib.bicap.service.PDFViewer;
 import it.unimib.bicap.service.Progetto;
 import it.unimib.bicap.service.Utility;
@@ -51,6 +52,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
 
 
 
+
         final String nomeProgetto = getterInfo.getNomeProgetto(obj);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(nomeProgetto);
@@ -72,7 +74,13 @@ public class PresentazioneProgetto extends AppCompatActivity {
         binding.btnStartProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject passo = getterInfo.getPasso(getterInfo.getPassi(finalObj), 0);
+                Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+                intentIntermediate.putExtra("Progetto", finalObj.toString());
+                startActivity(intentIntermediate);
+
+
+
+                /*JSONObject passo = getterInfo.getPasso(getterInfo.getPassi(finalObj), 0);
                 Log.d(TAG, "passo: " + passo.toString());
                 String tipo = "";
                 String tipo1 = "";
@@ -91,9 +99,9 @@ public class PresentazioneProgetto extends AppCompatActivity {
 
 
                     // TODO: Qui sotto ci andrà il link parsato del video
-                    /*Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
+                    *//*Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
                     intentVideo.putExtra("linkVideo", "https://firebasestorage.googleapis.com/v0/b/videoupload-c8474.appspot.com/o/Video%2Fvideoplayback.mp4?alt=media&token=89437c18-758c-4482-9fe3-23698d3c277f");
-                    startActivity(intentVideo);*/
+                    startActivity(intentVideo);*//*
 
                 } else if (tipo.equals("pdf")){
 
@@ -115,7 +123,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
                     intentWeb.putExtra("web", tipo1);
                     startActivity(intentWeb);
                     finish();
-                }
+                }*/
             }
         });
     }
