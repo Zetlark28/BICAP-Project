@@ -6,8 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import it.unimib.bicap.service.GetterInfo;
-import it.unimib.bicap.service.GetterLocal;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.Survey;
-import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
 
 public class Intermediate extends AppCompatActivity {
