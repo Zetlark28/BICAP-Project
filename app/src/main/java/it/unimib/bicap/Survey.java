@@ -73,11 +73,13 @@ public class Survey extends AppCompatActivity {
                 }
                 else if (url.contains(ActivityConstants.URL_EXIT)) {
                     Intent exitError = new Intent(getApplicationContext(), LoginProfessore.class);
-                    //TODO : passaggio del idProgetto per gestione db
+                    //TODO : passaggio del idProgetto per gestione db se è l'ultimo questionario, altrimenti fa l'update passo
                     /*
                     dbManager.saveCompletati("idProgetto");
                     dbManager.deleteDaCompletare("idProgetto");
-                    dbManager.deleteProgettoPasso("idProgetto");*/
+                    dbManager.deleteProgettoPasso("idProgetto");
+                    o
+                    dbManager.updatePasso("idProgetto", "passo");*/
                     //TODO: sostituire con schermata dove sono presenti tutti i progetti
                     startActivity(exitError);
                     finish();
