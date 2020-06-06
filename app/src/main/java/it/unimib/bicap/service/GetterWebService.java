@@ -9,7 +9,7 @@ public class GetterWebService implements GetterInfo {
 
 
     @Override
-    public String getIdProgetto(JSONObject progetto) {
+    public Integer getIdProgetto(JSONObject progetto) {
         return null;
     }
 

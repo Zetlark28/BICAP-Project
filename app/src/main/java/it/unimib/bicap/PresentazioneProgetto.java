@@ -4,26 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.databinding.ActivityPresentazioneProgettoBinding;
-import it.unimib.bicap.service.ExoPlayerStream;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 import it.unimib.bicap.service.Intermediate;
-import it.unimib.bicap.service.PDFViewer;
-import it.unimib.bicap.service.Progetto;
-import it.unimib.bicap.service.Utility;
+import it.unimib.bicap.domain.Progetto;
 
 public class PresentazioneProgetto extends AppCompatActivity {
     private static final String TAG = "PresentazioneProgetto";

@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import it.unimib.bicap.Survey;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
+import it.unimib.bicap.db.DBManager;
 
 public class Intermediate extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class Intermediate extends AppCompatActivity {
     private ActivityIntermediateBinding binding;
     private JSONObject finalObj;
     GetterInfo getterInfo = new GetterLocal();
+    DBManager dbManager;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -35,13 +37,13 @@ public class Intermediate extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         String progetto = getIntent().getStringExtra("Progetto");
-
         try {
             finalObj = new JSONObject(progetto);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        dbManager = new DBManager(getApplicationContext());
+        dbManager.saveDaCompletare(getterInfo.getIdProgetto(finalObj));
         binding.tvDettaglioPasso.setText("Descrizione passo");
         final String nomeProgetto = getterInfo.getNomeProgetto(finalObj);
         binding.btnAvanti.setOnClickListener(new View.OnClickListener() {

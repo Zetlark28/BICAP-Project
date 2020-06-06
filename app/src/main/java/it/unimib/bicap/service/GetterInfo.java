@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 public interface GetterInfo {
-    String getIdProgetto(JSONObject progetto);
+    Integer getIdProgetto(JSONObject progetto);
     String getNomeProgetto(JSONObject progetto);
     String getDescrizione(JSONObject progetto);
     String getAutore(JSONObject progetto);

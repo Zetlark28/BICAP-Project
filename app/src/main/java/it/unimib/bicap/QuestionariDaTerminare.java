@@ -101,11 +101,10 @@ public class QuestionariDaTerminare extends Fragment {
             e.printStackTrace();
         }
 
-        Cursor progettiDaCompletare = db.selectDaCompletare();
         JSONArray progDaCompletare= new JSONArray();
         try {
             for(int i = 0; i<progetti.length(); i++) {
-                if (DBManager.isDaCompletare(progettiDaCompletare, progetti.getJSONObject(i).getInt("id"))) {
+                if (DBManager.isDaCompletare(progetti.getJSONObject(i).getInt("id"))) {
                     progDaCompletare.put(progetti.getJSONObject(i));
                 }
             }

@@ -15,9 +15,9 @@ public class GetterLocal implements GetterInfo {
     private static JSONObject converter;
 
     @Override
-    public String getIdProgetto(JSONObject progetto) {
+    public Integer getIdProgetto(JSONObject progetto) {
         try {
-            return progetto.getString("id");
+            return progetto.getInt("id");
         } catch (JSONException e) {
             Log.d("error", "not found");
         }

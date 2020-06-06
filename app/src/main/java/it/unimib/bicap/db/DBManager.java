@@ -10,10 +10,10 @@ import it.unimib.bicap.constanti.DBConstants;
 
 public class DBManager {
 
-    private DBHelper dbhelper;
+    private static DBHelper dbhelper;
     public DBManager(Context ctx) {
         if(dbhelper == null)
-        dbhelper=new DBHelper(ctx);
+            dbhelper=new DBHelper(ctx);
         else
             getDbhelper();
 
@@ -75,31 +75,46 @@ public class DBManager {
         return crs;
     }
 
-    public static boolean isCompletato(Cursor progettiCompletati, int idProgetto){
-        if(progettiCompletati == null)
+    public static boolean isCompletato(int idProgetto){
+        Cursor crs=null;
+        try
+        {
+            SQLiteDatabase db=dbhelper.getReadableDatabase();
+            crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},
+                    DBConstants.FIELD_ID_PROGETTO + "=?",new String[]{Integer.toString(idProgetto)}, null, null, null, null);
+        }
+        catch(SQLiteException sqle)
+        {
             return false;
-        int indexColumn = progettiCompletati.getColumnIndex(DBConstants.FIELD_ID_PROGETTO);
-        progettiCompletati.moveToFirst();
-        if(progettiCompletati.getInt(indexColumn) == idProgetto)
-            return true;
-        else
-            while(progettiCompletati.moveToNext())
-                if(progettiCompletati.getInt(indexColumn) == idProgetto)
-                    return true;
-        return false;
+        }
+
+        if(crs.getCount()<=0){
+            crs.close();
+            return false;
+        }
+        crs.close();
+        return true;
     }
-    public static boolean isDaCompletare(Cursor progettiDaCompletare, int idProgetto){
-        if(progettiDaCompletare == null)
+    public static boolean isDaCompletare(int idProgetto){
+        Cursor crs=null;
+        try
+        {
+            SQLiteDatabase db=dbhelper.getReadableDatabase();
+            crs=db.query(DBConstants.TBL_NAME_DA_COMPLETARE, new String[]{DBConstants.FIELD_ID_PROGETTO},
+                    DBConstants.FIELD_ID_PROGETTO + "=?",new String[]{Integer.toString(idProgetto)}, null, null, null, null);
+        }
+        catch(SQLiteException sqle)
+        {
             return false;
-        int indexColumn = progettiDaCompletare.getColumnIndex(DBConstants.FIELD_ID_PROGETTO);
-        progettiDaCompletare.moveToFirst();
-        if(progettiDaCompletare.getInt(indexColumn) == idProgetto)
-            return true;
-        else
-            while(progettiDaCompletare.moveToNext())
-                if(progettiDaCompletare.getInt(indexColumn) == idProgetto)
-                    return true;
-        return false;
+        }
+
+        if(crs.getCount()<=0){
+            crs.close();
+            return false;
+        }
+        crs.close();
+        return true;
+
     }
 
     public Cursor selectDaCompletare() {
