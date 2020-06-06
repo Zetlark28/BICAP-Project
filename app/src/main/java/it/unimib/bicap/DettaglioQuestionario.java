@@ -77,8 +77,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-
-        toolbar.setTitle("nomeProgetto");
+        toolbar.setTitle(nomeProgetto);
 
 
         setSupportActionBar(toolbar);

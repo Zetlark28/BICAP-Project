@@ -51,8 +51,9 @@ public class PresentazioneProgetto extends AppCompatActivity {
 
 
 
+        final String nomeProgetto = getterInfo.getNomeProgetto(obj);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle(getterInfo.getNomeProgetto(obj));
+        toolbar.setTitle(nomeProgetto);
         setSupportActionBar(toolbar);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -83,6 +84,8 @@ public class PresentazioneProgetto extends AppCompatActivity {
 
                 Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
 
+                tipo = "pdf";
+
                 if (tipo.equals("video")){
 
 
@@ -101,6 +104,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
                    // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
                     Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
                     intentPDF.putExtra("guideOrPDF", "PDF");
+                    intentPDF.putExtra("NomeProgetto", nomeProgetto);
                     startActivity(intentPDF);
 
 
