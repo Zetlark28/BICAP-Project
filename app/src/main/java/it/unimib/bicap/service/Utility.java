@@ -151,6 +151,8 @@ public class Utility {
                     });
         }
 
+
+
         //scarica il pdf da firebase in locale
         public static boolean downloadPDF(String link) {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(link);
@@ -187,6 +189,8 @@ public class Utility {
         long progress = (100 * uploadBytes) / fileSize;
         binding.pbUpload.setProgress((int) progress);
     }
+
+
 
     //aggiorna un file nello storage
     public static void updateFile(final Uri filepath, final String directory, final Context context){

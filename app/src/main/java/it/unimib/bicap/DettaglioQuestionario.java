@@ -234,7 +234,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         });
 
 
-
         //TODO : settare il colore dei bottoni disabilitati
         binding.imInsertPdf.setOnClickListener(new View.OnClickListener() {
             @Override
