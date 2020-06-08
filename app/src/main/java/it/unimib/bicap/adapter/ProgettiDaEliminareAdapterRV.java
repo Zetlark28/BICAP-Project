@@ -39,11 +39,12 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     private EliminaProgetti eliminaActivity;
     private EliminaSomministratore eliminaActivitysomm;
     ProgettiDaEliminareAdapterRV istanzaProgettiAdapter;
-    private final String TAG = "ProgettiDaEliminareAdapter";
+    private final static String TAG = "ProgettiDaEliminareAdapter";
     private static final int TYPE_PROJ = 0;
     private static final int TYPE_SOMM = 1;
     private LayoutInflater layoutInflater;
     Context context;
+    private String key = "";
 
     @SuppressLint("LongLogTag")
     @Override
@@ -59,8 +60,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         ProgettiDaEliminareAdapterRV.listaProgetti = listaProgetti;
     }
 
+    @SuppressLint("LongLogTag")
     public static void setNomiSomministratori(HashMap<String, String> nomiSomministratori){
         ProgettiDaEliminareAdapterRV.nomiSomministratori = nomiSomministratori;
+        Log.d(TAG, "nuovi nomi: " + nomiSomministratori.toString());
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -99,13 +102,12 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
 
     @SuppressLint("LongLogTag")
     public ProgettiDaEliminareAdapterRV(Context context, HashMap<String, String> nomiSomm, List<String> emails, EliminaSomministratore eliminaActivity){
-        nomiSomministratori = nomiSomm;
+        this.nomiSomministratori = nomiSomm;
         for (Map.Entry<String, String> entry : nomiSomministratori.entrySet()) {
             this.nomiSommLista.add(entry.getValue());
-            this.emailSommLista.add(entry.getKey());
         }
-        Log.d(TAG, "HashMap: " + nomiSomm.toString());
-        this.emails = emails;
+        Log.d(TAG, "HashMap: " + nomiSomministratori.toString());
+        this.emailSommLista = emails;
         this.eliminaActivitysomm = eliminaActivity;
         this.istanzaProgettiAdapter = this;
         this.context = context;
@@ -146,16 +148,20 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
                 });
         } else if (holder instanceof  MyViewHolderSomm){
             MyViewHolderSomm vaultItemHolderSomm = (MyViewHolderSomm) holder;
-            String key = emails.get(position);
+            Log.d(TAG, "email1: " + emailSommLista.toString());
+            key = emailSommLista.get(position);
+            Log.d(TAG, "email: " + emailSommLista.get(position));
             Log.d(TAG, "chiave: " + key);
-            vaultItemHolderSomm.nome.setText(nomiSommLista.get(position));
-            vaultItemHolderSomm.emailSomm.setText(emailSommLista.get(position));
+            vaultItemHolderSomm.nome.setText(nomiSomministratori.get(key));
+            Log.d(TAG, "nome Somm rimasto: " + nomiSomministratori.get(key));
+            vaultItemHolderSomm.emailSomm.setText(key);
             vaultItemHolderSomm.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     EliminaDialog eliminaDialog = null;
-                    String key = emails.get(position);
-                    String message = "Sei sicuro di voler eliminare il somministratore: " + nomiSomministratori.get(key) + "?";
+                    String key = emailSommLista.get(position);
+                    String message = "Sei sicuro di voler eliminare il somministratore: " + nomiSomministratori.get(key
+                    ) + "?";
                     eliminaDialog = new EliminaDialog(nomiSomministratori, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
                     eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
 

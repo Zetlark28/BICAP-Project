@@ -134,9 +134,11 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                                         map.put("attivo", "false");
                                                         d.getRef().updateChildren(map);
                                                     } else {
-                                                        nuovaHashMap.put(d.child("email").toString(), d.child("autore").toString());
-                                                        nomiSomm.add(d.child("autore").getValue().toString());
-                                                        emailSomm.add(d.child("email").getValue().toString());
+                                                        if (d.child("attivo").getValue().equals("true") && ! d.child("email").getValue().equals("admin@admin.com")) {
+                                                            nuovaHashMap.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
+                                                            nomiSomm.add(d.child("autore").getValue().toString());
+                                                            emailSomm.add(d.child("email").getValue().toString());
+                                                        }
                                                     }
                                                 }
                                                 //TODO: reinizializzare anche lista delle email
@@ -147,6 +149,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                             //progettiAdapterSommRV.notifyItemRemoved(index);
                                             ProgettiDaEliminareAdapterRV.setNomiSomm(nomiSomm);
                                             ProgettiDaEliminareAdapterRV.setNomiSomministratori(nuovaHashMap);
+                                            Log.d(TAG, "nuova Hashmap: " + nuovaHashMap.toString());
                                             ProgettiDaEliminareAdapterRV.setEmailSomm(emailSomm);
                                             Log.d(TAG, emailSomm.toString());
                                             //progettiAdapterSommRV.notifyItemRemoved(index);

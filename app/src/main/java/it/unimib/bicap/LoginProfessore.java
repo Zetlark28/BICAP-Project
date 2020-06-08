@@ -28,6 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Arrays;
+import java.util.List;
+
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityLoginProfessoreBinding;
 
@@ -38,6 +41,7 @@ public class LoginProfessore extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private boolean fromHome;
     private  boolean esisteMail;
+    private List<String> sommAttivi;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
 
@@ -51,6 +55,7 @@ public class LoginProfessore extends AppCompatActivity {
 
         final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
         esisteMail = sharedPref.getBoolean("esisteMail", false);
+        sommAttivi = Arrays.asList(sharedPref.getString("sommAttivi", null).split(","));
         try {
             updateUI(currentUser, fromHome, esisteMail);
         } catch (InterruptedException e) {
@@ -153,7 +158,7 @@ public class LoginProfessore extends AppCompatActivity {
             });
         }
 
-        private void loginUser (String email, String password){
+        private void loginUser (final String email, String password){
             mAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
@@ -163,7 +168,23 @@ public class LoginProfessore extends AppCompatActivity {
                                 Log.i(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 fromHome = true;
-                                esisteMail = true;
+                                /*boolean esisteMail = false;
+                                int passaUtente = checkMail(email);
+                                while (passaUtente == Integer.parseInt(null)){
+
+                                }
+                                if (passaUtente == 1)
+                                    esisteMail = true;*/
+
+                                if (sommAttivi.contains(email)) {
+                                    Log.d(TAG, "sommAttivi contiente: " + sommAttivi.toString());
+                                    esisteMail = true;
+                                }
+                                else {
+                                    esisteMail = false;
+                                    Log.d(TAG, "sommAttivi non contiene: " + sommAttivi.toString());
+                                }
+
                                 try {
                                     updateUI(user, fromHome, esisteMail);
                                 } catch (InterruptedException e) {
@@ -183,6 +204,43 @@ public class LoginProfessore extends AppCompatActivity {
                         }
                     });
         }
+
+    /*private int checkMail(final String email) {
+        //final boolean[] valore = {false};
+        final int[] continua = new int[0];
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                for (DataSnapshot d : dataSnapshot.getChildren()){
+                    if (continua == null) {
+                        if (d.child("email").getValue().equals(email) && d.child("attivo").getValue().equals("true")) {
+                            // valore[0] = true;
+                            continua[0] = 1;
+                        }
+                    }
+                }
+                if (continua == null)
+                    continua[0] = 2;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+        while(continua.length == 0){
+
+        }
+
+        //return valore[0];
+        //assert continua != null;
+        return  continua[0];
+    }*/
 
     @Override
     public void startActivity(Intent intent){

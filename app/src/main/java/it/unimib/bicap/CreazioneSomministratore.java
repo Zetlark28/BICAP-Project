@@ -186,7 +186,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
     @SuppressLint("LongLogTag")
     private void checkMail(final String email, final String password, final String autore) {
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
@@ -203,18 +203,20 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 }
                 Log.d(TAG, "variabile metodo: " + variabile);
                 if (variabile){
-                    myRef.addValueEventListener(new ValueEventListener() {
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @SuppressLint("LongLogTag")
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
+                            HashMap<String, Object> map = new HashMap<>();
                             for (DataSnapshot d : dataSnapshot.getChildren()){
                                 if (d.child("email").getValue().equals(email)) {
                                     Log.d(TAG, "trovato  utente");
-                                    HashMap<String, Object> map = new HashMap<>();
                                     map.put("attivo", "true");
                                     d.getRef().updateChildren(map);
+                                    //d.getRef().child("attivo").setValue("true");
+                                    Log.d(TAG, "attivo? " + d.child("attivo").getValue().toString());
                                 }
                             }
                             //String value = dataSnapshot.getValue(String.class);

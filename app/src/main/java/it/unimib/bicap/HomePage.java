@@ -18,6 +18,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
 public class HomePage extends AppCompatActivity {
@@ -53,7 +58,7 @@ public class HomePage extends AppCompatActivity {
                     // whenever data at this location is updated.
                     for (DataSnapshot d : dataSnapshot.getChildren()){
                         key = d.getKey();
-                        if (key.equals(idUser)){
+                        if (d.child("attivo").getValue().equals("true")){
                             esisteMail = true;
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putBoolean("esisteMail", esisteMail);
@@ -69,6 +74,8 @@ public class HomePage extends AppCompatActivity {
                 }
             });
         }
+
+        leggiSomministratori();
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -90,6 +97,36 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentQuiz = new Intent(getApplicationContext(), ListaProgetti.class);
                 startActivity(intentQuiz);
+            }
+        });
+    }
+
+    private void leggiSomministratori() {
+        // Read from the database
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> sommAttivi = new ArrayList<>();
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                for (DataSnapshot d : dataSnapshot.getChildren()){
+                    if (d.child("attivo").getValue().equals("true")){
+                        sommAttivi.add(d.child("email").getValue().toString());
+                    }
+                }
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i<sommAttivi.size();i++){
+                    sb.append(sommAttivi.get(i)).append(",");
+                }
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("sommAttivi", sb.toString());
+                editor.commit();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
     }
