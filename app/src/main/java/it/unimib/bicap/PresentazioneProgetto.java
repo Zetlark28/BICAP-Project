@@ -138,7 +138,8 @@ public class PresentazioneProgetto extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        startActivity(new Intent(getApplicationContext(), ListaProgetti.class));
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         finish();
 
     }

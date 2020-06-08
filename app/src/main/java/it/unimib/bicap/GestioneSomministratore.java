@@ -136,11 +136,23 @@ public class GestioneSomministratore extends AppCompatActivity {
 
         return true;
     }
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+    }
 
     public void onBackPressed()
     {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         finish();
 
     }

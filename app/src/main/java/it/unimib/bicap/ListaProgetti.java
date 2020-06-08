@@ -128,6 +128,7 @@ public class ListaProgetti extends AppCompatActivity {
     {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), HomePage.class));
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         finish();
 
     }

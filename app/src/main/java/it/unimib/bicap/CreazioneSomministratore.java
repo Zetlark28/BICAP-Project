@@ -285,4 +285,11 @@ public class CreazioneSomministratore extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), GestioneSomministratore.class));
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+        finish();
+    }
 }
