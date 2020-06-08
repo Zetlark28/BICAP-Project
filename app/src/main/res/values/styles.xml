@@ -30,6 +30,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="HeaderBar">
+        <item name="android:background">#A4224B</item>
+    </style>
+
     <color name="colorEditTextLight" />
 </resources>
 

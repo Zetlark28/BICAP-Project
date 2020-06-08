@@ -45,6 +45,7 @@ public class Intermediate extends AppCompatActivity {
         dbManager = new DBManager(getApplicationContext());
         dbManager.saveDaCompletare(getterInfo.getIdProgetto(finalObj));
         binding.tvDettaglioPasso.setText("Descrizione passo");
+        binding.tvTitolo.setText("Titolo");
         final String nomeProgetto = getterInfo.getNomeProgetto(finalObj);
         binding.btnAvanti.setOnClickListener(new View.OnClickListener() {
             @Override
