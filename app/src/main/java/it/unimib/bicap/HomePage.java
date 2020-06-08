@@ -20,8 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
@@ -49,7 +49,8 @@ public class HomePage extends AppCompatActivity {
         sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
 
         if (currentFirebaseUser != null){
-            final String idUser = currentFirebaseUser.getUid();
+            //final String idUser = currentFirebaseUser.getUid();
+            //final CountDownLatch latch = new CountDownLatch(1);
             // Read from the database
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -58,13 +59,14 @@ public class HomePage extends AppCompatActivity {
                     // whenever data at this location is updated.
                     for (DataSnapshot d : dataSnapshot.getChildren()){
                         key = d.getKey();
-                        if (d.child("attivo").getValue().equals("true")){
+                        if (d.child("attivo").getValue().equals("true") && d.child("email").equals(currentFirebaseUser.getEmail())){
                             esisteMail = true;
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putBoolean("esisteMail", esisteMail);
                             editor.commit();
                         }
                     }
+                    //latch.countDown();
                 }
 
                 @Override
@@ -73,6 +75,11 @@ public class HomePage extends AppCompatActivity {
                     Log.w(TAG, "Failed to read value.", error.toException());
                 }
             });
+           /* try {
+                //latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
         }
 
         leggiSomministratori();
