@@ -5,6 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    android:elevation="0dp"
+    android:elevation="4dp"
     app:navigationIcon="?attr/homeAsUpIndicator">
 </androidx.appcompat.widget.Toolbar>

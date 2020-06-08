@@ -103,6 +103,7 @@ public class ExoPlayerStream extends AppCompatActivity {
 
                 if (playbackState == ExoPlayer.STATE_ENDED) {
                     // TODO: Aggiungere il codice per gestire la fine del video
+
                 }
             }
 

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,7 +24,7 @@ public class Intermediate extends AppCompatActivity {
 
     private static final String TAG = "Intermediate";
     private ActivityIntermediateBinding binding;
-    private JSONObject finalObj;
+    private JSONArray arrayPassi;
     GetterInfo getterInfo = new GetterLocal();
     DBManager dbManager;
 
@@ -33,46 +34,66 @@ public class Intermediate extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
         binding = ActivityIntermediateBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        String progetto = getIntent().getStringExtra("Progetto");
+        String passi = getIntent().getStringExtra("Passi");
+        final String nomeProgetto = getIntent().getStringExtra("NomeProgetto");
+        final String idProgetto = getIntent().getStringExtra("Id");
+
         try {
-            finalObj = new JSONObject(progetto);
+            arrayPassi = new JSONArray(passi);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        final JSONObject passo = getterInfo.getPasso(arrayPassi, 0);
+        Log.d(TAG, "passo: " + passo.toString());
+        String tipo = "";
+         String link = "";
+        try {
+             link = getterInfo.getLink(passo);
+             tipo = getterInfo.getTipo(passo);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        tipo = "pdf";
+
+        //Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
+
         dbManager = new DBManager(getApplicationContext());
-        dbManager.saveDaCompletare(getterInfo.getIdProgetto(finalObj));
-        binding.tvDettaglioPasso.setText("Descrizione passo");
-        final String nomeProgetto = getterInfo.getNomeProgetto(finalObj);
+        dbManager.saveDaCompletare(Integer.parseInt(idProgetto));
+        if (tipo.equals("video")) {
+            binding.tvTitolo.setText("Stai per visualizzare un video");
+            binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto video.\n" +
+                    "                            \\nRicordati che, una volta finito di visionare il video, verrai subito reindirizzato al prossimo passo quindi guarda il video con attenzione.\"");
+        } else if (tipo.equals("pdf")) {
+            binding.tvTitolo.setText("Stai per visualizzare un PDF");
+            binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto PDF.\n" +
+                    "                         \\nRicordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante 'avanti' in alto a destra della toolbar\"");
+        } else if (tipo.equals("questionario")) {
+            binding.tvTitolo.setText("Stai per svolgere un questionario");
+            binding.tvDettaglioPasso.setText("In questo passo stai per rispondere al questionario.\n" +
+                    "                            \\nRicordati che, se non terminerai il questionario quest'ultimo verrà inserito nella sezione 'survey sospesi'.\n" +
+                    "                            \\nNegli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.\"");
+        }
+
+        final String finalLink = link;
+        final String finalTipo = tipo;
         binding.btnAvanti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                JSONObject passo = getterInfo.getPasso(getterInfo.getPassi(finalObj), 0);
-                Log.d(TAG, "passo: " + passo.toString());
-                String tipo = "";
-                String tipo1 = "";
-                try {
-                    tipo = getterInfo.getTipo(passo);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
-
-                tipo = "pdf";
-
-                if (tipo.equals("video")){
 
 
+                if (finalTipo.equals("video")){
 
                     // TODO: Qui sotto ci andrà il link parsato del video
                     /*Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
                     intentVideo.putExtra("linkVideo", "https://firebasestorage.googleapis.com/v0/b/videoupload-c8474.appspot.com/o/Video%2Fvideoplayback.mp4?alt=media&token=89437c18-758c-4482-9fe3-23698d3c277f");
                     startActivity(intentVideo);*/
 
-                } else if (tipo.equals("pdf")){
+                } else if (finalTipo.equals("pdf")){
 
                     // TODO: Qui sotto ci andrà il link parsato del PDF
                     boolean finito = Utility.downloadPDF("https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Documenti%2FFile-6?alt=media&token=12840198-bfd8-4fa2-aa4b-0ab871ba0bb3");
@@ -85,11 +106,10 @@ public class Intermediate extends AppCompatActivity {
                     startActivity(intentPDF);
 
 
-                } else if (tipo.equals("questionario")){
+                } else if (finalTipo.equals("questionario")){
                     // TODO: Aggiungere il reindirizzamento all'activity web view
-                    tipo1 = getterInfo.getLink(passo);
                     Intent intentWeb = new Intent(getApplicationContext(), Survey.class);
-                    intentWeb.putExtra("web", tipo1);
+                    intentWeb.putExtra("web", finalLink);
                     startActivity(intentWeb);
                     finish();
                 }

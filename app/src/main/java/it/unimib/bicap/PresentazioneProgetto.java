@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,10 +45,6 @@ public class PresentazioneProgetto extends AppCompatActivity {
         }
 
 
-
-
-
-
         final String nomeProgetto = getterInfo.getNomeProgetto(obj);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(nomeProgetto);
@@ -65,11 +63,18 @@ public class PresentazioneProgetto extends AppCompatActivity {
         init(obj);
 
         final JSONObject finalObj = obj;
+
+        final int id = getterInfo.getIdProgetto(finalObj);
+        final JSONArray passi = getterInfo.getPassi(finalObj);
+        Log.d(TAG, "passi: " + passi.toString());
+
         binding.btnStartProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                intentIntermediate.putExtra("Progetto", finalObj.toString());
+                intentIntermediate.putExtra("Passi", passi.toString());
+                intentIntermediate.putExtra("Id", String.valueOf(id));
+                intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
                 startActivity(intentIntermediate);
 
 
