@@ -49,7 +49,7 @@ public class PDFViewer extends AppCompatActivity {
         setSupportActionBar(toolbar);
         // TODO: passo qui una stringa, se è PDF vuol dire che devo aprire il documento PDF con link, viceversa apro la guida
         if (guideOrPDF.equals("PDF")) {
-            openPDF(PDF_UNIQUE_PATH);
+            openPDF();
         } else {
             openGuida();
         }
@@ -80,7 +80,7 @@ public class PDFViewer extends AppCompatActivity {
         }
     }
 
-    private void openPDF(String path){
+    private void openPDF(){
         try {
             FileInputStream fis = new FileInputStream (new File(PDF_UNIQUE_PATH));
             pdfView.fromStream(fis)
