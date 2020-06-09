@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
@@ -36,19 +38,39 @@ public class HomePage extends AppCompatActivity {
     DatabaseReference myRef = database.getReference("utenti");
     SharedPreferences sharedPref;
     private String key = "";
+    private boolean valore = false;
+    private CountDownTimer cTimer;
+
+    public void startTimer(final MaterialButton btnProf) {
+        cTimer = new CountDownTimer(3000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                btnProf.setEnabled(false);
+            }
+            public void onFinish() {
+                btnProf.setEnabled(true);
+            }
+        };
+        cTimer.start();
+    }
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
         sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
 
+        final SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove("esisteMail");
+        editor.apply();
+        editor.remove("sommAttivi");
+        editor.apply();
+
         if (currentFirebaseUser != null){
+            Log.d(TAG, "utente: " + currentFirebaseUser.getEmail());
             //final String idUser = currentFirebaseUser.getUid();
             //final CountDownLatch latch = new CountDownLatch(1);
             // Read from the database
@@ -58,10 +80,14 @@ public class HomePage extends AppCompatActivity {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
                     for (DataSnapshot d : dataSnapshot.getChildren()){
+                        Log.d(TAG, "prova");
+                        Log.d(TAG, "email ciclo: " + d.child("email").getValue().toString() + " attivo? " + d.child("attivo").getValue().toString());
                         key = d.getKey();
-                        if (d.child("attivo").getValue().equals("true") && d.child("email").equals(currentFirebaseUser.getEmail())){
+                        Log.d(TAG, "email somm: " + currentFirebaseUser.getEmail());
+                        if (d.child("attivo").getValue().equals("true") && d.child("email").getValue().equals(currentFirebaseUser.getEmail())){
+                            Log.d(TAG, "entro email trovata");
                             esisteMail = true;
-                            SharedPreferences.Editor editor = sharedPref.edit();
+                            Log.d(TAG, "email: " + d.child("email").getValue().toString() + ", attivo: " + d.child("attivo").getValue().toString());
                             editor.putBoolean("esisteMail", esisteMail);
                             editor.commit();
                         }
@@ -82,7 +108,15 @@ public class HomePage extends AppCompatActivity {
             }*/
         }
 
-        leggiSomministratori();
+        valore = leggiSomministratori();
+
+        while(!valore){
+            binding.btnProf.setEnabled(false);
+        }
+
+        startTimer(binding.btnProf);
+
+        //binding.btnProf.setEnabled(true);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -108,7 +142,7 @@ public class HomePage extends AppCompatActivity {
         });
     }
 
-    private void leggiSomministratori() {
+    private boolean leggiSomministratori() {
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -136,6 +170,8 @@ public class HomePage extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+        return true;
     }
 
     //override startActivity con animazione slide avanti
