@@ -105,17 +105,11 @@ public class CreazioneProgetto extends AppCompatActivity {
                     intentDettaglioProgetto.putExtra("progetti", progettiJSON);
                     intentDettaglioProgetto.putExtra("nomeProgetto", nomeProgetto);
                     startActivity(intentDettaglioProgetto);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();
                 }
             }
         });
-    }
-
-    //override startActivity
-    @Override
-    public void startActivity(Intent intent){
-        super.startActivity(intent);
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
     @Override
@@ -126,12 +120,4 @@ public class CreazioneProgetto extends AppCompatActivity {
         finish();
 
     }
-
-    //override finish con animazione slide indietro
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-    }
-
 }
