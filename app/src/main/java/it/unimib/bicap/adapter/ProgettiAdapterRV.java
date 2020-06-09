@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.data.DataHolder;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -86,6 +87,12 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                 }
             });
         }
+
+        // TODO: implementare update della lista
+    public static void updateList(JSONArray list){
+        listaProgetti = list;
+        //istanzaProgettiAdapter.notifyDataSetChanged();
+    }
 
     public int getItemCount (){
         return nomi.size();

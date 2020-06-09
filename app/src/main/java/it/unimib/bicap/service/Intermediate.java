@@ -58,7 +58,7 @@ public class Intermediate extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        tipo = "pdf";
+        tipo = "video";
 
         //Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
 
@@ -67,16 +67,16 @@ public class Intermediate extends AppCompatActivity {
         if (tipo.equals("video")) {
             binding.tvTitolo.setText("Stai per visualizzare un video");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto video.\n" +
-                    "                            \\nRicordati che, una volta finito di visionare il video, verrai subito reindirizzato al prossimo passo quindi guarda il video con attenzione.\"");
+                                             "Ricordati che, una volta finito di visionare il video, verrai subito reindirizzato al prossimo passo quindi guarda il video con attenzione.\"");
         } else if (tipo.equals("pdf")) {
             binding.tvTitolo.setText("Stai per visualizzare un PDF");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto PDF.\n" +
-                    "                         \\nRicordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante 'avanti' in alto a destra della toolbar\"");
+                                             "Ricordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante 'avanti' in alto a destra della toolbar\"");
         } else if (tipo.equals("questionario")) {
             binding.tvTitolo.setText("Stai per svolgere un questionario");
             binding.tvDettaglioPasso.setText("In questo passo stai per rispondere al questionario.\n" +
-                    "                            \\nRicordati che, se non terminerai il questionario quest'ultimo verrà inserito nella sezione 'survey sospesi'.\n" +
-                    "                            \\nNegli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.\"");
+                                             "Ricordati che, se non terminerai il questionario quest'ultimo verrà inserito nella sezione 'survey sospesi'.\n" +
+                                             "Negli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.\"");
         }
 
         final String finalLink = link;
@@ -89,14 +89,14 @@ public class Intermediate extends AppCompatActivity {
                 if (finalTipo.equals("video")){
 
                     // TODO: Qui sotto ci andrà il link parsato del video
-                    /*Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
-                    intentVideo.putExtra("linkVideo", "https://firebasestorage.googleapis.com/v0/b/videoupload-c8474.appspot.com/o/Video%2Fvideoplayback.mp4?alt=media&token=89437c18-758c-4482-9fe3-23698d3c277f");
-                    startActivity(intentVideo);*/
+                    Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
+                    intentVideo.putExtra("linkVideo", finalLink);
+                    startActivity(intentVideo);
 
                 } else if (finalTipo.equals("pdf")){
 
                     // TODO: Qui sotto ci andrà il link parsato del PDF
-                    boolean finito = Utility.downloadPDF("https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Documenti%2FFile-6?alt=media&token=12840198-bfd8-4fa2-aa4b-0ab871ba0bb3");
+                    boolean finito = Utility.downloadPDF(finalLink);
                     while (!finito){
                     }
                     // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer

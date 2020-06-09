@@ -111,7 +111,9 @@ public class PDFViewer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorite) {
-            //Aggiungere Intent
+            Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+            startActivity(intentIntermediate);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
