@@ -133,8 +133,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
 
-                    filePath = null;
-                    type=null;
                 } else {
 
                     binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
@@ -224,7 +222,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     Log.d("oggetto", progetti.toString());
 
                     Utility.write(progetti,instance,binding);
-//                    write(progetti);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -306,6 +303,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private void aggiungiPassi() {
         if (filePath == null) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("questionario", binding.etLink.getText().toString()));
+
         } else if (type.contains("Video")) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("video", String.valueOf(linkToJoinJSON)));
             Log.d("oggetto", listaPassi.toString());
@@ -357,14 +355,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
         if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             this.type = "Video";
-            // Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
+             Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             Log.d("oggetto", filePath.toString());
             this.type = "PDF";
-            // Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
         } else {
-            // Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
         }
     }
 

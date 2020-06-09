@@ -1,4 +1,5 @@
 package it.unimib.bicap.service;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,8 +9,10 @@ import android.view.View;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import android.content.DialogInterface;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,9 +60,7 @@ public class PDFViewer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intendHomePage = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(intendHomePage);
-                finish();
+                showDialog();
             }
         });
         
@@ -94,13 +95,6 @@ public class PDFViewer extends AppCompatActivity {
         }
     }
 
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomePage.class));
-        finish();
-
-    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -117,6 +111,32 @@ public class PDFViewer extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Torna alla Homepage");
+        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void onBackPressed(){
+        showDialog();
     }
 
 

@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -57,7 +60,11 @@ public class CreazioneSomministratore extends AppCompatActivity {
         setContentView(view);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
+
         Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -267,6 +274,20 @@ public class CreazioneSomministratore extends AppCompatActivity {
             }
         });
     }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_switch, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.riattiva) {
+        //Inserire Intent
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
