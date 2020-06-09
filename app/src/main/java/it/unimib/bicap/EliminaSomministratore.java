@@ -52,7 +52,9 @@ public class EliminaSomministratore extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentHomeProfessore = new Intent(getApplicationContext(), GestioneSomministratore.class);
                 startActivity(intentHomeProfessore);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 EliminaSomministratore.this.finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             }
         });
 
@@ -60,17 +62,6 @@ public class EliminaSomministratore extends AppCompatActivity {
         binding.rvSomministratoreDaEliminare.setLayoutManager(linearLayoutManager);
         ProgettiDaEliminareAdapterRV progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, emails, this);
         binding.rvSomministratoreDaEliminare.setAdapter(progettiAdapter);
-    }
-
-    @Override
-    public void startActivity(Intent intent){
-        super.startActivity(intent);
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-    }
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
     public void onBackPressed() {

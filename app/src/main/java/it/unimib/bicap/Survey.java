@@ -27,6 +27,7 @@ public class Survey extends AppCompatActivity {
     private static final String TAG = "SurveyWebView";
     private ActivitySurveyBinding binding;
     private DBManager dbManager;
+    private String nomeProgetto;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -41,8 +42,9 @@ public class Survey extends AppCompatActivity {
         dbManager = new DBManager(getApplicationContext());
         String url = getIntent().getStringExtra("web");
 
+        nomeProgetto = getIntent().getStringExtra("NomeProgetto");
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Prova");
+        toolbar.setTitle(nomeProgetto);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
