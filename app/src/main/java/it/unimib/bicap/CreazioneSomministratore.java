@@ -60,10 +60,9 @@ public class CreazioneSomministratore extends AppCompatActivity {
         setContentView(view);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-
-
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(" ");
         toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
