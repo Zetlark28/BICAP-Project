@@ -48,15 +48,15 @@ public class QuestionariDaFare extends Fragment {
     public QuestionariDaFare(JSONObject progettiTot) {
         this.progettiTot=progettiTot;
     }
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         recyclerView = rootView.findViewById(R.id.rvProgetti);
 
-       final String idUtente = "prova";
+        final String idUtente = "prova";
 
         try {
             progetti = progettiTot.getJSONArray("progetti");
@@ -106,7 +106,6 @@ public class QuestionariDaFare extends Fragment {
             e.printStackTrace();
         }
         return progettiDaFare;
-
     }
 
 
