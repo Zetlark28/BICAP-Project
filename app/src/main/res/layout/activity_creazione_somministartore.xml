@@ -8,7 +8,8 @@
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main" />
+        layout="@layout/toolbar_main"
+        android:elevation="0dp"/>
 
     <LinearLayout
         android:layout_width="320dp"
@@ -63,7 +64,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="4dp"
                         android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +89,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="4dp"
                         android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -112,7 +113,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="4dp"
                         android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -139,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="30dp"
+                        android:layout_marginTop="12dp"
                         android:background="@color/sfondo"
                         android:text="Registra Somministratore"
                         android:textColor="@color/colorPrimary"
