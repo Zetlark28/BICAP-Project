@@ -90,6 +90,7 @@ public class QuestionariDaFare extends Fragment {
 
     }
 
+    // TODO: Implementare l'update del DataSet nel adapter
     public JSONArray cerca(String query) {
         try {
             for(int i = 0; i<progetti.length(); i++) {
@@ -104,8 +105,8 @@ public class QuestionariDaFare extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //ProgettiAdapterRV.updateList(progettiDaFare);
         return progettiDaFare;
+
     }
 
 

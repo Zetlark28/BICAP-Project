@@ -131,6 +131,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 Intent intentLogProf = new Intent(getApplicationContext(), LoginProfessore.class);
                 intentLogProf.putExtra("fromHome", fromHome);
                 startActivity(intentLogProf);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
             }
         });
@@ -142,6 +143,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 intentEliminaProgetto.putExtra("listaProgettiAutore", progettiAutore.toString());
                 intentEliminaProgetto.putExtra("listaProgetti", progetti.toString());
                 startActivity(intentEliminaProgetto);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             }
         });
 
@@ -154,6 +156,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                     Intent intentCreaProgetto = new Intent(getApplicationContext(), CreazioneProgetto.class);
                     intentCreaProgetto.putExtra("progetti", progettiDaSelezionare.toString());
                     startActivity(intentCreaProgetto);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 } else {
                     Snackbar.make(v, "Attento, è in corso un processo interno!", Snackbar.LENGTH_SHORT).show();
                 }
@@ -202,6 +205,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Intent HomePageSomministratoreRicarica = new Intent (getApplicationContext(), HomePageSomministratore.class);
                 startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
             }
         });
@@ -222,12 +226,13 @@ public class HomePageSomministratore extends AppCompatActivity {
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             Intent intentAddSomm = new Intent (this, GestioneSomministratore.class);
             startActivity(intentAddSomm);
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+   /* @Override
     public void startActivity(Intent intent){
         super.startActivity(intent);
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
@@ -237,7 +242,7 @@ public class HomePageSomministratore extends AppCompatActivity {
     public void finish(){
         super.finish();
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-    }
+    }*/
 
     //TODO : cambiare logica
     private void updateUI() {
@@ -249,6 +254,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             intentLogout.putExtra("fromHome", fromHome);
             if(fromHome == false){
                 startActivity(intentLogout);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
             }else{
                 startActivity(intentLogout);
@@ -267,13 +273,11 @@ public class HomePageSomministratore extends AppCompatActivity {
 
     //controllo su navigationBar
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed(){
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), HomePage.class));
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         finish();
-
     }
 
 }

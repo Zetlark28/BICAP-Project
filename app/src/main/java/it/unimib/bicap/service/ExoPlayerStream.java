@@ -32,6 +32,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import it.unimib.bicap.HomePage;
+import it.unimib.bicap.HomePageSomministratore;
 import it.unimib.bicap.R;
 
 // TODO: aggiungere cose fighe tipo la progressbar during buffering e vedere se quel fullscreen ci sta per davvero
@@ -102,8 +103,9 @@ public class ExoPlayerStream extends AppCompatActivity {
                 }
 
                 if (playbackState == ExoPlayer.STATE_ENDED) {
-                    // TODO: Aggiungere il codice per gestire la fine del video
-
+                    Intent intentNextStep = new Intent(getApplicationContext(), Intermediate.class);
+                    startActivity(intentNextStep);
+                    finish();
                 }
             }
 

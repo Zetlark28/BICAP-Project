@@ -67,7 +67,7 @@ public class Intermediate extends AppCompatActivity {
         if (tipo.equals("video")) {
             binding.tvTitolo.setText("Stai per visualizzare un video");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto video.\n" +
-                                             "Ricordati che, una volta finito di visionare il video, verrai subito reindirizzato al prossimo passo quindi guarda il video con attenzione.\"");
+                                             "Ricordati che, una volta finito di visionare il video, verrai automaticamente reindirizzato al passo successivo dopo che il video finisce.\"");
         } else if (tipo.equals("pdf")) {
             binding.tvTitolo.setText("Stai per visualizzare un PDF");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto PDF.\n" +

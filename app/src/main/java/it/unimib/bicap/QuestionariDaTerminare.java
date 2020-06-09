@@ -56,7 +56,6 @@ public class QuestionariDaTerminare extends Fragment {
         final View rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         final RecyclerView recyclerView = rootView.findViewById(R.id.rvProgetti);
 
-//        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
 
         db = new DBManager(getContext());
         //TODO: getUtenteReal
@@ -112,7 +111,6 @@ public class QuestionariDaTerminare extends Fragment {
             e.printStackTrace();
         }
         ProgettiDaTerminareAdapterRV progettiAdapterRV = new ProgettiDaTerminareAdapterRV(getContext(), progDaCompletare,  from);
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(progettiAdapterRV);
