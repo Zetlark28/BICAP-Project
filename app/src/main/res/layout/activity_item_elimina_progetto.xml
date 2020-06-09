@@ -22,7 +22,7 @@
             android:id="@+id/cardLn2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/design_default_color_background"
+            android:background="@drawable/eliminaquestionariobackground"
             android:orientation="vertical">
 
             <LinearLayout
@@ -34,12 +34,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="35dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/questionariodaeliminare" />
 
                     <TextView
                         android:id="@+id/idNomeProgetto"
