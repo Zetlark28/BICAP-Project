@@ -2,14 +2,20 @@ package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -24,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
@@ -41,16 +49,32 @@ public class HomePage extends AppCompatActivity {
     private boolean valore = false;
     private CountDownTimer cTimer;
 
-    public void startTimer(final MaterialButton btnProf) {
-        cTimer = new CountDownTimer(3000, 1000) {
-            public void onTick(long millisUntilFinished) {
-                btnProf.setEnabled(false);
+    //alertDialog Homepage
+    public void showAlertDialog(final Context context, String title, String message,
+                                Boolean status) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Caricamento in corso")
+                .setMessage("Attendere...")
+                .create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            private static final int AUTO_DISMISS_MILLIS = 3000;
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                new CountDownTimer(AUTO_DISMISS_MILLIS, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+                    @Override
+                    public void onFinish() {
+                        if (((AlertDialog) dialog).isShowing()) {
+                            dialog.dismiss();
+                        }
+                    }
+                }.start();
             }
-            public void onFinish() {
-                btnProf.setEnabled(true);
-            }
-        };
-        cTimer.start();
+        });
+        dialog.show();
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
@@ -114,8 +138,6 @@ public class HomePage extends AppCompatActivity {
             binding.btnProf.setEnabled(false);
         }
 
-        startTimer(binding.btnProf);
-
         //binding.btnProf.setEnabled(true);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -140,7 +162,10 @@ public class HomePage extends AppCompatActivity {
                 startActivity(intentQuiz);
             }
         });
+
+        showAlertDialog(this, "ciao","mamma", true);
     }
+
 
     private boolean leggiSomministratori() {
         // Read from the database
