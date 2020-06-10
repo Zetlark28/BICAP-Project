@@ -31,7 +31,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     public static List <String> nomi;
     String from;
     LayoutInflater layoutInflater;
-    public static  JSONArray listaProgetti;
+    public static JSONArray listaProgetti;
     GetterInfo getterInfo = new GetterLocal();
     ProgettiAdapterRV istanzaProgettiAdapter;
 
