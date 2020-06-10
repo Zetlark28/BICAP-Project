@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -34,15 +35,24 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import it.unimib.bicap.HomePage;
 import it.unimib.bicap.HomePageSomministratore;
 import it.unimib.bicap.R;
+import it.unimib.bicap.databinding.ActivityExoplayerStreamBinding;
+import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
+import it.unimib.bicap.db.DBManager;
 
 // TODO: aggiungere cose fighe tipo la progressbar during buffering e vedere se quel fullscreen ci sta per davvero
 
+
 public class ExoPlayerStream extends AppCompatActivity {
 
-    SimpleExoPlayerView exoPlayerView;
-    SimpleExoPlayer exoPlayer;
-    Uri videoUri;
-
+    private SimpleExoPlayerView exoPlayerView;
+    private SimpleExoPlayer exoPlayer;
+    private Uri videoUri;
+    private String nomeProgetto;
+    private String idProgetto;
+    private String passi;
+    private String nPasso;
+    private DBManager dbManager;
+    private ActivityExoplayerStreamBinding binding;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +60,15 @@ public class ExoPlayerStream extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_exoplayer_stream);
+        dbManager = new DBManager(getApplicationContext());
+        idProgetto = getIntent().getStringExtra("idProgetto");
+        passi = getIntent().getStringExtra("listaPassi");
+        nomeProgetto = getIntent().getStringExtra("NomeProgetto");
+        nPasso = getIntent().getStringExtra("nPasso");
 
-
-        exoPlayerView = findViewById(R.id.exoplayerview);
+        binding = ActivityExoplayerStreamBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         try {
             BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
@@ -103,8 +119,14 @@ public class ExoPlayerStream extends AppCompatActivity {
                 }
 
                 if (playbackState == ExoPlayer.STATE_ENDED) {
-                    Intent intentNextStep = new Intent(getApplicationContext(), Intermediate.class);
-                    startActivity(intentNextStep);
+
+                    dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso)+1);
+                    Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+                    intentIntermediate.putExtra("mode", "daTerminare");
+                    intentIntermediate.putExtra("idProgetto", idProgetto);
+                    intentIntermediate.putExtra("listaPassi", passi);
+                    intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                    startActivity(intentIntermediate);
                     finish();
                 }
             }
