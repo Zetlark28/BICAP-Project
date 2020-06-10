@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,12 +23,13 @@ import java.util.Map;
 
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
+import it.unimib.bicap.ExampleItem;
 import it.unimib.bicap.R;
 import it.unimib.bicap.service.EliminaDialog;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
-public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     private static List<String> nomi;
     private static List<String> nomiSommLista = new ArrayList<>();
@@ -45,6 +48,9 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     private LayoutInflater layoutInflater;
     Context context;
     private String key = "";
+    private List<String> nomiSommListaFull;
+    private static List<ExampleItem> exampleList;
+    private static List<ExampleItem> exampleListFull;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -64,6 +70,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     public static void setNomiSomministratori(HashMap<String, String> nomiSomministratori){
         ProgettiDaEliminareAdapterRV.nomiSomministratori = nomiSomministratori;
         Log.d(TAG, "nuovi nomi: " + nomiSomministratori.toString());
+    }
+
+    public void setExampleListFull(List<ExampleItem> exampleListNew) {
+        ProgettiDaEliminareAdapterRV.exampleListFull = exampleListNew;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -101,17 +111,26 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     }
 
     @SuppressLint("LongLogTag")
-    public ProgettiDaEliminareAdapterRV(Context context, HashMap<String, String> nomiSomm, List<String> emails, EliminaSomministratore eliminaActivity){
+    /*public ProgettiDaEliminareAdapterRV(Context context, HashMap<String, String> nomiSomm, List<String> emails, EliminaSomministratore eliminaActivity){
         this.nomiSomministratori = nomiSomm;
         for (Map.Entry<String, String> entry : nomiSomministratori.entrySet()) {
             this.nomiSommLista.add(entry.getValue());
         }
+        nomiSommListaFull = new ArrayList<>(nomiSommLista);
         Log.d(TAG, "HashMap: " + nomiSomministratori.toString());
         this.emailSommLista = emails;
         this.eliminaActivitysomm = eliminaActivity;
         this.istanzaProgettiAdapter = this;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
+    }*/
+
+    public ProgettiDaEliminareAdapterRV(Context context, List<ExampleItem> exampleList, EliminaSomministratore eliminaActivity){
+        this.exampleList = exampleList;
+        exampleListFull = new ArrayList<>(exampleList);
+        this.context = context;
+        this.eliminaActivitysomm = eliminaActivity;
+        this.istanzaProgettiAdapter = this;
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
@@ -148,21 +167,27 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
                 });
         } else if (holder instanceof  MyViewHolderSomm){
             MyViewHolderSomm vaultItemHolderSomm = (MyViewHolderSomm) holder;
-            Log.d(TAG, "email1: " + emailSommLista.toString());
-            key = emailSommLista.get(position);
-            Log.d(TAG, "email: " + emailSommLista.get(position));
-            Log.d(TAG, "chiave: " + key);
-            vaultItemHolderSomm.nome.setText(nomiSomministratori.get(key));
-            Log.d(TAG, "nome Somm rimasto: " + nomiSomministratori.get(key));
-            vaultItemHolderSomm.emailSomm.setText(key);
+            ExampleItem currentItem = exampleList.get(position);
+            //Log.d(TAG, "email1: " + emailSommLista.toString());
+            //key = emailSommLista.get(position);
+            //Log.d(TAG, "email: " + emailSommLista.get(position));
+            //Log.d(TAG, "chiave: " + key);
+            //vaultItemHolderSomm.nome.setText(nomiSomministratori.get(key));
+            vaultItemHolderSomm.nome.setText(currentItem.getTextNome());
+            //Log.d(TAG, "nome Somm rimasto: " + nomiSomministratori.get(key));
+            //vaultItemHolderSomm.emailSomm.setText(key);
+            vaultItemHolderSomm.emailSomm.setText(currentItem.getTextEmail());
             vaultItemHolderSomm.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ExampleItem currentItem = exampleList.get(position);
                     EliminaDialog eliminaDialog = null;
-                    String key = emailSommLista.get(position);
-                    String message = "Sei sicuro di voler eliminare il somministratore: " + nomiSomministratori.get(key
-                    ) + "?";
-                    eliminaDialog = new EliminaDialog(nomiSomministratori, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
+                    String key = currentItem.getTextEmail();
+                    /*String message = "Sei sicuro di voler eliminare il somministratore: " + nomiSomministratori.get(key
+                    ) + "?";*/
+                    String message = "Sei sicuro di voler eliminare il somministratore: " + exampleList.get(position
+                    ).getTextNome() + "?";
+                    eliminaDialog = new EliminaDialog(exampleList, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
                     eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
 
                     }
@@ -174,8 +199,46 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         if (eliminaActivity != null)
             return nomi.size();
         else
-            return nomiSomministratori.size();
+            //return nomiSomministratori.size();
+            return exampleList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<ExampleItem> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(exampleListFull);
+            } else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (ExampleItem item : exampleListFull){
+                    if (item.getTextNome().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            exampleList.clear();
+            exampleList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public static void setNomi(List<String> nomi) {
         ProgettiDaEliminareAdapterRV.nomi = nomi;
@@ -187,6 +250,10 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
 
     public static void setEmailSomm (List<String> email){
         ProgettiDaEliminareAdapterRV.emailSommLista = email;
+    }
+
+    public void setExampleList(List<ExampleItem> exampleListNew) {
+        ProgettiDaEliminareAdapterRV.exampleList = exampleListNew;
     }
 }
 

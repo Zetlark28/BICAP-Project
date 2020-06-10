@@ -27,6 +27,7 @@ import java.util.Map;
 
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
+import it.unimib.bicap.ExampleItem;
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 
 public class EliminaDialog extends AppCompatDialogFragment {
@@ -45,6 +46,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private EliminaSomministratore activityDelSomm;
     private GetterInfo getterInfo = new GetterLocal();
     private String message;
+    private List<ExampleItem> exampleList;
     private final String TAG = "EliminaDialog";
     public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
         try {
@@ -60,8 +62,20 @@ public class EliminaDialog extends AppCompatDialogFragment {
         }
     }
 
-    public EliminaDialog(HashMap<String, String> nomiSomministratori, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
+    /*public EliminaDialog(HashMap<String, String> nomiSomministratori, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
         this.nomiSomministratori = nomiSomministratori;
+        this.key = key;
+        this.index = index;
+        this.progettiAdapterSommRV = istanzaProgettiDaEliminareAdapterRV;
+        this.activityDelSomm = eliminaActivity;
+        this.message = message;
+    }*/
+
+    public EliminaDialog(List<ExampleItem> exampleList, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
+        this.exampleList = exampleList;
+        for (ExampleItem item : exampleList){
+            Log.d(TAG, "nome: " + item.getTextNome() + ", email: " + item.getTextEmail());
+        }
         this.key = key;
         this.index = index;
         this.progettiAdapterSommRV = istanzaProgettiDaEliminareAdapterRV;
@@ -114,7 +128,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     progettiAdapterRV.notifyDataSetChanged();
                                     dismiss();
                                 }
-                                else{
+                                else{/*
                                     final String email = key;
                                     final List<String> emailSomm = new ArrayList<>();
                                     final String autore = nomiSomministratori.get(email);
@@ -162,6 +176,55 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                         public void onCancelled(DatabaseError error) {
                                             // Failed to read value
                                             //Log.w(TAG, "Failed to read value.", error.toException());
+                                        }
+                                    });*/
+                                    final String autore = exampleList.get(index).getTextNome();
+                                    final String email = exampleList.get(index).getTextEmail();
+                                    final List<ExampleItem> exampleListNew = new ArrayList<>();
+                                    myRef.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot d : dataSnapshot.getChildren()){
+                                                if(d.child("email").getValue()!= null && d.child("autore").getValue()!=null && d.child("attivo").getValue()!=null) {
+                                                    if (d.child("autore").getValue().equals(autore) && d.child("email").getValue().equals(email)) {
+                                                        exampleList.remove(index);
+                                                        Log.d(TAG, "exampleList: " + exampleList.toString());
+                                                        HashMap<String, Object> map = new HashMap<>();
+                                                        map.put("attivo", "false");
+                                                        d.getRef().updateChildren(map);
+                                                    } else {
+                                                        if (d.child("attivo").getValue().equals("true") && !d.child("email").getValue().equals("admin@admin.com")) {
+                                                            /*String autore1 = d.child("autore").getValue().toString();
+                                                            Log.d(TAG, "autore New: " + autore1);
+                                                            String email1 = d.child("email").getValue().toString();
+                                                            Log.d(TAG, "email New: " + email1);*/
+                                                            boolean valore = false;
+                                                            for(ExampleItem item : exampleListNew){
+                                                                if (item.getTextNome().equals(d.child("autore").getValue().toString()) && item.getTextEmail().equals(d.child("email").getValue().toString())){
+                                                                    valore = true;
+                                                                }
+                                                            }
+                                                            if (! valore)
+                                                                exampleListNew.add(new ExampleItem(d.child("autore").getValue().toString(), d.child("email").getValue().toString()));
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            Log.d(TAG, "exampleListNew: " + exampleListNew.toString());
+                                            for (ExampleItem item : exampleListNew){
+                                                Log.d(TAG, "new List: " + "Nome: " + item.getTextNome() + ", Email: " + item.getTextEmail());
+                                            }
+                                            progettiAdapterSommRV.setExampleList(exampleListNew);
+                                            progettiAdapterSommRV.setExampleListFull(exampleListNew);
+                                            //activityDelSomm.setRitorno(false);
+                                            //progettiAdapterSommRV.notifyItemRemoved(index);
+                                            progettiAdapterSommRV.notifyDataSetChanged();
+                                            dismiss();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
                                         }
                                     });
 
