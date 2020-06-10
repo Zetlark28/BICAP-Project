@@ -216,8 +216,8 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     aggiungiPassi();
                 } else if (firstTime) {
                     Snackbar.make(v, "Attenzione, non puoi creare un progetto senza nessun contenuto! \nAggiungi qualcosa e riprova!", Snackbar.LENGTH_LONG).show();
-                } else {
-
+                }
+                if(!firstTime) {
                     jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
                     Log.d("oggetto", progetto.toString());
                     try {
@@ -225,7 +225,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti, progetto);
                         progetti.put("progetti", listaProgetti);
                         Log.d("oggetto", progetti.toString());
-
                         Utility.write(progetti, instance, binding);
                     } catch (JSONException e) {
                         e.printStackTrace();
