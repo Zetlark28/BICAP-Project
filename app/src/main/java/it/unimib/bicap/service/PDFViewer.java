@@ -17,6 +17,8 @@ import android.content.DialogInterface;
 import com.github.barteksc.pdfviewer.PDFView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.json.JSONArray;
+
 import java.io.File;
 import java.io.FileInputStream;
 
@@ -24,19 +26,25 @@ import it.unimib.bicap.GestioneSomministratore;
 import it.unimib.bicap.HomePage;
 import it.unimib.bicap.R;
 import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
+import it.unimib.bicap.db.DBManager;
 
 // TODO: creare if-else per capire se sto aprendo la guida o un file da firebase
 public class PDFViewer extends AppCompatActivity {
 
     private final static String PDF_UNIQUE_PATH = "/data/data/it.unimib.bicap/cache/PDF.pdf";
     private String guideOrPDF;
+    private DBManager dbManager;
     private PDFView pdfView;
-    private String nomeProgetto;
     private Toolbar mTopToolbar;
+    private String nomeProgetto;
+    private String idProgetto;
+    private String passi;
+    private String nPasso;
     private ActivityPdfViewerBinding binding;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        dbManager = new DBManager(getApplicationContext());
         binding = ActivityPdfViewerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -46,7 +54,10 @@ public class PDFViewer extends AppCompatActivity {
 
         pdfView = binding.pdfView;
         guideOrPDF = getIntent().getStringExtra("guideOrPDF");
+        idProgetto = getIntent().getStringExtra("idProgetto");
+        passi = getIntent().getStringExtra("listaPassi");
         nomeProgetto = getIntent().getStringExtra("NomeProgetto");
+        nPasso = getIntent().getStringExtra("nPasso");
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(nomeProgetto);
         setSupportActionBar(toolbar);
@@ -63,7 +74,6 @@ public class PDFViewer extends AppCompatActivity {
                 showDialog();
             }
         });
-        
     }
 
 
@@ -105,7 +115,14 @@ public class PDFViewer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorite) {
+            //TODO: Aggiornare DataBase
+
+            dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso)+1);
             Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+            intentIntermediate.putExtra("mode", "daTerminare");
+            intentIntermediate.putExtra("idProgetto", idProgetto);
+            intentIntermediate.putExtra("listaPassi", passi);
+            intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
             startActivity(intentIntermediate);
             finish();
             return true;
