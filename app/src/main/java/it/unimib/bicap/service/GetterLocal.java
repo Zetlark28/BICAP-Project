@@ -113,6 +113,18 @@ public class GetterLocal implements GetterInfo {
         return result;
     }
 
+    public List<String> getDescrizioniProgetti(JSONArray listaProgetti){
+        List<String> result = new ArrayList<>();
+        for(int i = 0; i<listaProgetti.length(); i++){
+            try {
+                result.add(listaProgetti.getJSONObject(i).getString("descrizione"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
     public String getTipo (JSONObject progetto){
         try {
             return progetto.getString("tipo");

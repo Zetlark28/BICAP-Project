@@ -43,7 +43,7 @@ public class Progetto {
         return nomeProgetto;
     }
 
-    public String getDesctizioneProgetto() {
+    public String getDescrizioneProgetto() {
         return descrizioneProgetto;
     }
 
@@ -63,8 +63,8 @@ public class Progetto {
         this.nomeProgetto = nomeProgetto;
     }
 
-    public void setDesctizioneProgetto(String desctizioneProgetto) {
-        this.descrizioneProgetto = desctizioneProgetto;
+    public void setDescrizioneProgetto(String descrizioneProgetto) {
+        this.descrizioneProgetto = descrizioneProgetto;
     }
 
     public void setAutoreProgetto(String autoreProgetto) {

@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -22,7 +23,6 @@
             android:id="@+id/cardLn2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:backgroundColor="#FFFFFF"
             android:orientation="vertical">
 
             <LinearLayout
@@ -34,6 +34,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:layout_margin="4dp"
+                        app:srcCompat="@drawable/questionariodaeliminareuno" />
 
                     <TextView
                         android:id="@+id/idNomeProgetto"
@@ -62,3 +69,4 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </LinearLayout>
+
