@@ -36,6 +36,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     public static  JSONArray listaProgetti;
     GetterInfo getterInfo = new GetterLocal();
     ProgettiAdapterRV istanzaProgettiAdapter;
+    String descrizionegoogle;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
         ProgettiAdapterRV.listaProgetti = listaProgetti;
@@ -99,8 +100,6 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
 
     }
-
-
 
     public int getItemCount (){
         return nomi.size();

@@ -67,10 +67,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginEnd="9dp"
                     android:textAppearance="?attr/textAppearanceBody2"
                     android:textColor="?android:attr/textColorSecondary"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="4dp"
                     android:text="testoprova" />
             </LinearLayout>
 
@@ -88,7 +88,7 @@
                     style="?attr/materialButtonOutlinedStyle"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|end"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="4dp"
                     android:text="Inizia"
                     android:layout_marginEnd="5dp"
                     android:textColor="#a4224b"
