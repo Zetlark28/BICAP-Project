@@ -74,6 +74,8 @@
             />
         <activity android:name=".EliminaSomministratore"
             />
+        <activity android:name=".GrazieScreen"
+            />
 
         <meta-data
             android:name="preloaded_fonts"

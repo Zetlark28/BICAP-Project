@@ -74,8 +74,8 @@ public class PresentazioneProgetto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                intentIntermediate.putExtra("Passi", passi.toString());
-                intentIntermediate.putExtra("Id", String.valueOf(id));
+                intentIntermediate.putExtra("listaPassi", passi.toString());
+                intentIntermediate.putExtra("idProgetto", String.valueOf(id));
                 intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
                 intentIntermediate.putExtra("mode", modalita);
                 startActivity(intentIntermediate);

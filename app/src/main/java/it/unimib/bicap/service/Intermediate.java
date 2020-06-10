@@ -41,9 +41,9 @@ public class Intermediate extends AppCompatActivity {
         binding = ActivityIntermediateBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        final String passi = getIntent().getStringExtra("Passi");
+        final String passi = getIntent().getStringExtra("listaPassi");
         final String nomeProgetto = getIntent().getStringExtra("NomeProgetto");
-        final String idProgetto = getIntent().getStringExtra("Id");
+        final String idProgetto = getIntent().getStringExtra("idProgetto");
 
         try {
             arrayPassi = new JSONArray(passi);
@@ -59,17 +59,22 @@ public class Intermediate extends AppCompatActivity {
         String link = "";
         Integer nPasso=0;
 
+        dbManager = new DBManager(getApplicationContext());
         if(modalita.equals("daTerminare")){
             Cursor crs = dbManager.selectNPasso(Integer.parseInt(idProgetto));
             int columnIndex = crs.getColumnIndex(DBConstants.FIELD_N_PASSO);
+            Log.d("cursor", crs.toString());
+            crs.moveToFirst();
+            Log.d("cursor2", crs.toString());
             nPasso = crs.getInt(columnIndex);
             try {
                 passo = arrayPassi.getJSONObject(nPasso);
+                link = getterInfo.getLink(passo);
+                tipo = getterInfo.getTipo(passo);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }else if(modalita.equals("daFare")){
-             dbManager = new DBManager(getApplicationContext());
              dbManager.saveDaCompletare(Integer.parseInt(idProgetto));
             passo = getterInfo.getPasso(arrayPassi, 0);
             Log.d(TAG, "passo: " + passo.toString());
@@ -82,13 +87,15 @@ public class Intermediate extends AppCompatActivity {
             }
             nPasso = 0;
         }
-
         if(nPasso == arrayPassi.length()){
             modalita = "completato";
         }
 
+
         //Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
         if(modalita.equals("completato")){
+            dbManager.deleteDaCompletare(Integer.parseInt(idProgetto));
+            dbManager.saveCompletati(Integer.parseInt(idProgetto));
             Intent intentFine = new Intent(getApplicationContext(), GrazieScreen.class);
             startActivity(intentFine);
         }else if(modalita.equals("Thanos")){
