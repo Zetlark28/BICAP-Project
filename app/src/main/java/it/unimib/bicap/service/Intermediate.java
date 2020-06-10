@@ -87,7 +87,7 @@ public class Intermediate extends AppCompatActivity {
             }
             nPasso = 0;
         }
-        if(nPasso == arrayPassi.length()){
+        if(nPasso >= arrayPassi.length()){
             modalita = "completato";
         }
 
@@ -139,7 +139,7 @@ public class Intermediate extends AppCompatActivity {
 
                 } else if (finalTipo.equals("pdf")){
 
-                    // TODO: Qui sotto ci andrà il link parsato del PDF
+                    // TODO: Controllo fine download pdf
                     boolean finito = Utility.downloadPDF(finalLink);
                     while (!finito){
                     }
