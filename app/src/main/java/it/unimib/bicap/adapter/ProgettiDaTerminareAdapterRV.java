@@ -1,6 +1,8 @@
 package it.unimib.bicap.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +11,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
+import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.R;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
@@ -64,9 +71,21 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     public void onBindViewHolder (final MyViewHolder holder, final int position){
 
             holder.nome.setText(nomi.get(position));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.info.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    JSONObject p = getterInfo.getProgetto(listaProgetti, position);
+                    Intent intentProg = new Intent(context, PresentazioneProgetto.class);
+                    intentProg.putExtra("obj", p.toString());
+                    intentProg.putExtra("mode","daTerminare");
+                    context.startActivity(intentProg);
+                    ((Activity) context).finish();
+                    try {
+                        String descrizione = getterInfo.getDescrizione((JSONObject) listaProgetti.get(position));
+                        Snackbar.make(v, "Descrizione: " + descrizione, Snackbar.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
                 }
             });

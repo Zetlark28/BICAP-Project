@@ -68,6 +68,8 @@ public class PresentazioneProgetto extends AppCompatActivity {
         final JSONArray passi = getterInfo.getPassi(finalObj);
         Log.d(TAG, "passi: " + passi.toString());
 
+        final String modalita = getIntent().getStringExtra("mode");
+
         binding.btnStartProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +77,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
                 intentIntermediate.putExtra("Passi", passi.toString());
                 intentIntermediate.putExtra("Id", String.valueOf(id));
                 intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                intentIntermediate.putExtra("mode", modalita);
                 startActivity(intentIntermediate);
 
 

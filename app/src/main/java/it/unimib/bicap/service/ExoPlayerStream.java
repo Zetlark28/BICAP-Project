@@ -103,6 +103,7 @@ public class ExoPlayerStream extends AppCompatActivity {
                 }
 
                 if (playbackState == ExoPlayer.STATE_ENDED) {
+                    //TODO aggiorna database passo
                     Intent intentNextStep = new Intent(getApplicationContext(), Intermediate.class);
                     startActivity(intentNextStep);
                     finish();
