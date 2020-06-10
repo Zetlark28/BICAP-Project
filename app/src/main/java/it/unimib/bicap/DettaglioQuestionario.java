@@ -39,7 +39,6 @@ import it.unimib.bicap.service.Utility;
 // TODO: (Arthur) quando il somministratore clicca su Salva Progetto ma la variabile path contiene qualcosa o la text ha un link si deve chiedere al somministratore la conferma
 // TODO: La conferma dev'essere chiesta in generale anche
 // TODO: Aggiungere tanti ma tantissimi controlli
-// TODO: Quando creo un nuovo file gli viene dato il nome scaricato dal realtime database, aggiungere il controllo per il download che i tasti non vengano cliccati troppo presto
 
 public class DettaglioQuestionario extends AppCompatActivity {
 
@@ -53,7 +52,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     private JSONArray listaPassi = new JSONArray();
     private String progettiJSON;
     private DettaglioQuestionario instance;
-
+    private boolean firstTime;
     private ActivityDettaglioQuestionarioBinding binding;
 
     public static void setLinkToJoinJSON(String linkToJoinJSON) {
@@ -66,6 +65,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        firstTime = true;
         Utility.getKeyValue();
         FirebaseApp.initializeApp(this);
         progettiJSON = getIntent().getStringExtra("progetti");
@@ -133,8 +133,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
 
-                    filePath = null;
-                    type=null;
                 } else {
 
                     binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
@@ -161,28 +159,31 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ((filePath == null) || binding.etLink.getText().toString().equals("")) {
+                    Snackbar.make(v, "Attenzione, non puoi passare al passo successivo senza aver inserito del contenuto! \nAggiungi qualcosa e riprova!", Snackbar.LENGTH_LONG).show();
+                } else {
+                    binding.imInsertPdf.setBackgroundColor(Color.WHITE);
+                    binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
+                    binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                    binding.btnAnnulla.setBackgroundColor(Color.WHITE);
 
-                binding.imInsertPdf.setBackgroundColor(Color.WHITE);
-                binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
-                binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                binding.btnAnnulla.setBackgroundColor(Color.WHITE);
+                    binding.imInsertPdf.setClickable(true);
+                    binding.imSaveProject.setClickable(true);
+                    binding.imCaricaVideo.setClickable(true);
+                    binding.imNextStep.setClickable(true);
+                    binding.etLink.setEnabled(true);
+                    binding.btnAnnulla.setClickable(true);
 
-                binding.imInsertPdf.setClickable(true);
-                binding.imSaveProject.setClickable(true);
-                binding.imCaricaVideo.setClickable(true);
-                binding.imNextStep.setClickable(true);
-                binding.etLink.setEnabled(true);
-                binding.btnAnnulla.setClickable(true);
-
-                Utility.getKeyValue();
-                //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
-                aggiungiPassi();
-                filePath = null;
-                type=null;
-                binding.etLink.setText("");
-                binding.pbUpload.setProgress(0);
-                Snackbar.make(v, "Sei passato al passaggio successivo", Snackbar.LENGTH_SHORT).show();
+                    Utility.getKeyValue();
+                    //Svolgo il controllo sul fatto che deve essere scelto solo un'opzione tra le tre disponibili
+                    aggiungiPassi();
+                    filePath = null;
+                    type = null;
+                    binding.etLink.setText("");
+                    binding.pbUpload.setProgress(0);
+                    Snackbar.make(v, "Sei passato al passaggio successivo", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -211,27 +212,29 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
+                if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
                     aggiungiPassi();
+                } else if (firstTime) {
+                    Snackbar.make(v, "Attenzione, non puoi creare un progetto senza nessun contenuto! \nAggiungi qualcosa e riprova!", Snackbar.LENGTH_LONG).show();
+                } else {
+
+                    jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
+                    Log.d("oggetto", progetto.toString());
+                    try {
+                        JSONArray listaProgetti = new JSONArray(progettiJSON);
+                        JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti, progetto);
+                        progetti.put("progetti", listaProgetti);
+                        Log.d("oggetto", progetti.toString());
+
+                        Utility.write(progetti, instance, binding);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    Intent congratScreem = new Intent(getApplicationContext(), CongratulazioniScreen.class);
+                    startActivity(congratScreem);
+                    finish();
                 }
-
-                jsonBuilder.aggiungiListaPassi(progetto, listaPassi);
-                Log.d("oggetto", progetto.toString());
-                try {
-                    JSONArray listaProgetti= new JSONArray(progettiJSON);
-                    JSONObject progetti = jsonBuilder.aggiungiProgettoInLista(listaProgetti,progetto);
-                    progetti.put("progetti", listaProgetti);
-                    Log.d("oggetto", progetti.toString());
-
-                    Utility.write(progetti,instance,binding);
-//                    write(progetti);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Intent congratScreem = new Intent(getApplicationContext(), CongratulazioniScreen.class);
-                startActivity(congratScreem);
-                finish();
             }
         });
 
@@ -304,8 +307,10 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
 
     private void aggiungiPassi() {
+        firstTime = false;
         if (filePath == null) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("questionario", binding.etLink.getText().toString()));
+
         } else if (type.contains("Video")) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("video", String.valueOf(linkToJoinJSON)));
             Log.d("oggetto", listaPassi.toString());
@@ -357,14 +362,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
         if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             this.type = "Video";
-            // Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
+             Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
         } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             Log.d("oggetto", filePath.toString());
             this.type = "PDF";
-            // Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
         } else {
-            // Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
         }
     }
 

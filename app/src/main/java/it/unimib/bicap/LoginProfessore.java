@@ -56,6 +56,9 @@ public class LoginProfessore extends AppCompatActivity {
 
         final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
         esisteMail = sharedPref.getBoolean("esisteMail", false);
+        /*while (sharedPref.getString("sommAttivi", null) == null){
+
+        }*/
         sommAttivi = Arrays.asList(sharedPref.getString("sommAttivi", null).split(","));
         try {
             updateUI(currentUser, fromHome, esisteMail);
@@ -64,19 +67,25 @@ public class LoginProfessore extends AppCompatActivity {
         }
     }
 
-    private void updateUI(FirebaseUser currentUser, boolean fromHome, boolean esisteMail) throws InterruptedException {
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private void updateUI(final FirebaseUser currentUser, boolean fromHome, boolean esisteMail) throws InterruptedException {
+        //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         this.getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, 0).edit().remove("autore");
-        final SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-        esisteMail = sharedPref.getBoolean("esisteMail", false);
-        if (user != null) {
-            String email = user.getEmail();
+        //final SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+        Log.d(TAG, "esiste Mail: " + esisteMail);
+        //esisteMail = sharedPref.getBoolean("esisteMail", false);
+        //Log.d(TAG, "currentUser: " + currentUser.getEmail());
+        if (currentUser != null) {
+            Log.d(TAG, "entra Utente");
+            Log.d(TAG, "fromHome: " + fromHome);
+            String email = currentUser.getEmail();
             //checkEmailExistsOrNot(email);
-            Log.d(TAG, "email: " + user.getEmail());
+            Log.d(TAG, "email: " + currentUser.getEmail());
             Log.d(TAG, "mail esiste? " + esisteMail);
             if (esisteMail) {
+                Log.d(TAG, "entra email");
                 if (fromHome) {
                     Log.d(TAG, email);
+                    Log.d(TAG, "entra fromHome");
                     // Read from the database
                     myRef.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -84,7 +93,7 @@ public class LoginProfessore extends AppCompatActivity {
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
 
-                            String autore = dataSnapshot.child(user.getUid()).child("autore").getValue().toString();
+                            String autore = dataSnapshot.child(currentUser.getUid()).child("autore").getValue().toString();
 
                             Log.d(TAG, "Value is: " + autore);
 
@@ -108,6 +117,7 @@ public class LoginProfessore extends AppCompatActivity {
                     startActivity(intentLogged);
                     finish();
                 } else {
+                    Log.d(TAG,"not from home");
                     Intent intentHome = new Intent(this, HomePage.class);
                     startActivity(intentHome);
                     finish();

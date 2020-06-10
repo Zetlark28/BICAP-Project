@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.data.DataHolder;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -29,6 +30,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     Context context;
     public static List <String> nomi;
+    public static List <String> descrizioni;
     String from;
     LayoutInflater layoutInflater;
     public static JSONArray listaProgetti;
@@ -41,12 +43,14 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
+        TextView descrizione1;
         Button info;
         Button start;
 
         public MyViewHolder (View itemView){
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
+            descrizione1= itemView.findViewById(R.id.descrizioneprog);
             info = itemView.findViewById(R.id.btnInfo);
         }
     }
@@ -54,6 +58,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     public ProgettiAdapterRV(Context context, JSONArray progetti, String from){
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progetti);
+        descrizioni = getterInfo.getDescrizioniProgetti(progetti);
         this.from = from;
         listaProgetti=progetti;
         this.istanzaProgettiAdapter =this;
@@ -69,6 +74,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
     public void onBindViewHolder (final MyViewHolder holder, final int position){
             holder.nome.setText(nomi.get(position));
+            holder.descrizione1.setText(descrizioni.get(position));
             holder.info.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,6 +92,15 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                 }
             });
         }
+
+    // TODO: implementare update della lista
+    public static void updateList(JSONArray list){
+        listaProgetti = list;
+
+
+    }
+
+
 
     public int getItemCount (){
         return nomi.size();

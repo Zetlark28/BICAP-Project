@@ -7,18 +7,19 @@
 
     <include
         android:id="@+id/toolbar_main"
-        layout="@layout/toolbar_main"/>
+        layout="@layout/toolbar_main"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardQuiz"

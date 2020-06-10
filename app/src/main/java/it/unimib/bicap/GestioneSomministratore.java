@@ -51,8 +51,8 @@ public class GestioneSomministratore extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentQuestionari = new Intent(getApplicationContext(), HomePageSomministratore.class);
                 startActivity(intentQuestionari);
-                finish();
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
             }
         });
 
@@ -69,6 +69,7 @@ public class GestioneSomministratore extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentCreazioneSomm = new Intent(getApplicationContext(), CreazioneSomministratore.class);
                 startActivity(intentCreazioneSomm);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             }
         });
 
@@ -87,6 +88,7 @@ public class GestioneSomministratore extends AppCompatActivity {
                 intentCreaSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
                 intentCreaSomm.putExtra("somministratori", somministratori);
                 startActivity(intentCreaSomm);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
             }
         });
@@ -130,17 +132,6 @@ public class GestioneSomministratore extends AppCompatActivity {
         });
 
         return true;
-    }
-    @Override
-    public void startActivity(Intent intent){
-        super.startActivity(intent);
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-    }
-
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
     public void onBackPressed()

@@ -35,5 +35,8 @@
     </style>
 
     <color name="colorEditTextLight" />
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18dp</item>
+    </style>
 </resources>
 

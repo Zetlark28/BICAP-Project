@@ -24,4 +24,6 @@ public interface GetterInfo {
     List<String> getNomiProgetti(JSONArray listaProgetti);
 
     List<String> getNomiSomministratori (JSONArray listaSomministratori);
+
+    List<String> getDescrizioniProgetti(JSONArray listaProgetti);
 }
