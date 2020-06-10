@@ -21,6 +21,7 @@ import java.util.Objects;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivitySurveyBinding;
 import it.unimib.bicap.db.DBManager;
+import it.unimib.bicap.service.Intermediate;
 
 public class Survey extends AppCompatActivity {
 
@@ -28,6 +29,9 @@ public class Survey extends AppCompatActivity {
     private ActivitySurveyBinding binding;
     private DBManager dbManager;
     private String nomeProgetto;
+    private String idProgetto;
+    private String passi;
+    private String nPasso;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -40,6 +44,9 @@ public class Survey extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         dbManager = new DBManager(getApplicationContext());
+        idProgetto = getIntent().getStringExtra("idProgetto");
+        passi = getIntent().getStringExtra("listaPassi");
+        nPasso = getIntent().getStringExtra("nPasso");
         String url = getIntent().getStringExtra("web");
 
         nomeProgetto = getIntent().getStringExtra("NomeProgetto");
@@ -63,27 +70,29 @@ public class Survey extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.i("URL", url);
                 if (url.contains(ActivityConstants.URL_ERROR)) {
-                    Intent nextSurvey = new Intent(getApplicationContext(), LoginProfessore.class);
-                    //TODO: passaggio del idProgetto per gestione db
-                /*
-                    dbManager.saveCompletati("idProgetto");
-                    dbManager.deleteDaCompletare("idProgetto");
-                    dbManager.deleteProgettoPasso("idProgetto");*/
-                    //TODO: sostituire con schermata dove sono presenti i restanti questionari e aggiornare la lista
-                    startActivity(nextSurvey);
-                    finish(); //METTERE INTENT PER ANDARE ALLA SCHERMATA CHE FOTTE A ME
+
+
+                    dbManager.deleteDaCompletare(Integer.parseInt(idProgetto));
+                    dbManager.saveCompletati(Integer.parseInt(idProgetto));
+                    Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+                    intentIntermediate.putExtra("mode", "Thanos");
+                    intentIntermediate.putExtra("idProgetto", idProgetto);
+                    intentIntermediate.putExtra("listaPassi", passi);
+                    intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                    startActivity(intentIntermediate);
+                    finish();
+
+
                 }
+
                 else if (url.contains(ActivityConstants.URL_EXIT)) {
-                    Intent exitError = new Intent(getApplicationContext(), LoginProfessore.class);
-                    //TODO : passaggio del idProgetto per gestione db se è l'ultimo questionario, altrimenti fa l'update passo
-                    /*
-                    dbManager.saveCompletati("idProgetto");
-                    dbManager.deleteDaCompletare("idProgetto");
-                    dbManager.deleteProgettoPasso("idProgetto");
-                    o
-                    dbManager.updatePasso("idProgetto", "passo");*/
-                    //TODO: sostituire con schermata dove sono presenti tutti i progetti
-                    startActivity(exitError);
+                    dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso)+1);
+                    Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+                    intentIntermediate.putExtra("mode", "daTerminare");
+                    intentIntermediate.putExtra("idProgetto", idProgetto);
+                    intentIntermediate.putExtra("listaPassi", passi);
+                    intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                    startActivity(intentIntermediate);
                     finish();
                 }
                 else

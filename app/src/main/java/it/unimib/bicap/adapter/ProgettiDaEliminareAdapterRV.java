@@ -34,6 +34,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     private static List<String> nomi;
     private static List<String> nomiSommLista = new ArrayList<>();
     private static List<String> emailSommLista = new ArrayList<>();
+    public static List <String> descrizioni;
     private static HashMap<String, String> nomiSomministratori;
     private static List<String> emails;
     public static JSONArray listaProgetti;
@@ -79,11 +80,13 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
         Button elimina;
+        TextView descrizione1;
 
         public MyViewHolder (View itemView){
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
             elimina = itemView.findViewById(R.id.btnEliminaProgetto);
+            descrizione1 = itemView.findViewById(R.id.descrizioneprog);
         }
     }
 
@@ -107,6 +110,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         this.eliminaActivity = eliminaActivity;
         this.istanzaProgettiAdapter =this;
         this.context = context;
+        descrizioni = getterInfo.getDescrizioniProgetti(progettiAutore);
         this.layoutInflater = LayoutInflater.from(context);
     }
 
@@ -156,11 +160,12 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         if (holder instanceof  MyViewHolder) {
                 MyViewHolder vaultItemHolder = (MyViewHolder) holder;
                 vaultItemHolder.nome.setText(nomi.get(position));
+                vaultItemHolder.descrizione1.setText(descrizioni.get(position));
                 vaultItemHolder.elimina.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EliminaDialog eliminaDialog = null;
-                        String message = "Sei sicuto di voler eliminare il progetto: " + nomi.get(position) + " ?";
+                        String message = "Sei sicuto di voler eliminare il progetto: \n" + nomi.get(position) + " ?";
                         eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity, message);
                         eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                     }

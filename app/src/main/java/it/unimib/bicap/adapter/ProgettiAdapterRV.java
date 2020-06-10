@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.common.data.DataHolder;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
@@ -22,7 +21,6 @@ import java.util.List;
 
 import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.R;
-import it.unimib.bicap.Survey;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
@@ -36,6 +34,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     public static JSONArray listaProgetti;
     GetterInfo getterInfo = new GetterLocal();
     ProgettiAdapterRV istanzaProgettiAdapter;
+    String descrizionegoogle;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
         ProgettiAdapterRV.listaProgetti = listaProgetti;
@@ -81,6 +80,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                     JSONObject p = getterInfo.getProgetto(listaProgetti, position);
                     Intent intentProg = new Intent(context, PresentazioneProgetto.class);
                     intentProg.putExtra("obj", p.toString());
+                    intentProg.putExtra("mode","daFare");
                     context.startActivity(intentProg);
                     ((Activity) context).finish();
                     try {
@@ -99,8 +99,6 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
 
 
     }
-
-
 
     public int getItemCount (){
         return nomi.size();
