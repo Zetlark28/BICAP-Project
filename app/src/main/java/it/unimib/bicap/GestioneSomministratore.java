@@ -83,11 +83,12 @@ public class GestioneSomministratore extends AppCompatActivity {
         binding.btnEliminaSomm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCreaSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
+                Intent deleteSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
                 Log.d(TAG, "Intent problem: " + somministratori.toString());
-                intentCreaSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
-                intentCreaSomm.putExtra("somministratori", somministratori);
-                startActivity(intentCreaSomm);
+                deleteSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
+                deleteSomm.putExtra("somministratori", somministratori);
+                deleteSomm.putExtra("home", true);
+                startActivity(deleteSomm);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
             }

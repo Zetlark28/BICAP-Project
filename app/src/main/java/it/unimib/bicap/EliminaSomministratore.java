@@ -1,9 +1,11 @@
 package it.unimib.bicap;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +36,7 @@ public class EliminaSomministratore extends AppCompatActivity {
     private static final String TAG = "EliminaSomministratore";
     ProgettiDaEliminareAdapterRV progettiAdapter;
     private List <ExampleItem> exampleList = new ArrayList();
-    private static boolean ritorno = false;
+    SearchView searchView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,12 +46,20 @@ public class EliminaSomministratore extends AppCompatActivity {
         Log.d(TAG, "Intent: " + intent.toString());
         HashMap<String, String> nomiSomm;
         List<String> somministratori = new ArrayList<>();
-        nomiSomm = (HashMap<String, String>) intent.getSerializableExtra("somministratori");
-        for (Map.Entry<String, String> entry : nomiSomm.entrySet()) {
-            this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+        boolean valore = getIntent().getBooleanExtra("home", false);
+        if (valore) {
+            nomiSomm = (HashMap<String, String>) intent.getSerializableExtra("somministratori");
+            for (Map.Entry<String, String> entry : nomiSomm.entrySet()) {
+                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+            }
+        } else{
+            HashMap<String, String> pazzi = (HashMap<String, String>) intent.getSerializableExtra("pazzi");
+            for (Map.Entry<String, String> entry : pazzi.entrySet()) {
+                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+            }
         }
         List<String> emails = intent.getStringArrayListExtra("emails");
-        Log.d(TAG, "Hashmap elimina: " + nomiSomm);
+        //Log.d(TAG, "Hashmap elimina: " + nomiSomm);
 
         binding = ActivityEliminaSomministratoreBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
@@ -82,6 +92,8 @@ public class EliminaSomministratore extends AppCompatActivity {
         //progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, emails, this);
         progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), exampleList, this);
         binding.rvSomministratoreDaEliminare.setAdapter(progettiAdapter);
+
+        showAlertDialog(this, "ciao","mamma", true);
     }
 
     public void onBackPressed() {
@@ -91,12 +103,13 @@ public class EliminaSomministratore extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_ricerca, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView = (SearchView) searchItem.getActionView();
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -112,4 +125,32 @@ public class EliminaSomministratore extends AppCompatActivity {
         });
         return true;
     }
+
+    public void showAlertDialog(final Context context, String title, String message,
+                                Boolean status) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Caricamento in corso")
+                .setMessage("Attendere...")
+                .create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            private static final int AUTO_DISMISS_MILLIS = 2000;
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                new CountDownTimer(AUTO_DISMISS_MILLIS, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+                    @Override
+                    public void onFinish() {
+                        if (((AlertDialog) dialog).isShowing()) {
+                            dialog.dismiss();
+                        }
+                    }
+                }.start();
+            }
+        });
+        dialog.show();
+    }
+
 }

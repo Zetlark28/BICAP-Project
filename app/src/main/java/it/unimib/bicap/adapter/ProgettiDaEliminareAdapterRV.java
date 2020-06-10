@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -208,7 +209,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
             return exampleList.size();
     }
 
-    @Override
+
     public Filter getFilter() {
         return exampleFilter;
     }

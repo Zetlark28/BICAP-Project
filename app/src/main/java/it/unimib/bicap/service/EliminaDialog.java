@@ -2,8 +2,11 @@ package it.unimib.bicap.service;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -214,12 +217,20 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                             for (ExampleItem item : exampleListNew){
                                                 Log.d(TAG, "new List: " + "Nome: " + item.getTextNome() + ", Email: " + item.getTextEmail());
                                             }
-                                            progettiAdapterSommRV.setExampleList(exampleListNew);
+                                            HashMap<String, String> map = new HashMap<>();
+                                            for(ExampleItem item : exampleListNew){
+                                                map.put(item.getTextEmail(), item.getTextNome());
+                                            }
+                                            Intent intentPazzo = new Intent(activityDelSomm, EliminaSomministratore.class);
+                                            intentPazzo.putExtra("pazzi", map);
+                                            intentPazzo.putExtra("home", false);
+                                            startActivity(intentPazzo);
+                                            activityDelSomm.finish();
+                                            /*progettiAdapterSommRV.setExampleList(exampleListNew);
                                             progettiAdapterSommRV.setExampleListFull(exampleListNew);
-                                            //activityDelSomm.setRitorno(false);
                                             //progettiAdapterSommRV.notifyItemRemoved(index);
                                             progettiAdapterSommRV.notifyDataSetChanged();
-                                            dismiss();
+                                            dismiss();*/
                                         }
 
                                         @Override
