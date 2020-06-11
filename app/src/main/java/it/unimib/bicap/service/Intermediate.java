@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.GrazieScreen;
+import it.unimib.bicap.ListaProgetti;
 import it.unimib.bicap.Survey;
 import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
@@ -125,7 +126,8 @@ public class Intermediate extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(modalitaFinal.equals("Thanos")){
-
+                    Intent intentHome = new Intent(getApplicationContext(), ListaProgetti.class);
+                    startActivity(intentHome);
                 }else if (finalTipo.equals("video")){
 
                     // TODO: Qui sotto ci andrà il link parsato del video
@@ -138,7 +140,6 @@ public class Intermediate extends AppCompatActivity {
                     startActivity(intentVideo);
 
                 } else if (finalTipo.equals("pdf")){
-
                     // TODO: Controllo fine download pdf
                     boolean finito = Utility.downloadPDF(finalLink);
                     while (!finito){

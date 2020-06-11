@@ -32,6 +32,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     public static List <String> nomi;
     String from;
     LayoutInflater layoutInflater;
+    public static List <String> descrizioni;
     public static  JSONArray listaProgetti;
     GetterInfo getterInfo = new GetterLocal();
     ProgettiDaTerminareAdapterRV istanzaProgettiAdapter;
@@ -43,6 +44,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
         Button info;
+        TextView descrizione1;
         Button start;
 
         public MyViewHolder (View itemView){
@@ -50,6 +52,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
             nome = itemView.findViewById(R.id.idNomeProgetto);
             info = itemView.findViewById(R.id.btnInfo);
             start = itemView.findViewById(R.id.btnCrea);
+            descrizione1 = itemView.findViewById(R.id.descrizioneprog);
         }
     }
     public ProgettiDaTerminareAdapterRV(Context context, JSONArray progetti, String from){
@@ -57,6 +60,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         nomi = getterInfo.getNomiProgetti(progetti);
         this.from = from;
         listaProgetti=progetti;
+        descrizioni = getterInfo.getDescrizioniProgetti(progetti);
         this.istanzaProgettiAdapter =this;
         layoutInflater = (LayoutInflater.from(context));
     }
@@ -71,6 +75,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     public void onBindViewHolder (final MyViewHolder holder, final int position){
 
             holder.nome.setText(nomi.get(position));
+            holder.descrizione1.setText(descrizioni.get(position));
             holder.info.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
