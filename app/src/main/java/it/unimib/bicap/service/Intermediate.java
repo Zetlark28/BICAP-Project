@@ -110,6 +110,9 @@ public class Intermediate extends AppCompatActivity {
             binding.tvTitolo.setText("Stai per visualizzare un PDF");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto PDF.\n" +
                                              "Ricordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante 'avanti' in alto a destra della toolbar\"");
+            boolean finito = Utility.downloadPDF(link);
+            while (!finito){
+            }
         } else if (tipo.equals("questionario")) {
             binding.tvTitolo.setText("Stai per svolgere un questionario");
             binding.tvDettaglioPasso.setText("In questo passo stai per rispondere al questionario.\n" +
@@ -141,9 +144,7 @@ public class Intermediate extends AppCompatActivity {
 
                 } else if (finalTipo.equals("pdf")){
                     // TODO: Controllo fine download pdf
-                    boolean finito = Utility.downloadPDF(finalLink);
-                    while (!finito){
-                    }
+
                     // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
                     Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
                     intentPDF.putExtra("guideOrPDF", "PDF");
