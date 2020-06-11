@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import it.unimib.bicap.GrazieScreen;
 import it.unimib.bicap.HomePage;
+import it.unimib.bicap.ListaProgetti;
 import it.unimib.bicap.R;
 import it.unimib.bicap.Survey;
 import it.unimib.bicap.constanti.DBConstants;
@@ -140,6 +141,8 @@ public class Intermediate extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(modalitaFinal.equals("Thanos")){
+                    Intent intentHome = new Intent(getApplicationContext(), ListaProgetti.class);
+                    startActivity(intentHome);
 
                 }else if (finalTipo.equals("video")){
 
