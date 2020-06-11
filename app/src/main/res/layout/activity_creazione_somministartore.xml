@@ -12,12 +12,15 @@
         android:elevation="0dp"/>
 
     <LinearLayout
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <ImageView
@@ -33,12 +36,6 @@
             app:cardCornerRadius="4dp"
             app:cardElevation="5dp"
             app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:id="@+id/cardLn3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/cardLn4"
@@ -61,12 +58,6 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp"
-                        android:orientation="vertical">
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tfEmailSomm"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -84,13 +75,6 @@
                                 android:inputType="textEmailAddress" />
 
                         </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp"
-                        android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tfPassword"
@@ -108,16 +92,9 @@
                                 app:boxStrokeColor="#a4224b" />
 
                         </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp"
-                        android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textField"
+                            android:id="@+id/tfAutore"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -132,7 +109,6 @@
                                 app:boxStrokeColor="#a4224b" />
 
                         </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnRegistraSomm"
@@ -140,14 +116,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:background="@color/sfondo"
                         android:text="Registra Somministratore"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp" />
                 </LinearLayout>
-            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Riaggiungi un vecchio somministratore"
+            android:textSize="15sp"/>
+
+            <Switch
+                android:id="@+id/switchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
 

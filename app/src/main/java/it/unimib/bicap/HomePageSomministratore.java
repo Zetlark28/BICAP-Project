@@ -142,6 +142,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
                 intentEliminaProgetto.putExtra("listaProgettiAutore", progettiAutore.toString());
                 intentEliminaProgetto.putExtra("listaProgetti", progetti.toString());
+                intentEliminaProgetto.putExtra("return", false);
                 startActivity(intentEliminaProgetto);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             }

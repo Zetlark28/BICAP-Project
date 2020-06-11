@@ -53,6 +53,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     private List<String> nomiSommListaFull;
     private static List<ExampleItem> exampleList;
     private static List<ExampleItem> exampleListFull;
+    private boolean ricerca;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -74,7 +75,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         Log.d(TAG, "nuovi nomi: " + nomiSomministratori.toString());
     }
 
-    public void setExampleListFull(List<ExampleItem> exampleListNew) {
+    public static void setExampleListFull(List<ExampleItem> exampleListNew) {
         ProgettiDaEliminareAdapterRV.exampleListFull = exampleListNew;
     }
 
@@ -104,15 +105,18 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         }
     }
 
-    public ProgettiDaEliminareAdapterRV(Context context, JSONArray progettiAutore, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity){
+    public ProgettiDaEliminareAdapterRV(Context context, JSONArray progettiAutore, List<ExampleItem> exampleList, JSONObject listaProgettiTot, EliminaProgetti eliminaActivity){
         nomi = getterInfo.getNomiProgetti(progettiAutore);
         listaProgetti = progettiAutore;
+        this.exampleList = exampleList;
+        exampleListFull = new ArrayList<>(exampleList);
         this.listaProgettiTot = listaProgettiTot;
         this.eliminaActivity = eliminaActivity;
         this.istanzaProgettiAdapter =this;
         this.context = context;
         descrizioni = getterInfo.getDescrizioniProgetti(progettiAutore);
         this.layoutInflater = LayoutInflater.from(context);
+        this.ricerca = true;
     }
 
     @SuppressLint("LongLogTag")
@@ -136,6 +140,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         this.context = context;
         this.eliminaActivitysomm = eliminaActivity;
         this.istanzaProgettiAdapter = this;
+        this.ricerca = false;
     }
 
     public RecyclerView.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
@@ -160,14 +165,19 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         Log.d(TAG, "type: " + holder.getItemViewType());
         if (holder instanceof  MyViewHolder) {
                 MyViewHolder vaultItemHolder = (MyViewHolder) holder;
-                vaultItemHolder.nome.setText(nomi.get(position));
-                vaultItemHolder.descrizione1.setText(descrizioni.get(position));
+                ExampleItem currentItem = exampleList.get(position);
+                //vaultItemHolder.nome.setText(nomi.get(position));
+                vaultItemHolder.nome.setText(currentItem.getTextNome());
+                //vaultItemHolder.descrizione1.setText(descrizioni.get(position));
+                vaultItemHolder.descrizione1.setText(currentItem.getTextEmail());
                 vaultItemHolder.elimina.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EliminaDialog eliminaDialog = null;
-                        String message = "Sei sicuto di voler eliminare il progetto: \n" + nomi.get(position) + " ?";
-                        eliminaDialog = new EliminaDialog(listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity, message);
+                        //String message = "Sei sicuto di voler eliminare il progetto: \n" + nomi.get(position) + " ?";
+                        String message = "Sei sicuro di voler eliminare il progetto: \n" + exampleList.get(position
+                        ).getTextNome() + " ?";
+                        eliminaDialog = new EliminaDialog(exampleList, listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity, message);
                         eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                     }
                 });
@@ -203,7 +213,8 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
 
     public int getItemCount (){
         if (eliminaActivity != null)
-            return nomi.size();
+            //return nomi.size();
+            return exampleList.size();
         else
             //return nomiSomministratori.size();
             return exampleList.size();
@@ -219,23 +230,46 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         protected FilterResults performFiltering(CharSequence constraint) {
             List<ExampleItem> filteredList = new ArrayList<>();
 
-            if(constraint == null || constraint.length() == 0){
-                filteredList.addAll(exampleListFull);
-            } else{
-                String filterPattern = constraint.toString().toLowerCase().trim();
+            if (ricerca) {
 
-                for (ExampleItem item : exampleListFull){
-                    if (item.getTextNome().toLowerCase().contains(filterPattern)){
-                        filteredList.add(item);
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(exampleListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for (ExampleItem item : exampleListFull) {
+                        if (item.getTextNome().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
                     }
                 }
+
+                FilterResults results = new FilterResults();
+
+                results.values = filteredList;
+
+                return results;
             }
 
-            FilterResults results = new FilterResults();
+            else {
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(exampleListFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
 
-            results.values = filteredList;
+                    for (ExampleItem item : exampleListFull) {
+                        if (item.getTextNome().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
 
-            return results;
+                FilterResults results = new FilterResults();
+
+                results.values = filteredList;
+
+                return results;
+            }
         }
 
         @Override

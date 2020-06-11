@@ -51,8 +51,9 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private String message;
     private List<ExampleItem> exampleList;
     private final String TAG = "EliminaDialog";
-    public EliminaDialog(JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
+    public EliminaDialog(List<ExampleItem> exampleList, JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
         try {
+            this.exampleList = exampleList;
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
             this.listaProgetti=listaProgetti;
             this.index = index;
@@ -99,13 +100,15 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     JSONArray listaNuova = new JSONArray();
                                     JSONObject nuoviProgetti = null;
                                     Integer idElimina = null;
+                                    //List<ExampleItem> exampleListNew = new ArrayList<>();
                                     //primo for serve  per identificare il json da eliminare all'interno della lista intera di progetti
                                     //secondo for serve per inizializzare una nuova lista di jsonObject che l'utente vedrà senza inserire il json identificato precedentemente
                                     try {
                                         for (int i = 0; i < listaProgetti.length(); i++) {
-                                            if (i != index)
+                                            if (i != index) {
                                                 listaNuova.put(listaProgetti.getJSONObject(i));
-                                            else
+                                                //exampleListNew.add(new ExampleItem(getterInfo.getNomeProgetto(listaProgetti.getJSONObject(i)), getterInfo.getDescrizione(listaProgetti.getJSONObject(i))));
+                                            } else
                                                 idElimina = listaProgetti.getJSONObject(i).getInt("id");
                                         }
                                         JSONArray lista = listaProgettiTot.getJSONArray("progetti");
@@ -125,11 +128,22 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     }
                                     //TODO: dialog on process e metodo di riscrittura file progetti.json
                                     Utility.write(nuoviProgetti, activity, null);
+                                    Log.d(TAG, "eliminato");
                                     //ProgettiDaEliminareAdapterRV.setListaProgettiTot(nuoviProgetti);
-                                    ProgettiDaEliminareAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
-                                    ProgettiDaEliminareAdapterRV.setListaProgetti(listaNuova);
-                                    progettiAdapterRV.notifyDataSetChanged();
-                                    dismiss();
+                                    //ProgettiDaEliminareAdapterRV.setExampleListFull(exampleListNew);
+                                    //ProgettiDaEliminareAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
+                                    //ProgettiDaEliminareAdapterRV.setListaProgetti(listaNuova);
+                                    //HashMap<String, Object> map = new HashMap<>();
+                                    //map.put("listaFinale", listaNuova);
+                                    //HashMap<String, Object> secondMap = new HashMap<>();
+                                    //map.put("oggettoFinale", listaProgettiTot);
+                                    //progettiAdapterRV.notifyDataSetChanged();
+                                    Intent intentDelProj = new Intent(getContext(), EliminaProgetti.class);
+                                    intentDelProj.putExtra("return", true);
+                                    intentDelProj.putExtra("newList", listaNuova.toString());
+                                    intentDelProj.putExtra("newObject", listaProgettiTot.toString());
+                                    showAlertDialog(activity, "ciao","mamma", true, intentDelProj);
+                                    //dismiss();
                                 }
                                 else{/*
                                     final String email = key;
@@ -250,5 +264,34 @@ public class EliminaDialog extends AppCompatDialogFragment {
                     }
                 });
         return  builder.create();
+    }
+
+    public void showAlertDialog(final Context context, String title, String message,
+                                Boolean status, final Intent intent) {
+        androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this.activity)
+                .setTitle("Caricamento in corso")
+                .setMessage("Attendere...")
+                .create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            private static final int AUTO_DISMISS_MILLIS = 3000;
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                new CountDownTimer(AUTO_DISMISS_MILLIS, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+                    @Override
+                    public void onFinish() {
+                        if (((androidx.appcompat.app.AlertDialog) dialog).isShowing()) {
+                            dialog.dismiss();
+                            activity.startActivity(intent);
+                            activity.finish();
+                        }
+                    }
+                }.start();
+            }
+        });
+        dialog.show();
     }
 }
