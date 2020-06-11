@@ -1,7 +1,6 @@
 package it.unimib.bicap.service;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -10,9 +9,7 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -21,9 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.GrazieScreen;
-import it.unimib.bicap.HomePage;
-import it.unimib.bicap.HomePageSomministratore;
-import it.unimib.bicap.R;
 import it.unimib.bicap.Survey;
 import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
@@ -51,13 +45,6 @@ public class Intermediate extends AppCompatActivity {
         final String nomeProgetto = getIntent().getStringExtra("NomeProgetto");
         final String idProgetto = getIntent().getStringExtra("idProgetto");
 
-        Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDialog();
-            }
-        });
         try {
             arrayPassi = new JSONArray(passi);
         } catch (JSONException e) {
@@ -179,30 +166,5 @@ public class Intermediate extends AppCompatActivity {
                 }
             }
         });
-    }
-    public void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Attenzione");
-        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent ListaQuest = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(ListaQuest);
-                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-                finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-    public void onBackPressed(){
-        showDialog();
     }
 }
