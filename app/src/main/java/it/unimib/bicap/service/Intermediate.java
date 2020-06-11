@@ -101,7 +101,8 @@ public class Intermediate extends AppCompatActivity {
             startActivity(intentFine);
         }else if(modalita.equals("Thanos")){
             binding.tvTitolo.setText("Non sei idoneo al progetto");
-            binding.tvDettaglioPasso.setText("Mi dispiace non sei idoneo al progetto");
+            binding.tvDettaglioPasso.setText("Mi dispiace non sei idoneo al progetto, verrai reindirizzato alla homepage.");
+            binding.btnAvanti.setText("Torna alla homepage");
         }else if (tipo.equals("video")) {
             binding.tvTitolo.setText("Stai per visualizzare un video");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto video.\n" +
