@@ -1,5 +1,6 @@
 package it.unimib.bicap.service;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -154,12 +156,31 @@ public class ExoPlayerStream extends AppCompatActivity {
         Log.d("AppState", "OnPause");
         exoPlayer.setPlayWhenReady(false);
     }
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomePage.class));
-        finish();
 
+    public void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Torna alla Homepage");
+        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    public void onBackPressed() {
+        showDialog();
     }
 }
 

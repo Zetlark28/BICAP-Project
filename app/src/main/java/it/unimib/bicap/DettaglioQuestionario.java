@@ -232,6 +232,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
                     Intent congratScreem = new Intent(getApplicationContext(), CongratulazioniScreen.class);
                     startActivity(congratScreem);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();
                 }
             }
@@ -372,13 +373,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         }
     }
 
-    //override startActivity con animazione slide avanti
-    @Override
-    public void startActivity(Intent intent){
-        super.startActivity(intent);
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-    }
-
     public void onBackPressed()
     {
         showDialog();
@@ -404,14 +398,6 @@ public class DettaglioQuestionario extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-
-    //override finish con animazione slide avanti
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
     }
 
 }
