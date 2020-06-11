@@ -33,7 +33,7 @@ public class QuestionariDaFare extends Fragment {
 
     private static final String TAG = "QuestionariDaFare";
     private static JSONArray progetti;
-    private DBManager db=null;
+    private DBManager db = null;
     private JSONObject progettiTot;
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
@@ -45,13 +45,15 @@ public class QuestionariDaFare extends Fragment {
     private GetterInfo getterInfo = new GetterLocal();
     private RecyclerView recyclerView;
     private View rootView;
+
     public QuestionariDaFare(JSONObject progettiTot) {
-        this.progettiTot=progettiTot;
+        this.progettiTot = progettiTot;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         recyclerView = rootView.findViewById(R.id.rvProgetti);
@@ -80,7 +82,7 @@ public class QuestionariDaFare extends Fragment {
                 e.printStackTrace();
             }*/
 
-        progettiAdapterRV = new ProgettiAdapterRV(getContext(), progettiDaFare,  from);
+        progettiAdapterRV = new ProgettiAdapterRV(getContext(), progettiDaFare, from);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(progettiAdapterRV);
@@ -93,13 +95,13 @@ public class QuestionariDaFare extends Fragment {
     // TODO: Implementare l'update del DataSet nel adapter
     public JSONArray cerca(String query) {
         try {
-            for(int i = 0; i<progetti.length(); i++) {
-               nomeProgetto = getterInfo.getNomeProgetto(getterInfo.getProgetto(progetti, i)).toLowerCase();
-                if (!db.isCompletato( progetti.getJSONObject(i).getInt("id")))
-                    if (!db.isDaCompletare( progetti.getJSONObject(i).getInt("id")))
+            for (int i = 0; i < progetti.length(); i++) {
+                nomeProgetto = getterInfo.getNomeProgetto(getterInfo.getProgetto(progetti, i)).toLowerCase();
+                if (!db.isCompletato(progetti.getJSONObject(i).getInt("id")))
+                    if (!db.isDaCompletare(progetti.getJSONObject(i).getInt("id")))
                         if (nomeProgetto.contains(query.toLowerCase())) {
                             progettiDaFare.put(progetti.getJSONObject(i));
-                }
+                        }
 
             }
         } catch (JSONException e) {
@@ -109,7 +111,6 @@ public class QuestionariDaFare extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,8 +118,8 @@ public class QuestionariDaFare extends Fragment {
 
 
     }
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+    /*public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         inflater.inflate(R.menu.menu_ricerca, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -160,4 +161,5 @@ public class QuestionariDaFare extends Fragment {
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
     }
+     */
 }

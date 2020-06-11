@@ -58,6 +58,7 @@ public class CreazioneProgetto extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentHomeProfessore = new Intent(getApplicationContext(), HomePageSomministratore.class);
                 startActivity(intentHomeProfessore);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
             }
         });
