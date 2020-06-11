@@ -159,7 +159,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         binding.imNextStep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((filePath == null) || binding.etLink.getText().toString().equals("")) {
+                if ((filePath == null) && binding.etLink.getText().toString().equals("")) {
                     Snackbar.make(v, "Attenzione, non puoi passare al passo successivo senza aver inserito del contenuto! \nAggiungi qualcosa e riprova!", Snackbar.LENGTH_LONG).show();
                 } else {
                     binding.imInsertPdf.setBackgroundColor(Color.WHITE);
