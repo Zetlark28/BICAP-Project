@@ -1,5 +1,6 @@
 package it.unimib.bicap.service;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -66,10 +68,10 @@ public class ExoPlayerStream extends AppCompatActivity {
         nomeProgetto = getIntent().getStringExtra("NomeProgetto");
         nPasso = getIntent().getStringExtra("nPasso");
 
-        binding = ActivityExoplayerStreamBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
-
+        //binding = ActivityExoplayerStreamBinding.inflate(getLayoutInflater());
+        //View view = binding.getRoot();
+        //setContentView(view);
+        exoPlayerView = findViewById(R.id.exoplayerview);
         try {
             BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
             TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
@@ -77,11 +79,8 @@ public class ExoPlayerStream extends AppCompatActivity {
 
             // TODO: Passare il link del video ed assegnarlo alla seguente variabile
             String linkVideo = getIntent().getStringExtra("linkVideo");
-
             // Prova di video
-            //String linkVideo = "https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Video%2FFile-49?alt=media&token=f049e892-e69b-4360-b017-1c792a8ab431";
-
-
+            //linkVideo = "https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Video%2FFile-49?alt=media&token=f049e892-e69b-4360-b017-1c792a8ab431";
             videoUri = Uri.parse(linkVideo);
             DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
@@ -154,12 +153,31 @@ public class ExoPlayerStream extends AppCompatActivity {
         Log.d("AppState", "OnPause");
         exoPlayer.setPlayWhenReady(false);
     }
-    public void onBackPressed()
-    {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomePage.class));
-        finish();
 
+    public void showDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Torna alla Homepage");
+        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    public void onBackPressed() {
+        showDialog();
     }
 }
 

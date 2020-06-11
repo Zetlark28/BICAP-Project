@@ -1,6 +1,7 @@
 package it.unimib.bicap.service;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -9,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -18,7 +21,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.GrazieScreen;
-import it.unimib.bicap.ListaProgetti;
+import it.unimib.bicap.HomePage;
+import it.unimib.bicap.R;
 import it.unimib.bicap.Survey;
 import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
@@ -52,7 +56,13 @@ public class Intermediate extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+            }
+        });
 
         String modalita = getIntent().getStringExtra("mode");
         final JSONObject passo;
@@ -101,7 +111,8 @@ public class Intermediate extends AppCompatActivity {
             startActivity(intentFine);
         }else if(modalita.equals("Thanos")){
             binding.tvTitolo.setText("Non sei idoneo al progetto");
-            binding.tvDettaglioPasso.setText("Mi dispiace non sei idoneo al progetto");
+            binding.tvDettaglioPasso.setText("Mi dispiace non sei idoneo al progetto, verrai reindirizzato alla homepage.");
+            binding.btnAvanti.setText("Torna alla homepage");
         }else if (tipo.equals("video")) {
             binding.tvTitolo.setText("Stai per visualizzare un video");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto video.\n" +
@@ -129,8 +140,7 @@ public class Intermediate extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(modalitaFinal.equals("Thanos")){
-                    Intent intentHome = new Intent(getApplicationContext(), ListaProgetti.class);
-                    startActivity(intentHome);
+
                 }else if (finalTipo.equals("video")){
 
                     // TODO: Qui sotto ci andrà il link parsato del video
@@ -143,6 +153,7 @@ public class Intermediate extends AppCompatActivity {
                     startActivity(intentVideo);
 
                 } else if (finalTipo.equals("pdf")){
+
                     // TODO: Controllo fine download pdf
 
                     // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
@@ -168,5 +179,30 @@ public class Intermediate extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Torna alla Homepage");
+        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");
+        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    public void onBackPressed(){
+        showDialog();
     }
 }

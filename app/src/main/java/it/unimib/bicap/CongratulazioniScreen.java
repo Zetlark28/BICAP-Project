@@ -41,18 +41,13 @@ public class CongratulazioniScreen extends AppCompatActivity {
             public void run() {
                 Intent intent=new Intent(CongratulazioniScreen.this, HomePageSomministratore.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
             }
         },3750);
 
 
 
-    }
-    //override startActivity con animazione slide avanti
-    @Override
-    public void startActivity(Intent intent){
-        super.startActivity(intent);
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
     //controllo su navigationBar
