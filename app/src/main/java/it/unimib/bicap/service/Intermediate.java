@@ -138,6 +138,9 @@ public class Intermediate extends AppCompatActivity {
 
                 if(modalitaFinal.equals("Thanos")){
                     Intent tornaHomePage = new Intent(getApplicationContext(), HomePage.class);
+                    startActivity(tornaHomePage);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                    finish();
                 }else if (finalTipo.equals("video")){
 
                     // TODO: Qui sotto ci andrà il link parsato del video

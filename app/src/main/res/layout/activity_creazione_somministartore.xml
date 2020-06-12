@@ -26,7 +26,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:src="@drawable/logobicoccaprimo"></ImageView>
+            android:src="@drawable/logobicoccaprimo"
+            android:contentDescription="@string/icon"></ImageView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardProf"
@@ -53,7 +54,7 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/roboto"
                         android:padding="10dp"
-                        android:text="Aggiungi un somministratore"
+                        android:text="@string/tvProf"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
@@ -64,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Email"
+                            android:hint="@string/tfEmailSomm"
                             app:boxStrokeColor="#a4224b">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -82,7 +83,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Password">
+                            android:hint="@string/tfPassword">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etPasswordSomm"
@@ -99,7 +100,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Nome e Cognome">
+                            android:hint="@string/tfAutore">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etNomeSomm"
@@ -120,7 +121,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Riattiva somministratore"
+                            android:text="@string/btnRegistraSomm"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:fontFamily="@font/roboto"
                             android:textColor="?android:attr/textColorSecondary"
