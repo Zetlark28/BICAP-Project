@@ -40,7 +40,7 @@
                         android:layout_margin="4dp"
                         android:layout_width="52dp"
                         android:layout_height="52dp"
-                        android:src="@drawable/questionariodaeliminareuno" />
+                        android:src="@drawable/progettidaeliminare2" />
 
                     <TextView
                         android:id="@+id/idNomeProgetto"
