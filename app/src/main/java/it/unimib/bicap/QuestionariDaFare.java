@@ -6,6 +6,8 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.SearchView;
 
 import androidx.annotation.RequiresApi;
@@ -23,6 +26,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.db.DBManager;
@@ -42,9 +48,11 @@ public class QuestionariDaFare extends Fragment {
     private JSONArray progettiDaFare;
     private JSONArray progettiDaCercare;
     private String nomeProgetto;
+    private List<ExampleItem> exampleList = new ArrayList();
     private GetterInfo getterInfo = new GetterLocal();
     private RecyclerView recyclerView;
     private View rootView;
+    private EditText ricercadafare;
 
     public QuestionariDaFare(JSONObject progettiTot) {
         this.progettiTot = progettiTot;
@@ -57,6 +65,8 @@ public class QuestionariDaFare extends Fragment {
 
         rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         recyclerView = rootView.findViewById(R.id.rvProgetti);
+        ricercadafare = rootView.findViewById(R.id.ricercadafare);
+
 
         final String idUtente = "prova";
 
@@ -67,8 +77,6 @@ public class QuestionariDaFare extends Fragment {
         }
 
         db = new DBManager(getContext());
-
-
         progettiDaFare = new JSONArray();
 
         progettiDaFare = cerca("");
@@ -82,10 +90,35 @@ public class QuestionariDaFare extends Fragment {
                 e.printStackTrace();
             }*/
 
-        progettiAdapterRV = new ProgettiAdapterRV(getContext(), progettiDaFare, from);
+        for (int i = 0;i<progettiDaFare.length();i++){
+            try {
+                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progettiDaFare.getJSONObject(i)), getterInfo.getDescrizione(progettiDaFare.getJSONObject(i))));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        progettiAdapterRV = new ProgettiAdapterRV(getContext(), progettiDaFare, exampleList, from);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(progettiAdapterRV);
+
+        ricercadafare.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                 ricercadafare.setError(null);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                progettiAdapterRV.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ricercadafare.setError(null);
+            }
+        });
 
 
         return rootView;
@@ -109,6 +142,7 @@ public class QuestionariDaFare extends Fragment {
         }
         return progettiDaFare;
     }
+
 
 
     @Override

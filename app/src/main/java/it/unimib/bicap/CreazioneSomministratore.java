@@ -288,20 +288,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
         });
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_switch, menu);
-        return true;
-    }
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.riattiva) {
-        //Inserire Intent
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
     public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Hai creato un somministratore");

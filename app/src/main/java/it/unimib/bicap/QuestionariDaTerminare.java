@@ -3,9 +3,12 @@ package it.unimib.bicap;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
@@ -23,10 +26,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.adapter.ProgettiDaTerminareAdapterRV;
 import it.unimib.bicap.db.DBManager;
+import it.unimib.bicap.service.GetterInfo;
+import it.unimib.bicap.service.GetterLocal;
 
 public class QuestionariDaTerminare extends Fragment {
 
@@ -38,11 +45,16 @@ public class QuestionariDaTerminare extends Fragment {
     private DBManager db;
 
     //private RecyclerView recyclerView;
-    private ProgettiAdapterRV progettiAdapterRV;
     private String [] titoli = {"Questionario 1", "Questionario 2"};
     private String from = "daTerminare";
     private ImageView immagine;
     private JSONObject progettiTot;
+    private RecyclerView recyclerView;
+    private View rootView;
+    private EditText ricercadafare;
+    private GetterInfo getterInfo = new GetterLocal();
+    private List<ExampleItem> exampleList = new ArrayList();
+    private ProgettiDaTerminareAdapterRV progettiAdapterTerminare;
 
 
     public QuestionariDaTerminare(JSONObject progettiTot) {
@@ -55,6 +67,7 @@ public class QuestionariDaTerminare extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         final RecyclerView recyclerView = rootView.findViewById(R.id.rvProgetti);
+        ricercadafare = rootView.findViewById(R.id.ricercadafare);
 
 
         db = new DBManager(getContext());
@@ -110,10 +123,40 @@ public class QuestionariDaTerminare extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        ProgettiDaTerminareAdapterRV progettiAdapterRV = new ProgettiDaTerminareAdapterRV(getContext(), progDaCompletare,  from);
+
+        for (int i = 0;i<progDaCompletare.length();i++){
+            try {
+                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progDaCompletare.getJSONObject(i)), getterInfo.getDescrizione(progDaCompletare.getJSONObject(i))));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        progettiAdapterTerminare= new ProgettiDaTerminareAdapterRV(getContext(), progDaCompletare, exampleList, from);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(progettiAdapterRV);
+        recyclerView.setAdapter(progettiAdapterTerminare);
+
+
+
+        ricercadafare.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                ricercadafare.setError(null);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                progettiAdapterTerminare.getFilter().filter(s);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ricercadafare.setError(null);
+            }
+        });
+
         return rootView;
     }
 }
