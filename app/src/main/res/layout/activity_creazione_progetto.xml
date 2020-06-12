@@ -112,7 +112,7 @@
                                 android:layout_marginEnd="10dp"
                                 android:layout_marginTop="40dp"
                                 android:text="@string/autore"
-                                android:textColor="@color/scritta"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="15sp" />
                         </LinearLayout>
 
