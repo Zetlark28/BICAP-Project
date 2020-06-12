@@ -16,26 +16,31 @@
 
     <style name="MyTheme" parent="android:Theme">
         <item name = "android:panelFullBackground">@color/sfondo</item>
+        <item name="android:fontFamily">@font/roboto</item>
     </style>
 
     <style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:fontFamily">@font/roboto</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
+        <item name="android:fontFamily">@font/roboto</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="HeaderBar">
         <item name="android:background">#A4224B</item>
+    <item name="android:fontFamily">@font/roboto</item>
     </style>
 
     <color name="colorEditTextLight" />
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:fontFamily">@font/roboto</item>
         <item name="android:textSize">18dp</item>
     </style>
 </resources>
