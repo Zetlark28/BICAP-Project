@@ -9,22 +9,35 @@
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main" />
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp">
+        android:orientation="vertical"
+        android:gravity="center">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCreaSomm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true">
@@ -79,8 +92,6 @@
                 android:id="@+id/cardEliminaSomm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true">
@@ -103,8 +114,6 @@
                         android:id="@+id/lnEliminaSomm2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
                         android:background="@color/design_default_color_background"
                         android:orientation="vertical">
 
@@ -139,7 +148,9 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+        </LinearLayout>
     </ScrollView>
+    </LinearLayout>
 
 
 </LinearLayout>
