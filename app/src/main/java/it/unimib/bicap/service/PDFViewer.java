@@ -1,7 +1,9 @@
 package it.unimib.bicap.service;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,6 +50,8 @@ public class PDFViewer extends AppCompatActivity {
         binding = ActivityPdfViewerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        showDialogCaricamento(this, "ciao","mamma", true);
 
         mTopToolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mTopToolbar);
@@ -124,6 +128,7 @@ public class PDFViewer extends AppCompatActivity {
             intentIntermediate.putExtra("listaPassi", passi);
             intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
             startActivity(intentIntermediate);
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             finish();
             return true;
         }
@@ -154,6 +159,33 @@ public class PDFViewer extends AppCompatActivity {
 
     public void onBackPressed(){
         showDialog();
+    }
+
+    public void showDialogCaricamento(final Context context, String title, String message,
+                                Boolean status) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Caricamento in corso")
+                .setMessage("Attendere...")
+                .create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            private static final int AUTO_DISMISS_MILLIS = 3000;
+            @Override
+            public void onShow(final DialogInterface dialog) {
+                new CountDownTimer(AUTO_DISMISS_MILLIS, 100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+                    @Override
+                    public void onFinish() {
+                        if (((AlertDialog) dialog).isShowing()) {
+                            dialog.dismiss();
+                        }
+                    }
+                }.start();
+            }
+        });
+        dialog.show();
     }
 
 

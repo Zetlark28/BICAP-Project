@@ -141,9 +141,10 @@ public class Intermediate extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(modalitaFinal.equals("Thanos")){
-                    Intent intentHome = new Intent(getApplicationContext(), ListaProgetti.class);
-                    startActivity(intentHome);
-
+                    Intent tornaHomePage = new Intent(getApplicationContext(), HomePage.class);
+                    startActivity(tornaHomePage);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                    finish();
                 }else if (finalTipo.equals("video")){
 
                     // TODO: Qui sotto ci andrà il link parsato del video
@@ -154,6 +155,7 @@ public class Intermediate extends AppCompatActivity {
                     intentVideo.putExtra("listaPassi", passi);
                     intentVideo.putExtra("nPasso", finalNPasso.toString());
                     startActivity(intentVideo);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
                 } else if (finalTipo.equals("pdf")){
 
@@ -167,7 +169,7 @@ public class Intermediate extends AppCompatActivity {
                     intentPDF.putExtra("listaPassi", passi);
                     intentPDF.putExtra("nPasso", finalNPasso.toString());
                     startActivity(intentPDF);
-
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
                 } else if (finalTipo.equals("questionario")){
                     // TODO: Aggiungere il reindirizzamento all'activity web view
@@ -178,6 +180,7 @@ public class Intermediate extends AppCompatActivity {
                     intentWeb.putExtra("nPasso", finalNPasso.toString());
                     intentWeb.putExtra("nomeProgetto", nomeProgetto);
                     startActivity(intentWeb);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();
                 }
             }

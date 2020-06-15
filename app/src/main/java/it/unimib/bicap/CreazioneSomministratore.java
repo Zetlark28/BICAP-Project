@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -124,6 +125,19 @@ public class CreazioneSomministratore extends AppCompatActivity {
                     showDialog();
                 } else {
                     Toast.makeText(getApplicationContext(), "La password deve essere più lunga di 5 caratteri", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        binding.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    binding.tfAutore.setVisibility(View.INVISIBLE);
+                    binding.tfPassword.setVisibility(View.INVISIBLE);
+                } else{
+                    binding.tfAutore.setVisibility(View.VISIBLE);
+                    binding.tfPassword.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -273,20 +287,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
             }
         });
     }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_switch, menu);
-        return true;
-    }
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.riattiva) {
-        //Inserire Intent
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
 
     public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

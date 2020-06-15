@@ -9,22 +9,35 @@
     <include
         android:id="@+id/toolbar_main"
         layout="@layout/toolbar_main" />
-    <ScrollView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="40dp">
+        android:orientation="vertical"
+        android:gravity="center">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardCreaSomm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true">
@@ -36,11 +49,12 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imCreaSomn"
+                        android:id="@+id/imCreaSomm"
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/immaginegruppodef" />
+                        app:srcCompat="@drawable/immaginegruppodef"
+                        android:contentDescription="@string/imCreaSomm" />
 
                     <TextView
                         android:id="@+id/tvCreaSomm"
@@ -48,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto"
                         android:padding="5dp"
-                        android:text="Aggiungi un Somministratore"
+                        android:text="@string/tvCreaSomm"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@color/colorPrimary" />
 
@@ -57,7 +71,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="3dp"
-                        android:text="In questa sezione andrai ad aggiungere un somministratore"
+                        android:text="@string/tvDescCreaSomm"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
@@ -68,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal|end"
                         android:layout_marginTop="10dp"
-                        android:text="Aggiungi un Somministratore" />
+                        android:text="@string/btnCreaSomm" />
 
                 </LinearLayout>
 
@@ -78,8 +92,6 @@
                 android:id="@+id/cardEliminaSomm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
                 app:cardCornerRadius="4dp"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true">
@@ -95,14 +107,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="140dp"
                         android:scaleType="centerCrop"
-                        app:srcCompat="@drawable/personachelavora" />
+                        app:srcCompat="@drawable/personachelavora"
+                        android:contentDescription="@string/imEliminaSomm" />
 
                     <LinearLayout
                         android:id="@+id/lnEliminaSomm2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
                         android:background="@color/design_default_color_background"
                         android:orientation="vertical">
 
@@ -112,7 +123,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto"
                             android:padding="5dp"
-                            android:text="Elimina Somministratore"
+                            android:text="@string/tvEliminaSomm"
                             android:textAppearance="?attr/textAppearanceHeadline6"
                             android:textColor="@color/colorPrimary" />
 
@@ -121,7 +132,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="3dp"
-                            android:text="In questa sezione, andrai ad eliminare un somministratore"
+                            android:text="@string/tvDescEliminaSomm"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="?android:attr/textColorSecondary" />
 
@@ -132,12 +143,14 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal|end"
                             android:layout_marginTop="10dp"
-                            android:text="Elimina Somministratore" />
+                            android:text="@string/btnEliminaSomm" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
+        </LinearLayout>
     </ScrollView>
+    </LinearLayout>
 
 
 </LinearLayout>

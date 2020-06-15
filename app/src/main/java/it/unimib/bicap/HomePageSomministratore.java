@@ -142,6 +142,7 @@ public class HomePageSomministratore extends AppCompatActivity {
                 Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
                 intentEliminaProgetto.putExtra("listaProgettiAutore", progettiAutore.toString());
                 intentEliminaProgetto.putExtra("listaProgetti", progetti.toString());
+                intentEliminaProgetto.putExtra("return", false);
                 startActivity(intentEliminaProgetto);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             }
@@ -214,35 +215,21 @@ public class HomePageSomministratore extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.menuLogOut){
+        if (item.getItemId() == R.id.menuLogOut) {
             mAuth.signOut();
             updateUI();
             return true;
-        }
-        else if (item.getItemId() == R.id.menuDownload){
+        } else if (item.getItemId() == R.id.menuDownload) {
 
-        }
-        else if (item.getItemId() == R.id.addSomm){
+        } else if (item.getItemId() == R.id.addSomm) {
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-            Intent intentAddSomm = new Intent (this, GestioneSomministratore.class);
+            Intent intentAddSomm = new Intent(this, GestioneSomministratore.class);
             startActivity(intentAddSomm);
             overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
-
-   /* @Override
-    public void startActivity(Intent intent){
-        super.startActivity(intent);
-        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-    }
-
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-    }*/
 
     //TODO : cambiare logica
     private void updateUI() {
@@ -254,7 +241,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             intentLogout.putExtra("fromHome", fromHome);
             if(fromHome == false){
                 startActivity(intentLogout);
-                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
             }else{
                 startActivity(intentLogout);

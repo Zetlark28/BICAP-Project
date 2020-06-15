@@ -33,7 +33,7 @@
                     android:layout_margin="4dp"
                     android:layout_width="52dp"
                     android:layout_height="52dp"
-                    app:srcCompat="@drawable/questionariodafare" />
+                    app:srcCompat="@drawable/questionariodafare2" />
 
                 <TextView
                     android:id="@+id/idNomeProgetto"

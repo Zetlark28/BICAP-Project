@@ -126,6 +126,7 @@ public class ExoPlayerStream extends AppCompatActivity {
                     intentIntermediate.putExtra("listaPassi", passi);
                     intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
                     startActivity(intentIntermediate);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();
                 }
             }

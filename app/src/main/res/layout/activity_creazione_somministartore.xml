@@ -12,18 +12,22 @@
         android:elevation="0dp"/>
 
     <LinearLayout
-        android:layout_width="320dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:src="@drawable/logobicoccaprimo"></ImageView>
+            android:src="@drawable/logobicoccaprimo"
+            android:contentDescription="@string/icon"></ImageView>
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardProf"
@@ -33,12 +37,6 @@
             app:cardCornerRadius="4dp"
             app:cardElevation="5dp"
             app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:id="@+id/cardLn3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <LinearLayout
                     android:id="@+id/cardLn4"
@@ -56,16 +54,10 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/roboto"
                         android:padding="10dp"
-                        android:text="Aggiungi un somministratore"
+                        android:text="@string/tvProf"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@color/colorPrimary"
                         android:textSize="20sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp"
-                        android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tfEmailSomm"
@@ -73,7 +65,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Email"
+                            android:hint="@string/tfEmailSomm"
                             app:boxStrokeColor="#a4224b">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -84,13 +76,6 @@
                                 android:inputType="textEmailAddress" />
 
                         </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp"
-                        android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/tfPassword"
@@ -98,7 +83,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Password">
+                            android:hint="@string/tfPassword">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etPasswordSomm"
@@ -108,21 +93,14 @@
                                 app:boxStrokeColor="#a4224b" />
 
                         </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="4dp"
-                        android:orientation="vertical">
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textField"
+                            android:id="@+id/tfAutore"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:hint="Nome e Cognome">
+                            android:hint="@string/tfAutore">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/etNomeSomm"
@@ -132,6 +110,30 @@
                                 app:boxStrokeColor="#a4224b" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/btnRegistraSomm"
+                            android:textAppearance="?attr/textAppearanceBody2"
+                            android:fontFamily="@font/roboto"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:textSize="14sp"/>
+
+                        <Switch
+                            android:id="@+id/switchButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
+
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
@@ -140,14 +142,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:background="@color/sfondo"
                         android:text="Registra Somministratore"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="18sp" />
+                        android:textSize="18sp">
+
+                    </com.google.android.material.button.MaterialButton>
+
+
                 </LinearLayout>
-            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
 
