@@ -40,7 +40,6 @@ public class JsonBuilder {
             progetto.put("nome", nomeProgetto);
             progetto.put("descrizione", descrizioneProgetto);
             progetto.put("autore", autore);
-            progetto.put("completato",0);
         } catch (JSONException e) {
             Log.d("errore", "jsonBuilderError");
             e.printStackTrace();
