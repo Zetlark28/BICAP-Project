@@ -58,10 +58,6 @@
             android:name=".HomePageSomministratore"
             android:parentActivityName=".LoginProfessore"
             />
-        <activity android:name=".QuestionariDaFare"
-            />
-        <activity android:name=".QuestionariDaTerminare"
-            />
         <activity android:name=".PresentazioneProgetto"
             />
         <activity android:name=".CongratulazioniScreen"
@@ -75,6 +71,8 @@
         <activity android:name=".EliminaSomministratore"
             />
         <activity android:name=".GrazieScreen"
+            />
+        <activity android:name=".RecuperaPassword"
             />
 
         <meta-data

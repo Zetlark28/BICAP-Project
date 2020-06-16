@@ -105,7 +105,7 @@ public class HomePage extends AppCompatActivity {
                     // whenever data at this location is updated.
                     for (DataSnapshot d : dataSnapshot.getChildren()){
                         Log.d(TAG, "prova");
-                        Log.d(TAG, "email ciclo: " + d.child("email").getValue().toString() + " attivo? " + d.child("attivo").getValue().toString());
+                        //Log.d(TAG, "email ciclo: " + d.child("email").getValue().toString() + " attivo? " + d.child("attivo").getValue().toString());
                         key = d.getKey();
                         Log.d(TAG, "email somm: " + currentFirebaseUser.getEmail());
                         if (d.child("attivo").getValue().equals("true") && d.child("email").getValue().equals(currentFirebaseUser.getEmail())){

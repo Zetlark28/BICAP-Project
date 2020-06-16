@@ -41,4 +41,5 @@
     <string name="btnAnnulla">Annulla</string>
     <string name="imNextStep">PROSSIMO \nPASSO</string>
     <string name="imSaveProject">SALVA PROGETTO</string>
+    <string name="password_dimenticata"><u>Password dimenticata?</u></string>
 </resources>

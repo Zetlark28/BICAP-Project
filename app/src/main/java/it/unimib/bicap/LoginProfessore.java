@@ -167,6 +167,15 @@ public class LoginProfessore extends AppCompatActivity {
                         loginUser(email, password);
                 }
             });
+
+            binding.tvPassDimenticata.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intentPassDimenticata = new Intent(getApplicationContext(), RecuperaPassword.class);
+                    startActivity(intentPassDimenticata);
+                    finish();
+                }
+            });
         }
 
         private void loginUser (final String email, String password){
@@ -214,7 +223,7 @@ public class LoginProfessore extends AppCompatActivity {
                             }
                         }
                     });
-        }
+            }
 
     /*private int checkMail(final String email) {
         //final boolean[] valore = {false};
