@@ -1,16 +1,15 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.transition.MaterialContainerTransform;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
@@ -49,6 +50,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
     private FirebaseUser user;
     private String email1;
     private String password1;
+    private ProgressDialog dialog;
     private String autore1;
 
     @SuppressLint("LongLogTag")
@@ -60,6 +62,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        dialog = new ProgressDialog(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -112,19 +116,26 @@ public class CreazioneSomministratore extends AppCompatActivity {
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
-                String autore = binding.etNomeSomm.getText().toString();
-                Log.d(TAG, "premo il bottone");
                 String email = binding.etEmailSomm.getText().toString();
-                String password = binding.etPasswordSomm.getText().toString();
-                email1 = email;
-                password1 = password;
-                autore1 = autore;
-                if (password.length() > 5) {
-                    createUser(email, password, autore);
-                    Log.d(TAG, "creato nuovo somministratore");
-                    showDialog();
+                if (binding.switchButton.isChecked()) {
+                    checkMailSecond(email);
+                    dialog.setTitle("Caricamento...");
+                    dialog.setMessage("Attendere Prego...");
+                    dialog.show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "La password deve essere più lunga di 5 caratteri", Toast.LENGTH_SHORT).show();
+                    String autore = binding.etNomeSomm.getText().toString();
+                    Log.d(TAG, "premo il bottone");
+                    String password = binding.etPasswordSomm.getText().toString();
+                    email1 = email;
+                    password1 = password;
+                    autore1 = autore;
+                    if (password.length() > 5) {
+                        createUser(email, password, autore);
+                        Log.d(TAG, "creato nuovo somministratore");
+                        showDialog();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "La password deve essere più lunga di 5 caratteri", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -143,6 +154,65 @@ public class CreazioneSomministratore extends AppCompatActivity {
         });
 
         }
+
+    private void checkMailSecond(final String email) {
+        myRef.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean variabile = false;
+                for (DataSnapshot d : dataSnapshot.getChildren()){
+                    if (!variabile){
+                        if (d.child("email").getValue()!= null && d.child("email").getValue().equals(email)){
+                            variabile = true;
+                            Log.d(TAG, "variabile: " + variabile);
+                        }
+                    }
+                }
+                if (variabile){
+                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressLint("LongLogTag")
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            dialog.dismiss();
+                            // This method is called once with the initial value and again
+                            // whenever data at this location is updated.
+                            HashMap<String, Object> map = new HashMap<>();
+                            for (DataSnapshot d : dataSnapshot.getChildren()){
+                                if (d.child("email").getValue().equals(email)) {
+                                    Log.d(TAG, "trovato  utente");
+                                    map.put("attivo", "true");
+                                    d.getRef().updateChildren(map);
+                                    //d.getRef().child("attivo").setValue("true");
+                                    Log.d(TAG, "attivo? " + d.child("attivo").getValue().toString());
+                                }
+                            }
+
+                            Snackbar.make(findViewById(android.R.id.content),
+                                    "Utente riattivato correttamente", Snackbar.LENGTH_SHORT).show();
+                            //String value = dataSnapshot.getValue(String.class);
+                            //Log.d(TAG, "Value is: " + value);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError error) {
+                            dialog.dismiss();
+                            // Failed to read value
+                            //Log.w(TAG, "Failed to read value.", error.toException());
+                        }
+                    });
+                } else {
+                    Snackbar.make(findViewById(android.R.id.content),
+                            "Attenzione, l'email potrebbe non esistere oppure l'utente è già attivo", Snackbar.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void createUser(final String email, String password, final String autore) {
         checkMail(email, password, autore);
