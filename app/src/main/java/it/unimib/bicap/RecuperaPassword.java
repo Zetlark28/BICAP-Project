@@ -45,7 +45,7 @@ public class RecuperaPassword extends AppCompatActivity {
                 Intent logInSomministratore = new Intent(getApplicationContext(), LoginProfessore.class);
                 logInSomministratore.putExtra("fromHome", true);
                 startActivity(logInSomministratore);
-
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
             }
         });
@@ -79,5 +79,14 @@ public class RecuperaPassword extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
+        overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+        finish();
+
     }
 }
