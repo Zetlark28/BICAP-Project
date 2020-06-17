@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityPresentazioneProgettoBinding;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
@@ -39,7 +40,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
         //JSONObject obj = (JSONObject) getIntent().getSerializableExtra("obj");
         JSONObject obj = null;
         try {
-            obj = new JSONObject(getIntent().getStringExtra("obj"));
+            obj = new JSONObject(getIntent().getStringExtra(ActivityConstants.INTENT_PROGETTO));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -68,16 +69,16 @@ public class PresentazioneProgetto extends AppCompatActivity {
         final JSONArray passi = getterInfo.getPassi(finalObj);
         Log.d(TAG, "passi: " + passi.toString());
 
-        final String modalita = getIntent().getStringExtra("mode");
+        final String modalita = getIntent().getStringExtra(ActivityConstants.INTENT_MODALITA);
 
         binding.btnStartProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                intentIntermediate.putExtra("listaPassi", passi.toString());
-                intentIntermediate.putExtra("idProgetto", String.valueOf(id));
-                intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
-                intentIntermediate.putExtra("mode", modalita);
+                intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi.toString());
+                intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, String.valueOf(id));
+                intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
+                intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, modalita);
                 startActivity(intentIntermediate);
 
 
@@ -114,7 +115,7 @@ public class PresentazioneProgetto extends AppCompatActivity {
                    // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
                     Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
                     intentPDF.putExtra("guideOrPDF", "PDF");
-                    intentPDF.putExtra("NomeProgetto", nomeProgetto);
+                    intentPDF.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentPDF);
 
 

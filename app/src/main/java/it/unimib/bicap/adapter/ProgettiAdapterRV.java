@@ -26,6 +26,7 @@ import it.unimib.bicap.ExampleItem;
 import it.unimib.bicap.PresentazioneProgetto;
 import it.unimib.bicap.QuestionariDaFare;
 import it.unimib.bicap.R;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
@@ -94,8 +95,8 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                 public void onClick(View v) {
                     JSONObject p = getterInfo.getProgetto(listaProgetti, position);
                     Intent intentProg = new Intent(context, PresentazioneProgetto.class);
-                    intentProg.putExtra("obj", p.toString());
-                    intentProg.putExtra("mode","daFare");
+                    intentProg.putExtra(ActivityConstants.INTENT_PROGETTO, p.toString());
+                    intentProg.putExtra(ActivityConstants.INTENT_MODALITA,"daFare");
                     context.startActivity(intentProg);
                     ((Activity) context).finish();
                     try {

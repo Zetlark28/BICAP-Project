@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 import it.unimib.bicap.service.JsonBuilder;
 import it.unimib.bicap.service.Utility;
@@ -69,7 +70,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         Utility.getKeyValue();
         FirebaseApp.initializeApp(this);
         progettiJSON = getIntent().getStringExtra("progetti");
-        String nomeProgetto = getIntent().getStringExtra("nomeProgetto");
+        String nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -90,7 +91,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             }
         });
 
-        toolbar.setTitle(getIntent().getStringExtra("nomeProgetto"));
+        toolbar.setTitle(getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO));
 
         final String progettoString = getIntent().getStringExtra("progetto");
         try {

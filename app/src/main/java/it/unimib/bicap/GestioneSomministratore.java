@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityGestioneSomministratoreBinding;
 
 public class GestioneSomministratore extends AppCompatActivity {
@@ -86,8 +87,8 @@ public class GestioneSomministratore extends AppCompatActivity {
                 Intent deleteSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
                 Log.d(TAG, "Intent problem: " + somministratori.toString());
                 deleteSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
-                deleteSomm.putExtra("somministratori", somministratori);
-                deleteSomm.putExtra("home", true);
+                deleteSomm.putExtra(ActivityConstants.INTENT_SOMMINISTRATORI, somministratori);
+                deleteSomm.putExtra(ActivityConstants.INTENT_HOME, true);
                 startActivity(deleteSomm);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();

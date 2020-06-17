@@ -32,6 +32,7 @@ import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
 import it.unimib.bicap.ExampleItem;
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
+import it.unimib.bicap.constanti.ActivityConstants;
 
 public class EliminaDialog extends AppCompatDialogFragment {
 
@@ -139,9 +140,9 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     //map.put("oggettoFinale", listaProgettiTot);
                                     //progettiAdapterRV.notifyDataSetChanged();
                                     Intent intentDelProj = new Intent(getContext(), EliminaProgetti.class);
-                                    intentDelProj.putExtra("return", true);
-                                    intentDelProj.putExtra("newList", listaNuova.toString());
-                                    intentDelProj.putExtra("newObject", listaProgettiTot.toString());
+                                    intentDelProj.putExtra(ActivityConstants.INTENT_RETURN, true);
+                                    intentDelProj.putExtra(ActivityConstants.INTENT_NEW_LIST, listaNuova.toString());
+                                    intentDelProj.putExtra(ActivityConstants.INTENT_NEW_OBJECT, listaProgettiTot.toString());
                                     showAlertDialog(activity, "ciao","mamma", true, intentDelProj);
                                     //dismiss();
                                 }
@@ -237,7 +238,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                             }
                                             Intent intentPazzo = new Intent(activityDelSomm, EliminaSomministratore.class);
                                             intentPazzo.putExtra("pazzi", map);
-                                            intentPazzo.putExtra("home", false);
+                                            intentPazzo.putExtra(ActivityConstants.INTENT_HOME, false);
                                             startActivity(intentPazzo);
                                             activityDelSomm.finish();
                                             /*progettiAdapterSommRV.setExampleList(exampleListNew);

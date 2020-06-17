@@ -37,6 +37,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import it.unimib.bicap.HomePage;
 import it.unimib.bicap.HomePageSomministratore;
 import it.unimib.bicap.R;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityExoplayerStreamBinding;
 import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
 import it.unimib.bicap.db.DBManager;
@@ -63,10 +64,10 @@ public class ExoPlayerStream extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_exoplayer_stream);
         dbManager = new DBManager(getApplicationContext());
-        idProgetto = getIntent().getStringExtra("idProgetto");
-        passi = getIntent().getStringExtra("listaPassi");
-        nomeProgetto = getIntent().getStringExtra("NomeProgetto");
-        nPasso = getIntent().getStringExtra("nPasso");
+        idProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_ID_PROGETTO);
+        passi = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PASSI);
+        nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
+        nPasso = getIntent().getStringExtra(ActivityConstants.INTENT_N_PASSO);
 
         //binding = ActivityExoplayerStreamBinding.inflate(getLayoutInflater());
         //View view = binding.getRoot();
@@ -121,10 +122,10 @@ public class ExoPlayerStream extends AppCompatActivity {
 
                     dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso)+1);
                     Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                    intentIntermediate.putExtra("mode", "daTerminare");
-                    intentIntermediate.putExtra("idProgetto", idProgetto);
-                    intentIntermediate.putExtra("listaPassi", passi);
-                    intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "daTerminare");
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentIntermediate);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();

@@ -79,13 +79,13 @@ public class EliminaProgetti extends AppCompatActivity {
 //            if(progettiAutore==null)
 
             //TODO: check extras not null
-            boolean ritorno = getIntent().getBooleanExtra("return", false);
+            boolean ritorno = getIntent().getBooleanExtra(ActivityConstants.INTENT_RETURN, false);
             if (! ritorno) {
-                progettiAutore = new JSONArray(getIntent().getExtras().getString("listaProgettiAutore"));
-                progetti = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString("listaProgetti")));
+                progettiAutore = new JSONArray(getIntent().getExtras().getString(ActivityConstants.INTENT_LISTA_PROGETTI_AUTORE));
+                progetti = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString(ActivityConstants.INTENT_LISTA_PROGETTI)));
             } else {
-                progettiAutore = new JSONArray(getIntent().getExtras().getString("newList"));
-                progetti = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString("newObject")));
+                progettiAutore = new JSONArray(getIntent().getExtras().getString(ActivityConstants.INTENT_NEW_LIST));
+                progetti = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString(ActivityConstants.INTENT_NEW_OBJECT)));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -46,9 +46,9 @@ public class EliminaSomministratore extends AppCompatActivity {
         Log.d(TAG, "Intent: " + intent.toString());
         HashMap<String, String> nomiSomm;
         List<String> somministratori = new ArrayList<>();
-        boolean valore = getIntent().getBooleanExtra("home", false);
+        boolean valore = getIntent().getBooleanExtra(ActivityConstants.INTENT_HOME, false);
         if (valore) {
-            nomiSomm = (HashMap<String, String>) intent.getSerializableExtra("somministratori");
+            nomiSomm = (HashMap<String, String>) intent.getSerializableExtra(ActivityConstants.INTENT_SOMMINISTRATORI);
             for (Map.Entry<String, String> entry : nomiSomm.entrySet()) {
                 this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
             }

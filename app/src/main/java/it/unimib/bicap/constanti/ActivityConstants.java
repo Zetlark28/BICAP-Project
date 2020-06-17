@@ -23,6 +23,20 @@ public class ActivityConstants {
     public static final String URL_EXIT = "google";
     public static final String URL_ERROR = "facebook";
 
+    public static final String INTENT_LISTA_PASSI = "listaPassi";
+    public static final String INTENT_NOME_PROGETTO="nomeProgetto";
+    public static final String INTENT_ID_PROGETTO = "idProgetto";
+    public static final String INTENT_MODALITA = "modalita";
+    public static final String INTENT_PROGETTO = "progetto";
+    public static final String INTENT_LISTA_PROGETTI_AUTORE = "listaProgettiAutore";
+    public static final String INTENT_LISTA_PROGETTI = "listaProgetti";
+    public static final String INTENT_N_PASSO = "nPasso";
+    public static final String INTENT_WEB ="web";
+    public static final String INTENT_RETURN = "return";
+    public static final String INTENT_NEW_LIST = "newList";
+    public static final String INTENT_NEW_OBJECT = "newObject";
+    public static final String INTENT_HOME ="home";
+    public static final String INTENT_SOMMINISTRATORI = "somministratori";
 
 
 

@@ -109,7 +109,7 @@ public class CreazioneProgetto extends AppCompatActivity {
                     Log.d(TAG, progetto.toString());
                     intentDettaglioProgetto.putExtra("progetto", progetto.toString());
                     intentDettaglioProgetto.putExtra("progetti", progettiJSON);
-                    intentDettaglioProgetto.putExtra("nomeProgetto", nomeProgetto);
+                    intentDettaglioProgetto.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentDettaglioProgetto);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();

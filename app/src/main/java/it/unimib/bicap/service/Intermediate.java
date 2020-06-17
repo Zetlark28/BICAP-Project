@@ -25,6 +25,7 @@ import it.unimib.bicap.HomePage;
 import it.unimib.bicap.ListaProgetti;
 import it.unimib.bicap.R;
 import it.unimib.bicap.Survey;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
 import it.unimib.bicap.db.DBManager;
@@ -47,9 +48,9 @@ public class Intermediate extends AppCompatActivity {
         binding = ActivityIntermediateBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        final String passi = getIntent().getStringExtra("listaPassi");
-        final String nomeProgetto = getIntent().getStringExtra("NomeProgetto");
-        final String idProgetto = getIntent().getStringExtra("idProgetto");
+        final String passi = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PASSI);
+        final String nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
+        final String idProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_ID_PROGETTO);
 
         try {
             arrayPassi = new JSONArray(passi);
@@ -65,7 +66,7 @@ public class Intermediate extends AppCompatActivity {
             }
         });
 
-        String modalita = getIntent().getStringExtra("mode");
+        String modalita = getIntent().getStringExtra(ActivityConstants.INTENT_MODALITA);
         final JSONObject passo;
         String tipo = "";
         String link = "";
@@ -150,10 +151,10 @@ public class Intermediate extends AppCompatActivity {
                     // TODO: Qui sotto ci andrà il link parsato del video
                     Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
                     intentVideo.putExtra("linkVideo", finalLink);
-                    intentVideo.putExtra("idProgetto",idProgetto);
-                    intentVideo.putExtra("nomeProgetto", nomeProgetto);
-                    intentVideo.putExtra("listaPassi", passi);
-                    intentVideo.putExtra("nPasso", finalNPasso.toString());
+                    intentVideo.putExtra(ActivityConstants.INTENT_ID_PROGETTO,idProgetto);
+                    intentVideo.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
+                    intentVideo.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+                    intentVideo.putExtra(ActivityConstants.INTENT_N_PASSO, finalNPasso.toString());
                     startActivity(intentVideo);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
@@ -164,21 +165,21 @@ public class Intermediate extends AppCompatActivity {
                     // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
                     Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
                     intentPDF.putExtra("guideOrPDF", "PDF");
-                    intentPDF.putExtra("NomeProgetto", nomeProgetto);
-                    intentPDF.putExtra("idProgetto",idProgetto);
-                    intentPDF.putExtra("listaPassi", passi);
-                    intentPDF.putExtra("nPasso", finalNPasso.toString());
+                    intentPDF.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
+                    intentPDF.putExtra(ActivityConstants.INTENT_ID_PROGETTO,idProgetto);
+                    intentPDF.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+                    intentPDF.putExtra(ActivityConstants.INTENT_N_PASSO, finalNPasso.toString());
                     startActivity(intentPDF);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
                 } else if (finalTipo.equals("questionario")){
                     // TODO: Aggiungere il reindirizzamento all'activity web view
                     Intent intentWeb = new Intent(getApplicationContext(), Survey.class);
-                    intentWeb.putExtra("web", finalLink);
-                    intentWeb.putExtra("idProgetto",idProgetto);
-                    intentWeb.putExtra("listaPassi", passi);
-                    intentWeb.putExtra("nPasso", finalNPasso.toString());
-                    intentWeb.putExtra("nomeProgetto", nomeProgetto);
+                    intentWeb.putExtra(ActivityConstants.INTENT_WEB, finalLink);
+                    intentWeb.putExtra(ActivityConstants.INTENT_ID_PROGETTO,idProgetto);
+                    intentWeb.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+                    intentWeb.putExtra(ActivityConstants.INTENT_N_PASSO, finalNPasso.toString());
+                    intentWeb.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentWeb);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();
