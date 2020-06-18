@@ -119,9 +119,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 String email = binding.etEmailSomm.getText().toString();
                 if (binding.switchButton.isChecked()) {
                     checkMailSecond(email);
-                    dialog.setTitle("Caricamento...");
-                    dialog.setMessage("Attendere Prego...");
-                    dialog.show();
                 } else {
                     String autore = binding.etNomeSomm.getText().toString();
                     Log.d(TAG, "premo il bottone");
@@ -129,10 +126,12 @@ public class CreazioneSomministratore extends AppCompatActivity {
                     email1 = email;
                     password1 = password;
                     autore1 = autore;
+                    dialog.setTitle("Attendere");
+                    dialog.setMessage("Attendere");
+                    dialog.show();
                     if (password.length() > 5) {
                         createUser(email, password, autore);
                         Log.d(TAG, "creato nuovo somministratore");
-                        showDialog();
                     } else {
                         Toast.makeText(getApplicationContext(), "La password deve essere più lunga di 5 caratteri", Toast.LENGTH_SHORT).show();
                     }
@@ -174,7 +173,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
                         @SuppressLint("LongLogTag")
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            dialog.dismiss();
                             // This method is called once with the initial value and again
                             // whenever data at this location is updated.
                             HashMap<String, Object> map = new HashMap<>();
@@ -187,6 +185,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
                                     Log.d(TAG, "attivo? " + d.child("attivo").getValue().toString());
                                 }
                             }
+
+                            showDialogSecond();
 
                             Snackbar.make(findViewById(android.R.id.content),
                                     "Utente riattivato correttamente", Snackbar.LENGTH_SHORT).show();
@@ -333,6 +333,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
                                         myRef.child(user.getUid()).child("email").setValue(email);
                                         myRef.child(user.getUid()).child("attivo").setValue("true");
                                         //mFirebaseAuth2.updateCurrentUser(mAuth.getCurrentUser());
+                                        dialog.dismiss();
+                                        showDialog();
                                         mAuth2.signOut();
                                         //TODO: fix presa user
                                     } else {
@@ -362,6 +364,23 @@ public class CreazioneSomministratore extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Hai creato un somministratore");
         builder.setMessage("Hai creato un nuovo somministratore con i seguenti dati: \nNome: " + autore1 + "\nEmail: " + email1 + "\n" + "Password: " + password1);
+        builder.setPositiveButton("Torna alla homepage", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), GestioneSomministratore.class);
+                startActivity(HomePageSomministratoreRicarica);
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void showDialogSecond() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Hai riattivato un somministratore");
+        builder.setMessage("Hai riattivato un vecchio somministratore con la seguente Email: \nEmail: " + binding.etEmailSomm.getText());
         builder.setPositiveButton("Torna alla homepage", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

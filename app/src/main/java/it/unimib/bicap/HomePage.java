@@ -1,6 +1,7 @@
 package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -47,14 +48,16 @@ public class HomePage extends AppCompatActivity {
     SharedPreferences sharedPref;
     private String key = "";
     private boolean valore = false;
+    private ProgressDialog dialog;
     private CountDownTimer cTimer;
 
     //alertDialog Homepage
-    public void showAlertDialog(final Context context, String title, String message,
+    /*public void showAlertDialog(final Context context, String title, String message,
                                 Boolean status) {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Caricamento in corso")
                 .setMessage("Attendere...")
+                .setCancelable(false)
                 .create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             private static final int AUTO_DISMISS_MILLIS = 3000;
@@ -75,7 +78,7 @@ public class HomePage extends AppCompatActivity {
             }
         });
         dialog.show();
-    }
+    }*/
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -86,6 +89,12 @@ public class HomePage extends AppCompatActivity {
         setContentView(view);
 
         sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("Caricamento in corso");
+        dialog.setMessage("Attendere...");
+        dialog.setCancelable(false);
+        dialog.show();
 
         final SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove("esisteMail");
@@ -108,7 +117,7 @@ public class HomePage extends AppCompatActivity {
                         //Log.d(TAG, "email ciclo: " + d.child("email").getValue().toString() + " attivo? " + d.child("attivo").getValue().toString());
                         key = d.getKey();
                         Log.d(TAG, "email somm: " + currentFirebaseUser.getEmail());
-                        if (d.child("attivo").getValue().equals("true") && d.child("email").getValue().equals(currentFirebaseUser.getEmail())){
+                        if (d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && d.child("email").getValue().equals(currentFirebaseUser.getEmail())){
                             Log.d(TAG, "entro email trovata");
                             esisteMail = true;
                             Log.d(TAG, "email: " + d.child("email").getValue().toString() + ", attivo: " + d.child("attivo").getValue().toString());
@@ -116,6 +125,7 @@ public class HomePage extends AppCompatActivity {
                             editor.commit();
                         }
                     }
+                    dialog.dismiss();
                     //latch.countDown();
                 }
 
@@ -146,11 +156,14 @@ public class HomePage extends AppCompatActivity {
         toolbar.setTitle("SurveyMiB");
         toolbar.setNavigationIcon(null);
 
+        final HomePage instance = this;
+
         binding.btnProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
                 intentLogInProf.putExtra("fromHome", true);
+                instance.finish();
                 startActivity(intentLogInProf);
             }
         });
@@ -160,10 +173,11 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentQuiz = new Intent(getApplicationContext(), ListaProgetti.class);
                 startActivity(intentQuiz);
+                instance.finish();
             }
         });
 
-        showAlertDialog(this, "ciao","mamma", true);
+        //showAlertDialog(this, "ciao","mamma", true);
     }
 
 
@@ -176,7 +190,7 @@ public class HomePage extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (DataSnapshot d : dataSnapshot.getChildren()){
-                    if (d.child("attivo").getValue().equals("true")){
+                    if (d.child("attivo").getValue() != null && d.child("attivo").getValue().equals("true")){
                         sommAttivi.add(d.child("email").getValue().toString());
                     }
                 }
@@ -187,6 +201,7 @@ public class HomePage extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("sommAttivi", sb.toString());
                 editor.commit();
+                dialog.dismiss();
             }
 
             @Override
