@@ -37,6 +37,10 @@ public class ActivityConstants {
     public static final String INTENT_NEW_OBJECT = "newObject";
     public static final String INTENT_HOME ="home";
     public static final String INTENT_SOMMINISTRATORI = "somministratori";
+    public static final String INTENT_GUIDE_OR_PDF ="guideOrPDF";
+    public static final String INTENT_EMAIL= "email";
+    public static final String INTENT_FROM_HOME ="fromHome";
+    public static final String INTENT_LINK_VIDEO = "linkVideo";
 
 
 
