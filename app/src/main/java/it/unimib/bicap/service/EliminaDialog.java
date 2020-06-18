@@ -31,6 +31,7 @@ import java.util.Map;
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
 import it.unimib.bicap.ExampleItem;
+import it.unimib.bicap.GestioneSomministratore;
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 
@@ -236,9 +237,9 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                             for(ExampleItem item : exampleListNew){
                                                 map.put(item.getTextEmail(), item.getTextNome());
                                             }
-                                            Intent intentPazzo = new Intent(activityDelSomm, EliminaSomministratore.class);
-                                            intentPazzo.putExtra("pazzi", map);
-                                            intentPazzo.putExtra(ActivityConstants.INTENT_HOME, false);
+                                            Intent intentPazzo = new Intent(activityDelSomm, GestioneSomministratore.class);
+//                                            intentPazzo.putExtra("pazzi", map);
+//                                            intentPazzo.putExtra(ActivityConstants.INTENT_HOME, false);
                                             startActivity(intentPazzo);
                                             activityDelSomm.finish();
                                             /*progettiAdapterSommRV.setExampleList(exampleListNew);

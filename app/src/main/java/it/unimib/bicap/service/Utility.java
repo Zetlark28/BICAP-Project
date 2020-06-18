@@ -2,9 +2,11 @@ package it.unimib.bicap.service;
 
 
 // TODO: Aggiungere i controlli sui metodi assincroni
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,7 +45,7 @@ public class Utility {
      private static final String QUESTIONNAIRE_FILE_PATH_DIR_LOCAL = "file:///data/data/it.unimib.bicap/files/progetti.json";
      private static final String FILE_NAME =  "progetti.json";
      private static final String FIREBASE_PATH_PROJECT = "Progetti/progetti.json";
-     private static final int ONE_MB = 1024 * 1024;
+     private static final int ONE_MB = 50 * 1024 * 1024;
      private StorageReference mStorageRef;
      private static String keyValue;
 
@@ -152,8 +154,10 @@ public class Utility {
 
 
         //scarica il pdf da firebase in locale
-        public static boolean downloadPDF(String link) {
+        public static boolean downloadPDF(String link, ProgressDialog progressDialog) {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(link);
+
+
 
             mStorageRef.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                 @Override
@@ -177,6 +181,7 @@ public class Utility {
                     // Handle any errors
                 }
             });
+            progressDialog.dismiss();
             return true;
         }
 

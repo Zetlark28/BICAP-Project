@@ -1,6 +1,7 @@
 package it.unimib.bicap.service;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -35,6 +36,7 @@ public class Intermediate extends AppCompatActivity {
     private static final String TAG = "Intermediate";
     private ActivityIntermediateBinding binding;
     private JSONArray arrayPassi;
+    public ProgressDialog progressDialog;
     GetterInfo getterInfo = new GetterLocal();
     DBManager dbManager;
 
@@ -120,12 +122,24 @@ public class Intermediate extends AppCompatActivity {
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto video.\n" +
                                              "Ricordati che, una volta finito di visionare il video, verrai automaticamente reindirizzato al passo successivo dopo che il video finisce.\"");
         } else if (tipo.equals("pdf")) {
+            Log.d("pdf", "kek");
             binding.tvTitolo.setText("Stai per visualizzare un PDF");
             binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto PDF.\n" +
-                                             "Ricordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante 'avanti' in alto a destra della toolbar\"");
-            boolean finito = Utility.downloadPDF(link);
+                    "Ricordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante 'avanti' in alto a destra della toolbar\"");
+
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Caricamento...");
+            progressDialog.setProgress(10);
+            progressDialog.setMax(100);
+            progressDialog.setMessage("Attendi!");
+            progressDialog.show();
+            boolean finito = Utility.downloadPDF(link, progressDialog);
+
+
+
             while (!finito){
             }
+            //progressDialog.dismiss();
         } else if (tipo.equals("questionario")) {
             binding.tvTitolo.setText("Stai per svolgere un questionario");
             binding.tvDettaglioPasso.setText("In questo passo stai per rispondere al questionario.\n" +
