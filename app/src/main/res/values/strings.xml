@@ -42,4 +42,23 @@
     <string name="imNextStep">PROSSIMO \nPASSO</string>
     <string name="imSaveProject">SALVA PROGETTO</string>
     <string name="password_dimenticata"><u>Password dimenticata?</u></string>
+    <string name="intermediate_tvTitoloNonIdoneo">Non sei idoneo al progetto</string>
+    <string name="intermediate_tvDettaglioPassoNonIdoneo">Mi dispiace non sei idoneo al progetto, verrai reindirizzato alla homepage.</string>
+    <string name="intermediate_btnAvantiNonIdoneo">Torna alla homepage</string>
+    <string name="intermediate_tvTitoloVideo">Stai per visualizzare un video</string>
+    <string name="intermediate_tvDettaglioPassoVideo">In questo passo stai per visualizzare un contenuto video.\n
+        Ricordati che, una volta finito di visionare il video, verrai automaticamente reindirizzato al passo successivo dopo che il video finisce.</string>
+    <string name="intermediate_tvDettaglioPDF">In questo passo stai per visualizzare un contenuto PDF.\n
+        Ricordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante \'avanti\' in alto a destra della toolbar</string>
+    <string name="intermediate_tvTitoloPDF">Stai per visualizzare un PDF</string>
+    <string name="intermediate_tvTitoloQuestionario">Stai per svolgere un questionario</string>
+    <string name="intermediate_tvDettaglioPassoQuestionario">In questo passo stai per rispondere al questionario.\n
+        Ricordati che, se non terminerai il questionario quest\'ultimo verrà inserito nella sezione \'survey sospesi\'.\n
+        Negli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.</string>
+    <string name="intermediate_dialogTitle">Torna alla Homepage</string>
+    <string name="intermediate_dialogMessage">Sicuro di voler tornare indietro?\n
+        Ricordati che, se non terminerai il questionario quest\'ultimo verrà inserito nella sezione \'survey sospesi\'.\n
+        Negli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.</string>
+    <string name="dialog_positive">Si</string>
+    <string name="dialog_negative">No</string>
 </resources>
