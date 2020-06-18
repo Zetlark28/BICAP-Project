@@ -37,7 +37,6 @@ public class PresentazioneProgetto extends AppCompatActivity {
         setContentView(v);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //JSONObject obj = (JSONObject) getIntent().getSerializableExtra("obj");
         JSONObject obj = null;
         try {
             obj = new JSONObject(getIntent().getStringExtra(ActivityConstants.INTENT_PROGETTO));
@@ -80,53 +79,6 @@ public class PresentazioneProgetto extends AppCompatActivity {
                 intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                 intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, modalita);
                 startActivity(intentIntermediate);
-
-
-
-                /*JSONObject passo = getterInfo.getPasso(getterInfo.getPassi(finalObj), 0);
-                Log.d(TAG, "passo: " + passo.toString());
-                String tipo = "";
-                String tipo1 = "";
-                try {
-                    tipo = getterInfo.getTipo(passo);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
-
-                tipo = "pdf";
-
-                if (tipo.equals("video")){
-
-
-
-                    // TODO: Qui sotto ci andrà il link parsato del video
-                    *//*Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
-                    intentVideo.putExtra("linkVideo", "https://firebasestorage.googleapis.com/v0/b/videoupload-c8474.appspot.com/o/Video%2Fvideoplayback.mp4?alt=media&token=89437c18-758c-4482-9fe3-23698d3c277f");
-                    startActivity(intentVideo);*//*
-
-                } else if (tipo.equals("pdf")){
-
-                    // TODO: Qui sotto ci andrà il link parsato del PDF
-                    boolean finito = Utility.downloadPDF("https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Documenti%2FFile-6?alt=media&token=12840198-bfd8-4fa2-aa4b-0ab871ba0bb3");
-                    while (!finito){
-                    }
-                   // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
-                    Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
-                    intentPDF.putExtra("guideOrPDF", "PDF");
-                    intentPDF.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
-                    startActivity(intentPDF);
-
-
-                } else if (tipo.equals("questionario")){
-                    // TODO: Aggiungere il reindirizzamento all'activity web view
-                    tipo1 = getterInfo.getLink(passo);
-                    Intent intentWeb = new Intent(getApplicationContext(), Survey.class);
-                    intentWeb.putExtra("web", tipo1);
-                    startActivity(intentWeb);
-                    finish();
-                }*/
             }
         });
     }

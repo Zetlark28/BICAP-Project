@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
 public class HomePage extends AppCompatActivity {
@@ -162,7 +163,7 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
-                intentLogInProf.putExtra("fromHome", true);
+                intentLogInProf.putExtra(ActivityConstants.INTENT_FROM_HOME, true);
                 instance.finish();
                 startActivity(intentLogInProf);
             }

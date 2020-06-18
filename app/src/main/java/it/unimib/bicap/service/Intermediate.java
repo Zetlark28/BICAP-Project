@@ -15,26 +15,23 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.unimib.bicap.GrazieScreen;
 import it.unimib.bicap.HomePage;
-import it.unimib.bicap.ListaProgetti;
 import it.unimib.bicap.R;
 import it.unimib.bicap.Survey;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
 import it.unimib.bicap.db.DBManager;
+import it.unimib.bicap.exception.IntermediateException;
 
 public class Intermediate extends AppCompatActivity {
 
     private static final String TAG = "Intermediate";
-    private ActivityIntermediateBinding binding;
     private JSONArray arrayPassi;
     public ProgressDialog progressDialog;
     GetterInfo getterInfo = new GetterLocal();
@@ -43,16 +40,24 @@ public class Intermediate extends AppCompatActivity {
     @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
-        binding = ActivityIntermediateBinding.inflate(getLayoutInflater());
+        it.unimib.bicap.databinding.ActivityIntermediateBinding binding = ActivityIntermediateBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         final String passi = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PASSI);
         final String nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
         final String idProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_ID_PROGETTO);
+
+        if(passi == null){
+            throw IntermediateException.INTERMEDIATE_PASSI_NULL;
+        }else if(nomeProgetto == null){
+            throw IntermediateException.INTERMEDIATE_NOME_PROGETTO_NULL;
+        }else if(idProgetto == null){
+            throw IntermediateException.INTERMEDIATE_ID_PROGETTO_NULL;
+        }
 
         try {
             arrayPassi = new JSONArray(passi);
@@ -69,18 +74,19 @@ public class Intermediate extends AppCompatActivity {
         });
 
         String modalita = getIntent().getStringExtra(ActivityConstants.INTENT_MODALITA);
+        if(modalita == null){
+            throw IntermediateException.INTERMEDIATE_MODALITA_NULL;
+        }
         final JSONObject passo;
         String tipo = "";
         String link = "";
-        Integer nPasso=0;
+        int nPasso=0;
 
         dbManager = new DBManager(getApplicationContext());
         if(modalita.equals("daTerminare")){
             Cursor crs = dbManager.selectNPasso(Integer.parseInt(idProgetto));
             int columnIndex = crs.getColumnIndex(DBConstants.FIELD_N_PASSO);
-            Log.d("cursor", crs.toString());
             crs.moveToFirst();
-            Log.d("cursor2", crs.toString());
             nPasso = crs.getInt(columnIndex);
             try {
                 passo = arrayPassi.getJSONObject(nPasso);
@@ -114,18 +120,16 @@ public class Intermediate extends AppCompatActivity {
             Intent intentFine = new Intent(getApplicationContext(), GrazieScreen.class);
             startActivity(intentFine);
         }else if(modalita.equals("Thanos")){
-            binding.tvTitolo.setText("Non sei idoneo al progetto");
-            binding.tvDettaglioPasso.setText("Mi dispiace non sei idoneo al progetto, verrai reindirizzato alla homepage.");
-            binding.btnAvanti.setText("Torna alla homepage");
+            binding.tvTitolo.setText(R.string.intermediate_tvTitolo_nonIdoneo);
+            binding.tvDettaglioPasso.setText(R.string.intermediate_tvDettaglioPasso_nonIdoneo);
+            binding.btnAvanti.setText(R.string.intermediate_btnAvanti_nonIdoneo);
         }else if (tipo.equals("video")) {
-            binding.tvTitolo.setText("Stai per visualizzare un video");
-            binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto video.\n" +
-                                             "Ricordati che, una volta finito di visionare il video, verrai automaticamente reindirizzato al passo successivo dopo che il video finisce.\"");
+            binding.tvTitolo.setText(R.string.intermediate_tvTitolo_video);
+            binding.tvDettaglioPasso.setText(getString(R.string.intermediate_tvDettaglioPasso_video));
         } else if (tipo.equals("pdf")) {
             Log.d("pdf", "kek");
-            binding.tvTitolo.setText("Stai per visualizzare un PDF");
-            binding.tvDettaglioPasso.setText("In questo passo stai per visualizzare un contenuto PDF.\n" +
-                    "Ricordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante 'avanti' in alto a destra della toolbar\"");
+            binding.tvTitolo.setText(R.string.intermediate_tvTitolo_PDF);
+            binding.tvDettaglioPasso.setText(R.string.intermediate_tvDettaglio_PDF);
 
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Caricamento...");
@@ -135,16 +139,10 @@ public class Intermediate extends AppCompatActivity {
             progressDialog.show();
             boolean finito = Utility.downloadPDF(link, progressDialog);
 
-
-
-            while (!finito){
-            }
             //progressDialog.dismiss();
         } else if (tipo.equals("questionario")) {
-            binding.tvTitolo.setText("Stai per svolgere un questionario");
-            binding.tvDettaglioPasso.setText("In questo passo stai per rispondere al questionario.\n" +
-                                             "Ricordati che, se non terminerai il questionario quest'ultimo verrà inserito nella sezione 'survey sospesi'.\n" +
-                                             "Negli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.\"");
+            binding.tvTitolo.setText(R.string.intermediate_tvTitolo_questionario);
+            binding.tvDettaglioPasso.setText(getString(R.string.intermediate_tvDettaglioPasso_questionario));
         }
 
         final String finalLink = link;
@@ -155,6 +153,7 @@ public class Intermediate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //TODO: CAMBIARE IL THANOS
                 if(modalitaFinal.equals("Thanos")){
                     Intent tornaHomePage = new Intent(getApplicationContext(), HomePage.class);
                     startActivity(tornaHomePage);
@@ -162,9 +161,8 @@ public class Intermediate extends AppCompatActivity {
                     finish();
                 }else if (finalTipo.equals("video")){
 
-                    // TODO: Qui sotto ci andrà il link parsato del video
                     Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
-                    intentVideo.putExtra("linkVideo", finalLink);
+                    intentVideo.putExtra(ActivityConstants.INTENT_LINK_VIDEO, finalLink);
                     intentVideo.putExtra(ActivityConstants.INTENT_ID_PROGETTO,idProgetto);
                     intentVideo.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     intentVideo.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
@@ -178,7 +176,7 @@ public class Intermediate extends AppCompatActivity {
 
                     // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
                     Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
-                    intentPDF.putExtra("guideOrPDF", "PDF");
+                    intentPDF.putExtra(ActivityConstants.INTENT_GUIDE_OR_PDF, "PDF");
                     intentPDF.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     intentPDF.putExtra(ActivityConstants.INTENT_ID_PROGETTO,idProgetto);
                     intentPDF.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
@@ -187,7 +185,6 @@ public class Intermediate extends AppCompatActivity {
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
                 } else if (finalTipo.equals("questionario")){
-                    // TODO: Aggiungere il reindirizzamento all'activity web view
                     Intent intentWeb = new Intent(getApplicationContext(), Survey.class);
                     intentWeb.putExtra(ActivityConstants.INTENT_WEB, finalLink);
                     intentWeb.putExtra(ActivityConstants.INTENT_ID_PROGETTO,idProgetto);
@@ -203,9 +200,9 @@ public class Intermediate extends AppCompatActivity {
     }
     public void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Torna alla Homepage");
-        builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.intermediate_dialogTitle);
+        builder.setMessage(getString(R.string.intermediate_dialogMessage));
+        builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePage.class);
@@ -214,7 +211,7 @@ public class Intermediate extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 

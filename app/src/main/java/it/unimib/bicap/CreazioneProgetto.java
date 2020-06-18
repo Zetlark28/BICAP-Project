@@ -36,7 +36,7 @@ public class CreazioneProgetto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        progettiJSON = getIntent().getStringExtra("progetti");
+        progettiJSON = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PROGETTI);
         binding = ActivityCreazioneProgettoBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -107,8 +107,8 @@ public class CreazioneProgetto extends AppCompatActivity {
                     JSONObject progetto = jsonBuilder.creaProgetto(nomeProgetto,descrizioneProgetto,autore);
                     Intent intentDettaglioProgetto = new Intent(getApplicationContext(), DettaglioQuestionario.class);
                     Log.d(TAG, progetto.toString());
-                    intentDettaglioProgetto.putExtra("progetto", progetto.toString());
-                    intentDettaglioProgetto.putExtra("progetti", progettiJSON);
+                    intentDettaglioProgetto.putExtra(ActivityConstants.INTENT_PROGETTO, progetto.toString());
+                    intentDettaglioProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI, progettiJSON);
                     intentDettaglioProgetto.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentDettaglioProgetto);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);

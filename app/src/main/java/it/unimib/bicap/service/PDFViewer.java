@@ -58,7 +58,7 @@ public class PDFViewer extends AppCompatActivity {
         setSupportActionBar(mTopToolbar);
 
         pdfView = binding.pdfView;
-        guideOrPDF = getIntent().getStringExtra("guideOrPDF");
+        guideOrPDF = getIntent().getStringExtra(ActivityConstants.INTENT_GUIDE_OR_PDF);
         idProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_ID_PROGETTO);
         passi = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PASSI);
         nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
@@ -67,7 +67,7 @@ public class PDFViewer extends AppCompatActivity {
         toolbar.setTitle(nomeProgetto);
         setSupportActionBar(toolbar);
         // TODO: passo qui una stringa, se è PDF vuol dire che devo aprire il documento PDF con link, viceversa apro la guida
-        if (guideOrPDF.equals("PDF")) {
+        if (guideOrPDF!=null && guideOrPDF.equals("PDF")) {
             openPDF();
         } else {
             openGuida();

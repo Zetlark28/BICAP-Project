@@ -73,9 +73,9 @@ public class CreazioneSomministratore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mAuth = FirebaseAuth.getInstance();
-                String email = getIntent().getStringExtra("email");
+                String email = getIntent().getStringExtra(ActivityConstants.INTENT_EMAIL);
                 Intent intentHomepage = new Intent(getApplicationContext(), HomePageSomministratore.class);
-                intentHomepage.putExtra("email", email);
+                intentHomepage.putExtra(ActivityConstants.INTENT_EMAIL, email);
                 startActivity(intentHomepage);
                 finish();
             }

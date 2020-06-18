@@ -79,7 +79,7 @@ public class ExoPlayerStream extends AppCompatActivity {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
             // TODO: Passare il link del video ed assegnarlo alla seguente variabile
-            String linkVideo = getIntent().getStringExtra("linkVideo");
+            String linkVideo = getIntent().getStringExtra(ActivityConstants.INTENT_LINK_VIDEO);
             // Prova di video
             //linkVideo = "https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Video%2FFile-49?alt=media&token=f049e892-e69b-4360-b017-1c792a8ab431";
             videoUri = Uri.parse(linkVideo);

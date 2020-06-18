@@ -69,7 +69,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         firstTime = true;
         Utility.getKeyValue();
         FirebaseApp.initializeApp(this);
-        progettiJSON = getIntent().getStringExtra("progetti");
+        progettiJSON = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PROGETTI);
         String nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
         binding = ActivityDettaglioQuestionarioBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -93,7 +93,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
         toolbar.setTitle(getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO));
 
-        final String progettoString = getIntent().getStringExtra("progetto");
+        final String progettoString = getIntent().getStringExtra(ActivityConstants.INTENT_PROGETTO);
         try {
             assert progettoString != null;
             progetto = new JSONObject(progettoString);

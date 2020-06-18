@@ -52,7 +52,7 @@ public class LoginProfessore extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         
-        fromHome = getIntent().getExtras().getBoolean("fromHome");
+        fromHome = getIntent().getExtras().getBoolean(ActivityConstants.INTENT_FROM_HOME);
 
         final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
         esisteMail = sharedPref.getBoolean("esisteMail", false);
@@ -112,8 +112,8 @@ public class LoginProfessore extends AppCompatActivity {
 
                     Intent intentLogged = new Intent(this, HomePageSomministratore.class);
                     //intentLogged.putExtra("Email", email);
-                    intentLogged.putExtra("fromHome", fromHome);
-                    intentLogged.putExtra("email", email);
+                    intentLogged.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
+                    intentLogged.putExtra(ActivityConstants.INTENT_EMAIL, email);
                     startActivity(intentLogged);
                     finish();
                 } else {
