@@ -362,14 +362,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
         if (requestCode == CODE_VIDEO && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
             this.type = "Video";
-             Toast.makeText(getApplicationContext(), "Hai selezionato un video", Toast.LENGTH_SHORT).show();
+             Snackbar.make(findViewById(android.R.id.content), "Hai selezionato un video", Snackbar.LENGTH_SHORT).show();
         } else if (requestCode == CODE_PDF && resultCode == RESULT_OK && data != null && data.getData() != null) {
             this.filePath = data.getData();
-            Log.d("oggetto", filePath.toString());
+            //Log.d("oggetto", filePath.toString());
             this.type = "PDF";
-            Toast.makeText(getApplicationContext(), "Hai selezionato un file PDF", Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Hai selezionato un file PDF", Snackbar.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getApplicationContext(), "Non hai selezionato nulla", Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), "Non hai selezionato nulla", Snackbar.LENGTH_SHORT).show();
         }
     }
 
