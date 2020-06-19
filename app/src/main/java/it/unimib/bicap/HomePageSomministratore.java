@@ -155,7 +155,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             public void onClick(View v) {
                 if (progettiAutore != null) {
                     Intent intentCreaProgetto = new Intent(getApplicationContext(), CreazioneProgetto.class);
-                    intentCreaProgetto.putExtra("progetti", progettiDaSelezionare.toString());
+                    intentCreaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI, progettiDaSelezionare.toString());
                     startActivity(intentCreaProgetto);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 } else {

@@ -2,11 +2,11 @@ package it.unimib.bicap.service;
 
 
 // TODO: Aggiungere i controlli sui metodi assincroni
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,16 +19,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,6 +34,7 @@ import java.io.OutputStreamWriter;
 import it.unimib.bicap.DettaglioQuestionario;
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
+import it.unimib.bicap.exception.UtilityException;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -53,8 +51,8 @@ public class Utility {
      //carica il file su firebase
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
          Log.d("oggetto", "Utility:Write");
-         Context context = null;
-         Context baseContext = null;
+         Context context;
+         Context baseContext;
          Boolean writing = Boolean.FALSE;
          //in base all'activity passata inizializzo le variabili
          if(activityInstance instanceof DettaglioQuestionario) {
@@ -68,6 +66,8 @@ public class Utility {
              context = activity.getApplicationContext();
              baseContext = activity.getBaseContext();
              Log.d("oggetto", "2");
+         }else{
+             throw UtilityException.UTILITY_ACTIVITY_CONTEXT_UNAUTHORIZED;
          }
          final Context finalContext = context;
          final Context finalBaseContext = baseContext;
@@ -92,17 +92,18 @@ public class Utility {
         DatabaseReference myRef = database.getReference("chiave");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String value = dataSnapshot.child("valoreChiave").getValue().toString();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Object key = dataSnapshot.child("valoreChiave").getValue();
+                if(key==null)
+                    throw UtilityException.UTILITY_FIREBASE_KEY_NOT_FOUND;
+                String value = key.toString();
                 keyValue = value;
                 Log.d("KeyValue", "Value is: " + value);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.d("Error", "Failed to read value.", error.toException());
+            public void onCancelled(@NonNull DatabaseError error) {
+                throw UtilityException.UTILITY_FIREBASE_DB_READ_VALUE_FAIL;
             }
         });
     }
@@ -119,7 +120,6 @@ public class Utility {
 
     //carica un file contenuto nella memoria del telefono su firebase
     public static void uploadFile(final Uri filepath, final String directory, final Context context, final ActivityDettaglioQuestionarioBinding binding) {
-
         FirebaseApp.initializeApp(context);
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         final StorageReference fileRef = mStorageRef.child(directory);
@@ -139,8 +139,7 @@ public class Utility {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            Toast.makeText(context, "Errore nell'upload", Toast.LENGTH_SHORT).show();
-                            Log.d("oggetto", "Errore nell'upload");
+                            throw UtilityException.UTILITY_FIREBASE_UPLOAD_FAIL;
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -208,7 +207,6 @@ public class Utility {
                             @Override
                             public void onSuccess(Uri uri) {
                                 DettaglioQuestionario.setLinkToJoinJSON(String.valueOf(uri));
-                                Log.d("oggetto", "Upload completato");
                             }
                         });
                     }
@@ -216,37 +214,13 @@ public class Utility {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(context, "Errore nell'upload", Toast.LENGTH_SHORT).show();
-                        Log.d("oggetto", "Errore nell'upload");
+                        throw UtilityException.UTILITY_FIREBASE_UPLOAD_FAIL;
                     }
                 })
                 .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                       //TODO : dialog in corso
                     }
                 });
     }
-
-//    public static JSONObject getProgetti(Context context){
-//        FirebaseApp.initializeApp(context);
-//        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
-//        StorageReference ref = mStorageRef.child("/Progetti/progetti.json");
-//        final JSONObject[] progetti = {null};
-//        ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-//            @Override
-//            public void onSuccess(byte[] bytes) {
-//                String json = null;
-//                try {
-//                    json = new String(bytes, "UTF-8");
-//                    progetti[0] = new JSONObject(json);
-//                } catch (JSONException ex) {
-//                    ex.printStackTrace();
-//                } catch (UnsupportedEncodingException ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//        });
-//        return progetti[0];
-//    }
 }
