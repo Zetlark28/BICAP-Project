@@ -25,7 +25,7 @@ import java.util.List;
 
 import it.unimib.bicap.activity.HomePageSomministratore;
 import it.unimib.bicap.R;
-import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
+import it.unimib.bicap.adapter.EliminaAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
 import it.unimib.bicap.exception.EliminaProgettiException;
@@ -37,7 +37,7 @@ public class EliminaProgetti extends AppCompatActivity {
     private static final String TAG = "EliminaProgetti";
     private static JSONObject progetti;
     private static JSONArray progettiAutore;
-    ProgettiDaEliminareAdapterRV progettiAdapter;
+    EliminaAdapterRV progettiAdapter;
     GetterInfo getterInfo = new GetterLocal();
 
     public static void setProgetti(JSONObject progetti) {
@@ -93,10 +93,10 @@ public class EliminaProgetti extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        List <ExampleItem> exampleList = new ArrayList<>();
+        List <ExampleItem> exampleLista = new ArrayList<>();
         for (int i = 0;i<progettiAutore.length();i++){
             try {
-                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progettiAutore.getJSONObject(i)), getterInfo.getDescrizione(progettiAutore.getJSONObject(i))));
+                exampleLista.add(new ExampleItem(getterInfo.getNomeProgetto(progettiAutore.getJSONObject(i)), getterInfo.getDescrizione(progettiAutore.getJSONObject(i))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -104,7 +104,7 @@ public class EliminaProgetti extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-        progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), progettiAutore, exampleList, progetti ,this);
+        progettiAdapter = new EliminaAdapterRV(getApplicationContext(), progettiAutore, exampleLista, progetti ,this);
         binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
 
     }

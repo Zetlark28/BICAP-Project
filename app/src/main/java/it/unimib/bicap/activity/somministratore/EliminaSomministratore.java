@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.unimib.bicap.R;
-import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
+import it.unimib.bicap.adapter.EliminaAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaSomministratoreBinding;
 
@@ -33,7 +33,7 @@ public class EliminaSomministratore extends AppCompatActivity {
 
     private ActivityEliminaSomministratoreBinding binding;
     private static final String TAG = "EliminaSomministratore";
-    ProgettiDaEliminareAdapterRV progettiAdapter;
+    EliminaAdapterRV progettiAdapter;
     private List <ExampleItem> exampleList = new ArrayList();
     SearchView searchView;
 
@@ -89,7 +89,7 @@ public class EliminaSomministratore extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvSomministratoreDaEliminare.setLayoutManager(linearLayoutManager);
         //progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, emails, this);
-        progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), exampleList, this);
+        progettiAdapter = new EliminaAdapterRV(getApplicationContext(), exampleList, this);
         binding.rvSomministratoreDaEliminare.setAdapter(progettiAdapter);
 
         showAlertDialog(this, "ciao","mamma", true);
