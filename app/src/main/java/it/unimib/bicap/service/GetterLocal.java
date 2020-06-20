@@ -145,21 +145,6 @@ public class GetterLocal implements GetterInfo {
         return null;
     }
 
-    public boolean getCompletato (JSONObject passo){
-        try {
-            int bit = passo.getInt("completato");
-
-            if (bit == 1) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public List<String> getNomiSomministratori(JSONArray listaProgetti){
         List<String> result = new ArrayList<>();
         for(int i = 0; i<listaProgetti.length(); i++){

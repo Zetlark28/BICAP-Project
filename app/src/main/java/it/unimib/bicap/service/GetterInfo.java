@@ -16,14 +16,9 @@ public interface GetterInfo {
     JSONObject getPasso (JSONArray passi,int index);
     int getNPassi(JSONArray passi);
     String getTipo(JSONObject progetto) throws JSONException;
-
     JSONArray getlistaProgetti(String stringProgetti);
-
     String getLink (JSONObject progetto);
-
     List<String> getNomiProgetti(JSONArray listaProgetti);
-
     List<String> getNomiSomministratori (JSONArray listaSomministratori);
-
     List<String> getDescrizioniProgetti(JSONArray listaProgetti);
 }
