@@ -82,10 +82,11 @@ public class EliminaProgetti extends AppCompatActivity {
             } else {
                 String progettiAutoreString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST_AUTORE);
                 String progettiString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST_TOT);
-                if(progettiString != null)
+                if(progettiString == null)
                     throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_NULL;
                 if(progettiAutoreString==null)
                     throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_AUTORE_NULL;
+                progetti= new JSONObject(progettiString);
                 progettiAutore = new JSONArray(progettiAutoreString);
             }
         } catch (JSONException e) {
