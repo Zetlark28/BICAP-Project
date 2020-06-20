@@ -200,7 +200,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     final String autore = exampleList.get(index).getTextNome();
                                     final String email = exampleList.get(index).getTextEmail();
                                     final List<ExampleItem> exampleListNew = new ArrayList<>();
-                                    myRef.addValueEventListener(new ValueEventListener() {
+                                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             for (DataSnapshot d : dataSnapshot.getChildren()){
@@ -212,7 +212,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                                         map.put("attivo", "false");
                                                         d.getRef().updateChildren(map);
                                                     } else {
-                                                        if (d.child("attivo").getValue().equals("true") && !d.child("email").getValue().equals("admin@admin.com")) {
+                                                        if (d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && !d.child("email").getValue().equals("admin@admin.com")) {
                                                             /*String autore1 = d.child("autore").getValue().toString();
                                                             Log.d(TAG, "autore New: " + autore1);
                                                             String email1 = d.child("email").getValue().toString();

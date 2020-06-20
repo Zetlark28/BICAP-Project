@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.SyncStateContract;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +33,8 @@ public class LaunchScreen extends AppCompatActivity {
         setContentView(R.layout.activity_launch_screen);
         //TODO : download progetti
         //TODO: salva in shared preferences
+
+        SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         StorageReference ref = mStorageRef.child(ActivityConstants.FIREBASE_STORAGE_CHILD_PROGETTI);

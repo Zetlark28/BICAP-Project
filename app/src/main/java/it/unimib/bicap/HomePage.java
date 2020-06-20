@@ -31,8 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
@@ -108,7 +106,7 @@ public class HomePage extends AppCompatActivity {
             //final String idUser = currentFirebaseUser.getUid();
             //final CountDownLatch latch = new CountDownLatch(1);
             // Read from the database
-            myRef.addValueEventListener(new ValueEventListener() {
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // This method is called once with the initial value and again
@@ -184,7 +182,7 @@ public class HomePage extends AppCompatActivity {
 
     private boolean leggiSomministratori() {
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<String> sommAttivi = new ArrayList<>();

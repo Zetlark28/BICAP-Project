@@ -2,14 +2,15 @@ package it.unimib.bicap;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,7 +22,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.transition.MaterialContainerTransform;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
@@ -45,6 +45,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
     private static final String TAG = "CreazioneSomministratore";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
+    private SharedPreferences sharedPref;
     private FirebaseAuth mAuth1;
     private FirebaseAuth mAuth2;
     private FirebaseUser user;
@@ -52,6 +53,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
     private String password1;
     private ProgressDialog dialog;
     private String autore1;
+    private SharedPreferences.Editor editor;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -65,11 +67,15 @@ public class CreazioneSomministratore extends AppCompatActivity {
 
         dialog = new ProgressDialog(this);
 
+        sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+
+        editor = sharedPref.edit();
+
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(" ");
         toolbar.inflateMenu(R.menu.main_menu);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        /*toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mAuth = FirebaseAuth.getInstance();
@@ -78,6 +84,16 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 intentHomepage.putExtra(ActivityConstants.INTENT_EMAIL, email);
                 startActivity(intentHomepage);
                 finish();
+            }
+        });*/
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCreazioneSomm = new Intent(getApplicationContext(), GestioneSomministratore.class);
+                startActivity(intentCreazioneSomm);
+                finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             }
         });
 
@@ -101,17 +117,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
 
         //Log.d(TAG, password);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentCreazioneSomm = new Intent(getApplicationContext(), GestioneSomministratore.class);
-                startActivity(intentCreazioneSomm);
-                finish();
-                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-            }
-        });
-
-
         binding.btnRegistraSomm.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("LongLogTag")
             @Override
@@ -119,6 +124,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 String email = binding.etEmailSomm.getText().toString();
                 if (binding.switchButton.isChecked()) {
                     checkMailSecond(email);
+
                 } else {
                     String autore = binding.etNomeSomm.getText().toString();
                     Log.d(TAG, "premo il bottone");
@@ -137,6 +143,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                     }
                 }
             }
+
         });
 
         binding.switchButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -155,7 +162,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
         }
 
     private void checkMailSecond(final String email) {
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("LongLogTag")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -291,32 +298,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 }
                 Log.d(TAG, "variabile metodo: " + variabile);
                 if (variabile){
-                    myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @SuppressLint("LongLogTag")
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
-                            HashMap<String, Object> map = new HashMap<>();
-                            for (DataSnapshot d : dataSnapshot.getChildren()){
-                                if (d.child("email").getValue().equals(email)) {
-                                    Log.d(TAG, "trovato  utente");
-                                    map.put("attivo", "true");
-                                    d.getRef().updateChildren(map);
-                                    //d.getRef().child("attivo").setValue("true");
-                                    Log.d(TAG, "attivo? " + d.child("attivo").getValue().toString());
-                                }
-                            }
-                            //String value = dataSnapshot.getValue(String.class);
-                            //Log.d(TAG, "Value is: " + value);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            //Log.w(TAG, "Failed to read value.", error.toException());
-                        }
-                    });
+                    dialog.dismiss();
+                    showDialogThird();
                 }
                 else{
                     mAuth2.createUserWithEmailAndPassword(email, password)
@@ -332,7 +315,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
                                         myRef.child(user.getUid()).child("autore").setValue(autore);
                                         myRef.child(user.getUid()).child("email").setValue(email);
                                         myRef.child(user.getUid()).child("attivo").setValue("true");
-                                        //mFirebaseAuth2.updateCurrentUser(mAuth.getCurrentUser());
                                         dialog.dismiss();
                                         showDialog();
                                         mAuth2.signOut();
@@ -388,6 +370,20 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 startActivity(HomePageSomministratoreRicarica);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showDialogThird() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Attenzione");
+        builder.setMessage("Stai cercando di creare un utente già presente nell'app");
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
         AlertDialog dialog = builder.create();

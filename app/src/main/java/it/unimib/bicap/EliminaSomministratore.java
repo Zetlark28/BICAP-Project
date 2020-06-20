@@ -3,6 +3,7 @@ package it.unimib.bicap;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -37,6 +38,7 @@ public class EliminaSomministratore extends AppCompatActivity {
     ProgettiDaEliminareAdapterRV progettiAdapter;
     private List <ExampleItem> exampleList = new ArrayList();
     SearchView searchView;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

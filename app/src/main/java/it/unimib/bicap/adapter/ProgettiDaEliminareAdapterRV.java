@@ -1,7 +1,10 @@
 package it.unimib.bicap.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,13 +22,16 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
 import it.unimib.bicap.ExampleItem;
 import it.unimib.bicap.R;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.service.EliminaDialog;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
@@ -54,6 +60,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
     private static List<ExampleItem> exampleList;
     private static List<ExampleItem> exampleListFull;
     private boolean ricerca;
+    private SharedPreferences.Editor editor;
 
     @SuppressLint("LongLogTag")
     @Override
@@ -183,7 +190,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
                 });
         } else if (holder instanceof  MyViewHolderSomm){
             MyViewHolderSomm vaultItemHolderSomm = (MyViewHolderSomm) holder;
-            ExampleItem currentItem = exampleList.get(position);
+            final ExampleItem currentItem = exampleList.get(position);
             //Log.d(TAG, "email1: " + emailSommLista.toString());
             //key = emailSommLista.get(position);
             //Log.d(TAG, "email: " + emailSommLista.get(position));
@@ -196,17 +203,31 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
             vaultItemHolderSomm.elimina.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ExampleItem currentItem = exampleList.get(position);
-                    EliminaDialog eliminaDialog = null;
-                    String key = currentItem.getTextEmail();
+                    /*if (sommModificati != null && sommModificati.contains(currentItem.getTextEmail())){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                        builder.setTitle("Attenzione");
+                        builder.setMessage("Per eliminare un somministratore precedentemente riattivato o aggiunto, si prega di riavviare l'app");
+                        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        AlertDialog dialog = builder.create();
+                        builder.show();
+                    }
+                    else {*/
+                        ExampleItem currentItem = exampleList.get(position);
+                        EliminaDialog eliminaDialog = null;
+                        String key = currentItem.getTextEmail();
                     /*String message = "Sei sicuro di voler eliminare il somministratore: " + nomiSomministratori.get(key
                     ) + "?";*/
-                    String message = "Sei sicuro di voler eliminare il somministratore: " + exampleList.get(position
-                    ).getTextNome() + "?";
-                    eliminaDialog = new EliminaDialog(exampleList, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
-                    eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
+                        String message = "Sei sicuro di voler eliminare il somministratore: " + exampleList.get(position
+                        ).getTextNome() + "?";
+                        eliminaDialog = new EliminaDialog(exampleList, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
+                        eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
+                        }
 
-                    }
             });
         }
     }
