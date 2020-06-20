@@ -1,12 +1,12 @@
-package it.unimib.bicap.activity.somministratore;
+package it.unimib.bicap;
 
 import com.google.android.material.button.MaterialButton;
 
-public class ExampleItem {
+public class ItemSearch {
     private String textNome;
     private String textEmail;
 
-    public ExampleItem(String textNome, String textEmail) {
+    public ItemSearch(String textNome, String textEmail) {
         this.textNome = textNome;
         this.textEmail = textEmail;
     }

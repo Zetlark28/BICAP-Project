@@ -1,4 +1,4 @@
-package it.unimib.bicap.activity;
+package it.unimib.bicap.activity.somministratore;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -36,10 +36,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 
 import it.unimib.bicap.R;
-import it.unimib.bicap.activity.somministratore.CreazioneProgetto;
-import it.unimib.bicap.activity.somministratore.EliminaProgetti;
-import it.unimib.bicap.activity.somministratore.GestioneSomministratore;
-import it.unimib.bicap.activity.somministratore.LoginProfessore;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 

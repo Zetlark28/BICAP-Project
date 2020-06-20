@@ -8,7 +8,6 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import it.unimib.bicap.activity.HomePageSomministratore;
 import it.unimib.bicap.R;
 
 public class CongratulazioniScreen extends AppCompatActivity {

@@ -22,7 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.ItemSearch;
 import it.unimib.bicap.R;
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.db.DBManager;
@@ -42,7 +42,7 @@ public class QuestionariDaFare extends Fragment {
     private JSONArray progettiDaFare;
     private JSONArray progettiDaCercare;
     private String nomeProgetto;
-    private List<ExampleItem> exampleList = new ArrayList();
+    private List<ItemSearch> exampleList = new ArrayList();
     private GetterInfo getterInfo = new GetterLocal();
     private RecyclerView recyclerView;
     private View rootView;
@@ -86,7 +86,7 @@ public class QuestionariDaFare extends Fragment {
 
         for (int i = 0;i<progettiDaFare.length();i++){
             try {
-                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progettiDaFare.getJSONObject(i)), getterInfo.getDescrizione(progettiDaFare.getJSONObject(i))));
+                exampleList.add(new ItemSearch(getterInfo.getNomeProgetto(progettiDaFare.getJSONObject(i)), getterInfo.getDescrizione(progettiDaFare.getJSONObject(i))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

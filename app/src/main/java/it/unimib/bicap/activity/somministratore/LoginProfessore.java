@@ -1,7 +1,10 @@
 package it.unimib.bicap.activity.somministratore;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -28,23 +31,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import it.unimib.bicap.activity.HomePage;
-import it.unimib.bicap.activity.HomePageSomministratore;
 import it.unimib.bicap.R;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityLoginProfessoreBinding;
 
 public class LoginProfessore extends AppCompatActivity {
 
-    private static final String TAG = "LoginProfessore";
+    private static final String TAG = "LoginSomministratore";
     private ActivityLoginProfessoreBinding binding;
     private FirebaseAuth mAuth;
-    private boolean fromHome;
-    private  boolean esisteMail;
-    private List<String> sommAttivi;
+    private boolean daHomepage;
+    private boolean esisteMail;
+    private ProgressDialog dialogCaricamento;
+    FirebaseUser utenteCorrente;
+    private List<String> sommAttivi = new ArrayList<>();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
 
@@ -52,43 +57,60 @@ public class LoginProfessore extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        utenteCorrente = mAuth.getCurrentUser();
         
-        fromHome = getIntent().getExtras().getBoolean(ActivityConstants.INTENT_FROM_HOME);
+        daHomepage = getIntent().getExtras().getBoolean(ActivityConstants.INTENT_FROM_HOME);
 
         final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
-        esisteMail = sharedPref.getBoolean("esisteMail", false);
-        /*while (sharedPref.getString("sommAttivi", null) == null){
 
-        }*/
-        sommAttivi = Arrays.asList(sharedPref.getString("sommAttivi", null).split(","));
+        if (sharedPref.getString("sommAttivi", null) != null) {
+            sommAttivi = Arrays.asList(sharedPref.getString("sommAttivi", null).split(","));
+        }
+
         try {
-            updateUI(currentUser, fromHome, esisteMail);
+            updateUI(utenteCorrente, daHomepage);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateUI(final FirebaseUser currentUser, boolean fromHome, boolean esisteMail) throws InterruptedException {
+    private void updateUI(final FirebaseUser currentUser, boolean fromHome) throws InterruptedException {
         //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         this.getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, 0).edit().remove("autore");
         //final SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-        Log.d(TAG, "esiste Mail: " + esisteMail);
         //esisteMail = sharedPref.getBoolean("esisteMail", false);
         //Log.d(TAG, "currentUser: " + currentUser.getEmail());
         if (currentUser != null) {
-            Log.d(TAG, "entra Utente");
-            Log.d(TAG, "fromHome: " + fromHome);
             String email = currentUser.getEmail();
-            //checkEmailExistsOrNot(email);
-            Log.d(TAG, "email: " + currentUser.getEmail());
-            Log.d(TAG, "mail esiste? " + esisteMail);
-            if (esisteMail) {
+            if (daHomepage) {
+                controllaEmail(email);
+
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String autore = dataSnapshot.child(currentUser.getUid()).child("autore").getValue().toString();
+                        SharedPreferences.Editor editor = getSharedPreferences("author", Context.MODE_PRIVATE).edit();
+                        editor.putString("autore", autore);
+                        editor.commit();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+            } else{
+                Intent intentHome = new Intent(getApplicationContext(), HomePage.class);
+                startActivity(intentHome);
+                finish();
+                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+            }
+            /*if (esisteMail) {
                 Log.d(TAG, "entra email");
                 if (fromHome) {
                     Log.d(TAG, email);
                     Log.d(TAG, "entra fromHome");
-                    // Read from the database
+                    Read from the database
                     myRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,21 +133,13 @@ public class LoginProfessore extends AppCompatActivity {
                             Log.w(TAG, "Failed to read value.", error.toException());
                         }
                     });
-
-                    Intent intentLogged = new Intent(this, HomePageSomministratore.class);
-                    //intentLogged.putExtra("Email", email);
-                    intentLogged.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
-                    intentLogged.putExtra(ActivityConstants.INTENT_EMAIL, email);
-                    startActivity(intentLogged);
-                    finish();
                 } else {
-                    Log.d(TAG,"not from home");
                     Intent intentHome = new Intent(this, HomePage.class);
                     startActivity(intentHome);
                     finish();
                     overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 }
-            }
+            }*/
         }
     }
 
@@ -138,6 +152,11 @@ public class LoginProfessore extends AppCompatActivity {
             View view = binding.getRoot();
             setContentView(view);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+            dialogCaricamento = new ProgressDialog(this);
+            dialogCaricamento.setTitle("Caricamento");
+            dialogCaricamento.setMessage("Attendere...");
+            dialogCaricamento.setCancelable(false);
 
             Toolbar toolbar = findViewById(R.id.toolbar_main);
             toolbar.setTitle("");
@@ -165,8 +184,10 @@ public class LoginProfessore extends AppCompatActivity {
                         Snackbar.make(v, "Attenzione, email non valida", Snackbar.LENGTH_SHORT).show();
                     } else if (password.equals("")) {
                         Snackbar.make(v, "Attenzione, password non valida", Snackbar.LENGTH_SHORT).show();
-                    } else
+                    } else {
+                        dialogCaricamento.show();
                         loginUser(email, password);
+                    }
                 }
             });
 
@@ -189,36 +210,18 @@ public class LoginProfessore extends AppCompatActivity {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.i(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                fromHome = true;
-                                /*boolean esisteMail = false;
-                                int passaUtente = checkMail(email);
-                                while (passaUtente == Integer.parseInt(null)){
-
-                                }
-                                if (passaUtente == 1)
-                                    esisteMail = true;*/
-
-                                if (sommAttivi.contains(email)) {
-                                    Log.d(TAG, "sommAttivi contiente: " + sommAttivi.toString());
-                                    esisteMail = true;
-                                }
-                                else {
-                                    esisteMail = false;
-                                    Log.d(TAG, "sommAttivi non contiene: " + sommAttivi.toString());
-                                }
-
+                                daHomepage = true;
                                 try {
-                                    updateUI(user, fromHome, esisteMail);
+                                    updateUI(user, daHomepage);
+                                    //sommAttivi.add(email);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             } else {
-                                // If sign in fails, display a message to the user.
-                                Log.i(TAG, "createUserWithEmail:failure", task.getException());
-                                esisteMail = false;
+                                dialogCaricamento.dismiss();
                                 Snackbar.make(binding.linearlayout, "Attenzione, credenziali non valide !", Snackbar.LENGTH_SHORT).show();
                                 try {
-                                    updateUI(null, fromHome, esisteMail);
+                                    updateUI(null, daHomepage);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -226,43 +229,6 @@ public class LoginProfessore extends AppCompatActivity {
                         }
                     });
             }
-
-    /*private int checkMail(final String email) {
-        //final boolean[] valore = {false};
-        final int[] continua = new int[0];
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                for (DataSnapshot d : dataSnapshot.getChildren()){
-                    if (continua == null) {
-                        if (d.child("email").getValue().equals(email) && d.child("attivo").getValue().equals("true")) {
-                            // valore[0] = true;
-                            continua[0] = 1;
-                        }
-                    }
-                }
-                if (continua == null)
-                    continua[0] = 2;
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-        while(continua.length == 0){
-
-        }
-
-        //return valore[0];
-        //assert continua != null;
-        return  continua[0];
-    }*/
 
     @Override
     public void startActivity(Intent intent){
@@ -277,6 +243,34 @@ public class LoginProfessore extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
         finish();
 
+    }
+
+    public void controllaEmail (final String email){
+        if (sommAttivi.contains(email)){
+            Intent intentLogged = new Intent(getApplicationContext(), HomePageSomministratore.class);
+            intentLogged.putExtra(ActivityConstants.INTENT_FROM_HOME, daHomepage);
+            intentLogged.putExtra(ActivityConstants.INTENT_EMAIL, email);
+            startActivity(intentLogged);
+            finish();
+        } else{
+            dialogCaricamento.dismiss();
+            mostraDialogUtenteNotAttivo();
+        }
+    }
+
+    private void mostraDialogUtenteNotAttivo() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Attenzzione");
+        builder.setMessage("Il somministratore con email: " + binding.etEmail.getText().toString() + "\n è stato disattivato.");
+        builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        mAuth.signOut();
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
 

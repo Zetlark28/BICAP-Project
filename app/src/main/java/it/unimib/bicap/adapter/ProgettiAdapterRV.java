@@ -21,10 +21,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.ItemSearch;
+import it.unimib.bicap.R;
 import it.unimib.bicap.activity.utente.PresentazioneProgetto;
 import it.unimib.bicap.activity.utente.QuestionariDaFare;
-import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
@@ -41,8 +41,8 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     private QuestionariDaFare questionariDaFare;
     GetterInfo getterInfo = new GetterLocal();
     ProgettiAdapterRV istanzaProgettiAdapter;
-    private static List<ExampleItem> exampleList;
-    private static List<ExampleItem> exampleListFull;
+    private static List<ItemSearch> exampleList;
+    private static List<ItemSearch> exampleListFull;
     private boolean ricerca;
 
     public static void setListaProgetti(JSONArray listaProgetti) {
@@ -63,7 +63,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         }
     }
 
-    public ProgettiAdapterRV(Context context, JSONArray progetti, List<ExampleItem> exampleList, String from){
+    public ProgettiAdapterRV(Context context, JSONArray progetti, List<ItemSearch> exampleList, String from){
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progetti);
         descrizioni = getterInfo.getDescrizioniProgetti(progetti);
@@ -86,7 +86,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     public void onBindViewHolder (final MyViewHolder holder, final int position){
             holder.nome.setText(nomi.get(position));
             holder.descrizione1.setText(descrizioni.get(position));
-            ExampleItem currentItem = exampleList.get(position);
+            ItemSearch currentItem = exampleList.get(position);
             holder.nome.setText(currentItem.getTextNome());
             holder.descrizione1.setText(currentItem.getTextEmail());
             holder.info.setOnClickListener(new View.OnClickListener() {
@@ -131,7 +131,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<ExampleItem> filteredList = new ArrayList<>();
+            List<ItemSearch> filteredList = new ArrayList<>();
 
             if (ricerca) {
 
@@ -140,7 +140,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                 } else {
                     String filterPattern = constraint.toString().toLowerCase().trim();
 
-                    for (ExampleItem item : exampleListFull) {
+                    for (ItemSearch item : exampleListFull) {
                         if (item.getTextNome().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item);
                         }
@@ -160,7 +160,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                 } else {
                     String filterPattern = constraint.toString().toLowerCase().trim();
 
-                    for (ExampleItem item : exampleListFull) {
+                    for (ItemSearch item : exampleListFull) {
                         if (item.getTextNome().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item);
                         }

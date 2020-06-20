@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import it.unimib.bicap.activity.HomePageSomministratore;
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityGestioneSomministratoreBinding;

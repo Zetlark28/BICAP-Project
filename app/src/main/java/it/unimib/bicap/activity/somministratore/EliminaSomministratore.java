@@ -3,6 +3,7 @@ package it.unimib.bicap.activity.somministratore;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,7 +25,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.unimib.bicap.ItemSearch;
 import it.unimib.bicap.R;
+import it.unimib.bicap.activity.somministratore.GestioneSomministratore;
 import it.unimib.bicap.adapter.EliminaAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaSomministratoreBinding;
@@ -34,8 +37,9 @@ public class EliminaSomministratore extends AppCompatActivity {
     private ActivityEliminaSomministratoreBinding binding;
     private static final String TAG = "EliminaSomministratore";
     EliminaAdapterRV progettiAdapter;
-    private List <ExampleItem> exampleList = new ArrayList();
+    private List <ItemSearch> exampleList = new ArrayList();
     SearchView searchView;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,12 +53,12 @@ public class EliminaSomministratore extends AppCompatActivity {
         if (valore) {
             nomiSomm = (HashMap<String, String>) intent.getSerializableExtra(ActivityConstants.INTENT_SOMMINISTRATORI);
             for (Map.Entry<String, String> entry : nomiSomm.entrySet()) {
-                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+                this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
             }
         } else{
             HashMap<String, String> pazzi = (HashMap<String, String>) intent.getSerializableExtra("pazzi");
             for (Map.Entry<String, String> entry : pazzi.entrySet()) {
-                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+                this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
             }
         }
         List<String> emails = intent.getStringArrayListExtra("emails");
@@ -64,7 +68,7 @@ public class EliminaSomministratore extends AppCompatActivity {
         View v = binding.getRoot();
         setContentView(v);
 
-        for (ExampleItem item : exampleList){
+        for (ItemSearch item : exampleList){
             Log.d(TAG, "Nome: " + item.getTextNome());
             Log.d(TAG, "Email: " + item.getTextEmail());
         }

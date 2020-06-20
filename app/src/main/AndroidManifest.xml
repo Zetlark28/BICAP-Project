@@ -40,7 +40,7 @@
             />
         <activity
             android:name=".activity.somministratore.CreazioneProgetto"
-            android:parentActivityName=".activity.HomePageSomministratore"
+            android:parentActivityName=".activity.somministratore.HomePageSomministratore"
             />
         <activity
             android:name=".activity.somministratore.DettaglioQuestionario"
@@ -52,10 +52,10 @@
             />
         <activity
             android:name=".activity.somministratore.EliminaProgetti"
-            android:parentActivityName=".activity.HomePageSomministratore"
+            android:parentActivityName=".activity.somministratore.HomePageSomministratore"
             />
         <activity
-            android:name=".activity.HomePageSomministratore"
+            android:name=".activity.somministratore.HomePageSomministratore"
             android:parentActivityName=".activity.somministratore.LoginProfessore"
             />
         <activity android:name=".activity.utente.PresentazioneProgetto"

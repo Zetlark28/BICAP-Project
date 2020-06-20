@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.ItemSearch;
 import it.unimib.bicap.R;
 import it.unimib.bicap.adapter.ProgettiDaTerminareAdapterRV;
 import it.unimib.bicap.db.DBManager;
@@ -31,11 +34,22 @@ import it.unimib.bicap.service.GetterLocal;
 public class QuestionariDaTerminare extends Fragment {
 
     private static final String TAG = "QuestionariDaTerminare";
+    private StorageReference mStorageRef;
+    private StorageReference ref;
+    private static final int ONE_MB = 1024 * 1024;
     private static JSONArray progetti;
+    private DBManager db;
+
+    //private RecyclerView recyclerView;
+    private String [] titoli = {"Questionario 1", "Questionario 2"};
+    private String from = "daTerminare";
+    private ImageView immagine;
     private JSONObject progettiTot;
-    private EditText ricercaDaFare;
+    private RecyclerView recyclerView;
+    private View rootView;
+    private EditText ricercadafare;
     private GetterInfo getterInfo = new GetterLocal();
-    private List<ExampleItem> exampleList = new ArrayList<>();
+    private List<ItemSearch> exampleList = new ArrayList();
     private ProgettiDaTerminareAdapterRV progettiAdapterTerminare;
 
 
@@ -49,11 +63,45 @@ public class QuestionariDaTerminare extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_lista_progetti, container, false);
         final RecyclerView recyclerView = rootView.findViewById(R.id.rvProgetti);
-        ricercaDaFare = rootView.findViewById(R.id.ricercadafare);
+        ricercadafare = rootView.findViewById(R.id.ricercadafare);
 
 
-        DBManager db = new DBManager(getContext());
+        db = new DBManager(getContext());
+        //TODO: getUtenteReal
+        //TODO: da sistemare
+/*        final String idUtente = "prova";
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        ref = mStorageRef.child("/Progetti/progetti.json");
+        ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            String jsonString = null;
+            @Override
+            public void onSuccess(byte[] bytes) {
+                try {
+                    jsonString = new String(bytes, "UTF-8");
+                    JSONObject progettiToParse = new JSONObject(jsonString);
+                    progetti = progettiToParse.getJSONArray("progetti");
+                    Cursor progettiDaCompletare = db.selectDaCompletare(idUtente);
 
+                    JSONArray progDaCompletare= new JSONArray();
+                    for(int i = 0; i<progetti.length(); i++){
+                            if(DBManager.isDaCompletare(progettiDaCompletare, progetti.getJSONObject(i).getInt("id")))
+                                progDaCompletare.put(progetti.getJSONObject(i));
+                    }
+
+                    //TODO: selezione dei questionari da terminare
+                    progettiAdapterRV = new ProgettiAdapterRV(getContext(), progDaCompletare,  from);
+                    recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(linearLayoutManager);
+                    recyclerView.setAdapter(progettiAdapterRV);
+                } catch (UnsupportedEncodingException | JSONException e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        });*/
+        final String idUtente = "prova";
         try {
             progetti = progettiTot.getJSONArray("progetti");
 
@@ -64,7 +112,7 @@ public class QuestionariDaTerminare extends Fragment {
         JSONArray progDaCompletare= new JSONArray();
         try {
             for(int i = 0; i<progetti.length(); i++) {
-                if (db.isDaCompletare(getterInfo.getIdProgetto(progetti.getJSONObject(i)))){
+                if (db.isDaCompletare(progetti.getJSONObject(i).getInt("id"))) {
                     progDaCompletare.put(progetti.getJSONObject(i));
                 }
             }
@@ -74,15 +122,13 @@ public class QuestionariDaTerminare extends Fragment {
 
         for (int i = 0;i<progDaCompletare.length();i++){
             try {
-                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progDaCompletare.getJSONObject(i)),
-                        getterInfo.getDescrizione(progDaCompletare.getJSONObject(i))));
+                exampleList.add(new ItemSearch(getterInfo.getNomeProgetto(progDaCompletare.getJSONObject(i)), getterInfo.getDescrizione(progDaCompletare.getJSONObject(i))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
 
-        String from = "daTerminare";
         progettiAdapterTerminare= new ProgettiDaTerminareAdapterRV(getContext(), progDaCompletare, exampleList, from);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -90,10 +136,10 @@ public class QuestionariDaTerminare extends Fragment {
 
 
 
-        ricercaDaFare.addTextChangedListener(new TextWatcher() {
+        ricercadafare.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                ricercaDaFare.setError(null);
+                ricercadafare.setError(null);
             }
 
             @Override
@@ -103,7 +149,7 @@ public class QuestionariDaTerminare extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                ricercaDaFare.setError(null);
+                ricercadafare.setError(null);
             }
         });
 
