@@ -128,6 +128,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
                     binding.tfAutore.setVisibility(View.VISIBLE);
                     binding.tfPassword.setVisibility(View.VISIBLE);
                     binding.etEmailSomm.setText("");
+                    //binding.etPassword.setText("");
+                    //binding.etAutore.setText("");
                 }
             }
         });
@@ -164,8 +166,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
                             }
                             mostraDialogRiattivazione();
                             dialog.dismiss();
-                            Snackbar.make(findViewById(android.R.id.content),
-                                    "Utente riattivato correttamente", Snackbar.LENGTH_SHORT).show();
+                         
+                                    
                         }
 
                         @Override
