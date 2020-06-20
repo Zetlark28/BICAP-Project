@@ -80,7 +80,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/roboto"
-                                    android:inputType="textEmailAddress"
+                                    android:inputType="textEmailAddress|textNoSuggestions"
                                     android:singleLine="false"
                                     app:boxStrokeColor="#a4224b"/>
 
@@ -138,9 +138,10 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/roboto"
-                                    android:inputType="textMultiLine"
+                                    android:inputType="textMultiLine|textNoSuggestions"
                                     app:boxStrokeColor="#a4224b"
-                                    android:scrollbars="vertical"/>
+                                    android:scrollbars="vertical"
+                                    />
 
                             </com.google.android.material.textfield.TextInputLayout>
 

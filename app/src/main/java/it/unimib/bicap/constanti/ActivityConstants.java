@@ -33,7 +33,8 @@ public class ActivityConstants {
     public static final String INTENT_N_PASSO = "nPasso";
     public static final String INTENT_WEB ="web";
     public static final String INTENT_RETURN = "return";
-    public static final String INTENT_NEW_LIST = "newList";
+    public static final String INTENT_NEW_LIST_AUTORE = "newListAutore";
+    public static final String INTENT_NEW_LIST_TOT= "newListTot";
     public static final String INTENT_NEW_OBJECT = "newObject";
     public static final String INTENT_HOME ="home";
     public static final String INTENT_SOMMINISTRATORI = "somministratori";

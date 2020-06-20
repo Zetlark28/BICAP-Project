@@ -80,8 +80,8 @@ public class EliminaProgetti extends AppCompatActivity {
                 progetti = new JSONObject(progettiString);
                 progettiAutore = new JSONArray(progettiAutoreString);
             } else {
-                String progettiAutoreString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST);
-                String progettiString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_OBJECT);
+                String progettiAutoreString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST_AUTORE);
+                String progettiString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST_TOT);
                 if(progettiString != null)
                     throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_NULL;
                 if(progettiAutoreString==null)

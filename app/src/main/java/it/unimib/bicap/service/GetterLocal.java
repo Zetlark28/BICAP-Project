@@ -1,14 +1,13 @@
 package it.unimib.bicap.service;
 
-
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.unimib.bicap.exception.GetterException;
 
 
 public class GetterLocal implements GetterInfo {
@@ -19,9 +18,8 @@ public class GetterLocal implements GetterInfo {
         try {
             return progetto.getInt("id");
         } catch (JSONException e) {
-            Log.d("error", "not found");
+            throw new GetterException("id").GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -29,9 +27,8 @@ public class GetterLocal implements GetterInfo {
         try {
             return progetto.getString("nome");
         } catch (JSONException e) {
-            Log.d("error", "not found");
+            throw new GetterException("nome").GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -39,9 +36,8 @@ public class GetterLocal implements GetterInfo {
         try {
             return progetto.getString("descrizione");
         } catch (JSONException e) {
-            Log.d("error", "not found");
+            throw new GetterException("descrizione").GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -49,9 +45,8 @@ public class GetterLocal implements GetterInfo {
         try {
             return progetto.getString("autore");
         } catch (JSONException e) {
-            Log.d("error", "not found");
+            throw new GetterException("autore").GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -59,9 +54,8 @@ public class GetterLocal implements GetterInfo {
         try {
             return progetti.getJSONObject(index);
         } catch (JSONException e) {
-            Log.d("error", "not found");
+            throw new GetterException("progetto index" + index).GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -69,9 +63,8 @@ public class GetterLocal implements GetterInfo {
         try {
             return progetti.getJSONArray("passi");
         } catch (JSONException e) {
-            Log.d("error", "not found");
+            throw new GetterException("passi").GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -79,9 +72,8 @@ public class GetterLocal implements GetterInfo {
         try {
             return passi.getJSONObject(index);
         } catch (JSONException e) {
-            Log.d("error", "not found");
+            throw new GetterException("passo index" + index).GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -95,9 +87,8 @@ public class GetterLocal implements GetterInfo {
             JSONObject jsonLista = converter.getJSONObject(listaProgeti);
             return jsonLista.getJSONArray("progetti");
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new GetterException("progetti").GETTER_JSON_FAIL;
         }
-        return null;
     }
 
     @Override
@@ -107,7 +98,7 @@ public class GetterLocal implements GetterInfo {
             try {
                 result.add(listaProgetti.getJSONObject(i).getString("nome"));
             } catch (JSONException e) {
-                e.printStackTrace();
+                throw new GetterException("nomeProgetto").GETTER_JSON_FAIL;
             }
         }
         return result;
@@ -119,7 +110,7 @@ public class GetterLocal implements GetterInfo {
             try {
                 result.add(listaProgetti.getJSONObject(i).getString("descrizione"));
             } catch (JSONException e) {
-                e.printStackTrace();
+                throw new GetterException("descrizioni dei progetti").GETTER_JSON_FAIL;
             }
         }
         return result;
@@ -129,31 +120,27 @@ public class GetterLocal implements GetterInfo {
         try {
             return progetto.getString("tipo");
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new GetterException("tipo").GETTER_JSON_FAIL;
         }
-
-        return  null;
     }
 
     public String getLink (JSONObject progetto){
         try {
             return progetto.getString("link");
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new GetterException("link").GETTER_JSON_FAIL;
         }
-
-        return null;
     }
 
     public List<String> getNomiSomministratori(JSONArray listaProgetti){
         List<String> result = new ArrayList<>();
         for(int i = 0; i<listaProgetti.length(); i++){
             try {
-                if (! result.contains(listaProgetti.getJSONObject(i).getString("nome"))) {
+                if(!result.contains(listaProgetti.getJSONObject(i).getString("nome"))){
                     result.add(listaProgetti.getJSONObject(i).getString("nome"));
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (JSONException e){
+                throw new GetterException("lista nomi somministratori").GETTER_JSON_FAIL;
             }
         }
         return result;

@@ -141,8 +141,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     //progettiAdapterRV.notifyDataSetChanged();
                                     Intent intentDelProj = new Intent(getContext(), EliminaProgetti.class);
                                     intentDelProj.putExtra(ActivityConstants.INTENT_RETURN, true);
-                                    intentDelProj.putExtra(ActivityConstants.INTENT_NEW_LIST, listaNuova.toString());
-                                    intentDelProj.putExtra(ActivityConstants.INTENT_NEW_OBJECT, listaProgettiTot.toString());
+                                    intentDelProj.putExtra(ActivityConstants.INTENT_NEW_LIST_AUTORE, listaNuova.toString());
+                                    intentDelProj.putExtra(ActivityConstants.INTENT_NEW_LIST_TOT, listaProgettiTot.toString());
                                     showAlertDialog(activity, "ciao","mamma", true, intentDelProj);
                                     //dismiss();
                                 }
@@ -273,7 +273,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                 .setTitle("Caricamento in corso")
                 .setMessage("Attendere...")
                 .create();
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+        dialog.setOnShowListener(new DialogInterface.OnShowListener(){
             private static final int AUTO_DISMISS_MILLIS = 3000;
             @Override
             public void onShow(final DialogInterface dialog) {
