@@ -164,18 +164,15 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
         if (holder instanceof  MyViewHolder) {
                 MyViewHolder vaultItemHolder = (MyViewHolder) holder;
                 ExampleItem currentItem = exampleList.get(position);
-                //vaultItemHolder.nome.setText(nomi.get(position));
                 vaultItemHolder.nome.setText(currentItem.getTextNome());
-                //vaultItemHolder.descrizione1.setText(descrizioni.get(position));
                 vaultItemHolder.descrizione1.setText(currentItem.getTextEmail());
                 vaultItemHolder.elimina.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         EliminaDialog eliminaDialog = null;
-                        //String message = "Sei sicuto di voler eliminare il progetto: \n" + nomi.get(position) + " ?";
                         String message = "Sei sicuro di voler eliminare il progetto: \n" + exampleList.get(position
                         ).getTextNome() + " ?";
-                        eliminaDialog = new EliminaDialog(exampleList, listaProgetti, listaProgettiTot, position, istanzaProgettiAdapter, eliminaActivity, message);
+                        eliminaDialog = new EliminaDialog(exampleList, listaProgetti, listaProgettiTot, position, eliminaActivity, message);
                         eliminaDialog.show(eliminaActivity.getSupportFragmentManager(), "prova");
                     }
                 });
@@ -201,7 +198,7 @@ public class ProgettiDaEliminareAdapterRV extends RecyclerView.Adapter<RecyclerV
                     ) + "?";*/
                     String message = "Sei sicuro di voler eliminare il somministratore: " + exampleList.get(position
                     ).getTextNome() + "?";
-                    eliminaDialog = new EliminaDialog(exampleList, key, position, istanzaProgettiAdapter, eliminaActivitysomm, message);
+                    eliminaDialog = new EliminaDialog(exampleList, position, eliminaActivitysomm, message);
                     eliminaDialog.show(eliminaActivitysomm.getSupportFragmentManager(), "prova");
 
                     }
