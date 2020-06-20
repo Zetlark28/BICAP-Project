@@ -18,12 +18,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +34,7 @@ public class EliminaSomministratore extends AppCompatActivity {
     private ActivityEliminaSomministratoreBinding binding;
     private static final String TAG = "EliminaSomministratore";
     ProgettiDaEliminareAdapterRV progettiAdapter;
-    private List <ExampleItem> exampleList = new ArrayList();
+    private List <ItemSearch> exampleList = new ArrayList();
     SearchView searchView;
     private SharedPreferences sharedPref;
 
@@ -52,12 +50,12 @@ public class EliminaSomministratore extends AppCompatActivity {
         if (valore) {
             nomiSomm = (HashMap<String, String>) intent.getSerializableExtra(ActivityConstants.INTENT_SOMMINISTRATORI);
             for (Map.Entry<String, String> entry : nomiSomm.entrySet()) {
-                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+                this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
             }
         } else{
             HashMap<String, String> pazzi = (HashMap<String, String>) intent.getSerializableExtra("pazzi");
             for (Map.Entry<String, String> entry : pazzi.entrySet()) {
-                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+                this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
             }
         }
         List<String> emails = intent.getStringArrayListExtra("emails");
@@ -67,7 +65,7 @@ public class EliminaSomministratore extends AppCompatActivity {
         View v = binding.getRoot();
         setContentView(v);
 
-        for (ExampleItem item : exampleList){
+        for (ItemSearch item : exampleList){
             Log.d(TAG, "Nome: " + item.getTextNome());
             Log.d(TAG, "Email: " + item.getTextEmail());
         }

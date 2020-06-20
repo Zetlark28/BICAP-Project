@@ -3,7 +3,6 @@ package it.unimib.bicap;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,7 +42,7 @@ public class RecuperaPassword extends AppCompatActivity {
         binding.tvAccedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent logInSomministratore = new Intent(getApplicationContext(), LoginProfessore.class);
+                Intent logInSomministratore = new Intent(getApplicationContext(), LoginSomministratore.class);
                 logInSomministratore.putExtra(ActivityConstants.INTENT_FROM_HOME, true);
                 startActivity(logInSomministratore);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);

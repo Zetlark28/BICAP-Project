@@ -33,7 +33,7 @@
         <activity android:name=".service.Intermediate"
             />
         <activity
-            android:name=".LoginProfessore"
+            android:name=".LoginSomministratore"
             android:parentActivityName=".HomePage"
             />
         <activity android:name=".Survey"
@@ -56,7 +56,7 @@
             />
         <activity
             android:name=".HomePageSomministratore"
-            android:parentActivityName=".LoginProfessore"
+            android:parentActivityName=".LoginSomministratore"
             />
         <activity android:name=".PresentazioneProgetto"
             />

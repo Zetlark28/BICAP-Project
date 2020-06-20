@@ -91,10 +91,10 @@ public class EliminaProgetti extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        List <ExampleItem> exampleList = new ArrayList<>();
+        List <ItemSearch> exampleList = new ArrayList<>();
         for (int i = 0;i<progettiAutore.length();i++){
             try {
-                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progettiAutore.getJSONObject(i)), getterInfo.getDescrizione(progettiAutore.getJSONObject(i))));
+                exampleList.add(new ItemSearch(getterInfo.getNomeProgetto(progettiAutore.getJSONObject(i)), getterInfo.getDescrizione(progettiAutore.getJSONObject(i))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

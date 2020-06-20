@@ -21,9 +21,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.bicap.ExampleItem;
+import it.unimib.bicap.ItemSearch;
 import it.unimib.bicap.PresentazioneProgetto;
-import it.unimib.bicap.QuestionariDaFare;
 import it.unimib.bicap.QuestionariDaTerminare;
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
@@ -42,8 +41,8 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     public static  JSONArray listaProgetti;
     GetterInfo getterInfo = new GetterLocal();
     ProgettiDaTerminareAdapterRV istanzaProgettiAdapter;
-    private static List<ExampleItem> exampleList;
-    private static List<ExampleItem> exampleListFull;
+    private static List<ItemSearch> exampleList;
+    private static List<ItemSearch> exampleListFull;
     private boolean ricerca;
     private QuestionariDaTerminare questionariDaTerminare;
 
@@ -65,7 +64,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
             descrizione1 = itemView.findViewById(R.id.descrizioneprog);
         }
     }
-    public ProgettiDaTerminareAdapterRV(Context context, JSONArray progetti,List<ExampleItem> exampleList, String from){
+    public ProgettiDaTerminareAdapterRV(Context context, JSONArray progetti, List<ItemSearch> exampleList, String from){
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progetti);
         this.exampleList = exampleList;
@@ -89,7 +88,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
 
             holder.nome.setText(nomi.get(position));
             holder.descrizione1.setText(descrizioni.get(position));
-            ExampleItem currentItem = exampleList.get(position);
+            ItemSearch currentItem = exampleList.get(position);
             holder.nome.setText(currentItem.getTextNome());
             holder.descrizione1.setText(currentItem.getTextEmail());
             holder.info.setOnClickListener(new View.OnClickListener() {
@@ -129,7 +128,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<ExampleItem> filteredList = new ArrayList<>();
+            List<ItemSearch> filteredList = new ArrayList<>();
 
             if (ricerca) {
 
@@ -138,7 +137,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
                 } else {
                     String filterPattern = constraint.toString().toLowerCase().trim();
 
-                    for (ExampleItem item : exampleListFull) {
+                    for (ItemSearch item : exampleListFull) {
                         if (item.getTextNome().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item);
                         }
@@ -158,7 +157,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
                 } else {
                     String filterPattern = constraint.toString().toLowerCase().trim();
 
-                    for (ExampleItem item : exampleListFull) {
+                    for (ItemSearch item : exampleListFull) {
                         if (item.getTextNome().toLowerCase().contains(filterPattern)) {
                             filteredList.add(item);
                         }

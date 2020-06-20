@@ -128,7 +128,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean fromHome = false;
-                Intent intentLogProf = new Intent(getApplicationContext(), LoginProfessore.class);
+                Intent intentLogProf = new Intent(getApplicationContext(), LoginSomministratore.class);
                 intentLogProf.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
                 startActivity(intentLogProf);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
@@ -237,7 +237,7 @@ public class HomePageSomministratore extends AppCompatActivity {
         boolean fromHome = false;
 
         if (currentUser == null){
-            Intent intentLogout = new Intent(this, LoginProfessore.class);
+            Intent intentLogout = new Intent(this, LoginSomministratore.class);
             intentLogout.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
             if(fromHome == false){
                 startActivity(intentLogout);

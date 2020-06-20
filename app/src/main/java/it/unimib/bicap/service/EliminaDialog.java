@@ -26,11 +26,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import it.unimib.bicap.EliminaProgetti;
 import it.unimib.bicap.EliminaSomministratore;
-import it.unimib.bicap.ExampleItem;
+import it.unimib.bicap.ItemSearch;
 import it.unimib.bicap.GestioneSomministratore;
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
@@ -51,9 +50,9 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private EliminaSomministratore activityDelSomm;
     private GetterInfo getterInfo = new GetterLocal();
     private String message;
-    private List<ExampleItem> exampleList;
+    private List<ItemSearch> exampleList;
     private final String TAG = "EliminaDialog";
-    public EliminaDialog(List<ExampleItem> exampleList, JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
+    public EliminaDialog(List<ItemSearch> exampleList, JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
         try {
             this.exampleList = exampleList;
             this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
@@ -77,9 +76,9 @@ public class EliminaDialog extends AppCompatDialogFragment {
         this.message = message;
     }*/
 
-    public EliminaDialog(List<ExampleItem> exampleList, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
+    public EliminaDialog(List<ItemSearch> exampleList, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
         this.exampleList = exampleList;
-        for (ExampleItem item : exampleList){
+        for (ItemSearch item : exampleList){
             Log.d(TAG, "nome: " + item.getTextNome() + ", email: " + item.getTextEmail());
         }
         this.key = key;
@@ -102,14 +101,14 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     JSONArray listaNuova = new JSONArray();
                                     JSONObject nuoviProgetti = null;
                                     Integer idElimina = null;
-                                    //List<ExampleItem> exampleListNew = new ArrayList<>();
+                                    //List<ItemSearch> exampleListNew = new ArrayList<>();
                                     //primo for serve  per identificare il json da eliminare all'interno della lista intera di progetti
                                     //secondo for serve per inizializzare una nuova lista di jsonObject che l'utente vedrà senza inserire il json identificato precedentemente
                                     try {
                                         for (int i = 0; i < listaProgetti.length(); i++) {
                                             if (i != index) {
                                                 listaNuova.put(listaProgetti.getJSONObject(i));
-                                                //exampleListNew.add(new ExampleItem(getterInfo.getNomeProgetto(listaProgetti.getJSONObject(i)), getterInfo.getDescrizione(listaProgetti.getJSONObject(i))));
+                                                //exampleListNew.add(new ItemSearch(getterInfo.getNomeProgetto(listaProgetti.getJSONObject(i)), getterInfo.getDescrizione(listaProgetti.getJSONObject(i))));
                                             } else
                                                 idElimina = listaProgetti.getJSONObject(i).getInt("id");
                                         }
@@ -199,7 +198,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     });*/
                                     final String autore = exampleList.get(index).getTextNome();
                                     final String email = exampleList.get(index).getTextEmail();
-                                    final List<ExampleItem> exampleListNew = new ArrayList<>();
+                                    final List<ItemSearch> exampleListNew = new ArrayList<>();
                                     myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -218,23 +217,23 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                                             String email1 = d.child("email").getValue().toString();
                                                             Log.d(TAG, "email New: " + email1);*/
                                                             boolean valore = false;
-                                                            for(ExampleItem item : exampleListNew){
+                                                            for(ItemSearch item : exampleListNew){
                                                                 if (item.getTextNome().equals(d.child("autore").getValue().toString()) && item.getTextEmail().equals(d.child("email").getValue().toString())){
                                                                     valore = true;
                                                                 }
                                                             }
                                                             if (! valore)
-                                                                exampleListNew.add(new ExampleItem(d.child("autore").getValue().toString(), d.child("email").getValue().toString()));
+                                                                exampleListNew.add(new ItemSearch(d.child("autore").getValue().toString(), d.child("email").getValue().toString()));
                                                         }
                                                     }
                                                 }
                                             }
                                             Log.d(TAG, "exampleListNew: " + exampleListNew.toString());
-                                            for (ExampleItem item : exampleListNew){
+                                            for (ItemSearch item : exampleListNew){
                                                 Log.d(TAG, "new List: " + "Nome: " + item.getTextNome() + ", Email: " + item.getTextEmail());
                                             }
                                             HashMap<String, String> map = new HashMap<>();
-                                            for(ExampleItem item : exampleListNew){
+                                            for(ItemSearch item : exampleListNew){
                                                 map.put(item.getTextEmail(), item.getTextNome());
                                             }
                                             Intent intentPazzo = new Intent(activityDelSomm, GestioneSomministratore.class);
