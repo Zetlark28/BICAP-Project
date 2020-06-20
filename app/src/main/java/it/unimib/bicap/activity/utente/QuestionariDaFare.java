@@ -1,18 +1,10 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -30,6 +22,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.R;
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.db.DBManager;
 import it.unimib.bicap.service.GetterInfo;

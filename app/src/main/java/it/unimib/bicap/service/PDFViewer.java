@@ -14,19 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.content.DialogInterface;
 
 import com.github.barteksc.pdfviewer.PDFView;
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.json.JSONArray;
 
 import java.io.File;
 import java.io.FileInputStream;
 
-import it.unimib.bicap.GestioneSomministratore;
-import it.unimib.bicap.HomePage;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.R;
+import it.unimib.bicap.activity.utente.Intermediate;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
 import it.unimib.bicap.db.DBManager;

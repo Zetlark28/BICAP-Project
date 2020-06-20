@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,6 +19,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 
 public class LaunchScreen extends AppCompatActivity {

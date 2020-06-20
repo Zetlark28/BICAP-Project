@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,12 +15,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityPresentazioneProgettoBinding;
+import it.unimib.bicap.domain.Progetto;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
-import it.unimib.bicap.service.Intermediate;
-import it.unimib.bicap.domain.Progetto;
 
 public class PresentazioneProgetto extends AppCompatActivity {
     private static final String TAG = "PresentazioneProgetto";

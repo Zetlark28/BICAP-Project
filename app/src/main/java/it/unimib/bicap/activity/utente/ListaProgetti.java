@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -24,6 +24,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
 import it.unimib.bicap.adapter.SectionsPagerAdapter;
 import it.unimib.bicap.constanti.ActivityConstants;
 
@@ -32,10 +34,8 @@ public class ListaProgetti extends AppCompatActivity {
     private static final String TAG = "ListaProgetti";
     private static final int ONE_MB = 1024 * 1024;
     private  JSONObject progettiTot;
-    ProgressDialog progressDialog;
+    private static ProgressDialog progressDialog;
 
-
-    private SectionsPagerAdapter mSectionsPageAdapter;
 
     private ViewPager myViewPager;
 
@@ -73,7 +73,7 @@ public class ListaProgetti extends AppCompatActivity {
         //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mSectionsPageAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPageAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         myViewPager = findViewById(R.id.project_view_pager);
         setUpViewPager(myViewPager);
@@ -115,7 +115,7 @@ public class ListaProgetti extends AppCompatActivity {
         overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
-    public class DownloadProgettiTask extends AsyncTask<Void, Void, Void> {
+    public static class DownloadProgettiTask extends AsyncTask<Void, Void, Void> {
         public void onPreExecute() {
             progressDialog.show();
         }

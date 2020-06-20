@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/iconabianca"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LaunchScreen"
+        <activity android:name=".activity.somministratore.LaunchScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
 
             <intent-filter>
@@ -28,51 +28,51 @@
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             />
-        <activity android:name=".HomePage"
+        <activity android:name=".activity.HomePage"
             />
-        <activity android:name=".service.Intermediate"
-            />
-        <activity
-            android:name=".LoginProfessore"
-            android:parentActivityName=".HomePage"
-            />
-        <activity android:name=".Survey"
+        <activity android:name=".activity.utente.Intermediate"
             />
         <activity
-            android:name=".CreazioneProgetto"
-            android:parentActivityName=".HomePageSomministratore"
+            android:name=".activity.somministratore.LoginProfessore"
+            android:parentActivityName=".activity.HomePage"
+            />
+        <activity android:name=".activity.utente.Survey"
             />
         <activity
-            android:name=".DettaglioQuestionario"
-            android:parentActivityName=".CreazioneProgetto"
+            android:name=".activity.somministratore.CreazioneProgetto"
+            android:parentActivityName=".activity.HomePageSomministratore"
             />
         <activity
-            android:name=".ListaProgetti"
-            android:parentActivityName=".HomePage"
+            android:name=".activity.somministratore.DettaglioQuestionario"
+            android:parentActivityName=".activity.somministratore.CreazioneProgetto"
             />
         <activity
-            android:name=".EliminaProgetti"
-            android:parentActivityName=".HomePageSomministratore"
+            android:name=".activity.utente.ListaProgetti"
+            android:parentActivityName=".activity.HomePage"
             />
         <activity
-            android:name=".HomePageSomministratore"
-            android:parentActivityName=".LoginProfessore"
+            android:name=".activity.somministratore.EliminaProgetti"
+            android:parentActivityName=".activity.HomePageSomministratore"
             />
-        <activity android:name=".PresentazioneProgetto"
+        <activity
+            android:name=".activity.HomePageSomministratore"
+            android:parentActivityName=".activity.somministratore.LoginProfessore"
             />
-        <activity android:name=".CongratulazioniScreen"
+        <activity android:name=".activity.utente.PresentazioneProgetto"
+            />
+        <activity android:name=".activity.somministratore.CongratulazioniScreen"
             />
         <activity android:name=".service.PDFViewer"
             />
-        <activity android:name=".CreazioneSomministratore"
+        <activity android:name=".activity.somministratore.CreazioneSomministratore"
             />
-        <activity android:name=".GestioneSomministratore"
+        <activity android:name=".activity.somministratore.GestioneSomministratore"
             />
-        <activity android:name=".EliminaSomministratore"
+        <activity android:name=".activity.somministratore.EliminaSomministratore"
             />
-        <activity android:name=".GrazieScreen"
+        <activity android:name=".activity.utente.GrazieScreen"
             />
-        <activity android:name=".RecuperaPassword"
+        <activity android:name=".activity.somministratore.RecuperaPassword"
             />
 
         <meta-data

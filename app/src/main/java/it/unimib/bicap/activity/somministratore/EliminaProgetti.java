@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -23,6 +23,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unimib.bicap.activity.HomePageSomministratore;
+import it.unimib.bicap.R;
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
@@ -80,12 +82,11 @@ public class EliminaProgetti extends AppCompatActivity {
             } else {
                 String progettiAutoreString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST);
                 String progettiString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_OBJECT);
-                if(progettiString == null)
+                if(progettiString != null)
                     throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_NULL;
                 if(progettiAutoreString==null)
                     throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_AUTORE_NULL;
                 progettiAutore = new JSONArray(progettiAutoreString);
-                progetti = new JSONObject(progettiString);
             }
         } catch (JSONException e) {
             e.printStackTrace();

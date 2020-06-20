@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,6 +35,11 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import it.unimib.bicap.R;
+import it.unimib.bicap.activity.somministratore.CreazioneProgetto;
+import it.unimib.bicap.activity.somministratore.EliminaProgetti;
+import it.unimib.bicap.activity.somministratore.GestioneSomministratore;
+import it.unimib.bicap.activity.somministratore.LoginProfessore;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 
@@ -139,12 +144,17 @@ public class HomePageSomministratore extends AppCompatActivity {
         binding.btnElimina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
-                intentEliminaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI_AUTORE, progettiAutore.toString());
-                intentEliminaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI, progetti.toString());
-                intentEliminaProgetto.putExtra(ActivityConstants.INTENT_RETURN, false);
-                startActivity(intentEliminaProgetto);
-                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                if(progettiAutore.length()!=0){
+                    Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
+                    intentEliminaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI_AUTORE, progettiAutore.toString());
+                    intentEliminaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI, progetti.toString());
+                    intentEliminaProgetto.putExtra(ActivityConstants.INTENT_RETURN, false);
+                    startActivity(intentEliminaProgetto);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                }
+
+                Snackbar.make(v, "Non sono presenti progetti da eliminare", Snackbar.LENGTH_SHORT).show();
+
             }
         });
 
@@ -167,9 +177,10 @@ public class HomePageSomministratore extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        FirebaseAuth.getInstance().getCurrentUser();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         MenuItem item = menu.findItem(R.id.addSomm);
-        if (! email.equals(ActivityConstants.AUTHORIZED_EMAIL))
+        if (!email.equals(ActivityConstants.AUTHORIZED_EMAIL))
             item.setVisible(false);
 
         return true;

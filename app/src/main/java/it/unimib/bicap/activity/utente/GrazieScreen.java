@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
 
 public class GrazieScreen extends AppCompatActivity {
     Handler handler;

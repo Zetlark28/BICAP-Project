@@ -1,4 +1,4 @@
-package it.unimib.bicap.service;
+package it.unimib.bicap.activity.utente;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -19,15 +19,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import it.unimib.bicap.GrazieScreen;
-import it.unimib.bicap.HomePage;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.R;
-import it.unimib.bicap.Survey;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
 import it.unimib.bicap.db.DBManager;
 import it.unimib.bicap.exception.IntermediateException;
+import it.unimib.bicap.service.ExoPlayerStream;
+import it.unimib.bicap.service.GetterInfo;
+import it.unimib.bicap.service.GetterLocal;
+import it.unimib.bicap.service.PDFViewer;
+import it.unimib.bicap.service.Utility;
 
 public class Intermediate extends AppCompatActivity {
 

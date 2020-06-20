@@ -1,6 +1,5 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,23 +12,20 @@ import android.widget.ImageView;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.bicap.adapter.ProgettiAdapterRV;
+import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.R;
 import it.unimib.bicap.adapter.ProgettiDaTerminareAdapterRV;
 import it.unimib.bicap.db.DBManager;
 import it.unimib.bicap.service.GetterInfo;

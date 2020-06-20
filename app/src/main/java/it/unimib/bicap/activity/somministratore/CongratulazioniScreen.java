@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import it.unimib.bicap.activity.HomePageSomministratore;
+import it.unimib.bicap.R;
 
 public class CongratulazioniScreen extends AppCompatActivity {
     Handler handler;

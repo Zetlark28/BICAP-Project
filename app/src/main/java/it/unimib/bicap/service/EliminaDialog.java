@@ -26,12 +26,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import it.unimib.bicap.EliminaProgetti;
-import it.unimib.bicap.EliminaSomministratore;
-import it.unimib.bicap.ExampleItem;
-import it.unimib.bicap.GestioneSomministratore;
+import it.unimib.bicap.activity.somministratore.EliminaProgetti;
+import it.unimib.bicap.activity.somministratore.EliminaSomministratore;
+import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.activity.somministratore.GestioneSomministratore;
 import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 

@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -16,13 +16,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.util.Objects;
-
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
-import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivitySurveyBinding;
 import it.unimib.bicap.db.DBManager;
-import it.unimib.bicap.service.Intermediate;
 
 public class Survey extends AppCompatActivity {
 

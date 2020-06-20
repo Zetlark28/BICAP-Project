@@ -21,16 +21,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.bicap.ExampleItem;
-import it.unimib.bicap.PresentazioneProgetto;
-import it.unimib.bicap.QuestionariDaFare;
-import it.unimib.bicap.QuestionariDaTerminare;
+import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.activity.utente.PresentazioneProgetto;
+import it.unimib.bicap.activity.utente.QuestionariDaTerminare;
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
-//import it.unimib.bicap.PresentazioneProgetto;
+//import it.unimib.bicap.activity.utente.PresentazioneProgetto;
 
 public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiDaTerminareAdapterRV.MyViewHolder> {
 

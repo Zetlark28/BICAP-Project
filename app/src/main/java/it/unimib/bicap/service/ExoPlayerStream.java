@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -34,12 +33,11 @@ import com.google.android.exoplayer2.upstream.BandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
-import it.unimib.bicap.HomePage;
-import it.unimib.bicap.HomePageSomministratore;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.R;
+import it.unimib.bicap.activity.utente.Intermediate;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityExoplayerStreamBinding;
-import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
 import it.unimib.bicap.db.DBManager;
 
 // TODO: aggiungere cose fighe tipo la progressbar during buffering e vedere se quel fullscreen ci sta per davvero

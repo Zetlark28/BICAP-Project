@@ -31,8 +31,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import it.unimib.bicap.DettaglioQuestionario;
-import it.unimib.bicap.EliminaProgetti;
+import it.unimib.bicap.activity.somministratore.DettaglioQuestionario;
+import it.unimib.bicap.activity.somministratore.EliminaProgetti;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
 import it.unimib.bicap.exception.UtilityException;
 

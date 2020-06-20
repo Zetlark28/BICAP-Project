@@ -21,10 +21,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.unimib.bicap.EliminaProgetti;
-import it.unimib.bicap.ExampleItem;
-import it.unimib.bicap.PresentazioneProgetto;
-import it.unimib.bicap.QuestionariDaFare;
+import it.unimib.bicap.activity.somministratore.ExampleItem;
+import it.unimib.bicap.activity.utente.PresentazioneProgetto;
+import it.unimib.bicap.activity.utente.QuestionariDaFare;
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.service.GetterInfo;
