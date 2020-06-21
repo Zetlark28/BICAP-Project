@@ -20,8 +20,8 @@ public class ActivityConstants {
 
     public static final String FIREBASE_STORAGE_CHILD_PROGETTI = "/Progetti/progetti.json";
 
-    public static final String URL_EXIT = "google";
-    public static final String URL_ERROR = "facebook";
+    public static final String URL_EXIT = "surveymib.success";
+    public static final String URL_ERROR = "surveymib.error";
 
     public static final String INTENT_LISTA_PASSI = "listaPassi";
     public static final String INTENT_NOME_PROGETTO="nomeProgetto";
