@@ -66,6 +66,7 @@ public class EliminaProgetti extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentHomeProfessore = new Intent(getApplicationContext(), HomePageSomministratore.class);
                 startActivity(intentHomeProfessore);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 EliminaProgetti.this.finish();
             }
         });

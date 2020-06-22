@@ -49,7 +49,7 @@
                         android:fontFamily="@font/roboto"
                         android:layout_marginTop="4dp"
                         android:padding="9dp"
-                        android:text="TextView"
+                        android:text="@string/textview"
                         android:textAppearance="?attr/textAppearanceHeadline6"
                         android:textColor="@color/colorPrimary" />
 
@@ -64,7 +64,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Descrizione: "
+                        android:text="@string/descrizione_duep"
                         android:textSize="15dp"
                         android:textColor="#a4224b"
                         android:fontFamily="@font/roboto"
@@ -78,7 +78,7 @@
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary"
                         android:layout_marginTop="4dp"
-                        android:text="testoprova" />
+                        android:text="@string/testoprova" />
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
@@ -87,7 +87,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|end"
-                    android:text="Elimina"
+                    android:text="@string/elimina"
                     android:textColor="#a4224b"
                     app:strokeColor="#a4224b"
                     android:layout_marginRight="5dp"/>

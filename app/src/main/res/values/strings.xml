@@ -61,4 +61,19 @@
         Negli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.</string>
     <string name="dialog_positive">Si</string>
     <string name="dialog_negative">No</string>
+    <string name="titolo">Titolo</string>
+    <string name="sono_pronto">Sono pronto</string>
+    <string name="nom_prog">TextView</string>
+    <string name="nome_somministratore">Nome Somministratore</string>
+    <string name="prova">Prova</string>
+    <string name="inizia">Inizia</string>
+    <string name="login_somministratore">Login Somministratore</string>
+    <string name="prova_duep">prova</string>
+    <string name="numero_di_risorse">Numero di risorse:</string>
+    <string name="email_duep">Email:</string>
+    <string name="descrizione_duep">Descrizione:</string>
+    <string name="textview">TextView</string>
+    <string name="testoprova">testoprova</string>
+    <string name="elimina">Elimina</string>
+    <string name="autore_duep">Autore:</string>
 </resources>
