@@ -127,23 +127,19 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
+
                                     //TODO: dialog on process e metodo di riscrittura file progetti.json
-                                    Utility.write(nuoviProgetti, activity, null);
-                                    Log.d(TAG, "eliminato");
-                                    //ProgettiDaEliminareAdapterRV.setListaProgettiTot(nuoviProgetti);
-                                    //ProgettiDaEliminareAdapterRV.setExampleListFull(exampleListNew);
-                                    //ProgettiDaEliminareAdapterRV.setNomi(getterInfo.getNomiProgetti(listaNuova));
-                                    //ProgettiDaEliminareAdapterRV.setListaProgetti(listaNuova);
-                                    //HashMap<String, Object> map = new HashMap<>();
-                                    //map.put("listaFinale", listaNuova);
-                                    //HashMap<String, Object> secondMap = new HashMap<>();
-                                    //map.put("oggettoFinale", listaProgettiTot);
-                                    //progettiAdapterRV.notifyDataSetChanged();
                                     Intent intentDelProj = new Intent(getContext(), EliminaProgetti.class);
                                     intentDelProj.putExtra(ActivityConstants.INTENT_RETURN, true);
                                     intentDelProj.putExtra(ActivityConstants.INTENT_NEW_LIST_AUTORE, listaNuova.toString());
                                     intentDelProj.putExtra(ActivityConstants.INTENT_NEW_LIST_TOT, listaProgettiTot.toString());
-                                    showAlertDialog(activity, "ciao","mamma", true, intentDelProj);
+                                    showAlertDialog();
+                                    Utility.write(nuoviProgetti, activity, null);
+                                    dismiss();
+                                    startActivity(intentDelProj);
+                                    Log.d(TAG, "eliminato");
+
+
                                     //dismiss();
                                 }
                                 else{/*
@@ -267,30 +263,15 @@ public class EliminaDialog extends AppCompatDialogFragment {
         return  builder.create();
     }
 
-    public void showAlertDialog(final Context context, String title, String message,
-                                Boolean status, final Intent intent) {
+    public void showAlertDialog() {
         androidx.appcompat.app.AlertDialog dialog = new androidx.appcompat.app.AlertDialog.Builder(this.activity)
                 .setTitle("Caricamento in corso")
                 .setMessage("Attendere...")
                 .create();
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            private static final int AUTO_DISMISS_MILLIS = 3000;
             @Override
-            public void onShow(final DialogInterface dialog) {
-                new CountDownTimer(AUTO_DISMISS_MILLIS, 100) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
+            public void onShow(final DialogInterface dialog){
 
-                    }
-                    @Override
-                    public void onFinish() {
-                        if (((androidx.appcompat.app.AlertDialog) dialog).isShowing()) {
-                            dialog.dismiss();
-                            activity.startActivity(intent);
-                            activity.finish();
-                        }
-                    }
-                }.start();
             }
         });
         dialog.show();
