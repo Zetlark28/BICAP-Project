@@ -161,7 +161,7 @@ public class PDFViewer extends AppCompatActivity {
         if (guideOrPDF.equalsIgnoreCase("PDF")) {
             showDialog();
         } else {
-            Intent HomePageSomministratore = new Intent(this, it.unimib.bicap.HomePageSomministratore.class);
+            Intent HomePageSomministratore = new Intent(this, it.unimib.bicap.activity.somministratore.HomePageSomministratore.class);
             startActivity(HomePageSomministratore);
             finish();
             overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
