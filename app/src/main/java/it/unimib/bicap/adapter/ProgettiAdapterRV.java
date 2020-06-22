@@ -108,7 +108,6 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
             });
         }
 
-    // TODO: implementare update della lista
     public static void updateList(JSONArray list){
         listaProgetti = list;
 

@@ -44,7 +44,6 @@ public class CreazioneProgetto extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(ActivityConstants.CREAZIONE_PROGETTO_TOOLBAR_TITLE);
-        //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
         final String autore = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE).getString(ActivityConstants.SHARED_PREFERENCE_AUTORE_KEY, null);
@@ -91,10 +90,10 @@ public class CreazioneProgetto extends AppCompatActivity {
                 String descrizioneProgetto = binding.etDescrizione.getText().toString();
 
                 if (nomeProgetto.equals("")){
-                    Snackbar.make(v, "Attenziona, manca il nome del progetto!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Attenzione, manca il nome del progetto!", Snackbar.LENGTH_SHORT).show();
                 }
                 else if (nomeProgetto.length()>31)
-                    Snackbar.make(v, "Attenziona, non puoi inserire un titolo più lungo di 30 caratteri!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Attenzione, non puoi inserire un titolo più lungo di 30 caratteri!", Snackbar.LENGTH_SHORT).show();
                 //else if (autoreProgetto.equals("")){
                     //Snackbar.make(v, "Attenzione, manca l'autore del progetto !", Snackbar.LENGTH_SHORT).show();
                 //}

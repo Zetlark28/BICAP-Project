@@ -27,7 +27,6 @@ import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
 import it.unimib.bicap.db.DBManager;
 
-// TODO: creare if-else per capire se sto aprendo la guida o un file da firebase
 public class PDFViewer extends AppCompatActivity {
 
     private final static String PDF_UNIQUE_PATH = "/data/data/it.unimib.bicap/cache/PDF.pdf";
@@ -48,8 +47,6 @@ public class PDFViewer extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //showDialogCaricamento(this, "ciao","mamma", true);
-
         mTopToolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mTopToolbar);
 
@@ -62,7 +59,7 @@ public class PDFViewer extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(nomeProgetto);
         setSupportActionBar(toolbar);
-        // TODO: passo qui una stringa, se è PDF vuol dire che devo aprire il documento PDF con link, viceversa apro la guida
+
         if (guideOrPDF!=null && guideOrPDF.equals("PDF")) {
             openPDF();
         } else {
@@ -72,7 +69,11 @@ public class PDFViewer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                if (guideOrPDF.equalsIgnoreCase("PDF")) {
+                    showDialog();
+                } else {
+                    onBackPressed();
+                }
             }
         });
     }
@@ -116,18 +117,18 @@ public class PDFViewer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorite) {
-            //TODO: Aggiornare DataBase
 
-            dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso)+1);
-            Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+                //TODO: Aggiornare DataBase
+                dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso) + 1);
+                Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
             intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "daTerminare");
             intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
             intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
             intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
-            startActivity(intentIntermediate);
-            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-            finish();
-            return true;
+                startActivity(intentIntermediate);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -155,7 +156,14 @@ public class PDFViewer extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        showDialog();
+        if (guideOrPDF.equalsIgnoreCase("PDF")) {
+            showDialog();
+        } else {
+            Intent HomePageSomministratore = new Intent(this, it.unimib.bicap.activity.somministratore.HomePageSomministratore.class);
+            startActivity(HomePageSomministratore);
+            finish();
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+        }
     }
 
     public void showDialogCaricamento(final Context context, String title, String message,

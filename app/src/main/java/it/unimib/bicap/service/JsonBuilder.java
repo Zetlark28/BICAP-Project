@@ -76,15 +76,4 @@ public class JsonBuilder {
         return listaCompleta;
     }
 
-    //TODO : remove because unused
-//    public  void aggiungiProgettoInLista(JSONArray listaProgetti , JSONObject progetto){
-//        listaProgetti.put(progetto);
-//    }
-//
-//    public  JSONObject getListaProgettiDaScrivereInFile(JSONArray listaProgetti) throws JSONException {
-//        JSONObject listaDaScrivere = new JSONObject();
-//        listaDaScrivere.put("progetti",listaProgetti);
-//        return listaDaScrivere;
-//    }
-
 }

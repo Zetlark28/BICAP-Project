@@ -67,40 +67,7 @@ public class QuestionariDaTerminare extends Fragment {
 
 
         db = new DBManager(getContext());
-        //TODO: getUtenteReal
-        //TODO: da sistemare
-/*        final String idUtente = "prova";
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-        ref = mStorageRef.child("/Progetti/progetti.json");
-        ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            String jsonString = null;
-            @Override
-            public void onSuccess(byte[] bytes) {
-                try {
-                    jsonString = new String(bytes, "UTF-8");
-                    JSONObject progettiToParse = new JSONObject(jsonString);
-                    progetti = progettiToParse.getJSONArray("progetti");
-                    Cursor progettiDaCompletare = db.selectDaCompletare(idUtente);
 
-                    JSONArray progDaCompletare= new JSONArray();
-                    for(int i = 0; i<progetti.length(); i++){
-                            if(DBManager.isDaCompletare(progettiDaCompletare, progetti.getJSONObject(i).getInt("id")))
-                                progDaCompletare.put(progetti.getJSONObject(i));
-                    }
-
-                    //TODO: selezione dei questionari da terminare
-                    progettiAdapterRV = new ProgettiAdapterRV(getContext(), progDaCompletare,  from);
-                    recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    recyclerView.setAdapter(progettiAdapterRV);
-                } catch (UnsupportedEncodingException | JSONException e){
-                    e.printStackTrace();
-                }
-
-            }
-
-        });*/
         final String idUtente = "prova";
         try {
             progetti = progettiTot.getJSONArray("progetti");
