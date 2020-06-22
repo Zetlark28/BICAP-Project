@@ -47,8 +47,6 @@ public class PDFViewer extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //showDialogCaricamento(this, "ciao","mamma", true);
-
         mTopToolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(mTopToolbar);
 
