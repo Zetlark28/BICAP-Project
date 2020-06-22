@@ -18,13 +18,14 @@ import org.json.JSONObject;
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityPresentazioneProgettoBinding;
-
+import it.unimib.bicap.domain.Progetto;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
 public class PresentazioneProgetto extends AppCompatActivity {
     private static final String TAG = "PresentazioneProgetto";
     private ActivityPresentazioneProgettoBinding binding;
+    private Progetto progetto;
     GetterInfo getterInfo = new GetterLocal();
 
     @SuppressLint("SourceLockedOrientationActivity")
