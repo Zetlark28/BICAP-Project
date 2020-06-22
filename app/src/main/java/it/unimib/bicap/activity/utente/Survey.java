@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -16,12 +16,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.util.Objects;
-
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivitySurveyBinding;
 import it.unimib.bicap.db.DBManager;
-import it.unimib.bicap.service.Intermediate;
 
 public class Survey extends AppCompatActivity {
 
@@ -44,12 +43,12 @@ public class Survey extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         dbManager = new DBManager(getApplicationContext());
-        idProgetto = getIntent().getStringExtra("idProgetto");
-        passi = getIntent().getStringExtra("listaPassi");
-        nPasso = getIntent().getStringExtra("nPasso");
-        String url = getIntent().getStringExtra("web");
+        idProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_ID_PROGETTO);
+        passi = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PASSI);
+        nPasso = getIntent().getStringExtra(ActivityConstants.INTENT_N_PASSO);
+        String url = getIntent().getStringExtra(ActivityConstants.INTENT_WEB);
 
-        nomeProgetto = getIntent().getStringExtra("NomeProgetto");
+        nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(nomeProgetto);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -75,10 +74,10 @@ public class Survey extends AppCompatActivity {
                     dbManager.deleteDaCompletare(Integer.parseInt(idProgetto));
                     dbManager.saveCompletati(Integer.parseInt(idProgetto));
                     Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                    intentIntermediate.putExtra("mode", "Thanos");
-                    intentIntermediate.putExtra("idProgetto", idProgetto);
-                    intentIntermediate.putExtra("listaPassi", passi);
-                    intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "notFit");
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentIntermediate);
                     finish();
 
@@ -88,10 +87,10 @@ public class Survey extends AppCompatActivity {
                 else if (url.contains(ActivityConstants.URL_EXIT)) {
                     dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso)+1);
                     Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                    intentIntermediate.putExtra("mode", "daTerminare");
-                    intentIntermediate.putExtra("idProgetto", idProgetto);
-                    intentIntermediate.putExtra("listaPassi", passi);
-                    intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "daTerminare");
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentIntermediate);
                     finish();
                 }

@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
+import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityCreazioneProgettoBinding;
 
@@ -36,14 +37,13 @@ public class CreazioneProgetto extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        progettiJSON = getIntent().getStringExtra("progetti");
+        progettiJSON = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PROGETTI);
         binding = ActivityCreazioneProgettoBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(ActivityConstants.CREAZIONE_PROGETTO_TOOLBAR_TITLE);
-        //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
         final String autore = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE).getString(ActivityConstants.SHARED_PREFERENCE_AUTORE_KEY, null);
@@ -90,10 +90,10 @@ public class CreazioneProgetto extends AppCompatActivity {
                 String descrizioneProgetto = binding.etDescrizione.getText().toString();
 
                 if (nomeProgetto.equals("")){
-                    Snackbar.make(v, "Attenziona, manca il nome del progetto!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Attenzione, manca il nome del progetto!", Snackbar.LENGTH_SHORT).show();
                 }
                 else if (nomeProgetto.length()>31)
-                    Snackbar.make(v, "Attenziona, non puoi inserire un titolo più lungo di 30 caratteri!", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Attenzione, non puoi inserire un titolo più lungo di 30 caratteri!", Snackbar.LENGTH_SHORT).show();
                 //else if (autoreProgetto.equals("")){
                     //Snackbar.make(v, "Attenzione, manca l'autore del progetto !", Snackbar.LENGTH_SHORT).show();
                 //}
@@ -107,9 +107,9 @@ public class CreazioneProgetto extends AppCompatActivity {
                     JSONObject progetto = jsonBuilder.creaProgetto(nomeProgetto,descrizioneProgetto,autore);
                     Intent intentDettaglioProgetto = new Intent(getApplicationContext(), DettaglioQuestionario.class);
                     Log.d(TAG, progetto.toString());
-                    intentDettaglioProgetto.putExtra("progetto", progetto.toString());
-                    intentDettaglioProgetto.putExtra("progetti", progettiJSON);
-                    intentDettaglioProgetto.putExtra("nomeProgetto", nomeProgetto);
+                    intentDettaglioProgetto.putExtra(ActivityConstants.INTENT_PROGETTO, progetto.toString());
+                    intentDettaglioProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI, progettiJSON);
+                    intentDettaglioProgetto.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                     startActivity(intentDettaglioProgetto);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                     finish();

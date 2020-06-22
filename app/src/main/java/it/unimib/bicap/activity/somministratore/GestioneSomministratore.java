@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import it.unimib.bicap.R;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityGestioneSomministratoreBinding;
 
 public class GestioneSomministratore extends AppCompatActivity {
@@ -86,8 +88,8 @@ public class GestioneSomministratore extends AppCompatActivity {
                 Intent deleteSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
                 Log.d(TAG, "Intent problem: " + somministratori.toString());
                 deleteSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
-                deleteSomm.putExtra("somministratori", somministratori);
-                deleteSomm.putExtra("home", true);
+                deleteSomm.putExtra(ActivityConstants.INTENT_SOMMINISTRATORI, somministratori);
+                deleteSomm.putExtra(ActivityConstants.INTENT_HOME, true);
                 startActivity(deleteSomm);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
@@ -113,7 +115,7 @@ public class GestioneSomministratore extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    if(d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && ! d.child("email").getValue().equals("admin@admin.com")) {
+                    if(d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && (! d.child("email").getValue().equals(ActivityConstants.EMAIL_ADMIN) || ! d.child("email").getValue().equals(ActivityConstants.EMAIL_PROF))) {
                         somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
                         email.add(d.child("email").getValue().toString());
                         Log.d(TAG, "Hasmap: " + somministratori.toString());

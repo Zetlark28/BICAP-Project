@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,14 +8,17 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class CongratulazioniScreen extends AppCompatActivity {
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
+
+public class GrazieScreen extends AppCompatActivity {
     Handler handler;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_congratulazioni_screen);
+        setContentView(R.layout.activity_grazie_screen);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -39,15 +42,19 @@ public class CongratulazioniScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(CongratulazioniScreen.this, HomePageSomministratore.class);
+                Intent intent=new Intent(GrazieScreen.this, HomePage.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
             }
         },3750);
 
+    }
 
-
+    //override startActivity con animazione slide avanti
+    @Override
+    public void startActivity(Intent intent){
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
     //controllo su navigationBar
@@ -55,7 +62,7 @@ public class CongratulazioniScreen extends AppCompatActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), HomePageSomministratore.class));
+        startActivity(new Intent(getApplicationContext(), HomePage.class));
         finish();
 
     }

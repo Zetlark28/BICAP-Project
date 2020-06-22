@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -35,12 +35,12 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import it.unimib.bicap.R;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 import it.unimib.bicap.service.PDFViewer;
 
-// TODO: Creare il menu a discesa coi vari pulsanti tra cui il LOGOUT/ Gestire il login
-// TODO: user & psw -> admin admin
 
 public class HomePageSomministratore extends AppCompatActivity {
     private static final int ONE_MB = 1024 * 1024;
@@ -77,7 +77,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //TODO : metodi mancanti
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(ActivityConstants.HOMEPAGE_SOMMINISTRATORE_TOOLBAR_TITLE);
         setSupportActionBar(toolbar);
@@ -130,7 +129,7 @@ public class HomePageSomministratore extends AppCompatActivity {
             public void onClick(View v) {
                 boolean fromHome = false;
                 Intent intentLogProf = new Intent(getApplicationContext(), LoginProfessore.class);
-                intentLogProf.putExtra("fromHome", fromHome);
+                intentLogProf.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
                 startActivity(intentLogProf);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
@@ -140,23 +139,27 @@ public class HomePageSomministratore extends AppCompatActivity {
         binding.btnElimina.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
-                intentEliminaProgetto.putExtra("listaProgettiAutore", progettiAutore.toString());
-                intentEliminaProgetto.putExtra("listaProgetti", progetti.toString());
-                intentEliminaProgetto.putExtra("return", false);
-                startActivity(intentEliminaProgetto);
-                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                if(progettiAutore.length()!=0){
+                    Intent intentEliminaProgetto = new Intent (getApplicationContext(), EliminaProgetti.class);
+                    intentEliminaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI_AUTORE, progettiAutore.toString());
+                    intentEliminaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI, progetti.toString());
+                    intentEliminaProgetto.putExtra(ActivityConstants.INTENT_RETURN, false);
+                    startActivity(intentEliminaProgetto);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                }
+
+                Snackbar.make(v, "Non sono presenti progetti da eliminare", Snackbar.LENGTH_SHORT).show();
+
             }
         });
 
 
-        // TODO: Progress bar al download dei progetti
         binding.btnCrea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (progettiAutore != null) {
                     Intent intentCreaProgetto = new Intent(getApplicationContext(), CreazioneProgetto.class);
-                    intentCreaProgetto.putExtra("progetti", progettiDaSelezionare.toString());
+                    intentCreaProgetto.putExtra(ActivityConstants.INTENT_LISTA_PROGETTI, progettiDaSelezionare.toString());
                     startActivity(intentCreaProgetto);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 } else {
@@ -168,9 +171,10 @@ public class HomePageSomministratore extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        FirebaseAuth.getInstance().getCurrentUser();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         MenuItem item = menu.findItem(R.id.addSomm);
-        if (! email.equals(ActivityConstants.AUTHORIZED_EMAIL))
+        if (!email.equals(ActivityConstants.AUTHORIZED_EMAIL) && !email.equals(ActivityConstants.EMAIL_ADMIN) && !email.equals(ActivityConstants.EMAIL_PROF))
             item.setVisible(false);
 
         return true;
@@ -235,14 +239,13 @@ public class HomePageSomministratore extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO : cambiare logica
     private void updateUI() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         boolean fromHome = false;
 
         if (currentUser == null){
             Intent intentLogout = new Intent(this, LoginProfessore.class);
-            intentLogout.putExtra("fromHome", fromHome);
+            intentLogout.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
             if(fromHome == false){
                 startActivity(intentLogout);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);

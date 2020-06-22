@@ -1,18 +1,10 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -30,6 +22,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.unimib.bicap.ItemSearch;
+import it.unimib.bicap.R;
 import it.unimib.bicap.adapter.ProgettiAdapterRV;
 import it.unimib.bicap.db.DBManager;
 import it.unimib.bicap.service.GetterInfo;
@@ -48,7 +42,7 @@ public class QuestionariDaFare extends Fragment {
     private JSONArray progettiDaFare;
     private JSONArray progettiDaCercare;
     private String nomeProgetto;
-    private List<ExampleItem> exampleList = new ArrayList();
+    private List<ItemSearch> exampleList = new ArrayList();
     private GetterInfo getterInfo = new GetterLocal();
     private RecyclerView recyclerView;
     private View rootView;
@@ -92,7 +86,7 @@ public class QuestionariDaFare extends Fragment {
 
         for (int i = 0;i<progettiDaFare.length();i++){
             try {
-                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progettiDaFare.getJSONObject(i)), getterInfo.getDescrizione(progettiDaFare.getJSONObject(i))));
+                exampleList.add(new ItemSearch(getterInfo.getNomeProgetto(progettiDaFare.getJSONObject(i)), getterInfo.getDescrizione(progettiDaFare.getJSONObject(i))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -125,7 +119,6 @@ public class QuestionariDaFare extends Fragment {
 
     }
 
-    // TODO: Implementare l'update del DataSet nel adapter
     public JSONArray cerca(String query) {
         try {
             for (int i = 0; i < progetti.length(); i++) {

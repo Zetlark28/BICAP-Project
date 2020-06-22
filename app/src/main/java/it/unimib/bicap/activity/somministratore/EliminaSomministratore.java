@@ -1,8 +1,9 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,16 +18,17 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
+import it.unimib.bicap.ItemSearch;
+import it.unimib.bicap.R;
+import it.unimib.bicap.activity.somministratore.GestioneSomministratore;
+import it.unimib.bicap.adapter.EliminaAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaSomministratoreBinding;
 
@@ -34,9 +36,10 @@ public class EliminaSomministratore extends AppCompatActivity {
 
     private ActivityEliminaSomministratoreBinding binding;
     private static final String TAG = "EliminaSomministratore";
-    ProgettiDaEliminareAdapterRV progettiAdapter;
-    private List <ExampleItem> exampleList = new ArrayList();
+    EliminaAdapterRV progettiAdapter;
+    private List <ItemSearch> exampleList = new ArrayList();
     SearchView searchView;
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,16 +49,16 @@ public class EliminaSomministratore extends AppCompatActivity {
         Log.d(TAG, "Intent: " + intent.toString());
         HashMap<String, String> nomiSomm;
         List<String> somministratori = new ArrayList<>();
-        boolean valore = getIntent().getBooleanExtra("home", false);
+        boolean valore = getIntent().getBooleanExtra(ActivityConstants.INTENT_HOME, false);
         if (valore) {
-            nomiSomm = (HashMap<String, String>) intent.getSerializableExtra("somministratori");
+            nomiSomm = (HashMap<String, String>) intent.getSerializableExtra(ActivityConstants.INTENT_SOMMINISTRATORI);
             for (Map.Entry<String, String> entry : nomiSomm.entrySet()) {
-                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+                this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
             }
         } else{
             HashMap<String, String> pazzi = (HashMap<String, String>) intent.getSerializableExtra("pazzi");
             for (Map.Entry<String, String> entry : pazzi.entrySet()) {
-                this.exampleList.add(new ExampleItem(entry.getValue(), entry.getKey()));
+                this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
             }
         }
         List<String> emails = intent.getStringArrayListExtra("emails");
@@ -65,7 +68,7 @@ public class EliminaSomministratore extends AppCompatActivity {
         View v = binding.getRoot();
         setContentView(v);
 
-        for (ExampleItem item : exampleList){
+        for (ItemSearch item : exampleList){
             Log.d(TAG, "Nome: " + item.getTextNome());
             Log.d(TAG, "Email: " + item.getTextEmail());
         }
@@ -90,7 +93,7 @@ public class EliminaSomministratore extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvSomministratoreDaEliminare.setLayoutManager(linearLayoutManager);
         //progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, emails, this);
-        progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), exampleList, this);
+        progettiAdapter = new EliminaAdapterRV(getApplicationContext(), exampleList, this);
         binding.rvSomministratoreDaEliminare.setAdapter(progettiAdapter);
 
         showAlertDialog(this, "ciao","mamma", true);

@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -21,33 +21,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
-import it.unimib.bicap.adapter.ProgettiDaEliminareAdapterRV;
+import it.unimib.bicap.ItemSearch;
+import it.unimib.bicap.R;
+import it.unimib.bicap.activity.somministratore.HomePageSomministratore;
+import it.unimib.bicap.adapter.EliminaAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
+import it.unimib.bicap.exception.EliminaProgettiException;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
 public class EliminaProgetti extends AppCompatActivity {
 
     private static final String TAG = "EliminaProgetti";
-    private ActivityEliminaProgettiBinding binding;
     private static JSONObject progetti;
     private static JSONArray progettiAutore;
-    private SearchView searchView;
-    ProgettiDaEliminareAdapterRV progettiAdapter;
-    private List <ExampleItem> exampleList = new ArrayList();
+    EliminaAdapterRV progettiAdapter;
     GetterInfo getterInfo = new GetterLocal();
 
     public static void setProgetti(JSONObject progetti) {
         EliminaProgetti.progetti = progetti;
-    }
-
-    public static void setProgettiAutore(JSONArray progettiAutore) {
-        EliminaProgetti.progettiAutore = progettiAutore;
     }
 
     String from = "eliminaProgetti";
@@ -57,14 +52,13 @@ public class EliminaProgetti extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityEliminaProgettiBinding.inflate(getLayoutInflater());
+        it.unimib.bicap.databinding.ActivityEliminaProgettiBinding binding = ActivityEliminaProgettiBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(ActivityConstants.ELIMINA_PROGETTI_TOOLBAR_TITLE);
         setSupportActionBar(toolbar);
-        //final EliminaProgetti instance = this;
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -76,24 +70,34 @@ public class EliminaProgetti extends AppCompatActivity {
             }
         });
         try {
-//            if(progettiAutore==null)
-
-            //TODO: check extras not null
-            boolean ritorno = getIntent().getBooleanExtra("return", false);
-            if (! ritorno) {
-                progettiAutore = new JSONArray(getIntent().getExtras().getString("listaProgettiAutore"));
-                progetti = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString("listaProgetti")));
+            boolean ritorno = getIntent().getBooleanExtra(ActivityConstants.INTENT_RETURN, false);
+            if (!ritorno) {
+                String progettiAutoreString = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PROGETTI_AUTORE);
+                String progettiString = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PROGETTI);
+                if(progettiString == null)
+                    throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_NULL;
+                if(progettiAutoreString==null)
+                    throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_AUTORE_NULL;
+                progetti = new JSONObject(progettiString);
+                progettiAutore = new JSONArray(progettiAutoreString);
             } else {
-                progettiAutore = new JSONArray(getIntent().getExtras().getString("newList"));
-                progetti = new JSONObject(Objects.requireNonNull(getIntent().getExtras().getString("newObject")));
+                String progettiAutoreString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST_AUTORE);
+                String progettiString = getIntent().getStringExtra(ActivityConstants.INTENT_NEW_LIST_TOT);
+                if(progettiString == null)
+                    throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_NULL;
+                if(progettiAutoreString==null)
+                    throw EliminaProgettiException.ELIMINA_PROGETTI_LISTA_PROGETTI_AUTORE_NULL;
+                progettiAutore = new JSONArray(progettiAutoreString);
+                progetti = new JSONObject(progettiString);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        List <ItemSearch> exampleList = new ArrayList<>();
         for (int i = 0;i<progettiAutore.length();i++){
             try {
-                exampleList.add(new ExampleItem(getterInfo.getNomeProgetto(progettiAutore.getJSONObject(i)), getterInfo.getDescrizione(progettiAutore.getJSONObject(i))));
+                exampleList.add(new ItemSearch(getterInfo.getNomeProgetto(progettiAutore.getJSONObject(i)), getterInfo.getDescrizione(progettiAutore.getJSONObject(i))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -101,7 +105,7 @@ public class EliminaProgetti extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvProgettiDaEliminare.setLayoutManager(linearLayoutManager);
-        progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), progettiAutore, exampleList, progetti ,this);
+        progettiAdapter = new EliminaAdapterRV(getApplicationContext(), progettiAutore, exampleList, progetti ,this);
         binding.rvProgettiDaEliminare.setAdapter(progettiAdapter);
 
     }
@@ -112,7 +116,7 @@ public class EliminaProgetti extends AppCompatActivity {
         inflater.inflate(R.menu.menu_ricerca, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
+        SearchView searchView = (SearchView) searchItem.getActionView();
 
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

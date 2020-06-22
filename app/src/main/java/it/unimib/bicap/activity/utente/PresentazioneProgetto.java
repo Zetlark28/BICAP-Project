@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.utente;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,11 +15,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import it.unimib.bicap.R;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityPresentazioneProgettoBinding;
+import it.unimib.bicap.domain.Progetto;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
-import it.unimib.bicap.service.Intermediate;
-import it.unimib.bicap.domain.Progetto;
 
 public class PresentazioneProgetto extends AppCompatActivity {
     private static final String TAG = "PresentazioneProgetto";
@@ -36,10 +37,9 @@ public class PresentazioneProgetto extends AppCompatActivity {
         setContentView(v);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //JSONObject obj = (JSONObject) getIntent().getSerializableExtra("obj");
         JSONObject obj = null;
         try {
-            obj = new JSONObject(getIntent().getStringExtra("obj"));
+            obj = new JSONObject(getIntent().getStringExtra(ActivityConstants.INTENT_PROGETTO));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -68,64 +68,17 @@ public class PresentazioneProgetto extends AppCompatActivity {
         final JSONArray passi = getterInfo.getPassi(finalObj);
         Log.d(TAG, "passi: " + passi.toString());
 
-        final String modalita = getIntent().getStringExtra("mode");
+        final String modalita = getIntent().getStringExtra(ActivityConstants.INTENT_MODALITA);
 
         binding.btnStartProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                intentIntermediate.putExtra("listaPassi", passi.toString());
-                intentIntermediate.putExtra("idProgetto", String.valueOf(id));
-                intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
-                intentIntermediate.putExtra("mode", modalita);
+                intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi.toString());
+                intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, String.valueOf(id));
+                intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
+                intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, modalita);
                 startActivity(intentIntermediate);
-
-
-
-                /*JSONObject passo = getterInfo.getPasso(getterInfo.getPassi(finalObj), 0);
-                Log.d(TAG, "passo: " + passo.toString());
-                String tipo = "";
-                String tipo1 = "";
-                try {
-                    tipo = getterInfo.getTipo(passo);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
-
-                tipo = "pdf";
-
-                if (tipo.equals("video")){
-
-
-
-                    // TODO: Qui sotto ci andrà il link parsato del video
-                    *//*Intent intentVideo = new Intent(getApplicationContext(), ExoPlayerStream.class);
-                    intentVideo.putExtra("linkVideo", "https://firebasestorage.googleapis.com/v0/b/videoupload-c8474.appspot.com/o/Video%2Fvideoplayback.mp4?alt=media&token=89437c18-758c-4482-9fe3-23698d3c277f");
-                    startActivity(intentVideo);*//*
-
-                } else if (tipo.equals("pdf")){
-
-                    // TODO: Qui sotto ci andrà il link parsato del PDF
-                    boolean finito = Utility.downloadPDF("https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Documenti%2FFile-6?alt=media&token=12840198-bfd8-4fa2-aa4b-0ab871ba0bb3");
-                    while (!finito){
-                    }
-                   // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
-                    Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
-                    intentPDF.putExtra("guideOrPDF", "PDF");
-                    intentPDF.putExtra("NomeProgetto", nomeProgetto);
-                    startActivity(intentPDF);
-
-
-                } else if (tipo.equals("questionario")){
-                    // TODO: Aggiungere il reindirizzamento all'activity web view
-                    tipo1 = getterInfo.getLink(passo);
-                    Intent intentWeb = new Intent(getApplicationContext(), Survey.class);
-                    intentWeb.putExtra("web", tipo1);
-                    startActivity(intentWeb);
-                    finish();
-                }*/
             }
         });
     }

@@ -1,4 +1,4 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.SyncStateContract;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +20,8 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 
 public class LaunchScreen extends AppCompatActivity {
@@ -30,8 +33,8 @@ public class LaunchScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch_screen);
-        //TODO : download progetti
-        //TODO: salva in shared preferences
+
+        SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         StorageReference ref = mStorageRef.child(ActivityConstants.FIREBASE_STORAGE_CHILD_PROGETTI);

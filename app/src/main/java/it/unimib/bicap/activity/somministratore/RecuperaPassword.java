@@ -1,9 +1,8 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity.somministratore;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,6 +15,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
+import it.unimib.bicap.activity.HomePage;
+import it.unimib.bicap.R;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityRecuperaPasswordBinding;
 
 public class RecuperaPassword extends AppCompatActivity {
@@ -43,7 +45,7 @@ public class RecuperaPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent logInSomministratore = new Intent(getApplicationContext(), LoginProfessore.class);
-                logInSomministratore.putExtra("fromHome", true);
+                logInSomministratore.putExtra(ActivityConstants.INTENT_FROM_HOME, true);
                 startActivity(logInSomministratore);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();

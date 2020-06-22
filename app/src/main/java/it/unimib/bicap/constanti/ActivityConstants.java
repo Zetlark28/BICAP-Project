@@ -20,9 +20,31 @@ public class ActivityConstants {
 
     public static final String FIREBASE_STORAGE_CHILD_PROGETTI = "/Progetti/progetti.json";
 
-    public static final String URL_EXIT = "google";
-    public static final String URL_ERROR = "facebook";
+    public static final String URL_EXIT = "surveymib.success";
+    public static final String URL_ERROR = "surveymib.error";
 
+    public static final String INTENT_LISTA_PASSI = "listaPassi";
+    public static final String INTENT_NOME_PROGETTO="nomeProgetto";
+    public static final String INTENT_ID_PROGETTO = "idProgetto";
+    public static final String INTENT_MODALITA = "modalita";
+    public static final String INTENT_PROGETTO = "progetto";
+    public static final String INTENT_LISTA_PROGETTI_AUTORE = "listaProgettiAutore";
+    public static final String INTENT_LISTA_PROGETTI = "listaProgetti";
+    public static final String INTENT_N_PASSO = "nPasso";
+    public static final String INTENT_WEB ="web";
+    public static final String INTENT_RETURN = "return";
+    public static final String INTENT_NEW_LIST_AUTORE = "newListAutore";
+    public static final String INTENT_NEW_LIST_TOT= "newListTot";
+    public static final String INTENT_NEW_OBJECT = "newObject";
+    public static final String INTENT_HOME ="home";
+    public static final String INTENT_SOMMINISTRATORI = "somministratori";
+    public static final String INTENT_GUIDE_OR_PDF ="guideOrPDF";
+    public static final String INTENT_EMAIL= "email";
+    public static final String INTENT_FROM_HOME ="fromHome";
+    public static final String INTENT_LINK_VIDEO = "linkVideo";
+
+    public static final String EMAIL_ADMIN = "bicap.project@gmail.com";
+    public static final String EMAIL_PROF = "massimo.miglioretti@unimib.it";
 
 
 

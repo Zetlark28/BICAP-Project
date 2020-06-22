@@ -14,24 +14,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.content.DialogInterface;
 
 import com.github.barteksc.pdfviewer.PDFView;
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.json.JSONArray;
 
 import java.io.File;
 import java.io.FileInputStream;
 
-import it.unimib.bicap.GestioneSomministratore;
-import it.unimib.bicap.HomePage;
-import it.unimib.bicap.HomePageSomministratore;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.R;
+import it.unimib.bicap.activity.utente.Intermediate;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
 import it.unimib.bicap.db.DBManager;
 
-// TODO: creare if-else per capire se sto aprendo la guida o un file da firebase
 public class PDFViewer extends AppCompatActivity {
 
     private final static String PDF_UNIQUE_PATH = "/data/data/it.unimib.bicap/cache/PDF.pdf";
@@ -58,16 +53,16 @@ public class PDFViewer extends AppCompatActivity {
         setSupportActionBar(mTopToolbar);
 
         pdfView = binding.pdfView;
-        guideOrPDF = getIntent().getStringExtra("guideOrPDF");
-        idProgetto = getIntent().getStringExtra("idProgetto");
-        passi = getIntent().getStringExtra("listaPassi");
-        nomeProgetto = getIntent().getStringExtra("NomeProgetto");
-        nPasso = getIntent().getStringExtra("nPasso");
+        guideOrPDF = getIntent().getStringExtra(ActivityConstants.INTENT_GUIDE_OR_PDF);
+        idProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_ID_PROGETTO);
+        passi = getIntent().getStringExtra(ActivityConstants.INTENT_LISTA_PASSI);
+        nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
+        nPasso = getIntent().getStringExtra(ActivityConstants.INTENT_N_PASSO);
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(nomeProgetto);
         setSupportActionBar(toolbar);
-        // TODO: passo qui una stringa, se è PDF vuol dire che devo aprire il documento PDF con link, viceversa apro la guida
-        if (guideOrPDF.equals("PDF")) {
+
+        if (guideOrPDF!=null && guideOrPDF.equals("PDF")) {
             openPDF();
         } else {
             openGuida();
@@ -128,10 +123,10 @@ public class PDFViewer extends AppCompatActivity {
                 //TODO: Aggiornare DataBase
                 dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso) + 1);
                 Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                intentIntermediate.putExtra("mode", "daTerminare");
-                intentIntermediate.putExtra("idProgetto", idProgetto);
-                intentIntermediate.putExtra("listaPassi", passi);
-                intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+            intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "daTerminare");
+            intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
+            intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+            intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                 startActivity(intentIntermediate);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();

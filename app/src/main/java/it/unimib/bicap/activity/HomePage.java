@@ -1,26 +1,20 @@
-package it.unimib.bicap;
+package it.unimib.bicap.activity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,9 +25,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
+import it.unimib.bicap.R;
+import it.unimib.bicap.activity.somministratore.LoginProfessore;
+import it.unimib.bicap.activity.utente.ListaProgetti;
+import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
 public class HomePage extends AppCompatActivity {
@@ -42,7 +38,7 @@ public class HomePage extends AppCompatActivity {
     private ActivityHomepageBinding binding;
     private boolean esisteMail;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    FirebaseUser currentFirebaseUser = mAuth.getCurrentUser() ;
+    FirebaseUser utenteCorrenteFirebase = mAuth.getCurrentUser() ;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
     SharedPreferences sharedPref;
@@ -50,35 +46,6 @@ public class HomePage extends AppCompatActivity {
     private boolean valore = false;
     private ProgressDialog dialog;
     private CountDownTimer cTimer;
-
-    //alertDialog Homepage
-    /*public void showAlertDialog(final Context context, String title, String message,
-                                Boolean status) {
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Caricamento in corso")
-                .setMessage("Attendere...")
-                .setCancelable(false)
-                .create();
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            private static final int AUTO_DISMISS_MILLIS = 3000;
-            @Override
-            public void onShow(final DialogInterface dialog) {
-                new CountDownTimer(AUTO_DISMISS_MILLIS, 100) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-
-                    }
-                    @Override
-                    public void onFinish() {
-                        if (((AlertDialog) dialog).isShowing()) {
-                            dialog.dismiss();
-                        }
-                    }
-                }.start();
-            }
-        });
-        dialog.show();
-    }*/
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -88,7 +55,7 @@ public class HomePage extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
 
         dialog = new ProgressDialog(this);
         dialog.setTitle("Caricamento in corso");
@@ -102,22 +69,20 @@ public class HomePage extends AppCompatActivity {
         editor.remove("sommAttivi");
         editor.apply();
 
-        if (currentFirebaseUser != null){
-            Log.d(TAG, "utente: " + currentFirebaseUser.getEmail());
+        if (utenteCorrenteFirebase != null){
+            Log.d(TAG, "utente: " + utenteCorrenteFirebase.getEmail());
             //final String idUser = currentFirebaseUser.getUid();
             //final CountDownLatch latch = new CountDownLatch(1);
             // Read from the database
-            myRef.addValueEventListener(new ValueEventListener() {
+            myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
                     for (DataSnapshot d : dataSnapshot.getChildren()){
                         Log.d(TAG, "prova");
                         //Log.d(TAG, "email ciclo: " + d.child("email").getValue().toString() + " attivo? " + d.child("attivo").getValue().toString());
                         key = d.getKey();
-                        Log.d(TAG, "email somm: " + currentFirebaseUser.getEmail());
-                        if (d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && d.child("email").getValue().equals(currentFirebaseUser.getEmail())){
+                        Log.d(TAG, "email somm: " + utenteCorrenteFirebase.getEmail());
+                        if (d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && d.child("email").getValue().equals(utenteCorrenteFirebase.getEmail())){
                             Log.d(TAG, "entro email trovata");
                             esisteMail = true;
                             Log.d(TAG, "email: " + d.child("email").getValue().toString() + ", attivo: " + d.child("attivo").getValue().toString());
@@ -162,9 +127,9 @@ public class HomePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
-                intentLogInProf.putExtra("fromHome", true);
-                instance.finish();
+                intentLogInProf.putExtra(ActivityConstants.INTENT_FROM_HOME, true);
                 startActivity(intentLogInProf);
+                instance.finish();
             }
         });
 
@@ -183,7 +148,7 @@ public class HomePage extends AppCompatActivity {
 
     private boolean leggiSomministratori() {
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<String> sommAttivi = new ArrayList<>();
