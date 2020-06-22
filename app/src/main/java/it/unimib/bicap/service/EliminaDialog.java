@@ -67,14 +67,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
         }
     }
 
-    /*public EliminaDialog(HashMap<String, String> nomiSomministratori, String key, Integer index, ProgettiDaEliminareAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
-        this.nomiSomministratori = nomiSomministratori;
-        this.key = key;
-        this.index = index;
-        this.progettiAdapterSommRV = istanzaProgettiDaEliminareAdapterRV;
-        this.activityDelSomm = eliminaActivity;
-        this.message = message;
-    }*/
 
     public EliminaDialog(List<ItemSearch> exampleList, String key, Integer index, EliminaAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
         this.exampleList = exampleList;
@@ -101,14 +93,12 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     JSONArray listaNuova = new JSONArray();
                                     JSONObject nuoviProgetti = null;
                                     Integer idElimina = null;
-                                    //List<ItemSearch> exampleListNew = new ArrayList<>();
                                     //primo for serve  per identificare il json da eliminare all'interno della lista intera di progetti
                                     //secondo for serve per inizializzare una nuova lista di jsonObject che l'utente vedrà senza inserire il json identificato precedentemente
                                     try {
                                         for (int i = 0; i < listaProgetti.length(); i++) {
                                             if (i != index) {
                                                 listaNuova.put(listaProgetti.getJSONObject(i));
-                                                //exampleListNew.add(new ItemSearch(getterInfo.getNomeProgetto(listaProgetti.getJSONObject(i)), getterInfo.getDescrizione(listaProgetti.getJSONObject(i))));
                                             } else
                                                 idElimina = listaProgetti.getJSONObject(i).getInt("id");
                                         }
@@ -128,7 +118,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                         e.printStackTrace();
                                     }
 
-                                    //TODO: dialog on process e metodo di riscrittura file progetti.json
                                     Intent intentDelProj = new Intent(getContext(), EliminaProgetti.class);
                                     intentDelProj.putExtra(ActivityConstants.INTENT_RETURN, true);
                                     intentDelProj.putExtra(ActivityConstants.INTENT_NEW_LIST_AUTORE, listaNuova.toString());
@@ -138,60 +127,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     dismiss();
                                     startActivity(intentDelProj);
                                     Log.d(TAG, "eliminato");
-
-
-                                    //dismiss();
                                 }
-                                else{/*
-                                    final String email = key;
-                                    final List<String> emailSomm = new ArrayList<>();
-                                    final String autore = nomiSomministratori.get(email);
-                                    final HashMap<String, String> nuovaHashMap = new HashMap<>();
-                                    final List<String> nomiSomm = new ArrayList<>();
-
-                                    myRef.addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            // This method is called once with the initial value and again
-                                            // whenever data at this location is updated.
-                                            for (DataSnapshot d : dataSnapshot.getChildren()){
-                                                if(d.child("email").getValue()!= null && d.child("autore").getValue()!=null && d.child("attivo").getValue()!=null) {
-                                                    if (d.child("autore").getValue().equals(autore) && d.child("email").getValue().equals(email)) {
-                                                        nomiSomministratori.remove(email);
-                                                        HashMap<String, Object> map = new HashMap<>();
-                                                        map.put("attivo", "false");
-                                                        d.getRef().updateChildren(map);
-                                                    } else {
-                                                        if (d.child("attivo").getValue().equals("true") && ! d.child("email").getValue().equals("admin@admin.com")) {
-                                                            nuovaHashMap.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
-                                                            nomiSomm.add(d.child("autore").getValue().toString());
-                                                            emailSomm.add(d.child("email").getValue().toString());
-                                                        }
-                                                    }
-                                                }
-                                                //TODO: reinizializzare anche lista delle email
-                                            }
-                                            //String value = dataSnapshot.getValue(String.class);
-                                            //Log.d(TAG, "Value is: " + value);
-                                            //ProgettiDaEliminareAdapterRV.setSomministratori(nuovaHashMap);
-                                            //progettiAdapterSommRV.notifyItemRemoved(index);
-                                            ProgettiDaEliminareAdapterRV.setNomiSomm(nomiSomm);
-                                            ProgettiDaEliminareAdapterRV.setNomiSomministratori(nuovaHashMap);
-                                            Log.d(TAG, "nuova Hashmap: " + nuovaHashMap.toString());
-                                            ProgettiDaEliminareAdapterRV.setEmailSomm(emailSomm);
-                                            Log.d(TAG, emailSomm.toString());
-                                            //progettiAdapterSommRV.notifyItemRemoved(index);
-                                            progettiAdapterSommRV.notifyDataSetChanged();
-                                            //progettiAdapterSommRV.notifyDataSetChanged();
-                                            dismiss();
-                                        }
-
-                                        @Override
-                                        public void onCancelled(DatabaseError error) {
-                                            // Failed to read value
-                                            //Log.w(TAG, "Failed to read value.", error.toException());
-                                        }
-                                    });*/
+                                else{
                                     final String autore = exampleList.get(index).getTextNome();
                                     final String email = exampleList.get(index).getTextEmail();
                                     final List<ItemSearch> exampleListNew = new ArrayList<>();
@@ -208,10 +145,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                                         d.getRef().updateChildren(map);
                                                     } else {
                                                         if (d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && !d.child("email").getValue().equals("admin@admin.com")) {
-                                                            /*String autore1 = d.child("autore").getValue().toString();
-                                                            Log.d(TAG, "autore New: " + autore1);
-                                                            String email1 = d.child("email").getValue().toString();
-                                                            Log.d(TAG, "email New: " + email1);*/
                                                             boolean valore = false;
                                                             for(ItemSearch item : exampleListNew){
                                                                 if (item.getTextNome().equals(d.child("autore").getValue().toString()) && item.getTextEmail().equals(d.child("email").getValue().toString())){
@@ -233,15 +166,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                                 map.put(item.getTextEmail(), item.getTextNome());
                                             }
                                             Intent intentPazzo = new Intent(activityDelSomm, GestioneSomministratore.class);
-//                                            intentPazzo.putExtra("pazzi", map);
-//                                            intentPazzo.putExtra(ActivityConstants.INTENT_HOME, false);
                                             startActivity(intentPazzo);
                                             activityDelSomm.finish();
-                                            /*progettiAdapterSommRV.setExampleList(exampleListNew);
-                                            progettiAdapterSommRV.setExampleListFull(exampleListNew);
-                                            //progettiAdapterSommRV.notifyItemRemoved(index);
-                                            progettiAdapterSommRV.notifyDataSetChanged();
-                                            dismiss();*/
                                         }
 
                                         @Override
