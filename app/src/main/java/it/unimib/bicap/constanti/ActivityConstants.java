@@ -43,6 +43,9 @@ public class ActivityConstants {
     public static final String INTENT_FROM_HOME ="fromHome";
     public static final String INTENT_LINK_VIDEO = "linkVideo";
 
+    public static final String EMAIL_ADMIN = "bicap.project@gmail.com";
+    public static final String EMAIL_PROF = "massimo.miglioretti@unimib.it";
+
 
 
 }
