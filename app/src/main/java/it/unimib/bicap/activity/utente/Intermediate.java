@@ -156,8 +156,8 @@ public class Intermediate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //TODO: CAMBIARE IL THANOS
-                if(modalitaFinal.equals("Thanos")){
+
+                if(modalitaFinal.equals("notFit")){
                     Intent tornaHomePage = new Intent(getApplicationContext(), HomePage.class);
                     startActivity(tornaHomePage);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
@@ -174,10 +174,6 @@ public class Intermediate extends AppCompatActivity {
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
 
                 } else if (finalTipo.equals("pdf")){
-
-                    // TODO: Controllo fine download pdf
-
-                    // TODO: Dopo aver scaricato il PDF si può aprirlo in PDFViewer
                     Intent intentPDF = new Intent(getApplicationContext(), PDFViewer.class);
                     intentPDF.putExtra(ActivityConstants.INTENT_GUIDE_OR_PDF, "PDF");
                     intentPDF.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);

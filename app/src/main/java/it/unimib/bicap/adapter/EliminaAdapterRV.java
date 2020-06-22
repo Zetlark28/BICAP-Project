@@ -282,4 +282,3 @@ public class EliminaAdapterRV extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 }
 
-//TODO: implementare controllo quanado la lista dei progetti rimane vuota (Adapter non funziona altrimenti errore nel getJSONArray())
