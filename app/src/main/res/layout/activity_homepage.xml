@@ -70,7 +70,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto"
                             android:padding="5dp"
-                            android:text="Compila i Questionari"
+                            android:text="@string/compila_i_questionari"
                             android:textAppearance="?attr/textAppearanceHeadline6"
                             android:textColor="@color/colorPrimary" />
 
@@ -79,7 +79,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="3dp"
-                            android:text="In questa sezione, andrai a compilare i questionari disponibili"
+                            android:text="@string/in_questa_sezione_andrai_a_compilare_i_questionari_disponibili"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="?android:attr/textColorSecondary" />
 
@@ -90,7 +90,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal|end"
                             android:layout_marginTop="10dp"
-                            android:text="Rispondi ai questionari" />
+                            android:text="@string/rispondi_ai_questionari" />
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -132,7 +132,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto"
                             android:padding="5dp"
-                            android:text="Area Somministratore"
+                            android:text="@string/area_somministratore"
                             android:textAppearance="?attr/textAppearanceHeadline6"
                             android:textColor="@color/colorPrimary" />
 
@@ -141,7 +141,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="3dp"
-                            android:text="In questa sezione, andrai a creare i progetti che verranno visualizzati dagli utenti"
+                            android:text="@string/in_questa_sezione_andrai_a_creare_i_progetti_che_verranno_visualizzati_dagli_utenti"
                             android:textAppearance="?attr/textAppearanceBody2"
                             android:textColor="?android:attr/textColorSecondary" />
 

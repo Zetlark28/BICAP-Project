@@ -177,7 +177,7 @@ public class HomePageSomministratore extends AppCompatActivity {
         FirebaseAuth.getInstance().getCurrentUser();
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         MenuItem item = menu.findItem(R.id.addSomm);
-        if (!email.equals(ActivityConstants.AUTHORIZED_EMAIL) || !email.equals(ActivityConstants.EMAIL_ADMIN) || !email.equals(ActivityConstants.EMAIL_PROF))
+        if (!email.equals(ActivityConstants.AUTHORIZED_EMAIL) && !email.equals(ActivityConstants.EMAIL_ADMIN) && !email.equals(ActivityConstants.EMAIL_PROF))
             item.setVisible(false);
 
         return true;
