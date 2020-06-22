@@ -128,8 +128,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
                     binding.tfAutore.setVisibility(View.VISIBLE);
                     binding.tfPassword.setVisibility(View.VISIBLE);
                     binding.etEmailSomm.setText("");
-                    //binding.etPassword.setText("");
-                    //binding.etAutore.setText("");
+                    binding.etPasswordSomm.setText("");
+                    binding.etNomeSomm.setText("");
                 }
             }
         });
