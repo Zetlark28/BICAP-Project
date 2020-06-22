@@ -11,7 +11,7 @@
     <string name="requisiti">Requisiti</string>
     <string name="numero_questionari">Numero Componenti</string>
     <string name="creaPasso">Crea passo</string>
-    <string name="area_somministratore">AREA SOMMINISTRATORE</string>
+    <string name="area_somministratore">Area somministratore</string>
     <string name="rispondi_ai_quiz">RISPONDI AI QUIZ</string>
     <string name="inserisci_dati">INSERISCI DATI</string>
     <string name="nome">Nome</string>
@@ -46,19 +46,18 @@
     <string name="intermediate_tvDettaglioPasso_nonIdoneo">Mi dispiace non sei idoneo al progetto, verrai reindirizzato alla homepage.</string>
     <string name="intermediate_btnAvanti_nonIdoneo">Torna alla homepage</string>
     <string name="intermediate_tvTitolo_video">Stai per visualizzare un video</string>
-    <string name="intermediate_tvDettaglioPasso_video">In questo passo stai per visualizzare un contenuto video.\n
-        Ricordati che, una volta finito di visionare il video, verrai automaticamente reindirizzato al passo successivo dopo che il video finisce.</string>
-    <string name="intermediate_tvDettaglio_PDF">In questo passo stai per visualizzare un contenuto PDF.\n
-        Ricordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante \'avanti\' in alto a destra della toolbar</string>
+    <string name="intermediate_tvDettaglioPasso_video">In questo passo stai per visualizzare un contenuto video.\nRicordati che, una volta finito di visionare il video, verrai automaticamente reindirizzato al passo successivo dopo che il video finisce.</string>
+    <string name="intermediate_tvDettaglio_PDF">In questo passo stai per visualizzare un contenuto PDF.\nRicordati che, una volta finito di visionare il PDF, dovrai premere sul pulsante \'avanti\' in alto a destra della toolbar</string>
     <string name="intermediate_tvTitolo_PDF">Stai per visualizzare un PDF</string>
     <string name="intermediate_tvTitolo_questionario">Stai per svolgere un questionario</string>
-    <string name="intermediate_tvDettaglioPasso_questionario">In questo passo stai per rispondere al questionario.\n
-        Ricordati che, se non terminerai il questionario quest\'ultimo verrà inserito nella sezione \'survey sospesi\'.\n
-        Negli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.</string>
+    <string name="intermediate_tvDettaglioPasso_questionario">In questo passo stai per rispondere al questionario.\nRicordati che, se non terminerai il questionario quest\'ultimo verrà inserito nella sezione \'survey sospesi\'.\nNegli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.</string>
     <string name="intermediate_dialogTitle">Torna alla Homepage</string>
-    <string name="intermediate_dialogMessage">Sicuro di voler tornare indietro?\n
-        Ricordati che, se non terminerai il questionario quest\'ultimo verrà inserito nella sezione \'survey sospesi\'.\n
-        Negli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.</string>
+    <string name="intermediate_dialogMessage">Sicuro di voler tornare indietro?\nRicordati che, se non terminerai il questionario quest\'ultimo verrà inserito nella sezione \'survey sospesi\'.\nNegli altri casi invece, non potrai più rispondere alle domande quindi, prima di completarlo pensaci bene.</string>
     <string name="dialog_positive">Si</string>
     <string name="dialog_negative">No</string>
+    <string name="nome_card1">Aggiungi una risorsa</string>
+    <string name="compila_i_questionari">Compila i Questionari</string>
+    <string name="in_questa_sezione_andrai_a_compilare_i_questionari_disponibili">In questa sezione, andrai a compilare i questionari disponibili</string>
+    <string name="rispondi_ai_questionari">Rispondi ai questionari</string>
+    <string name="in_questa_sezione_andrai_a_creare_i_progetti_che_verranno_visualizzati_dagli_utenti">In questa sezione, andrai a creare i progetti che verranno visualizzati dagli utenti</string>
 </resources>
