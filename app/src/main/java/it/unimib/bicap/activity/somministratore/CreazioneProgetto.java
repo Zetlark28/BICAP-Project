@@ -44,7 +44,6 @@ public class CreazioneProgetto extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(ActivityConstants.CREAZIONE_PROGETTO_TOOLBAR_TITLE);
-        //TODO: inserire titolo questionario tramite metodo get
         setSupportActionBar(toolbar);
 
         final String autore = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE).getString(ActivityConstants.SHARED_PREFERENCE_AUTORE_KEY, null);

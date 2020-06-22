@@ -1,7 +1,6 @@
 package it.unimib.bicap.service;
 
 
-// TODO: Aggiungere i controlli sui metodi assincroni
 
 import android.app.ProgressDialog;
 import android.content.Context;

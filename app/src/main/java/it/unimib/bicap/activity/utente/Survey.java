@@ -74,7 +74,7 @@ public class Survey extends AppCompatActivity {
                     dbManager.deleteDaCompletare(Integer.parseInt(idProgetto));
                     dbManager.saveCompletati(Integer.parseInt(idProgetto));
                     Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-                    intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "Thanos");
+                    intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "notFit");
                     intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
                     intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
                     intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);

@@ -274,8 +274,4 @@ public class LoginProfessore extends AppCompatActivity {
     }
 }
 
-//TODO: Email: admin@admin.com Password:alessio
-//TODO: aaggiungere nome e cognome
-//TODO: aggiungere il controllo se viene eliminato e aggiungere la possibilità di eliminare un somministratore
-
 

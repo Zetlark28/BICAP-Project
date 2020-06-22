@@ -40,8 +40,6 @@ import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
 
-// TODO: Creare il menu a discesa coi vari pulsanti tra cui il LOGOUT/ Gestire il login
-// TODO: user & psw -> admin admin
 
 public class HomePageSomministratore extends AppCompatActivity {
     private static final int ONE_MB = 1024 * 1024;
@@ -78,7 +76,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        //TODO : metodi mancanti
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(ActivityConstants.HOMEPAGE_SOMMINISTRATORE_TOOLBAR_TITLE);
         setSupportActionBar(toolbar);
@@ -156,7 +153,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         });
 
 
-        // TODO: Progress bar al download dei progetti
         binding.btnCrea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,7 +235,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //TODO : cambiare logica
     private void updateUI() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         boolean fromHome = false;

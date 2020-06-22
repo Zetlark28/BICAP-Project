@@ -40,7 +40,6 @@ import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityExoplayerStreamBinding;
 import it.unimib.bicap.db.DBManager;
 
-// TODO: aggiungere cose fighe tipo la progressbar during buffering e vedere se quel fullscreen ci sta per davvero
 
 
 public class ExoPlayerStream extends AppCompatActivity {
@@ -76,10 +75,7 @@ public class ExoPlayerStream extends AppCompatActivity {
             TrackSelector trackSelector = new DefaultTrackSelector(new AdaptiveTrackSelection.Factory(bandwidthMeter));
             exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector);
 
-            // TODO: Passare il link del video ed assegnarlo alla seguente variabile
             String linkVideo = getIntent().getStringExtra(ActivityConstants.INTENT_LINK_VIDEO);
-            // Prova di video
-            //linkVideo = "https://firebasestorage.googleapis.com/v0/b/bicap-ffecb.appspot.com/o/Video%2FFile-49?alt=media&token=f049e892-e69b-4360-b017-1c792a8ab431";
             videoUri = Uri.parse(linkVideo);
             DefaultHttpDataSourceFactory dataSourceFactory = new DefaultHttpDataSourceFactory("exoplayer_video");
             ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
