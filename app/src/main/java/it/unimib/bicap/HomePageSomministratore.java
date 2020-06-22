@@ -37,6 +37,7 @@ import java.io.UnsupportedEncodingException;
 
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageSomministratoreBinding;
+import it.unimib.bicap.service.PDFViewer;
 
 // TODO: Creare il menu a discesa coi vari pulsanti tra cui il LOGOUT/ Gestire il login
 // TODO: user & psw -> admin admin
@@ -220,7 +221,10 @@ public class HomePageSomministratore extends AppCompatActivity {
             updateUI();
             return true;
         } else if (item.getItemId() == R.id.menuDownload) {
-
+            Intent pdfGuida = new Intent(this, PDFViewer.class);
+            pdfGuida.putExtra("guideOrPDF", "kek");
+            startActivity(pdfGuida);
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         } else if (item.getItemId() == R.id.addSomm) {
             String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             Intent intentAddSomm = new Intent(this, GestioneSomministratore.class);

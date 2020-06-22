@@ -26,6 +26,7 @@ import java.io.FileInputStream;
 
 import it.unimib.bicap.GestioneSomministratore;
 import it.unimib.bicap.HomePage;
+import it.unimib.bicap.HomePageSomministratore;
 import it.unimib.bicap.R;
 import it.unimib.bicap.databinding.ActivityPdfViewerBinding;
 import it.unimib.bicap.db.DBManager;
@@ -75,7 +76,11 @@ public class PDFViewer extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
+                if (guideOrPDF.equalsIgnoreCase("PDF")) {
+                    showDialog();
+                } else {
+                    onBackPressed();
+                }
             }
         });
     }
@@ -119,18 +124,18 @@ public class PDFViewer extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorite) {
-            //TODO: Aggiornare DataBase
 
-            dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso)+1);
-            Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-            intentIntermediate.putExtra("mode", "daTerminare");
-            intentIntermediate.putExtra("idProgetto", idProgetto);
-            intentIntermediate.putExtra("listaPassi", passi);
-            intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
-            startActivity(intentIntermediate);
-            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-            finish();
-            return true;
+                //TODO: Aggiornare DataBase
+                dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso) + 1);
+                Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
+                intentIntermediate.putExtra("mode", "daTerminare");
+                intentIntermediate.putExtra("idProgetto", idProgetto);
+                intentIntermediate.putExtra("listaPassi", passi);
+                intentIntermediate.putExtra("NomeProgetto", nomeProgetto);
+                startActivity(intentIntermediate);
+                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -158,7 +163,14 @@ public class PDFViewer extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-        showDialog();
+        if (guideOrPDF.equalsIgnoreCase("PDF")) {
+            showDialog();
+        } else {
+            Intent HomePageSomministratore = new Intent(this, it.unimib.bicap.HomePageSomministratore.class);
+            startActivity(HomePageSomministratore);
+            finish();
+            overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+        }
     }
 
     public void showDialogCaricamento(final Context context, String title, String message,
