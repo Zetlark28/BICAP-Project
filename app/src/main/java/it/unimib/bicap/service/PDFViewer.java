@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.github.barteksc.pdfviewer.PDFView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -38,6 +39,7 @@ public class PDFViewer extends AppCompatActivity {
     private String idProgetto;
     private String passi;
     private String nPasso;
+    private boolean buttonInvisible = false;
     private ActivityPdfViewerBinding binding;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +62,15 @@ public class PDFViewer extends AppCompatActivity {
         toolbar.setTitle(nomeProgetto);
         setSupportActionBar(toolbar);
 
+        if (!guideOrPDF.equalsIgnoreCase("PDF")) {
+            buttonInvisible = true;
+        }
+
         if (guideOrPDF!=null && guideOrPDF.equals("PDF")) {
             openPDF();
         } else {
             openGuida();
+
         }
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -108,9 +115,19 @@ public class PDFViewer extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_favorite);
+        if (buttonInvisible) {
+            item.setVisible(false);
+        }
+        return true;
+    }
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -118,13 +135,12 @@ public class PDFViewer extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorite) {
 
-                //TODO: Aggiornare DataBase
                 dbManager.updatePasso(Integer.parseInt(idProgetto), Integer.parseInt(nPasso) + 1);
                 Intent intentIntermediate = new Intent(getApplicationContext(), Intermediate.class);
-            intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "daTerminare");
-            intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
-            intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
-            intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
+                intentIntermediate.putExtra(ActivityConstants.INTENT_MODALITA, "daTerminare");
+                intentIntermediate.putExtra(ActivityConstants.INTENT_ID_PROGETTO, idProgetto);
+                intentIntermediate.putExtra(ActivityConstants.INTENT_LISTA_PASSI, passi);
+                intentIntermediate.putExtra(ActivityConstants.INTENT_NOME_PROGETTO, nomeProgetto);
                 startActivity(intentIntermediate);
                 overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
                 finish();
