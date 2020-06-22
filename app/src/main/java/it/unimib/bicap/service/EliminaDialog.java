@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import it.unimib.bicap.ItemSearch;
+import it.unimib.bicap.R;
 import it.unimib.bicap.activity.somministratore.EliminaProgetti;
 import it.unimib.bicap.activity.somministratore.EliminaSomministratore;
 import it.unimib.bicap.activity.somministratore.GestioneSomministratore;
@@ -126,6 +127,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     Utility.write(nuoviProgetti, activity, null);
                                     dismiss();
                                     startActivity(intentDelProj);
+                                    activity.overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                                     Log.d(TAG, "eliminato");
                                 }
                                 else{
