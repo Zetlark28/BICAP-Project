@@ -14,13 +14,7 @@ public class DBManager {
     public DBManager(Context ctx) {
         if(dbhelper == null)
             dbhelper=new DBHelper(ctx);
-        else
-            getDbhelper();
 
-    }
-
-    public DBHelper getDbhelper() {
-        return dbhelper;
     }
 
     public void saveCompletati( Integer idProgetto)
@@ -28,24 +22,15 @@ public class DBManager {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put(DBConstants.FIELD_ID_PROGETTO, idProgetto);
-        try {
-            db.insert(DBConstants.TBL_NAME_COMPLETATI, null,cv);
-        }
-        catch (SQLiteException sqle) {
+        db.insert(DBConstants.TBL_NAME_COMPLETATI, null,cv);
 
-        }
     }
     public void saveDaCompletare(Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put(DBConstants.FIELD_ID_PROGETTO, idProgetto);
-        try
-        {
-            db.insert(DBConstants.TBL_NAME_DA_COMPLETARE, null,cv);
-        }
-        catch (SQLiteException sqle) {
-        }
+        db.insert(DBConstants.TBL_NAME_DA_COMPLETARE, null,cv);
     }
     public void saveProgettoPasso(Integer idProgetto, Integer passo)
     {
@@ -53,30 +38,12 @@ public class DBManager {
         ContentValues cv=new ContentValues();
         cv.put(DBConstants.FIELD_ID_PROGETTO, idProgetto);
         cv.put(DBConstants.FIELD_N_PASSO, passo);
-        try
-        {
-            db.insert(DBConstants.TBL_NAME_PASSO_PROGETTO, null,cv);
-        }
-        catch (SQLiteException sqle) {
-        }
-    }
+        db.insert(DBConstants.TBL_NAME_PASSO_PROGETTO, null,cv);
 
-    public Cursor selectCompletati() {
-        Cursor crs=null;
-        try
-        {
-            SQLiteDatabase db=dbhelper.getReadableDatabase();
-            crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},null,null, null, null, null, null);
-        }
-        catch(SQLiteException sqle)
-        {
-            return null;
-        }
-        return crs;
     }
 
     public boolean isCompletato(int idProgetto){
-        Cursor crs=null;
+        Cursor crs;
         try
         {
             SQLiteDatabase db=dbhelper.getReadableDatabase();
@@ -96,7 +63,7 @@ public class DBManager {
         return true;
     }
     public boolean isDaCompletare(int idProgetto){
-        Cursor crs=null;
+        Cursor crs;
         try
         {
             SQLiteDatabase db=dbhelper.getReadableDatabase();
@@ -117,22 +84,8 @@ public class DBManager {
 
     }
 
-    public Cursor selectDaCompletare() {
-        Cursor crs=null;
-        try
-        {
-            SQLiteDatabase db=dbhelper.getReadableDatabase();
-            crs=db.query(DBConstants.TBL_NAME_COMPLETATI, new String[]{DBConstants.FIELD_ID_PROGETTO},null, null, null, null, null, null);
-        }
-        catch(SQLiteException sqle)
-        {
-            return null;
-        }
-        return crs;
-    }
-
     public Cursor selectNPasso(Integer progettoId) {
-        Cursor crs=null;
+        Cursor crs;
         try
         {
             SQLiteDatabase db=dbhelper.getReadableDatabase();
@@ -145,48 +98,11 @@ public class DBManager {
         return crs;
     }
 
-    public boolean deleteCompletati(Integer idProgetto)
+    public void deleteDaCompletare(Integer idProgetto)
     {
         SQLiteDatabase db=dbhelper.getWritableDatabase();
-        try
-        {
-            if (db.delete(DBConstants.TBL_NAME_COMPLETATI, DBConstants.FIELD_ID_UTENTE+"=? AND " + DBConstants.FIELD_ID_PROGETTO ,
-                    new String[]{ Integer.toString(idProgetto)})==1)
-                return true;
-            return false;
-        }
-        catch (SQLiteException sqle) {
-            return false;
-        }
-    }
-    public boolean deleteDaCompletare(Integer idProgetto)
-    {
-        SQLiteDatabase db=dbhelper.getWritableDatabase();
-        try
-        {
-            if (db.delete(DBConstants.TBL_NAME_DA_COMPLETARE, DBConstants.FIELD_ID_PROGETTO +"=?",
-                    new String[]{ Integer.toString(idProgetto)})==1)
-                return true;
-            return false;
-        }
-        catch (SQLiteException sqle) {
-            return false;
-        }
-    }
-
-    public boolean deleteProgettoPasso(Integer idProgetto)
-    {
-        SQLiteDatabase db=dbhelper.getWritableDatabase();
-        try
-        {
-            if (db.delete(DBConstants.TBL_NAME_PASSO_PROGETTO, DBConstants.FIELD_ID_PROGETTO +"=?",
-                    new String[]{ Integer.toString(idProgetto)})==1)
-                return true;
-            return false;
-        }
-        catch (SQLiteException sqle) {
-            return false;
-        }
+        db.delete(DBConstants.TBL_NAME_DA_COMPLETARE, DBConstants.FIELD_ID_PROGETTO +"=?",
+                    new String[]{ Integer.toString(idProgetto)});
     }
 
     public void updatePasso(Integer idProgetto, Integer passo){
@@ -200,17 +116,4 @@ public class DBManager {
 
     }
 
-    public boolean passoPresente(Integer idProgetto){
-        SQLiteDatabase db = dbhelper.getWritableDatabase();
-
-        Cursor crs = db.query(DBConstants.TBL_NAME_PASSO_PROGETTO,new String[]{DBConstants.FIELD_ID_PROGETTO},
-                DBConstants.FIELD_ID_PROGETTO + "=?", new String[]{idProgetto.toString()},null, null, null);
-        if(crs.getCount()<=0){
-            crs.close();
-            return false;
-        }
-
-        crs.close();
-        return true;
-    }
 }
