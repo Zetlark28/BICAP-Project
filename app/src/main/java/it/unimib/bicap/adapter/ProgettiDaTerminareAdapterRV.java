@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -43,11 +44,6 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     private static List<ItemSearch> exampleList;
     private static List<ItemSearch> exampleListFull;
     private boolean ricerca;
-    private QuestionariDaTerminare questionariDaTerminare;
-
-    public static void setListaProgetti(JSONArray listaProgetti) {
-        ProgettiDaTerminareAdapterRV.listaProgetti = listaProgetti;
-    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
@@ -66,7 +62,7 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
     public ProgettiDaTerminareAdapterRV(Context context, JSONArray progetti, List<ItemSearch> exampleList, String from){
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progetti);
-        this.exampleList = exampleList;
+        ProgettiDaTerminareAdapterRV.exampleList = exampleList;
         exampleListFull = new ArrayList<>(exampleList);
         this.from = from;
         this.ricerca = true;
@@ -76,11 +72,11 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         layoutInflater = (LayoutInflater.from(context));
     }
 
-    public MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
+    @NonNull
+    public MyViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType){
         View v = layoutInflater.inflate(R.layout.activity_item_progetto, parent, false);
-        MyViewHolder mV = new MyViewHolder(v);
 
-        return mV;
+        return new MyViewHolder(v);
     }
 
     public void onBindViewHolder (final MyViewHolder holder, final int position){
@@ -99,25 +95,13 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
                     intentProg.putExtra(ActivityConstants.INTENT_MODALITA,"daTerminare");
                     context.startActivity(intentProg);
                     ((Activity) context).finish();
-                    try {
-                        String descrizione = getterInfo.getDescrizione((JSONObject) listaProgetti.get(position));
-                        Snackbar.make(v, "Descrizione: " + descrizione, Snackbar.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
                 }
             });
 
     }
 
     public int getItemCount (){
-        if (questionariDaTerminare != null)
-            //return nomi.size();
-            return exampleList.size();
-        else
-            //return nomiSomministratori.size();
-            return exampleList.size();
+        return exampleList.size();
     }
 
     public Filter getFilter() {
@@ -179,7 +163,4 @@ public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiD
         }
     };
 
-    public static void setNomi(List<String> nomi) {
-        ProgettiDaTerminareAdapterRV.nomi = nomi;
-    }
 }

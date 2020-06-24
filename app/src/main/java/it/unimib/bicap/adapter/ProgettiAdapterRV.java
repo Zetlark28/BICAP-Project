@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Filter;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -24,7 +25,6 @@ import java.util.List;
 import it.unimib.bicap.ItemSearch;
 import it.unimib.bicap.R;
 import it.unimib.bicap.activity.utente.PresentazioneProgetto;
-import it.unimib.bicap.activity.utente.QuestionariDaFare;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
@@ -37,29 +37,22 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
     String from;
     LayoutInflater layoutInflater;
     public static JSONArray listaProgetti;
-    private JSONObject listaProgettiTot;
-    private QuestionariDaFare questionariDaFare;
     GetterInfo getterInfo = new GetterLocal();
     ProgettiAdapterRV istanzaProgettiAdapter;
     private static List<ItemSearch> exampleList;
     private static List<ItemSearch> exampleListFull;
     private boolean ricerca;
 
-    public static void setListaProgetti(JSONArray listaProgetti) {
-        ProgettiAdapterRV.listaProgetti = listaProgetti;
-    }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder{
         TextView nome;
         TextView descrizione1;
-        Button info;
         Button start;
 
         public MyViewHolder (View itemView){
             super(itemView);
             nome = itemView.findViewById(R.id.idNomeProgetto);
             descrizione1= itemView.findViewById(R.id.descrizioneprog);
-            info = itemView.findViewById(R.id.btnInfo);
+            start = itemView.findViewById(R.id.btnInfo);
         }
     }
 
@@ -67,7 +60,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         this.context = context;
         nomi = getterInfo.getNomiProgetti(progetti);
         descrizioni = getterInfo.getDescrizioniProgetti(progetti);
-        this.exampleList = exampleList;
+        ProgettiAdapterRV.exampleList = exampleList;
         exampleListFull = new ArrayList<>(exampleList);
         this.from = from;
         this.ricerca = true;
@@ -76,11 +69,11 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         layoutInflater = (LayoutInflater.from(context));
     }
 
-    public MyViewHolder onCreateViewHolder (ViewGroup parent, int viewType){
+    @NonNull
+    public MyViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType){
         View v = layoutInflater.inflate(R.layout.activity_item_progetto, parent, false);
-        MyViewHolder mV = new MyViewHolder(v);
 
-        return mV;
+        return new MyViewHolder(v);
     }
 
     public void onBindViewHolder (final MyViewHolder holder, final int position){
@@ -89,7 +82,7 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
             ItemSearch currentItem = exampleList.get(position);
             holder.nome.setText(currentItem.getTextNome());
             holder.descrizione1.setText(currentItem.getTextEmail());
-            holder.info.setOnClickListener(new View.OnClickListener() {
+            holder.start.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     JSONObject p = getterInfo.getProgetto(listaProgetti, position);
@@ -98,29 +91,12 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
                     intentProg.putExtra(ActivityConstants.INTENT_MODALITA,"daFare");
                     context.startActivity(intentProg);
                     ((Activity) context).finish();
-                    try {
-                        String descrizione = getterInfo.getDescrizione((JSONObject) listaProgetti.get(position));
-                        Snackbar.make(v, "Descrizione: " + descrizione, Snackbar.LENGTH_SHORT).show();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
                 }
             });
         }
 
-    public static void updateList(JSONArray list){
-        listaProgetti = list;
-
-
-    }
-
     public int getItemCount (){
-        if (questionariDaFare != null)
-            //return nomi.size();
-            return exampleList.size();
-        else
-            //return nomiSomministratori.size();
-            return exampleList.size();
+        return exampleList.size();
     }
 
     public Filter getFilter() {
@@ -182,7 +158,4 @@ public class ProgettiAdapterRV extends RecyclerView.Adapter<ProgettiAdapterRV.My
         }
     };
 
-    public static void setNomi(List<String> nomi) {
-        ProgettiAdapterRV.nomi = nomi;
-    }
 }
