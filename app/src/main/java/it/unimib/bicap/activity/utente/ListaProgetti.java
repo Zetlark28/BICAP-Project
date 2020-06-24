@@ -22,22 +22,19 @@ import com.google.firebase.storage.StorageReference;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
-import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.R;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.adapter.SectionsPagerAdapter;
 import it.unimib.bicap.constanti.ActivityConstants;
 
 public class ListaProgetti extends AppCompatActivity {
 
-    private static final String TAG = "ListaProgetti";
     private static final int ONE_MB = 1024 * 1024;
     private  JSONObject progettiTot;
     private static ProgressDialog progressDialog;
 
-
-    private ViewPager myViewPager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("SourceLockedOrientationActivity")
@@ -70,12 +67,9 @@ public class ListaProgetti extends AppCompatActivity {
             }
         });
 
-        //Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        new SectionsPagerAdapter(getSupportFragmentManager());
 
-        SectionsPagerAdapter mSectionsPageAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        myViewPager = findViewById(R.id.project_view_pager);
+        ViewPager myViewPager = findViewById(R.id.project_view_pager);
         setUpViewPager(myViewPager);
 
         TabLayout tabLayout = findViewById(R.id.project_tab);
@@ -88,10 +82,11 @@ public class ListaProgetti extends AppCompatActivity {
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference();
         StorageReference ref = mStorageRef.child(ActivityConstants.FIREBASE_STORAGE_CHILD_PROGETTI);
         ref.getBytes(ONE_MB).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onSuccess(byte[] bytes) {
                 try {
-                    String json = new String(bytes, "UTF-8");
+                    String json = new String(bytes, StandardCharsets.UTF_8);
                     progettiTot = new JSONObject(json);
                     SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
                     adapter.addFragment(new QuestionariDaFare(progettiTot), "SURVEY ATTIVI");
@@ -99,8 +94,6 @@ public class ListaProgetti extends AppCompatActivity {
                     viewPager.setAdapter(adapter);
                     progressDialog.dismiss();
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
             }

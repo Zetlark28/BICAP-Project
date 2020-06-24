@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -35,7 +34,6 @@ import it.unimib.bicap.service.Utility;
 
 public class Intermediate extends AppCompatActivity {
 
-    private static final String TAG = "Intermediate";
     private JSONArray arrayPassi;
     public ProgressDialog progressDialog;
     GetterInfo getterInfo = new GetterLocal();
@@ -102,7 +100,6 @@ public class Intermediate extends AppCompatActivity {
         }else if(modalita.equals("daFare")){
              dbManager.saveDaCompletare(Integer.parseInt(idProgetto));
             passo = getterInfo.getPasso(arrayPassi, 0);
-            Log.d(TAG, "passo: " + passo.toString());
             try {
                 link = getterInfo.getLink(passo);
                 tipo = getterInfo.getTipo(passo);
@@ -129,7 +126,6 @@ public class Intermediate extends AppCompatActivity {
             binding.tvTitolo.setText(R.string.intermediate_tvTitolo_video);
             binding.tvDettaglioPasso.setText(getString(R.string.intermediate_tvDettaglioPasso_video));
         } else if (tipo.equals("pdf")) {
-            Log.d("pdf", "kek");
             binding.tvTitolo.setText(R.string.intermediate_tvTitolo_PDF);
             binding.tvDettaglioPasso.setText(R.string.intermediate_tvDettaglio_PDF);
 
