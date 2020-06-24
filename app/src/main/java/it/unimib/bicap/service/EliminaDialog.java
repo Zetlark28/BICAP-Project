@@ -37,15 +37,10 @@ import it.unimib.bicap.constanti.ActivityConstants;
 
 public class EliminaDialog extends AppCompatDialogFragment {
 
-    private String nomeProgetto;
     private JSONArray listaProgetti;
-    private HashMap<String, String> nomiSomministratori;
     private Integer index;
-    private String key;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
-    private EliminaAdapterRV progettiAdapterRV;
-    private EliminaAdapterRV progettiAdapterSommRV;
     private JSONObject listaProgettiTot;
     private EliminaProgetti activity;
     private EliminaSomministratore activityDelSomm;
@@ -53,30 +48,21 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private String message;
     private List<ItemSearch> exampleList;
     private final String TAG = "EliminaDialog";
+
+
     public EliminaDialog(List<ItemSearch> exampleList, JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, EliminaAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
-        try {
             this.exampleList = exampleList;
-            this.nomeProgetto=listaProgetti.getJSONObject(index).getString("nome");
             this.listaProgetti=listaProgetti;
             this.index = index;
-            this.progettiAdapterRV = istanzaProgettiAdapter;
             this.listaProgettiTot = listaProgettiTot;
             this.activity = eliminaActivity;
             this.message = message;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 
     public EliminaDialog(List<ItemSearch> exampleList, String key, Integer index, EliminaAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
         this.exampleList = exampleList;
-        for (ItemSearch item : exampleList){
-            Log.d(TAG, "nome: " + item.getTextNome() + ", email: " + item.getTextEmail());
-        }
-        this.key = key;
         this.index = index;
-        this.progettiAdapterSommRV = istanzaProgettiDaEliminareAdapterRV;
         this.activityDelSomm = eliminaActivity;
         this.message = message;
     }
@@ -87,7 +73,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Elimina")
                 .setMessage(message)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (activityDelSomm == null) {
@@ -105,7 +91,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                         }
                                         JSONArray lista = listaProgettiTot.getJSONArray("progetti");
                                         JSONArray nuovaListaTotProgetti = new JSONArray();
-                                        for (int j = 0; j < lista.length(); j++) {
+                                        for (int j = 0; j < lista.length() &&  idElimina!=null; j++) {
                                             int idnuovo = lista.getJSONObject(j).getInt("id");
                                             if (idnuovo != idElimina) {
                                                 nuovaListaTotProgetti.put(lista.getJSONObject(j));
@@ -138,23 +124,27 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             for (DataSnapshot d : dataSnapshot.getChildren()){
-                                                if(d.child("email").getValue()!= null && d.child("autore").getValue()!=null && d.child("attivo").getValue()!=null) {
-                                                    if (d.child("autore").getValue().equals(autore) && d.child("email").getValue().equals(email)) {
-                                                        exampleList.remove(index);
-                                                        Log.d(TAG, "exampleList: " + exampleList.toString());
+                                                String autoreFirebase = (String) d.child("autore").getValue();
+                                                String emailFirebase = (String) d.child("email").getValue();
+                                                String attivoFirebase = (String) d.child("attivo").getValue();
+                                                if(emailFirebase!= null && autoreFirebase!=null &&attivoFirebase!=null) {
+                                                    if (autoreFirebase.equals(autore) && emailFirebase.equals(email)) {
+                                                        exampleList.remove(index.intValue());
                                                         HashMap<String, Object> map = new HashMap<>();
                                                         map.put("attivo", "false");
                                                         d.getRef().updateChildren(map);
                                                     } else {
-                                                        if (d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && !d.child("email").getValue().equals("admin@admin.com")) {
+                                                        if (attivoFirebase.equals("true") && !emailFirebase.equals(ActivityConstants.EMAIL_ADMIN) &&
+                                                                !emailFirebase.equals(ActivityConstants.EMAIL_PROF) && !emailFirebase.equals(ActivityConstants.AUTHORIZED_EMAIL)) {
                                                             boolean valore = false;
                                                             for(ItemSearch item : exampleListNew){
-                                                                if (item.getTextNome().equals(d.child("autore").getValue().toString()) && item.getTextEmail().equals(d.child("email").getValue().toString())){
+                                                                if (item.getTextNome().equals(autoreFirebase) && item.getTextEmail().equals(emailFirebase)) {
                                                                     valore = true;
+                                                                    break;
                                                                 }
                                                             }
                                                             if (! valore)
-                                                                exampleListNew.add(new ItemSearch(d.child("autore").getValue().toString(), d.child("email").getValue().toString()));
+                                                                exampleListNew.add(new ItemSearch(autoreFirebase, emailFirebase));
                                                         }
                                                     }
                                                 }
@@ -167,8 +157,8 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                             for(ItemSearch item : exampleListNew){
                                                 map.put(item.getTextEmail(), item.getTextNome());
                                             }
-                                            Intent intentPazzo = new Intent(activityDelSomm, GestioneSomministratore.class);
-                                            startActivity(intentPazzo);
+                                            Intent intentGestioneSomm = new Intent(activityDelSomm, GestioneSomministratore.class);
+                                            startActivity(intentGestioneSomm);
                                             activityDelSomm.finish();
                                         }
 
@@ -182,7 +172,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                             }
                         }
                 )
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
