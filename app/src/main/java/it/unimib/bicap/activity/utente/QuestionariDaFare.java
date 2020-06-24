@@ -31,18 +31,14 @@ import it.unimib.bicap.service.GetterLocal;
 
 public class QuestionariDaFare extends Fragment {
 
-    private static final String TAG = "QuestionariDaFare";
     private static JSONArray progetti;
     private DBManager db = null;
     private JSONObject progettiTot;
-    private SearchView searchView = null;
-    private SearchView.OnQueryTextListener queryTextListener;
     private ProgettiAdapterRV progettiAdapterRV;
     private String from = "daFare";
     private JSONArray progettiDaFare;
-    private JSONArray progettiDaCercare;
     private String nomeProgetto;
-    private List<ItemSearch> exampleList = new ArrayList();
+    private List<ItemSearch> exampleList = new ArrayList<>();
     private GetterInfo getterInfo = new GetterLocal();
     private RecyclerView recyclerView;
     private View rootView;
@@ -61,9 +57,6 @@ public class QuestionariDaFare extends Fragment {
         recyclerView = rootView.findViewById(R.id.rvProgetti);
         ricercadafare = rootView.findViewById(R.id.ricercadafare);
 
-
-        final String idUtente = "prova";
-
         try {
             progetti = progettiTot.getJSONArray("progetti");
         } catch (JSONException e) {
@@ -74,15 +67,6 @@ public class QuestionariDaFare extends Fragment {
         progettiDaFare = new JSONArray();
 
         progettiDaFare = cerca("");
-        /*try {
-        for(int i = 0; i<progetti.length(); i++) {
-            if (!db.isCompletato( progetti.getJSONObject(i).getInt("id")))
-                if (!db.isDaCompletare( progetti.getJSONObject(i).getInt("id")))
-                    progettiDaFare.put(progetti.getJSONObject(i));
-        }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
 
         for (int i = 0;i<progettiDaFare.length();i++){
             try {
@@ -145,48 +129,4 @@ public class QuestionariDaFare extends Fragment {
 
 
     }
-
-    /*public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-        inflater.inflate(R.menu.menu_ricerca, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        if (searchItem != null) {
-            searchView = (SearchView) searchItem.getActionView();
-        }
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-            queryTextListener = new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    Log.i("onQueryTextChange", newText);
-                    progettiDaCercare = cerca(newText);
-                    return true;
-                }
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    Log.i("onQueryTextSubmit", query);
-                    progettiDaCercare = cerca(query);
-                    return true;
-                }
-            };
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_search:
-
-                return false;
-            default:
-                break;
-        }
-        searchView.setOnQueryTextListener(queryTextListener);
-        return super.onOptionsItemSelected(item);
-    }
-     */
 }
