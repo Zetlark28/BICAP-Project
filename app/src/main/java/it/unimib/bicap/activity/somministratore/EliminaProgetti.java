@@ -25,7 +25,6 @@ import java.util.List;
 
 import it.unimib.bicap.ItemSearch;
 import it.unimib.bicap.R;
-import it.unimib.bicap.activity.somministratore.HomePageSomministratore;
 import it.unimib.bicap.adapter.EliminaAdapterRV;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityEliminaProgettiBinding;
@@ -35,7 +34,6 @@ import it.unimib.bicap.service.GetterLocal;
 
 public class EliminaProgetti extends AppCompatActivity {
 
-    private static final String TAG = "EliminaProgetti";
     private static JSONObject progetti;
     private static JSONArray progettiAutore;
     EliminaAdapterRV progettiAdapter;
@@ -44,8 +42,6 @@ public class EliminaProgetti extends AppCompatActivity {
     public static void setProgetti(JSONObject progetti) {
         EliminaProgetti.progetti = progetti;
     }
-
-    String from = "eliminaProgetti";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override

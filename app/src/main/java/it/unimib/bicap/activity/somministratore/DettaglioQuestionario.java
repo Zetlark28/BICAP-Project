@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
+import it.unimib.bicap.exception.DettaglioQuestionarioException;
 import it.unimib.bicap.service.JsonBuilder;
 import it.unimib.bicap.service.Utility;
 
@@ -87,14 +88,14 @@ public class DettaglioQuestionario extends AppCompatActivity {
         toolbar.setTitle(getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO));
 
         final String progettoString = getIntent().getStringExtra(ActivityConstants.INTENT_PROGETTO);
+        if(progettoString==null){
+            throw DettaglioQuestionarioException.DETTAGLIO_QUESTIONARIO_PROGETTO_NULL;
+        }
         try {
-            assert progettoString != null;
             progetto = new JSONObject(progettoString);
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw DettaglioQuestionarioException.DETTAGLIO_QUESTIONARIO_PARSER_PROGETTO_JSON_FAIL;
         }
-
-        Log.d("OGGETTO JSON", progetto.toString());
 
         binding.btnUpload.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,7 +198,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (!(filePath == null) || !binding.etLink.getText().toString().equals("")) {
+                if (!(filePath == null) || (binding.etLink.getText()!=null && !binding.etLink.getText().toString().equals(""))) {
                     aggiungiPassi();
                 } else if (primaVolta) {
                     Snackbar.make(v, "Attenzione, non puoi creare un progetto senza nessun contenuto! \nAggiungi qualcosa e riprova!", Snackbar.LENGTH_LONG).show();
@@ -284,12 +285,10 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
     private void aggiungiPassi() {
         primaVolta = false;
-        if (filePath == null) {
+        if (filePath == null && binding.etLink.getText()!=null) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("questionario", binding.etLink.getText().toString()));
-
         } else if (tipo.contains("Video")) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("video", String.valueOf(linkToJoinJSON)));
-
         } else if (tipo.contains("PDF")) {
             jsonBuilder.aggiungiPassoAllaLista(listaPassi, jsonBuilder.creaPasso("pdf", String.valueOf(linkToJoinJSON)));
         }
@@ -308,7 +307,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Cancella tutto");
             builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti");
-            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePageSomministratore.class);
@@ -316,7 +315,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                     finish();
                 }
             });
-             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+             builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -353,7 +352,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Attenzione");
         builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo eliminerà tutti i passaggi fatti");
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePageSomministratore.class);
@@ -362,7 +361,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
