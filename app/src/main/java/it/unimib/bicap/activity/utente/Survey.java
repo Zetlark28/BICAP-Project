@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -24,20 +25,19 @@ import it.unimib.bicap.db.DBManager;
 
 public class Survey extends AppCompatActivity {
 
-    private static final String TAG = "SurveyWebView";
-    private ActivitySurveyBinding binding;
     private DBManager dbManager;
     private String nomeProgetto;
     private String idProgetto;
     private String passi;
     private String nPasso;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivitySurveyBinding.inflate(getLayoutInflater());
+        it.unimib.bicap.databinding.ActivitySurveyBinding binding = ActivitySurveyBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -61,7 +61,7 @@ public class Survey extends AppCompatActivity {
 
         //"https://psicologiaunimib.eu.qualtrics.com/jfe/form/SV_5mr178vYfm3V3XD"
 
-        binding.surveyWebView.loadUrl(url); //INSERIRE LINK DEL QUESTIONARIO (quindi fare un metodo che lo infila)
+        binding.surveyWebView.loadUrl(url);
         WebSettings webSettings = binding.surveyWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
@@ -105,7 +105,7 @@ public class Survey extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Torna alla Homepage");
         builder.setMessage("Sicuro di voler tornare indietro?\n" + "Questo renderà visibile il questionario nella sezione \"Survey Sospesi\"");
-        builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.dialog_positive, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent HomePageSomministratoreRicarica = new Intent(getApplicationContext(), HomePage.class);
@@ -114,7 +114,7 @@ public class Survey extends AppCompatActivity {
                 finish();
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.dialog_negative, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
