@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/iconabianca"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.somministratore.LaunchScreen"
+        <activity android:name=".activity.LaunchScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
 
             <intent-filter>

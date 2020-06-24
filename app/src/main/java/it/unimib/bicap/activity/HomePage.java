@@ -11,6 +11,7 @@ import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,7 +35,6 @@ import it.unimib.bicap.databinding.ActivityHomepageBinding;
 
 public class HomePage extends AppCompatActivity {
 
-    private static final String TAG = "HomePage";
     private ActivityHomepageBinding binding;
     private boolean esisteMail;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -42,10 +42,7 @@ public class HomePage extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
     SharedPreferences sharedPref;
-    private String key = "";
-    private boolean valore = false;
     private ProgressDialog dialog;
-    private CountDownTimer cTimer;
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -70,50 +67,28 @@ public class HomePage extends AppCompatActivity {
         editor.apply();
 
         if (utenteCorrenteFirebase != null){
-            Log.d(TAG, "utente: " + utenteCorrenteFirebase.getEmail());
-            //final String idUser = currentFirebaseUser.getUid();
-            //final CountDownLatch latch = new CountDownLatch(1);
-            // Read from the database
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot d : dataSnapshot.getChildren()){
-                        Log.d(TAG, "prova");
-                        //Log.d(TAG, "email ciclo: " + d.child("email").getValue().toString() + " attivo? " + d.child("attivo").getValue().toString());
-                        key = d.getKey();
-                        Log.d(TAG, "email somm: " + utenteCorrenteFirebase.getEmail());
-                        if (d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && d.child("email").getValue().equals(utenteCorrenteFirebase.getEmail())){
-                            Log.d(TAG, "entro email trovata");
+                        String attivo = (String) d.child("attivo").getValue();
+                        String email = (String) d.child("email").getValue();
+                        if (attivo != null && email != null && attivo.equals("true") && email.equals(utenteCorrenteFirebase.getEmail())){
                             esisteMail = true;
-                            Log.d(TAG, "email: " + d.child("email").getValue().toString() + ", attivo: " + d.child("attivo").getValue().toString());
                             editor.putBoolean("esisteMail", esisteMail);
                             editor.commit();
                         }
                     }
                     dialog.dismiss();
-                    //latch.countDown();
                 }
 
                 @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "Failed to read value.", error.toException());
+                public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
-           /* try {
-                //latch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
         }
 
-        valore = leggiSomministratori();
-
-        while(!valore){
-            binding.btnProf.setEnabled(false);
-        }
-
-        //binding.btnProf.setEnabled(true);
+        leggiSomministratori();
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -121,15 +96,13 @@ public class HomePage extends AppCompatActivity {
         toolbar.setTitle("SurveyMiB");
         toolbar.setNavigationIcon(null);
 
-        final HomePage instance = this;
-
         binding.btnProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
                 intentLogInProf.putExtra(ActivityConstants.INTENT_FROM_HOME, true);
                 startActivity(intentLogInProf);
-                instance.finish();
+                finish();
             }
         });
 
@@ -138,25 +111,22 @@ public class HomePage extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentQuiz = new Intent(getApplicationContext(), ListaProgetti.class);
                 startActivity(intentQuiz);
-                instance.finish();
+                finish();
             }
         });
-
-        //showAlertDialog(this, "ciao","mamma", true);
     }
 
 
-    private boolean leggiSomministratori() {
-        // Read from the database
+    private void leggiSomministratori() {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> sommAttivi = new ArrayList<>();
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
                 for (DataSnapshot d : dataSnapshot.getChildren()){
-                    if (d.child("attivo").getValue() != null && d.child("attivo").getValue().equals("true")){
-                        sommAttivi.add(d.child("email").getValue().toString());
+                    String attivo = (String) d.child("attivo").getValue();
+                    String email = (String) d.child("email").getValue();
+                    if (attivo != null && attivo.equals("true") && email != null){
+                        sommAttivi.add(email);
                     }
                 }
                 StringBuilder sb = new StringBuilder();
@@ -165,21 +135,16 @@ public class HomePage extends AppCompatActivity {
                 }
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("sommAttivi", sb.toString());
-                editor.commit();
+                editor.apply();
                 dialog.dismiss();
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        return true;
     }
 
-    //override startActivity con animazione slide avanti
     @Override
     public void startActivity(Intent intent){
         super.startActivity(intent);
@@ -191,5 +156,4 @@ public class HomePage extends AppCompatActivity {
         super.onBackPressed();
         this.finishAffinity();
     }
-
 }
