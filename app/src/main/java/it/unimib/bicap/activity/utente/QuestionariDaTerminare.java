@@ -32,13 +32,9 @@ import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
 public class QuestionariDaTerminare extends Fragment {
-    
-    private StorageReference mStorageRef;
-    private StorageReference ref;
-    private static final int ONE_MB = 1024 * 1024;
+
     private static JSONArray progetti;
     private DBManager db;
-
     private String from = "daTerminare";
     private JSONObject progettiTot;
     private EditText ricercadafare;
