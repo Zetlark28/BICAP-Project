@@ -37,41 +37,24 @@ public class EliminaSomministratore extends AppCompatActivity {
     private ActivityEliminaSomministratoreBinding binding;
     private static final String TAG = "EliminaSomministratore";
     EliminaAdapterRV progettiAdapter;
-    private List <ItemSearch> exampleList = new ArrayList();
+    private List <ItemSearch> exampleList = new ArrayList<>();
     SearchView searchView;
-    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        Log.d(TAG, "Intent: " + intent.toString());
-        HashMap<String, String> nomiSomm;
-        List<String> somministratori = new ArrayList<>();
-        boolean valore = getIntent().getBooleanExtra(ActivityConstants.INTENT_HOME, false);
-        if (valore) {
-            nomiSomm = (HashMap<String, String>) intent.getSerializableExtra(ActivityConstants.INTENT_SOMMINISTRATORI);
+        HashMap<String, String> nomiSomm = (HashMap<String, String>) intent.getSerializableExtra(ActivityConstants.INTENT_SOMMINISTRATORI);
+        if (nomiSomm != null) {
             for (Map.Entry<String, String> entry : nomiSomm.entrySet()) {
                 this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
+                }
             }
-        } else{
-            HashMap<String, String> pazzi = (HashMap<String, String>) intent.getSerializableExtra("pazzi");
-            for (Map.Entry<String, String> entry : pazzi.entrySet()) {
-                this.exampleList.add(new ItemSearch(entry.getValue(), entry.getKey()));
-            }
-        }
-        List<String> emails = intent.getStringArrayListExtra("emails");
-        //Log.d(TAG, "Hashmap elimina: " + nomiSomm);
 
         binding = ActivityEliminaSomministratoreBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
-
-        for (ItemSearch item : exampleList){
-            Log.d(TAG, "Nome: " + item.getTextNome());
-            Log.d(TAG, "Email: " + item.getTextEmail());
-        }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
@@ -92,11 +75,8 @@ public class EliminaSomministratore extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         binding.rvSomministratoreDaEliminare.setLayoutManager(linearLayoutManager);
-        //progettiAdapter = new ProgettiDaEliminareAdapterRV(getApplicationContext(), nomiSomm, emails, this);
         progettiAdapter = new EliminaAdapterRV(getApplicationContext(), exampleList, this);
         binding.rvSomministratoreDaEliminare.setAdapter(progettiAdapter);
-
-        showAlertDialog(this, "ciao","mamma", true);
     }
 
     public void onBackPressed() {
@@ -127,33 +107,6 @@ public class EliminaSomministratore extends AppCompatActivity {
             }
         });
         return true;
-    }
-
-    public void showAlertDialog(final Context context, String title, String message,
-                                Boolean status) {
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Caricamento in corso")
-                .setMessage("Attendere...")
-                .create();
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            private static final int AUTO_DISMISS_MILLIS = 2000;
-            @Override
-            public void onShow(final DialogInterface dialog) {
-                new CountDownTimer(AUTO_DISMISS_MILLIS, 100) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-
-                    }
-                    @Override
-                    public void onFinish() {
-                        if (((AlertDialog) dialog).isShowing()) {
-                            dialog.dismiss();
-                        }
-                    }
-                }.start();
-            }
-        });
-        dialog.show();
     }
 
 }

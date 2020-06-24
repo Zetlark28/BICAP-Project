@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,15 +33,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityCreazioneSomministartoreBinding;
+import it.unimib.bicap.exception.CreazioneSomministratoreException;
 
 public class CreazioneSomministratore extends AppCompatActivity {
 
     private ActivityCreazioneSomministartoreBinding binding;
-    private static final String TAG = "CreazioneSomministratore";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
     private FirebaseAuth mAuth1;
@@ -50,6 +53,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
     private String autore;
     private ProgressDialog dialog;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @SuppressLint("LongLogTag")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(" ");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(" ");
         toolbar.inflateMenu(R.menu.main_menu);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -94,6 +98,8 @@ public class CreazioneSomministratore extends AppCompatActivity {
             @SuppressLint("LongLogTag")
             @Override
             public void onClick(View v) {
+                if (binding.etEmailSomm.getText() == null || binding.etNomeSomm.getText() == null || binding.etPasswordSomm.getText() == null)
+                    throw CreazioneSomministratoreException.CREAZIONE_SOMMINISTRATORE_VIEW_FAIL;
                 email = binding.etEmailSomm.getText().toString();
                 autore = binding.etNomeSomm.getText().toString();
                 password = binding.etPasswordSomm.getText().toString();
@@ -144,10 +150,11 @@ public class CreazioneSomministratore extends AppCompatActivity {
                 boolean utenteTrovato = false;
                 for (DataSnapshot d : dataSnapshot.getChildren()){
                     if (! utenteTrovato){
-                        if (d.child("attivo").getValue() != null && d.child("attivo").getValue().equals("false") &&
-                                d.child("email").getValue() != null && d.child("email").getValue().equals(email)){
+                        String attivo = (String) d.child("attivo").getValue();
+                        String emailFirebase = (String) d.child("email").getValue();
+                        if (attivo != null && attivo.equals("false") &&
+                                emailFirebase != null && emailFirebase.equals(email)){
                             utenteTrovato = true;
-                            //Log.d(TAG, "utenteTrovato: " + utenteTrovato);
                         }
                     }
                 }
@@ -155,11 +162,11 @@ public class CreazioneSomministratore extends AppCompatActivity {
                     myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @SuppressLint("LongLogTag")
                         @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             HashMap<String, Object> map = new HashMap<>();
                             for (DataSnapshot d : dataSnapshot.getChildren()){
-                                if (d.child("email").getValue().equals(email)) {
-                                    Log.d(TAG, "trovato  utente");
+                                String emailFirebase = (String) d.child("email").getValue();
+                                if (emailFirebase != null && emailFirebase.equals(email)) {
                                     map.put("attivo", "true");
                                     d.getRef().updateChildren(map);
                                 }
@@ -171,7 +178,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onCancelled(DatabaseError error) {
+                        public void onCancelled(@NonNull DatabaseError error) {
                             dialog.dismiss();
                         }
                     });
@@ -192,11 +199,12 @@ public class CreazioneSomministratore extends AppCompatActivity {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("LongLogTag")
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean utenteTrovato = false;
                 for (DataSnapshot d : dataSnapshot.getChildren()){
                     if(!utenteTrovato){
-                        if (d.child("email").getValue() != null && d.child("email").getValue().equals(email)){
+                        String emailFirebase = (String) d.child("email").getValue();
+                        if (emailFirebase != null && emailFirebase.equals(email)){
                             utenteTrovato = true;
                         }
                     }
@@ -213,7 +221,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         utente = mAuth2.getCurrentUser();
-                                        Log.d(TAG, "problema successo");
+                                        assert utente != null;
                                         myRef.child(utente.getUid()).child("autore").setValue(autore);
                                         myRef.child(utente.getUid()).child("email").setValue(email);
                                         myRef.child(utente.getUid()).child("attivo").setValue("true");
@@ -229,7 +237,7 @@ public class CreazioneSomministratore extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }

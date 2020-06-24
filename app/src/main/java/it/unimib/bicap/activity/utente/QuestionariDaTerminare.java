@@ -33,23 +33,13 @@ import it.unimib.bicap.service.GetterLocal;
 
 public class QuestionariDaTerminare extends Fragment {
 
-    private static final String TAG = "QuestionariDaTerminare";
-    private StorageReference mStorageRef;
-    private StorageReference ref;
-    private static final int ONE_MB = 1024 * 1024;
     private static JSONArray progetti;
     private DBManager db;
-
-    //private RecyclerView recyclerView;
-    private String [] titoli = {"Questionario 1", "Questionario 2"};
     private String from = "daTerminare";
-    private ImageView immagine;
     private JSONObject progettiTot;
-    private RecyclerView recyclerView;
-    private View rootView;
     private EditText ricercadafare;
     private GetterInfo getterInfo = new GetterLocal();
-    private List<ItemSearch> exampleList = new ArrayList();
+    private List<ItemSearch> exampleList = new ArrayList<>();
     private ProgettiDaTerminareAdapterRV progettiAdapterTerminare;
 
 
@@ -68,10 +58,8 @@ public class QuestionariDaTerminare extends Fragment {
 
         db = new DBManager(getContext());
 
-        final String idUtente = "prova";
         try {
             progetti = progettiTot.getJSONArray("progetti");
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
