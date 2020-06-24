@@ -29,7 +29,6 @@ import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
-//import it.unimib.bicap.PresentazioneProgetto;
 
 public class ProgettiDaTerminareAdapterRV extends RecyclerView.Adapter<ProgettiDaTerminareAdapterRV.MyViewHolder> {
 
