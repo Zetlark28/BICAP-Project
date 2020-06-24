@@ -131,9 +131,9 @@ public class HomePageSomministratore extends AppCompatActivity {
                     intentEliminaProgetto.putExtra(ActivityConstants.INTENT_RETURN, false);
                     startActivity(intentEliminaProgetto);
                     overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                }else {
+                    Snackbar.make(v, "Non sono presenti progetti da eliminare", Snackbar.LENGTH_SHORT).show();
                 }
-
-                Snackbar.make(v, "Non sono presenti progetti da eliminare", Snackbar.LENGTH_SHORT).show();
 
             }
         });

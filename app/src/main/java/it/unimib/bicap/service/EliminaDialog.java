@@ -50,7 +50,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
     private final String TAG = "EliminaDialog";
 
 
-    public EliminaDialog(List<ItemSearch> exampleList, JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, EliminaAdapterRV istanzaProgettiAdapter, EliminaProgetti eliminaActivity, String message){
+    public EliminaDialog(List<ItemSearch> exampleList, JSONArray listaProgetti, JSONObject listaProgettiTot, Integer index, EliminaProgetti eliminaActivity, String message){
             this.exampleList = exampleList;
             this.listaProgetti=listaProgetti;
             this.index = index;
@@ -60,7 +60,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
     }
 
 
-    public EliminaDialog(List<ItemSearch> exampleList, String key, Integer index, EliminaAdapterRV istanzaProgettiDaEliminareAdapterRV, EliminaSomministratore eliminaActivity, String message){
+    public EliminaDialog(List<ItemSearch> exampleList, Integer index, EliminaSomministratore eliminaActivity, String message){
         this.exampleList = exampleList;
         this.index = index;
         this.activityDelSomm = eliminaActivity;
