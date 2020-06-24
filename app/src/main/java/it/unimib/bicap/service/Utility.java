@@ -2,10 +2,10 @@ package it.unimib.bicap.service;
 
 
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,13 +43,11 @@ public class Utility {
      private static final String FILE_NAME =  "progetti.json";
      private static final String FIREBASE_PATH_PROJECT = "Progetti/progetti.json";
      private static final int ONE_MB = 50 * 1024 * 1024;
-     private StorageReference mStorageRef;
-     private static String keyValue;
+    private static String keyValue;
 
      //scrittura del jsonObject convertito a stringa su un file
      //carica il file su firebase
      public static void write(JSONObject progetti, Object activityInstance, ActivityDettaglioQuestionarioBinding binding){
-         Log.d("oggetto", "Utility:Write");
          Context context;
          Context baseContext;
          Boolean writing = Boolean.FALSE;
@@ -59,12 +57,10 @@ public class Utility {
              context = activity.getApplicationContext();
              baseContext = activity.getBaseContext();
              writing=Boolean.TRUE;
-             Log.d("oggetto", "1");
          }else if (activityInstance instanceof EliminaProgetti){
              EliminaProgetti activity = (EliminaProgetti) activityInstance;
              context = activity.getApplicationContext();
              baseContext = activity.getBaseContext();
-             Log.d("oggetto", "2");
          }else{
              throw UtilityException.UTILITY_ACTIVITY_CONTEXT_UNAUTHORIZED;
          }
@@ -95,9 +91,7 @@ public class Utility {
                 Object key = dataSnapshot.child("valoreChiave").getValue();
                 if(key==null)
                     throw UtilityException.UTILITY_FIREBASE_KEY_NOT_FOUND;
-                String value = key.toString();
-                keyValue = value;
-                Log.d("KeyValue", "Value is: " + value);
+                keyValue = key.toString();
             }
 
             @Override
@@ -152,7 +146,7 @@ public class Utility {
 
 
         //scarica il pdf da firebase in locale
-        public static boolean downloadPDF(String link, ProgressDialog progressDialog) {
+        public static void downloadPDF(String link, ProgressDialog progressDialog) {
             StorageReference mStorageRef = FirebaseStorage.getInstance().getReferenceFromUrl(link);
 
 
@@ -162,15 +156,15 @@ public class Utility {
                 public void onSuccess(byte[] bytes) {
                     // Data for "images/island.jpg" is returns, use this as needed
                         try {
-                            String path = "/data/data/it.unimib.bicap/cache/PDF.pdf";
+                            @SuppressLint("SdCardPath") String path = "/data/data/it.unimib.bicap/cache/PDF.pdf";
                             FileOutputStream stream = new FileOutputStream(path);
                             try {
                                 stream.write(bytes);
                             } catch (IOException e) {
-                                e.printStackTrace();
+                                throw UtilityException.UTILITY_ACTIVITY_DOWNLOAD_FAIL;
                             }
                         } catch (FileNotFoundException e) {
-                            e.printStackTrace();
+                            throw UtilityException.UTILITY_ACTIVITY_DOWNLOAD_FAIL;
                         }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -180,7 +174,6 @@ public class Utility {
                 }
             });
             progressDialog.dismiss();
-            return true;
         }
 
     //update barra di caricamento
