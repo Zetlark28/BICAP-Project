@@ -122,7 +122,7 @@ public class Intermediate extends AppCompatActivity {
             dbManager.saveCompletati(Integer.parseInt(idProgetto));
             Intent intentFine = new Intent(getApplicationContext(), GrazieScreen.class);
             startActivity(intentFine);
-        }else if(modalita.equals("Thanos")){
+        }else if(modalita.equals("notFit")){
             binding.tvTitolo.setText(R.string.intermediate_tvTitolo_nonIdoneo);
             binding.tvDettaglioPasso.setText(R.string.intermediate_tvDettaglioPasso_nonIdoneo);
             binding.btnAvanti.setText(R.string.intermediate_btnAvanti_nonIdoneo);
