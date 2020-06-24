@@ -43,7 +43,6 @@ import it.unimib.bicap.exception.CreazioneSomministratoreException;
 public class CreazioneSomministratore extends AppCompatActivity {
 
     private ActivityCreazioneSomministartoreBinding binding;
-    private static final String TAG = "CreazioneSomministratore";
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("utenti");
     private FirebaseAuth mAuth1;
@@ -168,7 +167,6 @@ public class CreazioneSomministratore extends AppCompatActivity {
                             for (DataSnapshot d : dataSnapshot.getChildren()){
                                 String emailFirebase = (String) d.child("email").getValue();
                                 if (emailFirebase != null && emailFirebase.equals(email)) {
-                                    Log.d(TAG, "trovato  utente");
                                     map.put("attivo", "true");
                                     d.getRef().updateChildren(map);
                                 }

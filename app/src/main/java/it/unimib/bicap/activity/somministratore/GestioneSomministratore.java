@@ -1,5 +1,6 @@
 package it.unimib.bicap.activity.somministratore;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -8,10 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -75,28 +78,26 @@ public class GestioneSomministratore extends AppCompatActivity {
             }
         });
 
-        boolean finito = getListaSommAttivi();
-
-        while(! finito){
-
-        }
-        Log.d(TAG, "Hashmap finale: " + somministratori);
+        getListaSommAttivi();
 
         binding.btnEliminaSomm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent deleteSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
-                Log.d(TAG, "Intent problem: " + somministratori.toString());
-                deleteSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
-                deleteSomm.putExtra(ActivityConstants.INTENT_SOMMINISTRATORI, somministratori);
-                deleteSomm.putExtra(ActivityConstants.INTENT_HOME, true);
-                startActivity(deleteSomm);
-                overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
-                finish();
+                if (somministratori.size() == 0){
+                    Snackbar.make(v, "Attenzione, non sono presenti somministratori da eliminare", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Intent eliminaSomm = new Intent(getApplicationContext(), EliminaSomministratore.class);
+                    eliminaSomm.putStringArrayListExtra("emails", (ArrayList<String>) email);
+                    eliminaSomm.putExtra(ActivityConstants.INTENT_SOMMINISTRATORI, somministratori);
+                    startActivity(eliminaSomm);
+                    overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+                    finish();
+                }
             }
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
     public class DownloadSomministratoriTask extends AsyncTask<Void, Void, Void> {
         public void onPreExecute() {
             progressDialog.show();
@@ -106,35 +107,29 @@ public class GestioneSomministratore extends AppCompatActivity {
         }
     }
 
-    public boolean getListaSommAttivi() {
+    public void getListaSommAttivi() {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //HashMap<String, String> mappa = new HashMap<>();
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot d : dataSnapshot.getChildren()) {
-                    if(d.child("attivo").getValue() != null && d.child("email").getValue() != null && d.child("attivo").getValue().equals("true") && (! d.child("email").getValue().equals(ActivityConstants.EMAIL_ADMIN) || ! d.child("email").getValue().equals(ActivityConstants.EMAIL_PROF))) {
-                        somministratori.put(d.child("email").getValue().toString(), d.child("autore").getValue().toString());
-                        email.add(d.child("email").getValue().toString());
-                        Log.d(TAG, "Hasmap: " + somministratori.toString());
-                        //somministratori.add(d.getValue().toString());
+                    String attivo = (String) d.child("attivo").getValue();
+                    String emailFirebase = (String) d.child("email").getValue();
+                    String autore = (String) d.child("autore").getValue();
+                    if(attivo!= null && emailFirebase != null && attivo.equals("true")
+                            && (! emailFirebase.equals(ActivityConstants.EMAIL_ADMIN) && ! emailFirebase.equals(ActivityConstants.EMAIL_PROF)
+                    && ! emailFirebase.equals(ActivityConstants.AUTHORIZED_EMAIL))) {
+                        somministratori.put(emailFirebase, autore);
+                        email.add(emailFirebase);
                     }
                 }
 
                 progressDialog.dismiss();
-                //Log.d(TAG, "Value is: " + value);
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-        return true;
     }
 
     public void onBackPressed()
