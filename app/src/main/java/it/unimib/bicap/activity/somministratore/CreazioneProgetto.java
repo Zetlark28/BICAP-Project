@@ -4,11 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -27,7 +28,9 @@ public class CreazioneProgetto extends AppCompatActivity {
     private ActivityCreazioneProgettoBinding binding;
     private static JsonBuilder jsonBuilder = JsonBuilder.getJsonBuilder();
     private String progettiJSON;
+    
     @SuppressLint({"SourceLockedOrientationActivity", "ClickableViewAccessibility"})
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

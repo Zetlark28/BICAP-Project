@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -19,8 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.R;
+import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.constanti.DBConstants;
 import it.unimib.bicap.databinding.ActivityIntermediateBinding;
@@ -115,8 +116,6 @@ public class Intermediate extends AppCompatActivity {
             modalita = "completato";
         }
 
-
-        //Snackbar.make(v, "Tipo: " + tipo, Snackbar.LENGTH_SHORT).show();
         if(modalita.equals("completato")){
             dbManager.deleteDaCompletare(Integer.parseInt(idProgetto));
             dbManager.saveCompletati(Integer.parseInt(idProgetto));
@@ -140,9 +139,8 @@ public class Intermediate extends AppCompatActivity {
             progressDialog.setMax(100);
             progressDialog.setMessage("Attendi!");
             progressDialog.show();
-            boolean finito = Utility.downloadPDF(link, progressDialog);
+            Utility.downloadPDF(link, progressDialog);
 
-            //progressDialog.dismiss();
         } else if (tipo.equals("questionario")) {
             binding.tvTitolo.setText(R.string.intermediate_tvTitolo_questionario);
             binding.tvDettaglioPasso.setText(getString(R.string.intermediate_tvDettaglioPasso_questionario));
