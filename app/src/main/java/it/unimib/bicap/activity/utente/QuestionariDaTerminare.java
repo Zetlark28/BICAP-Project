@@ -32,8 +32,7 @@ import it.unimib.bicap.service.GetterInfo;
 import it.unimib.bicap.service.GetterLocal;
 
 public class QuestionariDaTerminare extends Fragment {
-
-    private static final String TAG = "QuestionariDaTerminare";
+    
     private StorageReference mStorageRef;
     private StorageReference ref;
     private static final int ONE_MB = 1024 * 1024;
