@@ -19,6 +19,7 @@ import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.R;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityRecuperaPasswordBinding;
+import it.unimib.bicap.exception.RecuperaPasswordException;
 
 public class RecuperaPassword extends AppCompatActivity {
 
@@ -44,8 +45,7 @@ public class RecuperaPassword extends AppCompatActivity {
         binding.tvAccedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent logInSomministratore = new Intent(getApplicationContext(), LoginProfessore.class);
-                logInSomministratore.putExtra(ActivityConstants.INTENT_FROM_HOME, true);
+                Intent logInSomministratore = new Intent(getApplicationContext(), LoginSomministratore.class);
                 startActivity(logInSomministratore);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
@@ -55,6 +55,8 @@ public class RecuperaPassword extends AppCompatActivity {
         binding.btnRecuperaPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (binding.etEmailRecuperata.getText() == null)
+                    throw RecuperaPasswordException.RECUPERA_PASSWORD_VIEW_FAIL;
                 String email = binding.etEmailRecuperata.getText().toString();
                 if (email.equals("")){
                     Snackbar.make(v, "Attenzione, il testo inserito non è valido", Snackbar.LENGTH_SHORT).show();
@@ -73,10 +75,8 @@ public class RecuperaPassword extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 progressDialog.dismiss();
                 if (task.isSuccessful()){
-                    //Toast.makeText(getApplicationContext(), "Password mandata via email", Toast.LENGTH_SHORT).show();
                     Snackbar.make(findViewById(android.R.id.content), "Password mandata via email", Snackbar.LENGTH_SHORT).show();
                 } else {
-                    //Toast.makeText(getApplicationContext(), "Email Errata", Toast.LENGTH_SHORT).show();
                     Snackbar.make(findViewById(android.R.id.content), "Email Errata", Snackbar.LENGTH_SHORT).show();
                 }
             }

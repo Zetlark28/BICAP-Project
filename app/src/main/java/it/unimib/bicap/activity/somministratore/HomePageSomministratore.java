@@ -1,5 +1,6 @@
 package it.unimib.bicap.activity.somministratore;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import it.unimib.bicap.R;
 import it.unimib.bicap.activity.HomePage;
@@ -53,16 +56,7 @@ public class HomePageSomministratore extends AppCompatActivity {
     private static final String TAG = "HomePageSomministratore";
     private ActivityHomepageSomministratoreBinding binding;
     private FirebaseAuth mAuth;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (mAuth.getCurrentUser() == null)
-            mAuth.signInWithEmailAndPassword(ActivityConstants.AUTHORIZED_EMAIL, ActivityConstants.AUTHORIZED_PASSWORD);
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Log.d(TAG, "current user: " + currentUser.getEmail());
-    }
+    private String emailSomministratore;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -70,12 +64,12 @@ public class HomePageSomministratore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mAuth = FirebaseAuth.getInstance();
-         if(mAuth == null)
-             Log.d(TAG, "mauth è null");
 
         binding = ActivityHomepageSomministratoreBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        emailSomministratore = Objects.requireNonNull(mAuth.getCurrentUser()).getEmail();
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         toolbar.setTitle(ActivityConstants.HOMEPAGE_SOMMINISTRATORE_TOOLBAR_TITLE);
@@ -99,13 +93,8 @@ public class HomePageSomministratore extends AppCompatActivity {
             public void onSuccess(byte[] bytes) {
                 String json;
                 try {
-                    json = new String(bytes, "UTF-8");
-                    Log.d("kek", json.toString());
+                    json = new String(bytes, StandardCharsets.UTF_8);
                     progetti = new JSONObject(json);
-                    SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPref.edit();
-//                    editor.putString("file",progetti.toString());
-//                    editor.commit();
                     progettiDaSelezionare = progetti.getJSONArray("progetti");
                     progettiAutore = new JSONArray();
                     for (int i = 0; i < progettiDaSelezionare.length(); i++) {
@@ -116,8 +105,6 @@ public class HomePageSomministratore extends AppCompatActivity {
 //
                 } catch (JSONException e) {
                     e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
                 }
                 progressDialog.dismiss();
                 cancelTimer();
@@ -127,9 +114,7 @@ public class HomePageSomministratore extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean fromHome = false;
-                Intent intentLogProf = new Intent(getApplicationContext(), LoginProfessore.class);
-                intentLogProf.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
+                Intent intentLogProf = new Intent(getApplicationContext(), HomePage.class);
                 startActivity(intentLogProf);
                 overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
                 finish();
@@ -169,14 +154,15 @@ public class HomePageSomministratore extends AppCompatActivity {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         FirebaseAuth.getInstance().getCurrentUser();
-        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String email = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
         MenuItem item = menu.findItem(R.id.addSomm);
+        assert email != null;
         if (!email.equals(ActivityConstants.AUTHORIZED_EMAIL) && !email.equals(ActivityConstants.EMAIL_ADMIN) && !email.equals(ActivityConstants.EMAIL_PROF))
             item.setVisible(false);
-
         return true;
     }
 
@@ -230,7 +216,6 @@ public class HomePageSomministratore extends AppCompatActivity {
             startActivity(pdfGuida);
             overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
         } else if (item.getItemId() == R.id.addSomm) {
-            String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
             Intent intentAddSomm = new Intent(this, GestioneSomministratore.class);
             startActivity(intentAddSomm);
             overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
@@ -241,21 +226,17 @@ public class HomePageSomministratore extends AppCompatActivity {
 
     private void updateUI() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        boolean fromHome = false;
 
         if (currentUser == null){
-            Intent intentLogout = new Intent(this, LoginProfessore.class);
-            intentLogout.putExtra(ActivityConstants.INTENT_FROM_HOME, fromHome);
-            if(fromHome == false){
-                startActivity(intentLogout);
-                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-                finish();
-            }else{
-                startActivity(intentLogout);
+            Intent intentLogout = new Intent(this, LoginSomministratore.class);
+            startActivity(intentLogout);
+            overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
+            finish();
             }
         }
-    }
 
+
+    @SuppressLint("StaticFieldLeak")
     public class DownloadProgettiTask extends AsyncTask<Void, Void, Void> {
         public void onPreExecute() {
             progressDialog.show();
@@ -265,7 +246,6 @@ public class HomePageSomministratore extends AppCompatActivity {
         }
     }
 
-    //controllo su navigationBar
     @Override
     public void onBackPressed(){
         super.onBackPressed();

@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/iconabianca"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.somministratore.LaunchScreen"
+        <activity android:name=".activity.LaunchScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
 
             <intent-filter>
@@ -33,7 +33,7 @@
         <activity android:name=".activity.utente.Intermediate"
             />
         <activity
-            android:name=".activity.somministratore.LoginProfessore"
+            android:name=".activity.somministratore.LoginSomministratore"
             android:parentActivityName=".activity.HomePage"
             />
         <activity android:name=".activity.utente.Survey"
@@ -56,7 +56,7 @@
             />
         <activity
             android:name=".activity.somministratore.HomePageSomministratore"
-            android:parentActivityName=".activity.somministratore.LoginProfessore"
+            android:parentActivityName=".activity.somministratore.LoginSomministratore"
             />
         <activity android:name=".activity.utente.PresentazioneProgetto"
             />
