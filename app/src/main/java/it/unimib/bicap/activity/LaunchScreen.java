@@ -45,7 +45,7 @@ public class LaunchScreen extends AppCompatActivity {
         },3750);
 
     }
-    
+
     @Override
     public void startActivity(Intent intent){
         super.startActivity(intent);

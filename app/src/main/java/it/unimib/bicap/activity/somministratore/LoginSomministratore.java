@@ -34,19 +34,18 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import it.unimib.bicap.R;
 import it.unimib.bicap.activity.HomePage;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityLoginProfessoreBinding;
+import it.unimib.bicap.exception.LoginSomministratoreException;
 
-public class LoginProfessore extends AppCompatActivity {
+public class LoginSomministratore extends AppCompatActivity {
 
-    private static final String TAG = "LoginSomministratore";
     private ActivityLoginProfessoreBinding binding;
     private FirebaseAuth mAuth;
-    private boolean daHomepage;
-    private boolean esisteMail;
     private ProgressDialog dialogCaricamento;
     FirebaseUser utenteCorrente;
     private List<String> sommAttivi = new ArrayList<>();
@@ -56,92 +55,40 @@ public class LoginProfessore extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         utenteCorrente = mAuth.getCurrentUser();
-        
-        daHomepage = getIntent().getExtras().getBoolean(ActivityConstants.INTENT_FROM_HOME);
 
         final SharedPreferences sharedPref = getSharedPreferences("author", Context.MODE_PRIVATE);
 
-        if (sharedPref.getString("sommAttivi", null) != null) {
-            sommAttivi = Arrays.asList(sharedPref.getString("sommAttivi", null).split(","));
+        String sb = sharedPref.getString("sommAttivi", null);
+
+        if (sb != null) {
+            sommAttivi = Arrays.asList(sb.split(","));
         }
 
-        try {
-            updateUI(utenteCorrente, daHomepage);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        updateUI(utenteCorrente);
     }
 
-    private void updateUI(final FirebaseUser currentUser, boolean fromHome) throws InterruptedException {
-        //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    @SuppressLint("CommitPrefEdits")
+    private void updateUI(final FirebaseUser currentUser) {
         this.getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, 0).edit().remove("autore");
-        //final SharedPreferences sharedPref = getSharedPreferences(ActivityConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
-        //esisteMail = sharedPref.getBoolean("esisteMail", false);
-        //Log.d(TAG, "currentUser: " + currentUser.getEmail());
         if (currentUser != null) {
             String email = currentUser.getEmail();
-            if (daHomepage) {
-                controllaEmail(email);
+            controllaEmail(email);
 
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String autore = dataSnapshot.child(currentUser.getUid()).child("autore").getValue().toString();
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String autore = (String) dataSnapshot.child(currentUser.getUid()).child("autore").getValue();
                         SharedPreferences.Editor editor = getSharedPreferences("author", Context.MODE_PRIVATE).edit();
                         editor.putString("autore", autore);
-                        editor.commit();
-                    }
+                        editor.apply();
+                        }
                     @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
+                    public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-            } else{
-                Intent intentHome = new Intent(getApplicationContext(), HomePage.class);
-                startActivity(intentHome);
-                finish();
-                overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
             }
-            /*if (esisteMail) {
-                Log.d(TAG, "entra email");
-                if (fromHome) {
-                    Log.d(TAG, email);
-                    Log.d(TAG, "entra fromHome");
-                    Read from the database
-                    myRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            // This method is called once with the initial value and again
-                            // whenever data at this location is updated.
-
-                            String autore = dataSnapshot.child(currentUser.getUid()).child("autore").getValue().toString();
-
-                            Log.d(TAG, "Value is: " + autore);
-
-                            SharedPreferences.Editor editor = getSharedPreferences("author", Context.MODE_PRIVATE).edit();
-
-                            editor.putString("autore", autore);
-                            editor.commit();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Log.w(TAG, "Failed to read value.", error.toException());
-                        }
-                    });
-                } else {
-                    Intent intentHome = new Intent(this, HomePage.class);
-                    startActivity(intentHome);
-                    finish();
-                    overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-                }
-            }*/
         }
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
         @SuppressLint("SourceLockedOrientationActivity")
@@ -177,6 +124,9 @@ public class LoginProfessore extends AppCompatActivity {
             binding.imAccedi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (binding.etEmail.getText() == null || binding.etPassword.getText() == null){
+                        throw LoginSomministratoreException.LOGIN_VIEW_FAIL;
+                    }
                     String email = binding.etEmail.getText().toString();
                     String password = binding.etPassword.getText().toString();
 
@@ -207,24 +157,12 @@ public class LoginProfessore extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.i(TAG, "createUserWithEmail:success");
                                 FirebaseUser user = mAuth.getCurrentUser();
-                                daHomepage = true;
-                                try {
-                                    updateUI(user, daHomepage);
-                                    //sommAttivi.add(email);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                                updateUI(user);
                             } else {
                                 dialogCaricamento.dismiss();
                                 Snackbar.make(binding.linearlayout, "Attenzione, credenziali non valide !", Snackbar.LENGTH_SHORT).show();
-                                try {
-                                    updateUI(null, daHomepage);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
+                                updateUI(null);
                             }
                         }
                     });
@@ -248,7 +186,6 @@ public class LoginProfessore extends AppCompatActivity {
     public void controllaEmail (final String email){
         if (sommAttivi.contains(email)){
             Intent intentLogged = new Intent(getApplicationContext(), HomePageSomministratore.class);
-            intentLogged.putExtra(ActivityConstants.INTENT_FROM_HOME, daHomepage);
             intentLogged.putExtra(ActivityConstants.INTENT_EMAIL, email);
             startActivity(intentLogged);
             finish();
@@ -261,6 +198,8 @@ public class LoginProfessore extends AppCompatActivity {
     private void mostraDialogUtenteNotAttivo() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Attenzzione");
+        if (binding.etEmail.getText() == null)
+            throw LoginSomministratoreException.LOGIN_VIEW_FAIL;
         builder.setMessage("Il somministratore con email: " + binding.etEmail.getText().toString() + "\n è stato disattivato.");
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
             @Override

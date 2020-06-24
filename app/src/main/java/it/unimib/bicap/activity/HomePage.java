@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -28,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.unimib.bicap.R;
-import it.unimib.bicap.activity.somministratore.LoginProfessore;
+import it.unimib.bicap.activity.somministratore.LoginSomministratore;
 import it.unimib.bicap.activity.utente.ListaProgetti;
 import it.unimib.bicap.constanti.ActivityConstants;
 import it.unimib.bicap.databinding.ActivityHomepageBinding;
@@ -99,8 +97,7 @@ public class HomePage extends AppCompatActivity {
         binding.btnProf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentLogInProf = new Intent(getApplicationContext(), LoginProfessore.class);
-                intentLogInProf.putExtra(ActivityConstants.INTENT_FROM_HOME, true);
+                Intent intentLogInProf = new Intent(getApplicationContext(), LoginSomministratore.class);
                 startActivity(intentLogInProf);
                 finish();
             }
