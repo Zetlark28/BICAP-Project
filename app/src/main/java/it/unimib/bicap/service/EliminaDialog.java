@@ -100,7 +100,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                         //crea un nuovo jsonObject dove inserisce il JsonArray ricavato precedentemente
                                         nuoviProgetti = new JSONObject();
                                         nuoviProgetti.put("progetti", nuovaListaTotProgetti);
-                                        Log.d("oggetto", nuoviProgetti.toString());
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -114,7 +113,6 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                     dismiss();
                                     startActivity(intentDelProj);
                                     activity.overridePendingTransition(R.anim.activity_back_in, R.anim.activity_back_out);
-                                    Log.d(TAG, "eliminato");
                                 }
                                 else{
                                     final String autore = exampleList.get(index).getTextNome();
@@ -151,7 +149,7 @@ public class EliminaDialog extends AppCompatDialogFragment {
                                             }
                                             Log.d(TAG, "exampleListNew: " + exampleListNew.toString());
                                             for (ItemSearch item : exampleListNew){
-                                                Log.d(TAG, "new List: " + "Nome: " + item.getTextNome() + ", Email: " + item.getTextEmail());
+                                               // Log.d(TAG, "new List: " + "Nome: " + item.getTextNome() + ", Email: " + item.getTextEmail());
                                             }
                                             HashMap<String, String> map = new HashMap<>();
                                             for(ItemSearch item : exampleListNew){

@@ -120,8 +120,6 @@ public class EliminaAdapterRV extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @SuppressLint("LongLogTag")
     public void onBindViewHolder (final RecyclerView.ViewHolder holder, final int position) {
-        Log.d(TAG, "eliminaActivity: " + eliminaActivity);
-        Log.d(TAG, "type: " + holder.getItemViewType());
         if (holder instanceof  MyViewHolder) {
                 MyViewHolder vaultItemHolder = (MyViewHolder) holder;
                 ItemSearch currentItem = exampleList.get(position);
