@@ -30,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import it.unimib.bicap.R;
 import it.unimib.bicap.activity.somministratore.DettaglioQuestionario;
 import it.unimib.bicap.activity.somministratore.EliminaProgetti;
 import it.unimib.bicap.databinding.ActivityDettaglioQuestionarioBinding;
@@ -125,6 +126,10 @@ public class Utility {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     DettaglioQuestionario.setLinkToJoinJSON(String.valueOf(uri));
+                                    binding.imSaveProject.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                                    binding.imNextStep.setBackgroundColor(context.getResources().getColor(R.color.colorPrimary));
+                                    binding.imSaveProject.setClickable(true);
+                                    binding.imNextStep.setClickable(true);
                                 }
                             });
                         }
@@ -140,6 +145,8 @@ public class Utility {
                         public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
                             updateProgress(taskSnapshot,binding);
                         }
+
+
                     });
         }
 

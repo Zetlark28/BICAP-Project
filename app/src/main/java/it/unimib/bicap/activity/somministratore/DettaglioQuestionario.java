@@ -103,14 +103,12 @@ public class DettaglioQuestionario extends AppCompatActivity {
 
                 String key = Utility.setKeyValue();
                 if (tipo != null) {
-                    binding.imSaveProject.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                    binding.imNextStep.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
                     binding.imCaricaVideo.setBackgroundColor(getResources().getColor(R.color.disabilita));
                     binding.imInsertPdf.setBackgroundColor(getResources().getColor(R.color.disabilita));
                     binding.btnAnnulla.setBackgroundColor(getResources().getColor(R.color.disabilita));
 
-                    binding.imSaveProject.setClickable(true);
-                    binding.imNextStep.setClickable(true);
+
                     binding.imCaricaVideo.setClickable(false);
                     binding.imInsertPdf.setClickable(false);
                     binding.btnAnnulla.setClickable(false);
@@ -122,6 +120,7 @@ public class DettaglioQuestionario extends AppCompatActivity {
                         Utility.uploadFile(filePath,"Documenti/" + key, istanza,binding);
                         Snackbar.make(v, "Hai inserito un PDF", Snackbar.LENGTH_SHORT).show();
                     }
+
                 } else {
                     binding.imCaricaVideo.setBackgroundColor(Color.WHITE);
                     binding.imInsertPdf.setBackgroundColor(Color.WHITE);
