@@ -66,9 +66,6 @@ public class ExoPlayerStream extends AppCompatActivity {
         nomeProgetto = getIntent().getStringExtra(ActivityConstants.INTENT_NOME_PROGETTO);
         nPasso = getIntent().getStringExtra(ActivityConstants.INTENT_N_PASSO);
 
-        //binding = ActivityExoplayerStreamBinding.inflate(getLayoutInflater());
-        //View view = binding.getRoot();
-        //setContentView(view);
         exoPlayerView = findViewById(R.id.exoplayerview);
         try {
             BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
